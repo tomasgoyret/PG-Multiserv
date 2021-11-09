@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const firebase = require('firebase-admin');
-const { applicationDefault, initializeApp } = require('firebase-admin/app');
+const { applicationDefault } = require('firebase-admin/app');
 
 
 const {
