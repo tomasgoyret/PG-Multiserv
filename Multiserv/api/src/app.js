@@ -22,8 +22,8 @@ app.use((req, res, next) => {
 // Routes
 app.use(require('./routes/index'));
 
-//Cacheo de errores
 
+//Cacheo de errores
 app.use((err, req, res, next) => { 
     const status = err.status || 500;
     const message = err.message || err;

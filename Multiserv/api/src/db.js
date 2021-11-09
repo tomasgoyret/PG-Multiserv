@@ -10,9 +10,8 @@ const {
   PROJECT_ID,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
-  APP_ID
+  APP_ID,
 } = process.env;
-
 
 
 const firebaseConfig = {
@@ -24,10 +23,13 @@ const firebaseConfig = {
   appId: APP_ID
 };
 
+
 firebase.initializeApp({
   firebaseConfig,
   credential: applicationDefault()
 });
+
+
 
 const db = firebase.firestore();
 
