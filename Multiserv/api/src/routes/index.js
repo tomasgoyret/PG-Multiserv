@@ -1,12 +1,20 @@
 const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-
-
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+const db = require("../db.js");
+
+router.post("/agregar-usuario", async(req, res) => {
+  const {nombre, apellido, correo} = req.body;
+  const nuevoUsuario = {
+      nombre,
+      apellido,
+      correo
+    };
+    const user = await db.collection("usuarios").add(nuevoUsuario)
+    console.log(user.id)
+    res.status(201).json({data: "User Created"})
+});
+
 
 
 module.exports = router;
