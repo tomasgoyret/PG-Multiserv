@@ -1,14 +1,13 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const firebase = require('firebase-admin');
-const { applicationDefault } = require('firebase-admin/app');
-
 
 const {
   API_KEY,
   AUTH_DOMAIN,
   PROJECT_ID,
   STORAGE_BUCKET,
+  KEYPATH,
   MESSAGING_SENDER_ID,
   APP_ID,
 } = process.env;
@@ -24,12 +23,12 @@ const firebaseConfig = {
 };
 
 
+var serviceAccount = require(KEYPATH);
+
 firebase.initializeApp({
   firebaseConfig,
-  credential: applicationDefault()
-});
-
-
+  credential: firebase.credential.cert(serviceAccount)
+}); 
 
 const db = firebase.firestore();
 
