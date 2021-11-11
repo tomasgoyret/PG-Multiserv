@@ -86,7 +86,7 @@ const Button = ({ type, text, icon, action, theme, customTextColor, full, disabl
                 onMouseLeave={toggleHover}
                 onClick={() => action()}
                 css={customStyles}
-                className={` ${full ? 'flex w-full' : 'inline-flex'} p-2 py-2 px-4 justify-center items-center rounded-md font-semibold ${type === 'white' ? 'text-gray-900 shadow-md' : 'text-gray-50'} hover:${type ? btnColor(type).hover : ''} ${type ? btnColor(type).bg :
+                className={` ${full ? 'flex w-full' : 'inline-flex w-max'} flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold ${type === 'white' ? 'text-gray-900 shadow-md' : 'text-gray-50'} hover:${type ? btnColor(type).hover : ''} ${type ? btnColor(type).bg :
                     ''} transition-all ease-in-out duration-200 hover:shadow`} >
                 {icon}
                 <span className="self-center">{text}</span>
