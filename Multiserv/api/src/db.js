@@ -32,4 +32,9 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-module.exports = db;
+const auth= firebase.auth();
+
+module.exports = {
+  db,
+  auth
+}
