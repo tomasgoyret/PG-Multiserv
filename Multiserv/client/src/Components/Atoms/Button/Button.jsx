@@ -1,6 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import React, { Fragment, useState } from 'react'
 
-const Button = ({ type, text, icon, action, theme, customTextColor }) => {
+const Button = ({ type, text, icon, action, theme, customTextColor, full, disabled, submit }) => {
     const [hover, setHover] = useState(false)
     const toggleHover = () => {
         setHover(!hover)
@@ -28,8 +29,25 @@ const Button = ({ type, text, icon, action, theme, customTextColor }) => {
         return color = `#${subtractLight(color.substring(0, 2), amount)}${subtractLight(color.substring(2, 4), amount)}${subtractLight(color.substring(4, 6), amount)}`;
     }
 
+    const customStyles = {
+        backgroundColor: !type && theme,
+        color: !type && customTextColor,
+        '&:hover': {
+            backgroundColor: !type && darken(theme, 10)
+        },
+        '&:disabled': {
+            opacity: '0.6',
+            cursor: 'not-allowed'
+        }
+    }
+
     const btnColor = (text) => {
         switch (text) {
+            case 'white':
+                return {
+                    bg: 'bg-white',
+                    hover: 'bg-gray-50'
+                }
             case 'standard':
                 return {
                     bg: 'bg-blue-800',
@@ -62,14 +80,16 @@ const Button = ({ type, text, icon, action, theme, customTextColor }) => {
     return (
         <Fragment>
             <button
+                type={submit && 'submit'}
+                disabled={disabled}
                 onMouseEnter={toggleHover}
                 onMouseLeave={toggleHover}
                 onClick={() => action()}
-                style={!type ? hover ? { backgroundColor: darken(theme, 10), color: customTextColor } : { backgroundColor: theme, color: customTextColor } : {}}
-                className={`inline-flex m-2 py-1 px-4 rounded-md font-semibold text-gray-50 hover:${type ? btnColor(type).hover : ''} ${type ? btnColor(type).bg :
+                css={customStyles}
+                className={` ${full ? 'flex w-full' : 'inline-flex'} p-2 py-2 px-4 justify-center items-center rounded-md font-semibold ${type === 'white' ? 'text-gray-900 shadow-md' : 'text-gray-50'} hover:${type ? btnColor(type).hover : ''} ${type ? btnColor(type).bg :
                     ''} transition-all ease-in-out duration-200 hover:shadow`} >
                 {icon}
-                <span>{text}</span>
+                <span className="self-center">{text}</span>
             </button>
         </Fragment>
     )
