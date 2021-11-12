@@ -1,4 +1,4 @@
-const db = require("../db.js");
+const { db } = require("../db.js");
 
 // orderBy:   /oderby?catalogo={}&alfa={}
 const getOrderBy = async (req, res) => {
