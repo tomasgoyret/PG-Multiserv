@@ -71,6 +71,7 @@ alert('correo: ' + mail)
             <div style={{ width: '350px', backgroundColor: '#fdfdfd' }} className="self-center my-12 rounded-md shadow-lg transition-all ease-out duration-300">
             <form onSubmit={handleSubmit}>
                 <div  className="self-center">
+
               <Input
                 label='Correo'
                 type="text"
@@ -80,10 +81,8 @@ alert('correo: ' + mail)
                 placeholder="Escribe tu correo"
                 callBack={handleMail}
               />
-              
-                </div>
-        
-                <div className="self-center">
+              </div>
+        <div className="self-center">
               <Input
                 flexed
                 label="contraseña"
@@ -109,6 +108,7 @@ alert('correo: ' + mail)
               submit
               full
               icon={<AiFillCaretRight className="mr-2" />}
+
               type="standard"
               text="Enviar"
             />

@@ -16,14 +16,15 @@ const {db, auth} = require("../db.js");
 //   }
 
     const postUser = async(req, res)=>{
-        const {nombre, apellido, correo, password, isProvider} = req.body; 
+        const {nombre, apellido, correo, password, photoURL, phone} = req.body; 
         try{
         const newUser= await auth.createUser({
             email: correo,
             emailVerified: false,
+            phoneNumber: phone,
             password: password,
-            displayName: nombre + apellido,
-            photoURL: 'http://www.example.com/12345678/photo.png',
+            displayName: `${nombre} ${apellido}`,
+            photoURL: photoURL,
             disabled: false,
           })
             // if(isProvider) {
@@ -37,7 +38,6 @@ const {db, auth} = require("../db.js");
 
 
         } catch(error) {
-                console.log(error);
                 res.status(404).json(error)
             }     
     }
