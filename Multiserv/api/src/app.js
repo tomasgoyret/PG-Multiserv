@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
-const cors = require("cors")
+const cors = require("cors");
+const middleware = require('./middleware');
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+
+//Middleware token de validación
+// app.use(middleware.decodeToken);
 
 // Routes
 app.use(require('./routes/index'));

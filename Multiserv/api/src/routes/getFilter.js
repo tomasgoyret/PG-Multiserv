@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const postUser = require('../controller/postUser');
+const getFilter = require("../controller/getFilter");
 
-router.post("/", postUser);
+router.get("/", getFilter);
 
 module.exports = router;
