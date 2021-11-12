@@ -34,9 +34,9 @@ const getServices = async (req, res) => {
 // get user by id specific
 
 const getServicesId = async (req, res) => {
-    const {uid} = req.params;
+    const {id} = req.params;
     try {
-        const peticion = await db.collection("services").where('uid', '==', uid).get();
+        const peticion = await db.collection("services").where('id', '==', id).get();
         const { docs } = peticion
         if (docs.length <= 0) {
             res.send('No hay Servicios que coincidan')
