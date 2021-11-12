@@ -37,4 +37,4 @@ const auth= firebase.auth();
 module.exports = {
   db,
   auth
-} 
+}

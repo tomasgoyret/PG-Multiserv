@@ -4,34 +4,35 @@ import Input from '../../Atoms/Input/Input'
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 const UserRegister = ({ callBack }) => {
-    const [mail, setMail] = useState('')
-    const handleMailChanges = (text) => {
-        setMail(text)
-    }
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [name, setName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [phone, setPhone] = useState('')
     const [disabledSignUp, setDisabledSignUp] = useState(true)
 
-    const handlePasswordChanges = (text) => {
-        setPassword(text)
+    const handleName = (text) => {
+        setName(text)
     }
-    const handleConfirmChanges = (text) => {
-        setConfirmPassword(text)
+    const handleLastName = (text) => {
+        setLastName(text)
+    }
+    const handlePhone = (text) => {
+        setPhone(text)
     }
 
     useEffect(() => {
-        const emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-        if (emailValid.test(mail) && password.length >= 6 && password === confirmPassword) {
+        if (name && lastName && phone) {
             setDisabledSignUp(true)
         } else {
             setDisabledSignUp(false)
         }
-    }, [mail, password, confirmPassword])
+    }, [name, lastName, phone])
 
     return (
         <form
-            onSubmit={(e) => { e.preventDefault() }}
+            onSubmit={(e) => {
+                e.preventDefault()
+                callBack(name, lastName, phone)
+            }}
         >
             <div className="mb-4">
                 <Input
@@ -41,7 +42,7 @@ const UserRegister = ({ callBack }) => {
                     label="Nombre(s):"
                     placeholder="Ingresa tu nombre"
                     flexed
-                    callBack={handleMailChanges}
+                    callBack={handleName}
                 />
             </div>
             <div className="mb-4">
@@ -51,7 +52,7 @@ const UserRegister = ({ callBack }) => {
                     label="Apellido(s):"
                     flexed
                     placeholder="Ingresa tus apellidos"
-                    callBack={handlePasswordChanges}
+                    callBack={handleLastName}
                 />
             </div>
             <div className="mb-4">
@@ -61,7 +62,7 @@ const UserRegister = ({ callBack }) => {
                     label="Teléfono:"
                     flexed
                     placeholder="Tu número telefónico"
-                    callBack={handleConfirmChanges}
+                    callBack={handlePhone}
                 />
             </div>
             <div className="px-4 py-2">
@@ -72,9 +73,6 @@ const UserRegister = ({ callBack }) => {
                     text="Crear cuenta"
                     full
                     disabled={!disabledSignUp}
-                    action={() => {
-                        callBack(mail, password)
-                    }}
                 />
                 <div className="my-4">
                     <p className="text-gray-700 leading-tight text-sm font-sans">Al hacer click en <span className="font-medium">Crear cuenta</span>, aceptas nuestros <span className=" font-bold text-cyan-800 cursor-pointer">términos y condiciones <HiOutlineArrowNarrowRight className="inline-block" /> </span></p>
