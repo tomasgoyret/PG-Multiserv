@@ -4,6 +4,11 @@ import Button from '../../Components/Atoms/Button/Button'
 import { FcGoogle } from "react-icons/fc";
 
 const Components = () => {
+    const [miTexto, setMiTexto] = useState('')
+
+    const funcionCualquiera = (texto) => {
+        setMiTexto(texto)
+    }
     const [mail, setMail] = useState('')
     const [mail2, setMail2] = useState('')
     const handleMailChanges = (text) => {
@@ -114,6 +119,18 @@ const Components = () => {
                     </div>
                 </div>
             </div>
+
+            <Input
+                type="text"
+                id="mi_texto"
+                theme="#164E63"
+                label="un texto"
+                placeholder="escribe algo"
+                flexed
+                callBack={funcionCualquiera}
+            />
+            <span>{miTexto}</span>
+
         </div>
     )
 }
