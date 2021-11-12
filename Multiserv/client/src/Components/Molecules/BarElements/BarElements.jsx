@@ -1,5 +1,4 @@
-
-const BarElemnts = ({ clase, arr }) => {
+const BarElements = ({ clase, arr }) => {
     return (
         <div className={clase}>
             {arr.map(elem => (<span>{elem}</span>))}
@@ -8,5 +7,4 @@ const BarElemnts = ({ clase, arr }) => {
 }
 
 
-
-export default BarElemnts
+export default BarElements;
