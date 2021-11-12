@@ -1,6 +1,6 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-const firebase = require('firebase-admin');
+const firebase = require("firebase-admin");
 
 const {
   API_KEY,
@@ -9,7 +9,7 @@ const {
   STORAGE_BUCKET,
   KEYPATH,
   MESSAGING_SENDER_ID,
-  APP_ID,
+  APP_ID
 } = process.env;
 
 
@@ -19,7 +19,7 @@ const firebaseConfig = {
   projectId: PROJECT_ID,
   storageBucket: STORAGE_BUCKET,
   messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID
+  appId:APP_ID
 };
 
 

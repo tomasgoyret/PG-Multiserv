@@ -4,12 +4,16 @@ import Encabezado2 from "../../Atoms/Encabezados/Encabezado2";
 import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
 // import { signUp, signWithGoogle } from '../../Firebase'
-// import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 
 const FormularioSignIn = () => {
     const [disabledSignIn, setDisabledSignIn] = useState(true)
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
+    const [sesion, setSesion] = useState({
+        sesion : false,
+        usuario : ""
+    })
 
     // Handles
     const handleMailChanges = (text) => {
@@ -32,15 +36,31 @@ const FormularioSignIn = () => {
     }, [mail, password])
 
     // Login
-    const signInUser = () => {
-        
+    var user = ""
+    const signIn = () => {
+        const auth = getAuth()
+        signInWithEmailAndPassword(auth, mail, password)
+            .then(userCredential => {
+                user = userCredential.user
+                alert("Iniciaste sesión como "+ user.email)
+                setSesion({
+                    ...sesion,
+                    sesion : true,
+                    usuario : user.email
+                })
+            })
+            .catch(error => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert( errorCode , errorMessage)
+              });
     }
 
 
     return(
         <div className="items-center">
             <Encabezado2 
-                clases="pt-4 pb-4 flex justify-center"
+                clases="pt-4 pb-3 flex justify-center"
                 titulo="Sign In"
             />
             <ButtonXartiago 
@@ -76,10 +96,10 @@ const FormularioSignIn = () => {
                     submit
                     theme="#155E75"
                     customTextColor="#FFFFF"
-                    text="Crear cuenta"
+                    text="Ingresar"
                     full
                     disabled={!disabledSignIn}
-                    action={signInUser}
+                    action={signIn}
                 />
             </div>
             <div className="px-4 py-2">
