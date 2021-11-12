@@ -1,8 +1,10 @@
 import React, {useState}  from 'react'
 import Input from '../../Components/Atoms/Input/Input'
-//import Button from '../../Components/Atoms/Button/Button'
+import { FcGoogle } from "react-icons/fc";
+import { AiFillCaretRight } from "react-icons/ai";
 //_----------------------------------------------------------------------------------------
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
+import Button from '../../Components/Atoms/Button/Button';
 function handleResetPassword(auth, actionCode, continueUrl, lang) {
   // Localize the UI to the selected language as determined by the lang
   // Localizar la interfaz de usuario al idioma seleccionado según lo determine el idioma
@@ -35,79 +37,86 @@ function handleResetPassword(auth, actionCode, continueUrl, lang) {
 }
 //_----------------------------------------------------------------------------------------
 const PasswordChange = () => {
-    const [input, setInput] = useState({
-        //correo: "",
-        user_mail:"",
-        user_password:"",
-        user_newPassword:""
-    })
-    function handleChange(e) {
-      setInput({
-          ...input,
-          [e.target.name]: e.target.value
-        })
-      }
-
-      //________________________________________
-      async function handleSubmit(e) {
-        let {user_mail, user_password,user_newPassword} = input
-       alert("email"+user_mail+
-       "password"+user_password+
-       "new password"+user_newPassword
-       )
-        console.log(user_mail)
-        e.preventDefault()
-        setInput({
-          user_mail: "",
-          user_password:"",
-          user_newPassword:""
-          })
-        }
-
-
-
+    // const [input, setInput] = useState({
+    //     //correo: "",
+    //     user_mail:"",
+    //     user_password:"",
+    //     user_newPassword:""
+    // })
+  const [mail, setMail] = useState("")
+  const [password, setPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  //____________-capturar
+  const handleMail = (text) => {
+    setMail(text)
+  }
+  const handlePassword = (text) => {
+    setPassword(text)
+  }
+  const handleNewPassword = (text) => {
+    setNewPassword(text)
+  }
+  //________________________________________
+  const handleSubmit = (e) => {
+    e.preventDefault()
+alert('correo: ' + mail)
+}
 
     return (
         <div>
-            <div className="container mx-auto flex flex-col justify-center items-center">
-             <h1  className="text-4xl"  >Cambiar Contraseña</h1>
-             <form onSubmit={handleSubmit}>
-                <div className="self-center">
-                    <Input type="text"
-                    name="user_mail"
-                    theme="#3730A3"
-                    placeholder="Escribe tu correo"
-                    value={input.user_mail} 
-                    onChange={handleChange}
-                    required/>
+            <div className="bg-gray-50 h-screen flex flex-col justify-center items-center">
+            <div className="px-4 pt-6 pb-4">
+                 <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Cambiar Contraseña!</h1>
+            </div>
+            <div style={{ width: '350px', backgroundColor: '#fdfdfd' }} className="self-center my-12 rounded-md shadow-lg transition-all ease-out duration-300">
+            <form onSubmit={handleSubmit}>
+                <div  className="self-center">
+              <Input
+                label='Correo'
+                type="text"
+                flexed
+                id="user_mail"
+                theme="#3730A3"
+                placeholder="Escribe tu correo"
+                callBack={handleMail}
+              />
+              
                 </div>
         
                 <div className="self-center">
-                    <Input type="text"
-                    name="user_password"
+              <Input
+                flexed
+                label="contraseña"
+                type="password"
+                    id="user_password"
                     theme="#3730A3"
-                    placeholder="contraseña actual" 
-                    value={input.user_password} 
-                    onChange={handleChange}
-                    required
+                placeholder="Escribe tu contraseña actual"
+                callBack={handlePassword}
                     />
                 </div>
                 <div className="self-center">
-                    <Input type="text"
-                    name="user_newPassword"
+              <Input
+                label="Nueva contraseña"
+                type="password"
+                flexed
+                    id="user_newPassword"
                     theme="#3730A3"
-                    placeholder="nueva contraseña " 
-                    value={input.user_newPassword} 
-                    onChange={handleChange}
-                    required/>
+                    placeholder="Escribe tu nueva contraseña " 
+                callBack={handleNewPassword}
+              />
                 </div>
-                <Input 
-                placeholder="enviar"
-                type="submit"
-                className="inline-flex bg-blue-800 text-white px-4 py-2 rounded-md">  
-                </Input>
+            <Button
+              submit
+              full
+              icon={<AiFillCaretRight className="mr-2" />}
+              type="standard"
+              text="Enviar"
+            />
                 </form>
+   
+
             </div>
+         </div>
         </div>
     )
 }
