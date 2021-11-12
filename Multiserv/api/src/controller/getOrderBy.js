@@ -1,4 +1,4 @@
-const { db } = require("../db");
+const { db } = require("../db.js");
 
 // orderBy:   /oderby -- default az  o por body le mandan el estado a ordenar {catalogo:[], rating:mayor/menor o title:asc/desc}
 const getOrderBy = async (req, res) => {

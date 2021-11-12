@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Root = () => {
     return (
-        <div>
+        <div className="container mx-auto">
             <h1 className="text-4xl">Bienvenido a multiservices!</h1>
         </div>
     )
 }
-
+ 
 export default Root
