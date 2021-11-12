@@ -119,7 +119,7 @@ const Components = () => {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
+
             <Input
                 type="text"
                 id="mi_texto"
@@ -130,8 +130,7 @@ const Components = () => {
                 callBack={funcionCualquiera}
             />
             <span>{miTexto}</span>
-=======
->>>>>>> e9cfa006a0a591f5078f27c5d149e529fe121e19
+
         </div>
     )
 }
