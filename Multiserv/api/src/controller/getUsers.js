@@ -53,9 +53,21 @@ const getUserId = async(req, res) => {
     }
 };
 
+//en proceso----->
+const getUserEmail = async(req, res) => {
+    const { email } = req.params;
+    console.log(email);
+    try {
+        const peticion= await auth.getUserByEmail(email);
+        res.status(200).json(peticion)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+};
 
 
 module.exports = {
     getUsers,
-    getUserId
+    getUserId, 
+    getUserEmail
 };
