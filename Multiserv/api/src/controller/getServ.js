@@ -19,7 +19,7 @@ const getServices = async (req, res) => {
 // onSearch query by name 
 
             if(name){
-                const servicesName = services.filter(serv => serv.servicio.titulo.toLowerCase().includes(name.toLowerCase()))
+                const servicesName = services.filter(serv => serv.servicio.title.toLowerCase().includes(name.toLowerCase()))
                 res.json(servicesName)
             }
             else{
@@ -34,9 +34,9 @@ const getServices = async (req, res) => {
 // get user by id specific
 
 const getServicesId = async (req, res) => {
-    const {id} = req.params;
+    const {uid} = req.params;
     try {
-        const peticion = await db.collection("services").where('id', '==', id).get();
+        const peticion = await db.collection("services").where('uid', '==', uid).get();
         const { docs } = peticion
         if (docs.length <= 0) {
             res.send('No hay Servicios que coincidan')
