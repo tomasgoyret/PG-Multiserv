@@ -28,7 +28,6 @@ const Button = ({ type, text, icon, action, theme, customTextColor, full, disabl
         amount = parseInt((255 * amount) / 100);
         return color = `#${subtractLight(color.substring(0, 2), amount)}${subtractLight(color.substring(2, 4), amount)}${subtractLight(color.substring(4, 6), amount)}`;
     }
-
     const customStyles = {
         backgroundColor: !type && theme,
         color: !type && customTextColor,
@@ -40,7 +39,6 @@ const Button = ({ type, text, icon, action, theme, customTextColor, full, disabl
             cursor: 'not-allowed'
         }
     }
-
     const btnColor = (text) => {
         switch (text) {
             case 'white':
