@@ -48,6 +48,7 @@ const SignUp = () => {
                                 <span className="font-semibold ml-2">Volver</span>
                             </button>
                         </div>
+                        <h3 className="text-center font-semibold text-2xl text-cyan-900">Información adicional</h3>
                         <UserRegister />
                     </div>
                 )}

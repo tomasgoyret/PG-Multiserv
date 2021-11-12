@@ -69,7 +69,7 @@ const UserRegister = ({ callBack }) => {
                     submit
                     theme="#155E75"
                     customTextColor="#FFFFF"
-                    text="Continuar"
+                    text="Crear cuenta"
                     full
                     disabled={!disabledSignUp}
                     action={() => {
@@ -77,7 +77,7 @@ const UserRegister = ({ callBack }) => {
                     }}
                 />
                 <div className="my-4">
-                    <p className="text-gray-700 leading-tight text-sm font-sans">Al hacer click en <span className="font-medium">Continuar</span>, aceptas nuestros <span className=" font-bold text-cyan-800 cursor-pointer">términos y condiciones <HiOutlineArrowNarrowRight className="inline-block" /> </span></p>
+                    <p className="text-gray-700 leading-tight text-sm font-sans">Al hacer click en <span className="font-medium">Crear cuenta</span>, aceptas nuestros <span className=" font-bold text-cyan-800 cursor-pointer">términos y condiciones <HiOutlineArrowNarrowRight className="inline-block" /> </span></p>
                 </div>
             </div>
         </form>
