@@ -7,8 +7,13 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import UserRegister from '../../Components/Organisms/UserRegister/UserRegister';
 
 const SignUp = () => {
-    const [mail, setMail] = useState('')
-    const [password, setPassword] = useState('')
+    const [user, setUser] = useState({
+        mail: '',
+        password: '',
+        name: '',
+        lastName: '',
+        phone: ''
+    })
     const [step, setStep] = useState(1)
     /* const signUpUser = () => {
         signUp(mail, password)
@@ -21,9 +26,20 @@ const SignUp = () => {
             })
     } */
     const nextStep = (mail, password) => {
-        setMail(mail)
-        setPassword(password)
+        setUser({
+            ...user,
+            mail,
+            password
+        })
         setStep(2)
+    }
+    const register = (name, lastName, phone) => {
+        setUser({
+            ...user,
+            name,
+            lastName,
+            phone
+        })
     }
     return (
         <div className="bg-gray-50 h-screen flex flex-col justify-center items-center">
@@ -49,7 +65,7 @@ const SignUp = () => {
                             </button>
                         </div>
                         <h3 className="text-center font-semibold text-2xl text-cyan-900">Información adicional</h3>
-                        <UserRegister />
+                        <UserRegister callBack={register} />
                     </div>
                 )}
             </div>
