@@ -3,6 +3,6 @@ const router = express.Router();
 const { getServices, getServicesId} = require("../controller/getServ");
 
 router.get("/", getServices);
-router.get("/:id", getServicesId);
+router.get("/:uid", getServicesId);
 
 module.exports = router;
