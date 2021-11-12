@@ -53,6 +53,7 @@ const getUserId = async(req, res) => {
     }
 };
 
+//en proceso----->
 const getUserEmail = async(req, res) => {
     const { email } = req.params;
     console.log(email);
