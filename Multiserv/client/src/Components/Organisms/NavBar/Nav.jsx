@@ -9,5 +9,4 @@ const Nav = ({ clase, imagen, imgClass, imgName, arr, claseArr}) => {
         </div>
     )
 }
-
 export default Nav;
