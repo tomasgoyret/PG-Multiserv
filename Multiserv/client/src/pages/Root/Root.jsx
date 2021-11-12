@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Input from '../../Components/Atoms/Input/Input'
-import Button from '../../Components/HeadLess/Button/Button'
+//import Button from '../../Components/HeadLess/Button/Button'
 import { FcGoogle } from "react-icons/fc";
 
 const Root = () => {
