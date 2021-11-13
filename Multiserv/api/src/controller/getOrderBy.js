@@ -2,7 +2,7 @@ const { db } = require("../db.js");
 
 // orderBy:   /oderby -- default az  o por body le mandan el estado a ordenar {catalogo:[], rating:mayor/menor o title:asc/desc}
 const getOrderBy = async (req, res) => {
-    const body = req.body;
+    const {title, rating } = req.query
     try {
         const peticion = await db.collection("services").get();
         const { docs } = peticion;
@@ -11,14 +11,15 @@ const getOrderBy = async (req, res) => {
             res.send('No hay Servicios agregados')
         }
         else {
+            const services = docs.map(serv => {
+                let servicio = serv.data();
+                return { servicio }
+            })
 
-            // Order Default A-Z
+            // Order Default o title  A-Z
 
-            if (Object.keys(body).length===0) {
-                const services = docs.map(serv => {
-                    let servicio = serv.data();
-                    return { servicio }
-                })
+            if (!title && !rating || title === 'asc') {
+
                 services.sort(function (a, b) {
                     if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
                         return 1;
@@ -31,41 +32,39 @@ const getOrderBy = async (req, res) => {
                 res.send(services)
             }
 
-            // A-Z
 
-            if (Object.keys(body)[1] === 'title' && Object.values(body)[1] === 'asc') {
-                
-                Object.values(body)[0].sort(function (a, b) {
-                    if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
-                        return 1;
-                    }
-                    if (a.servicio.title.toLowerCase() < b.servicio.title.toLowerCase()) {
+            // title Z-A
+            if (title=== 'desc') {
+            services.sort(function (a, b) {
+                if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
+                    return -1;
+                }
+                if (a.servicio.title.toLowerCase() < b.servicio.title.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            });
+            res.send(services)
+        }
+
+            // PUNTUACION MAYOR A MENOR
+
+            if (rating=== 'desc') {
+                services.sort(function (a, b) {
+                    if (a.servicio.rating > b.servicio.rating) {
                         return -1;
+                    }
+                    if (a.servicio.rating < b.servicio.rating) {
+                        return 1;
                     }
                     return 0;
                 });
-                res.send(Object.values(body)[0])
+                res.send(services)
             }
 
-            // Z-A
-
-            if (Object.keys(body)[1] === 'title' && Object.values(body)[1] === 'desc') {
-                Object.values(body)[0].sort(function (a, b) {
-                    if (a.servicio.title.toLowerCase() < b.servicio.title.toLowerCase()) {
-                        return 1;
-                    }
-                    if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                res.send(Object.values(body)[0])
-            }
-
-            // PUNTUACION MAYOR
-
-            if (Object.keys(body)[1] === 'rating' && Object.values(body)[1] === 'menor') {
-                Object.values(body)[0].sort(function (a, b) {
+            // PUNTUACION MENOR A MAYOR
+            if (rating=== 'asc') {
+                services.sort(function (a, b) {
                     if (a.servicio.rating > b.servicio.rating) {
                         return 1;
                     }
@@ -74,22 +73,7 @@ const getOrderBy = async (req, res) => {
                     }
                     return 0;
                 });
-                res.send(Object.values(body)[0])
-            }
-
-            // PUNTUACION MENOR
-
-            if (Object.keys(body)[1] === 'rating' && Object.values(body)[1] === 'mayor') {
-                Object.values(body)[0].sort(function (a, b) {
-                    if (a.servicio.rating < b.servicio.rating) {
-                        return 1;
-                    }
-                    if (a.servicio.rating > b.servicio.rating) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                res.send(Object.values(body)[0])
+                res.send(services)
             }
         }
     } catch (error) {
