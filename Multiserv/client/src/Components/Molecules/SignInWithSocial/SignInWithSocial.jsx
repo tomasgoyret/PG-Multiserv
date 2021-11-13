@@ -4,7 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import Button from '../../Atoms/Button/Button'
 
-const SignInWithSocial = ({ afterLogin }) => {
+
+const SignInWithSocial = ({afterLogin}) => {
     const googleRegister = () => {
         signWithGoogle()
             .then((result) => {
