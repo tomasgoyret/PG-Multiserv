@@ -6,7 +6,7 @@ import {
 export function saludar(){
     return {
         type: HELLOWORLD,
-        payload: 'Holaaaa'
+        payload: 'Holaaaa probandooo'
     }
 }
 
