@@ -10,6 +10,13 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 
 const Home = () => {
+
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    var foto = datosSesionFromLocalStorage.photoURL
+    if(!foto){
+        foto = Img
+    }
+
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} />,
@@ -19,7 +26,7 @@ const Home = () => {
 
     return (
         <div>
-            <Nav clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' imgClass='w-16' imagen={Img} imgName='Logo' arr={arr} />
+            <Nav clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' imgClass='w-16' imagen={foto} imgName='Logo' arr={arr} />
         </div>
     )
 }

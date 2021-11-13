@@ -82,6 +82,7 @@ const FormularioSignIn = () => {
                 <div className="px-4 py-2">
                         <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
                 </div>
+                <img src={`${datosSesionFromLocalStorage.photoURL}`} />
                 </div> ) : <form onSubmit={signIn}>
                 <Encabezado2
                     clases="pt-4 pb-3 flex justify-center"
