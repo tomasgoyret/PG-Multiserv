@@ -42,7 +42,7 @@ const {db, auth} = require("../db.js");
                 res.status(404).json(error.message)
             }     
     }
-
+ 
 
 
   module.exports = postUser;

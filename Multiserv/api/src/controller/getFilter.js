@@ -1,13 +1,14 @@
 const { db } = require("../db.js");
 
+
 const getFilter = async (req, res) => {
 
     const query  = req.query;
 
     // query --> { atributo: valor }
     // Busco en base de datos atributo con ese valor y filtro
-    try {
-        const peticion = await db.collection("services").where(Object.keys(query)[0], '==', Object.values(query)[0].toLowerCase()).get();        
+    try {   
+        const peticion = await db.collection("services").where(Object.keys(query)[0], '==', Object.values(query)[0]).get();        
         const { docs } = peticion;
         
         if (docs.length <= 0) {
