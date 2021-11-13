@@ -38,42 +38,56 @@ const FormularioSignIn = () => {
         }
     }, [mail, password])
 
-    // Login
-    var user = ""
-    const signIn = (e) => {
-        e.preventDefault();
-        const auth = getAuth()
-        signInWithEmailAndPassword(auth, mail, password)
-            .then(userCredential => {
-                user = userCredential.user
-                console.log(user)
-                alert("Iniciaste sesión como "+ user.email)
-                setSesion({
-                    ...sesion,
-                    sesion : true,
-                    usuario : user.email
+        // Login
+
+        var user;
+        const signIn = async (e) => {
+            e.preventDefault();
+            const auth = getAuth()
+            // setPersistence(auth, browserLocalPersistence)
+            // .then( () => {
+            //     return signInWithEmailAndPassword(auth, mail, password);
+            // }) nueva prueba otra otra
+            signInWithEmailAndPassword(auth, mail, password)
+                .then(userCredential => {
+                    e.preventDefault()
+                    user = userCredential.user
+                    localStorage.setItem("datoSesion",JSON.stringify(user))
+                    navigate("/sign-in")
                 })
-            })
-            .catch(error => {
-                console.log(error)
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                
-              });
-    }
+                .catch(error => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log(errorCode, errorMessage)
+                    alert(errorCode, errorMessage)
+    
+                });
+        }
 
     const redirectToHome = () => {
         navigate('/')
     }
 
-    return(
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    const cerrarSesion = () =>{
+        localStorage.removeItem("datoSesion")
+        navigate("/sign-in")
+    }
+
+
+    return (
         <div className="items-center">
-            <form onSubmit={signIn}>
-                <Encabezado2 
+            {datosSesionFromLocalStorage? (<div> 
+                Sesion Iniciada con : {datosSesionFromLocalStorage.email} 
+                <div className="px-4 py-2">
+                        <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
+                </div>
+                </div> ) : <form onSubmit={signIn}>
+                <Encabezado2
                     clases="pt-4 pb-3 flex justify-center"
                     titulo="Sign In"
                 />
-                <SignInWithSocial 
+                <SignInWithSocial
                     afterLogin={redirectToHome}
                 />
                 <Input
@@ -107,7 +121,8 @@ const FormularioSignIn = () => {
                 <div className="px-4 py-2">
                     <p className="text-gray-500 leading-tight text-sm font-sans">Olvidaste tu contraseña? <span className="font-medium">Recuerda</span>, que puedes restablecerla en el siguiente enlace <span className="font-semibold text-indigo-800 cursor-pointer">Restablecer Contraseña</span></p>
                 </div>
-            </form>
+            </form>}
+
         </div>
     )
 }
