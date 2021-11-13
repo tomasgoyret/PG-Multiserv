@@ -16,14 +16,14 @@ const {db, auth} = require("../db.js");
 //   }
 
     const postUser = async(req, res)=>{
-        const {nombre, apellido, correo, password, photoURL, phone} = req.body; 
+        const {name, lastName, mail, password, photoURL, phone} = req.body; 
         try{
         const newUser= await auth.createUser({
-            email: correo,
+            email: mail,
             emailVerified: false,
             phoneNumber: phone,
             password: password,
-            displayName: `${nombre} ${apellido}`,
+            displayName: `${name} ${lastName}`,
             photoURL: photoURL,
             disabled: false,
           })
@@ -41,7 +41,7 @@ const {db, auth} = require("../db.js");
                 res.status(404).json(error)
             }     
     }
-
+ 
 
 
   module.exports = postUser;
