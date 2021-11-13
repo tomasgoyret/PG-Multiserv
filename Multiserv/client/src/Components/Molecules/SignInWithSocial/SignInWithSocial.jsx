@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import Button from '../../Atoms/Button/Button'
 
+
 const SignInWithSocial = ({afterLogin}) => {
     const googleRegister = () => {
         signWithGoogle()
@@ -11,7 +12,6 @@ const SignInWithSocial = ({afterLogin}) => {
                 /* const credential = GoogleAuthProvider.credentialFromResult(result) */
                 console.log(result)
                 afterLogin()
-                
             })
             .catch(error => {
                 console.log(error);
