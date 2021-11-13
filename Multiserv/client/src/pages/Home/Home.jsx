@@ -16,7 +16,7 @@ const Home = () => {
     if(!foto){
         foto = Img
     }
-
+    // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} />,

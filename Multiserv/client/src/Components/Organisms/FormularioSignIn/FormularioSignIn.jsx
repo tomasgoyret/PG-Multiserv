@@ -53,7 +53,7 @@ const FormularioSignIn = () => {
                     e.preventDefault()
                     user = userCredential.user
                     localStorage.setItem("datoSesion",JSON.stringify(user))
-                    navigate("/sign-in")
+                    navigate("/home")
                 })
                 .catch(error => {
                     var errorCode = error.code;
@@ -71,7 +71,7 @@ const FormularioSignIn = () => {
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const cerrarSesion = () =>{
         localStorage.removeItem("datoSesion")
-        navigate("/sign-in")
+        navigate("/")
     }
 
 
