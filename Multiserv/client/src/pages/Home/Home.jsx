@@ -12,12 +12,11 @@ import { FaUserAlt } from "react-icons/fa";
 const Home = () => {
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    var foto = ""
-    if(!datosSesionFromLocalStorage){
-        foto = Img
-    } else {
-        foto = datosSesionFromLocalStorage.photoURL
-    }
+    var foto = Img
+    if(localStorage.length>0 && datosSesionFromLocalStorage.photoURL){
+        console.log("entra",datosSesionFromLocalStorage)
+         foto = datosSesionFromLocalStorage.photoURL
+     }
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
