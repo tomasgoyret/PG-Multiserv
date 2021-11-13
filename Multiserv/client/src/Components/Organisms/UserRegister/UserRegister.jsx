@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../Atoms/Button/Button'
 import Input from '../../Atoms/Input/Input'
+import { ImSpinner9 } from "react-icons/im";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
-const UserRegister = ({ callBack }) => {
+const UserRegister = ({ loading, callBack }) => {
     const [name, setName] = useState('')
     const [lastName, setLastName] = useState('')
     const [phone, setPhone] = useState('')
@@ -67,12 +68,13 @@ const UserRegister = ({ callBack }) => {
             </div>
             <div className="px-4 py-2">
                 <Button
+                    icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                     submit
                     theme="#155E75"
                     customTextColor="#FFFFF"
-                    text="Crear cuenta"
+                    text={loading ? 'Creando cuenta...' : 'Crear cuenta'}
                     full
-                    disabled={!disabledSignUp}
+                    disabled={!disabledSignUp || loading}
                 />
                 <div className="my-4">
                     <p className="text-gray-700 leading-tight text-sm font-sans">Al hacer click en <span className="font-medium">Crear cuenta</span>, aceptas nuestros <span className=" font-bold text-cyan-800 cursor-pointer">términos y condiciones <HiOutlineArrowNarrowRight className="inline-block" /> </span></p>

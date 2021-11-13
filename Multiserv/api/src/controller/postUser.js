@@ -24,7 +24,7 @@ const {db, auth} = require("../db.js");
             phoneNumber: phone,
             password: password,
             displayName: `${name} ${lastName}`,
-            photoURL: photoURL,
+            photoURL,
             disabled: false,
           })
             // if(isProvider) {
@@ -38,7 +38,8 @@ const {db, auth} = require("../db.js");
 
 
         } catch(error) {
-                res.status(404).json(error)
+          console.log(error)
+                res.status(404).json(error.message)
             }     
     }
  
