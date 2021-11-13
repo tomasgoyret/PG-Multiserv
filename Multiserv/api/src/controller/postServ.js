@@ -1,7 +1,7 @@
 const { db } = require("../db.js");
 
 
-const postNewService = async (req, res) => {
+const postServ = async (req, res) => {
     const { category, description, photos, priceRange, rating, title, uidUser } = req.body;
     const newService = { category, description, photos, priceRange, rating, title, uidUser}
     try {
@@ -17,4 +17,4 @@ const postNewService = async (req, res) => {
 
 
 
-module.exports = postNewService;
+module.exports = postServ;
