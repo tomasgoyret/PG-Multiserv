@@ -12,9 +12,11 @@ import { FaUserAlt } from "react-icons/fa";
 const Home = () => {
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    var foto = datosSesionFromLocalStorage.photoURL
-    if(!foto){
+    var foto = ""
+    if(!datosSesionFromLocalStorage){
         foto = Img
+    } else {
+        foto = datosSesionFromLocalStorage.photoURL
     }
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
     const arr = [
