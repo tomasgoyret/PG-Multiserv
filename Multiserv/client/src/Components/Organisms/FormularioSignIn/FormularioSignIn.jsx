@@ -6,6 +6,7 @@ import Button from "../../Atoms/Button/Button";
 // import { signUp, signWithGoogle } from '../../Firebase'
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
+import { useNavigate } from "react-router";
 
 const FormularioSignIn = () => {
     const [disabledSignIn, setDisabledSignIn] = useState(true)
@@ -15,6 +16,7 @@ const FormularioSignIn = () => {
         sesion : false,
         usuario : ""
     })
+    const navigate = useNavigate();
 
     // Handles
     const handleMailChanges = (text) => {
@@ -56,10 +58,13 @@ const FormularioSignIn = () => {
                 console.log(error)
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                alert( errorCode , errorMessage)
+                
               });
     }
 
+    const redirectToHome = () => {
+        navigate('/')
+    }
 
     return(
         <div className="items-center">
@@ -69,7 +74,7 @@ const FormularioSignIn = () => {
                     titulo="Sign In"
                 />
                 <SignInWithSocial 
-                    afterLogin={() => {}}
+                    afterLogin={redirectToHome}
                 />
                 <Input
                     type="email"
