@@ -53,7 +53,7 @@ const FormularioSignIn = () => {
                     e.preventDefault()
                     user = userCredential.user
                     localStorage.setItem("datoSesion",JSON.stringify(user))
-                    navigate("/sign-in")
+                    navigate("/home")
                 })
                 .catch(error => {
                     var errorCode = error.code;
@@ -71,7 +71,7 @@ const FormularioSignIn = () => {
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const cerrarSesion = () =>{
         localStorage.removeItem("datoSesion")
-        navigate("/sign-in")
+        navigate("/")
     }
 
 
@@ -82,6 +82,7 @@ const FormularioSignIn = () => {
                 <div className="px-4 py-2">
                         <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
                 </div>
+                <img src={`${datosSesionFromLocalStorage.photoURL}`} />
                 </div> ) : <form onSubmit={signIn}>
                 <Encabezado2
                     clases="pt-4 pb-3 flex justify-center"

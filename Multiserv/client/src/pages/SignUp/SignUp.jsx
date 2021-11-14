@@ -58,7 +58,7 @@ const SignUp = () => {
             })
     }
     const redirectToHome = () => {
-        navigate('/')
+        navigate('/home')
     }
     return (
         <div className="bg-gray-50 h-screen flex flex-col justify-center items-center">
