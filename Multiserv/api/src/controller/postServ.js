@@ -1,9 +1,9 @@
 const { db } = require("../db.js");
 
 
-const postNewService = async (req, res) => {
-    const { category, description, photos, priceRange, rating, title, uidUser } = req.body;
-    const newService = { category, description, photos, priceRange, rating, title, uidUser}
+const postServ = async (req, res) => {
+    const { category, description, photos, min, max, rating, title, uidUser, currency } = req.body;
+    const newService = { category, description, photos, min, max, rating, title, uidUser, currency}
     try {
         const service = await db.collection("services").add(newService);
         const serviceUpdate = await db.collection('services').doc(service.id).update({
@@ -17,4 +17,4 @@ const postNewService = async (req, res) => {
 
 
 
-module.exports = postNewService;
+module.exports = postServ;
