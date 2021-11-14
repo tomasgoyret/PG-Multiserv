@@ -5,13 +5,13 @@ import { FaFacebook } from "react-icons/fa";
 import Button from '../../Atoms/Button/Button'
 
 
-const SignInWithSocial = ({afterLogin}) => {
+const SignInWithSocial = () => {
     const googleRegister = () => {
         signWithGoogle()
             .then((result) => {
                 /* const credential = GoogleAuthProvider.credentialFromResult(result) */
                 localStorage.setItem("datoSesion",JSON.stringify(result.user))
-                afterLogin()
+                
             })
             .catch(error => {
                 console.log(error);
