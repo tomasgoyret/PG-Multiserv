@@ -9,14 +9,18 @@ import { AiFillHome, AiFillCalendar } from "react-icons/ai";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 /* React Hooks */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
 import { services } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
+import { useNavigate } from 'react-router';
+import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
 
 const Home = () => {
     const servicios = useSelector((state) => state.servicios)
+    const navigate = useNavigate();
+    const [verPerfil, setVerPerfil] = useState(false)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(services())
@@ -37,10 +41,47 @@ const Home = () => {
         <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} />
     ]
 
+
+    const logout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("datoSesion")
+        navigate("/")
+    }
+
+    const handleClick = () => {
+        setVerPerfil(!verPerfil);
+    }
+
+    const validarLogitudNombre = (nombre) => {
+        let nombres = nombre.split(" ")
+        return nombres;
+    }
+
+    const resultadoNombre = validarLogitudNombre(datosSesionFromLocalStorage.displayName)
+    const modal = ( 
+        verPerfil ?
+        <div className={s.UserProfile__OnClick}>
+            <img src={datosSesionFromLocalStorage.photoURL} alt="" />
+            <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
+            <br />
+            <button onClick={logout}>Logout</button>
+        </div>
+        :
+        null)
+
+
     return (
         <div className="flex">
-            <Nav clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' imgClass='w-16' imagen={foto} imgName='Logo' arr={arr} />
-            <div className="w-full">
+            <Nav 
+                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' 
+                imgClass='w-16 rounded-full' 
+                onClick={handleClick}
+                imagen={foto}
+                imgName='Logo' 
+                arr={arr} 
+            />
+            {modal}
+            <div className="w-full" onClick={handleClick}>
                 <ServiceCard />
             </div>
         </div>
