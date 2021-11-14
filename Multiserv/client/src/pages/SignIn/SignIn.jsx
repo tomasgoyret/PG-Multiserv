@@ -2,7 +2,7 @@ import React from "react";
 import CardInfomativaFormulario from "../../Components/Organisms/CardInformativaFormulario/CardInformativaFormulario";
 import FormularioSignIn from "../../Components/Organisms/FormularioSignIn/FormularioSignIn";
 import s from "./SignIn.module.css";
-
+// borrar
 
 const SignIn = () => {
 
