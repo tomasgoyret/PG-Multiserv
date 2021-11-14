@@ -11,7 +11,7 @@ const ServiceCard = () => {
         priceRange: "$2000-$12000",
         category: "Carpintería",
         description: "Tailwind CSS is the utility-first CSS framework for those looking to rapidly build custom designs. Rather than predesigned components, Tailwind CSS comes with basic utility classes meant for customization. The documentation highly recommends downloading the framework via npm or yarn to gain full access to component customization.",
-        rating: 4,
+        rating: 3.4,
         uidUser: "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
         photos: [
             "https://i.ytimg.com/vi/j5bz8tp5JQ0/maxresdefault.jpg",
