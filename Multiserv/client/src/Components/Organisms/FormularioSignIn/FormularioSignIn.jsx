@@ -69,7 +69,7 @@ const FormularioSignIn = () => {
                 redirectToHome()
             })
             .catch(error => {
-                console.log(error);
+                alert(error)
             })
     }
 
