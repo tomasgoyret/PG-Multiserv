@@ -7,7 +7,7 @@ import StarRating from '../../Atoms/StarRating/StarRating'
 const ServiceCard = () => {
     const service = {
         id: "1xSqIn1AFenrk3drarSX",
-        title: "Mueblería la paz",
+        title: "Un mueblecito",
         priceRange: "$2000-$12000",
         category: "Carpintería",
         description: "Tailwind CSS is the utility-first CSS framework for those looking to rapidly build custom designs. Rather than predesigned components, Tailwind CSS comes with basic utility classes meant for customization. The documentation highly recommends downloading the framework via npm or yarn to gain full access to component customization.",
