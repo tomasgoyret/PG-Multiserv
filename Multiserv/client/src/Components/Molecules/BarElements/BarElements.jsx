@@ -1,7 +1,7 @@
 const BarElements = ({ clase, arr }) => {
     return (
         <div className={clase}>
-            {arr.map(elem => (<span>{elem}</span>))}
+            {arr.map((elem, i ) => (<span key={i} >{elem}</span>))}
         </div>
     )
 }

@@ -1,17 +1,26 @@
 import { 
-    HELLOWORLD
+    SERVICIOS,
+    USUARIOS
 } from "../actionTypes/actionTypes";
 
+/* Estado global */
 const initalState = {
-    text: ''
+    servicios: [],
+    usuarios: [],
 }
 
-function rootReducer(state = initalState, action){
-    switch(action.type){
-        case HELLOWORLD:
+function rootReducer(state = initalState, {type, payload}){
+    switch(type){
+        case SERVICIOS:
             return{
                 ...state,
-                text: action.payload
+                servicios: payload
+            }
+        case USUARIOS:
+            console.log(payload)
+            return{
+                ...state,
+                usuarios: payload
             }
 
         default:
