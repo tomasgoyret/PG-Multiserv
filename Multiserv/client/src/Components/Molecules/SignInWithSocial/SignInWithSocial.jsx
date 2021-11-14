@@ -10,7 +10,7 @@ const SignInWithSocial = ({afterLogin}) => {
         signWithGoogle()
             .then((result) => {
                 /* const credential = GoogleAuthProvider.credentialFromResult(result) */
-                console.log(result)
+                localStorage.setItem("datoSesion",JSON.stringify(result.user))
                 afterLogin()
             })
             .catch(error => {
