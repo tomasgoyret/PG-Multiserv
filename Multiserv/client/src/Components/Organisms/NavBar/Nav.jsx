@@ -1,17 +1,12 @@
-import PropTypes from 'prop-types';
-import BarElemnts from '../../Moleculas/NavBar/BarElemnts'
+import BarElements from '../../Molecules/BarElements/BarElements'
+import Image from '../../Atoms/Image/Image'
 
-const Nav = ({ clase, imagen, arr }) => {
+const Nav = ({ clase, imagen, imgClass, imgName, arr, claseArr}) => {
     return (
         <div className={`${clase}`}>
-            {imagen}
-            <BarElemnts clase='flex' arr={arr}/>
+            <Image imgClass={imgClass} imagen={imagen} name={imgName}/>
+            <BarElements clase={claseArr} arr={arr}/>
         </div>
     )
 }
-
-Nav.propTypes = {
-    arr: PropTypes.array
-}
-
 export default Nav;

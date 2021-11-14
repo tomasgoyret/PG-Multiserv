@@ -1,9 +1,8 @@
 const { db } = require("../db.js");
 
-// orderBy:   /oderby?catalogo={}&alfa={}
+// orderBy:   /oderby -- default az  o por body le mandan el estado a ordenar {catalogo:[], rating:mayor/menor o title:asc/desc}
 const getOrderBy = async (req, res) => {
-    const query = req.query;
-    
+    const {title, rating } = req.query
     try {
         const peticion = await db.collection("services").get();
         const { docs } = peticion;
@@ -16,13 +15,16 @@ const getOrderBy = async (req, res) => {
                 let servicio = serv.data();
                 return { servicio }
             })
-            // A-Z
-            if (Object.keys(query)[0] === 'alfabe' && Object.values(query)[0] === 'asc') {
+
+            // Order Default o title  A-Z
+
+            if (!title && !rating || title === 'asc') {
+
                 services.sort(function (a, b) {
-                    if (a.servicio.titulo.toLowerCase() > b.servicio.titulo.toLowerCase()) {
+                    if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
                         return 1;
                     }
-                    if (a.servicio.titulo.toLowerCase() < b.servicio.titulo.toLowerCase()) {
+                    if (a.servicio.title.toLowerCase() < b.servicio.title.toLowerCase()) {
                         return -1;
                     }
                     return 0;
@@ -30,44 +32,43 @@ const getOrderBy = async (req, res) => {
                 res.send(services)
             }
 
-            // Z-A
 
-            if (Object.keys(query)[0] === 'alfabe' && Object.values(query)[0] === 'desc') {
+            // title Z-A
+            if (title=== 'desc') {
+            services.sort(function (a, b) {
+                if (a.servicio.title.toLowerCase() > b.servicio.title.toLowerCase()) {
+                    return -1;
+                }
+                if (a.servicio.title.toLowerCase() < b.servicio.title.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            });
+            res.send(services)
+        }
+
+            // PUNTUACION MAYOR A MENOR
+
+            if (rating=== 'desc') {
                 services.sort(function (a, b) {
-                    if (a.servicio.titulo.toLowerCase() < b.servicio.titulo.toLowerCase()) {
-                        return 1;
-                    }
-                    if (a.servicio.titulo.toLowerCase() > b.servicio.titulo.toLowerCase()) {
+                    if (a.servicio.rating > b.servicio.rating) {
                         return -1;
+                    }
+                    if (a.servicio.rating < b.servicio.rating) {
+                        return 1;
                     }
                     return 0;
                 });
                 res.send(services)
             }
 
-            // PUNTUACION MAYOR
-
-            if (Object.keys(query)[0] === 'puntuacion' && Object.values(query)[0] === 'menor') {
+            // PUNTUACION MENOR A MAYOR
+            if (rating=== 'asc') {
                 services.sort(function (a, b) {
-                    if (a.servicio.value > b.servicio.value) {
+                    if (a.servicio.rating > b.servicio.rating) {
                         return 1;
                     }
-                    if (a.servicio.value < b.servicio.value) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                res.send(services)
-            }
-
-            // PUNTUACION MENOR
-
-            if (Object.keys(query)[0] === 'puntuacion' && Object.values(query)[0] === 'mayor') {
-                services.sort(function (a, b) {
-                    if (a.servicio.value < b.servicio.value) {
-                        return 1;
-                    }
-                    if (a.servicio.value > b.servicio.value) {
+                    if (a.servicio.rating < b.servicio.rating) {
                         return -1;
                     }
                     return 0;
