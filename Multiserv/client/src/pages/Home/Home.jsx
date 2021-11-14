@@ -8,8 +8,19 @@ import Img from '../../assets/Icons/ICONO.png'
 import { AiFillHome, AiFillCalendar } from "react-icons/ai";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
+/* React Hooks */
+import { useEffect } from 'react';
+/* React redux */
+import { useSelector, useDispatch } from 'react-redux'
+import { services } from '../../redux/actions/actions';
 
 const Home = () => {
+    const servicios = useSelector((state) => state.servicios)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(services())
+        console.log(servicios)
+    }, [])
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
