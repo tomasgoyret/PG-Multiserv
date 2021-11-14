@@ -19,7 +19,13 @@ const Home = () => {
     useEffect(() => {
         dispatch(services())
     }, [])
-    console.log(servicios)
+
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    var foto = Img
+    if(localStorage.length>0 && datosSesionFromLocalStorage.photoURL){
+         foto = datosSesionFromLocalStorage.photoURL
+     }
+
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} />,
