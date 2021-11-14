@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
 import { services } from '../../redux/actions/actions';
+import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 
 const Home = () => {
     const servicios = useSelector((state) => state.servicios)
@@ -37,8 +38,11 @@ const Home = () => {
     ]
 
     return (
-        <div>
+        <div className="flex">
             <Nav clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' imgClass='w-16' imagen={foto} imgName='Logo' arr={arr} />
+            <div className="w-full">
+                <ServiceCard />
+            </div>
         </div>
     )
 }
