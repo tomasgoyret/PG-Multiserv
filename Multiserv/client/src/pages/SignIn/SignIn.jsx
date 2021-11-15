@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import CardInfomativaFormulario from "../../Components/Organisms/CardInformativaFormulario/CardInformativaFormulario";
-import FormularioSignIn from "../../Components/Organisms/FormularioSignIn/FormularioSignIn";
-import s from "./SignIn.module.css";
-
-
-const SignIn = () => {
-
-    return(
-        <div className={s.SignIn}>
-            <div className={s.SignIn__Container}>
-                <div className={s.SignIn__Container__Contenido}>
-                    <CardInfomativaFormulario />
-                </div>
-                <div className={s.SignIn__Container__Formulario}>
-                    <FormularioSignIn />
-                    {/* ejemplo push*/}
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default SignIn;
-=======
 import React from "react";
 import CardInfomativaFormulario from "../../Components/Organisms/CardInformativaFormulario/CardInformativaFormulario";
 import FormularioSignIn from "../../Components/Organisms/FormularioSignIn/FormularioSignIn";
@@ -48,4 +22,3 @@ const SignIn = () => {
 
 export default SignIn;
 
->>>>>>> 18c6d9b1cebbe53ba458ec228dd27a54d891d02a
