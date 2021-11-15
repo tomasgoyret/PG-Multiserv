@@ -4,7 +4,8 @@ import {
     ORDERRAT,
     SERVICIOS,
     USUARIOS,
-    RESETORDER
+    RESETORDER,
+    FILTERCAT
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -30,8 +31,12 @@ function rootReducer(state = initalState, {type, payload}){
                 ...state,
                 servicios: newServ
             }
+        case FILTERCAT:
+            return{
+                ...state,
+                servicios: payload
+            }
         case USUARIOS:
-            console.log(payload)
             return{
                 ...state,
                 usuarios: payload
