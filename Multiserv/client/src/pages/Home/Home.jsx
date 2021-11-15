@@ -81,8 +81,10 @@ const Home = () => {
                 arr={arr} 
             />
             {modal}
-            <div className="w-full" onClick={handleClick}>
-                <ServiceCard />
+            <div style={{ scrollBehavior: 'smooth' }} className="w-full flex flex-wrap h-screen overflow-y-auto">
+                {servicios.map((service, index) => (
+                    <ServiceCard key={index} service={service} />
+                ))}
             </div>
         </div>
     )
