@@ -16,7 +16,7 @@ const CardInfomativaFormulario = () => {
                 parrafo="Lorem Ipsum is simply dummy text of the printing and typesetting industry" 
             />
            <ButtonXartiago 
-                btn="Regregar"
+                btn="Regresar"
                 page=""
                 clase="w-2/5"
                 btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
