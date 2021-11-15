@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
 import Input from '../../Components/Atoms/Input/Input';
 import Select from '../../Components/Molecules/Select/Select';
+import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
 
 const Home = () => {
     const servicios = useSelector((state) => state.servicios)
@@ -78,24 +79,36 @@ const Home = () => {
         return nombres;
     }
 
-    const resultadoNombre = validarLogitudNombre(datosSesionFromLocalStorage.displayName)
-    const modal = (
+
+    var name = "Inicia Sesión "
+    if(localStorage.length>0 && datosSesionFromLocalStorage.displayName){
+        name = datosSesionFromLocalStorage.displayName
+     }
+
+    const resultadoNombre = validarLogitudNombre(name)
+    const modal = ( 
         verPerfil ?
-            <div className={s.UserProfile__OnClick}>
-                <img src={datosSesionFromLocalStorage.photoURL} alt="" />
-                <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
-                <br />
-                <button onClick={logout}>Logout</button>
-            </div>
-            :
-            null)
-    const arrAlphOrder = ['asc', 'desc']
+        <div className={s.UserProfile__OnClick}>
+            <img src={foto} alt="" />
+            <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
+            <br />
+            {datosSesionFromLocalStorage? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago 
+                btn="Regresar"
+                page=""
+                clase="w-2/5"
+                btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
+           />)}
+        </div>
+        :
+        null)
+
+
     return (
         <div className="flex">
-            <Nav
-                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900'
-                imgClass='w-16 rounded-full'
-                onClick={handleClick}
+            <Nav 
+                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' 
+                imgClass='w-16 rounded-full cursor-pointer'
+                imgOnClick={handleClick}
                 imagen={foto}
                 imgName='Logo'
                 arr={arr}
