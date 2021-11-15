@@ -5,28 +5,28 @@ import Nav from "../../Components/Organisms/NavBar/Nav"
 /* Assets */
 import Img from '../../assets/Icons/ICONO.png'
 /* Icon */
-import { AiFillHome, AiFillCalendar } from "react-icons/ai";
-import { BsFillChatDotsFill } from "react-icons/bs";
+import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 /* React Hooks */
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, resetOrder } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
 import Input from '../../Components/Atoms/Input/Input';
-import Select from '../../Components/Molecules/Select/Select';
 import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
+import ListBox from '../../Components/HeadLess/ListBox/ListBox'
 
 const Home = () => {
+    const loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const navigate = useNavigate();
     const [verPerfil, setVerPerfil] = useState(false)
     const [buscador, setBuscador] = useState('')
-    const [alph, setAlph] = useState('')
-    const [rat, setRat] = useState('')
+    const [order, setOrder] = useState(null)
     const dispatch = useDispatch()
     const handleBuscador = (texto) => {
         setBuscador(texto)
@@ -34,23 +34,24 @@ const Home = () => {
     useEffect(() => {
         dispatch(services())
     }, [])
+
     useEffect(() => {
-        buscador.length > 0 && dispatch(buscar(buscador)) 
+        if (order !== null) {
+            if (order.type === 'none') {
+                dispatch(resetOrder())
+            }
+            if (order.type === 'alph') {
+                dispatch(orderAlph(order.value))
+            }
+            if (order.type === 'rat') {
+                dispatch(orderRating(order.value))
+            }
+        }
+    }, [order])
+
+    useEffect(() => {
+        buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
     }, [buscador])
-    useEffect(() => {
-        dispatch(orderAlph(alph))
-    }, [alph])
-    useEffect(() => {
-        dispatch(orderRating(rat))
-    }, [rat])
-    const filterAlph = (e) =>{
-        setAlph(e.target.value)
-    }
-    const filterRat = (e) =>{
-        setRat(e.target.value)
-    }
-    console.log( 'alph:', alph)
-    console.log('rat:', rat)
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
@@ -69,7 +70,41 @@ const Home = () => {
         localStorage.removeItem("datoSesion")
         navigate("/")
     }
-
+    const handleListValue = (obj) => {
+        setOrder(obj)
+    }
+    const options = [
+        {
+            name: 'Sin ordenar',
+            type: 'none',
+            value: 'none',
+            icon: <AiFillStar className="text-xl" />
+        },
+        {
+            name: 'Alfabético (ascendente)',
+            type: 'alph',
+            value: 'asc',
+            icon: <BsSortAlphaUpAlt className="text-xl" />
+        },
+        {
+            name: 'Alfabético (descendente)',
+            type: 'alph',
+            value: 'desc',
+            icon: <BsSortAlphaDownAlt className="text-xl" />
+        },
+        {
+            name: 'Por calificación (menor a mayor)',
+            type: 'rat',
+            value: 'asc',
+            icon: <BsSortDownAlt className="text-xl" />
+        },
+        {
+            name: 'Por calificación (mayor a menor)',
+            type: 'rat',
+            value: 'desc',
+            icon: <BsSortDown className="text-xl" />
+        },
+    ]
     const handleClick = () => {
         setVerPerfil(!verPerfil);
     }
@@ -78,8 +113,6 @@ const Home = () => {
         let nombres = nombre.split(" ")
         return nombres;
     }
-
-    const arrAlphOrder = ['asc', 'desc']
 
     var name = "Inicia Sesión "
     if(localStorage.length>0 && datosSesionFromLocalStorage.displayName){
@@ -115,29 +148,43 @@ const Home = () => {
                 arr={arr}
             />
             {modal}
-            <div style={{ scrollBehavior: 'smooth' }} className="w-full flex flex-wrap h-screen overflow-y-auto">
-                <Input
+            {
+                loading ? (
+                    <div className="w-full flex flex-col h-screen justify-center items-center">
+                        <AiOutlineLoading3Quarters className={`text-5xl text-indigo-900 animate-spin`} />
+                        <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
+                    </div>
+                ) : (
+                    <div className="w-full flex flex-col h-screen">
+                        <div style={{ zIndex: 500 }} className="flex flex-row filter drop-shadow-md bg-white">
+                            <Input
+                                    theme="#0C4A6E"
+                                    label="Buscar por nombre"
                     placeholder='Buscar...'
                     type='text'
                     id='buscar'
                     callBack={handleBuscador}
                 />
-                <Select 
-                    typeSelect='Ordenar por alf'
-                    defaultSelect='alf'
-                    arr={arrAlphOrder}
-                    callback={filterAlph}
-                />
-                <Select 
-                    typeSelect='Ordenar por rat'
-                    defaultSelect='alf'
-                    arr={arrAlphOrder}
-                    callback={filterRat}
-                />
+                                <div className="self-center flex flex-row">
+                                    <span className="text-gray-600 self-center font-medium">Ordenar por: </span>
+                                    <ListBox
+                                        className="border-gray-400"
+                                        options={options}
+                                        callBack={handleListValue}
+                                        text="Selecciona una opción..."
+                                        theme="#0C4A6E"
+                                    />
+                                </div>
+                            </div>
+                            <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
+
                 {servicios.map((service, index) => (
                     <ServiceCard key={index} service={service} />
                 ))}
-            </div>
+                            </div>
+                    </div>
+                )
+            }
         </div>
     )
 }

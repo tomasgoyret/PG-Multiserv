@@ -3,11 +3,13 @@ import {
     ORDERALPH,
     ORDERRAT,
     SERVICIOS,
-    USUARIOS
+    USUARIOS,
+    RESETORDER
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
 const initalState = {
+    loadingServices: true,
     servicios: [],
     usuarios: [],
     aux: []
@@ -18,6 +20,7 @@ function rootReducer(state = initalState, {type, payload}){
         case SERVICIOS:
             return{
                 ...state,
+                loadingServices: false,
                 servicios: payload,
                 aux: payload
             }
@@ -42,6 +45,11 @@ function rootReducer(state = initalState, {type, payload}){
             return{
                 ...state,
                 servicios: payload
+            }
+        case RESETORDER:
+            return{
+                ...state,
+                servicios: state.aux
             }
         default:
             return state;
