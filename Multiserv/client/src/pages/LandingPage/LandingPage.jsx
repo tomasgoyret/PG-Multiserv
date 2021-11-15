@@ -10,7 +10,6 @@ import BarElements from '../../Components/Molecules/BarElements/BarElements';
 /* Organismos */
 import Nav from '../../Components/Organisms/NavBar/Nav';
 
-
 const LandingPage = () => {
     const navArr = [
         <LinkTo linkClass='px-7 text-2xl font-bold text-gray-700' page='about' render='Acerca de' />,
