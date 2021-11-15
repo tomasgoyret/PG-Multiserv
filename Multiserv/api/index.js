@@ -18,16 +18,21 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const app = require('./src/app');
+const { conn } = require('./src/db.js');
+
 require('dotenv').config();
 const {
     PORT
 } = process.env
 
 
+conn
+    .sync({ force: true })
+    .then(async () => {
+        await app.listen(PORT || 3001, () => {
+            console.log('Server on port', PORT || 3001)
+        })
+    })
+    .catch ((e)=>console.log(e.message))
 
-async function main() {
-    await app.listen(PORT || 3001);
-    console.log('Server on port', PORT || 3001);
-}
 
-main();
