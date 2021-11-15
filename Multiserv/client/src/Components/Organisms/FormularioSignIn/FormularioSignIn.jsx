@@ -9,6 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
+import { Link } from "react-router-dom";
 
 const FormularioSignIn = () => {
     const [disabledSignIn, setDisabledSignIn] = useState(true)
@@ -161,7 +162,8 @@ const FormularioSignIn = () => {
                     />
                 </div>
                 <div className="px-4 py-2">
-                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace <span className="font-semibold text-indigo-800 cursor-pointer">Restablecer Contraseña</span></p>
+                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace 
+                    <span className="font-semibold text-indigo-800 cursor-pointer"><Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
                 </div>
             </form>}
 
