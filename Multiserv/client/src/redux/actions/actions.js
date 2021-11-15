@@ -6,7 +6,8 @@ import {
     ORDERALPH,
     ORDERRAT,
     SERVICIOS,
-    USUARIOS
+    USUARIOS,
+    RESETORDER
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = 'http://localhost:3005';
@@ -60,5 +61,11 @@ export const orderRating = (by) => {
             type: ORDERRAT,
             payload: servInOrder
         })
+    }
+}
+
+export const resetOrder = (action) => {
+    return {
+        type: RESETORDER
     }
 }

@@ -38,8 +38,8 @@ const {db, auth} = require("../db.js");
 
 
         } catch(error) {
-          console.log(error)
-                res.status(404).json(error.message)
+          console.log(error.message)
+                res.status(404).json(error)
             }     
     }
  
