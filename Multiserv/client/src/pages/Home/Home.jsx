@@ -3,7 +3,7 @@ import LinkTo from '../../Components/Atoms/LinkTo/LinkTo'
 /* Organisms */
 import Nav from "../../Components/Organisms/NavBar/Nav"
 /* Assets */
-import Img from '../../assets/Icons/ICONO.png'
+import Img from '../../assets/Icons/profile.png'
 /* Icon */
 import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
@@ -163,7 +163,7 @@ const Home = () => {
         return nombres;
     }
 
-    var name = "Inicia Sesión "
+    var name = "Usuario Invitado"
     if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
         name = datosSesionFromLocalStorage.displayName
     }
@@ -176,8 +176,8 @@ const Home = () => {
                 <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
                 <br />
                 {datosSesionFromLocalStorage ? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago
-                    btn="Regresar"
-                    page=""
+                    btn="Sign In"
+                    page="sign-in"
                     clase="w-2/5"
                     btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
                 />)}
