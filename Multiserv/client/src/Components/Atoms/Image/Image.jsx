@@ -1,4 +1,4 @@
-const Image = ({ imagen, imgClass, name, loadedHandler, failedHandler }) => {
+const Image = ({ imagen, imgClass, name, loadedHandler, failedHandler, imgOnClick }) => {
     return (
         <div>
             <img
@@ -7,7 +7,9 @@ const Image = ({ imagen, imgClass, name, loadedHandler, failedHandler }) => {
                 className={imgClass}
                 src={imagen}
                 alt={name}
-                width='100%' />
+                width='100%' 
+                onClick={imgOnClick}
+                />
         </div>
     )
 }
