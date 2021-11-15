@@ -8,6 +8,7 @@ import { signWithGoogle } from '../../../Firebase';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
+import Swal from 'sweetalert2';
 
 const FormularioSignIn = () => {
     const [disabledSignIn, setDisabledSignIn] = useState(true)
@@ -56,7 +57,12 @@ const FormularioSignIn = () => {
             .catch(error => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                alert(errorCode, errorMessage)
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Los datos no son validos',
+                    icon: 'error',
+                    confirmButtonText: 'X'
+                  })
                 console.log(errorCode, errorMessage)
             });
     }
@@ -70,7 +76,12 @@ const FormularioSignIn = () => {
                 redirectToHome()
             })
             .catch(error => {
-                alert(error)
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Los datos no son validos',
+                    icon: 'error',
+                    confirmButtonText: 'X'
+                  })
             })
     }
 
