@@ -79,6 +79,7 @@ const Home = () => {
         return nombres;
     }
 
+    const arrAlphOrder = ['asc', 'desc']
 
     var name = "Inicia Sesión "
     if(localStorage.length>0 && datosSesionFromLocalStorage.displayName){
