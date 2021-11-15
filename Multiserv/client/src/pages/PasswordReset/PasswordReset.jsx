@@ -2,6 +2,9 @@ import React, {useState}  from 'react'
 import Input from '../../Components/Atoms/Input/Input'
 import { FcGoogle } from "react-icons/fc";
 import { AiFillCaretRight } from "react-icons/ai";
+//import {firebase} from "firebase/auth";
+import Button from '../../Components/Atoms/Button/Button';
+import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
 //import {getAuth, sendPasswordResetEmail } from "firebase/auth";
 import {
   getAuth,
@@ -11,8 +14,7 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from 'firebase/auth'
-//import {firebase} from "firebase/auth";
-import Button from '../../Components/Atoms/Button/Button';
+
 const PasswordReset = () => {
 const [mail, setMail] = useState("")
 //____________-capturar
@@ -80,6 +82,13 @@ function resetPassword () {
   return (
       <div>
           <div className="bg-gray-50 h-screen flex flex-col justify-center items-center">
+          <div className="">
+              <ButtonXartiago
+                  btn="Volver"
+                  page=""
+                  btnClass="flex justify-center font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 "
+              />
+          </div>
           <div className="px-4 pt-6 pb-4">
                <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Recuperar Contraseña!</h1>
           </div>
