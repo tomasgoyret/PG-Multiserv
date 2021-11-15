@@ -75,6 +75,7 @@ function handleResetPassword(auth, actionCode, continueUrl, lang, e) {
             <div style={{ width: '350px', backgroundColor: '#fdfdfd' }} className="self-center my-12 rounded-md shadow-lg transition-all ease-out duration-300">
             <form onSubmit={handleResetPassword}>
                 <div  className="self-center">
+
               <Input
                 label='Correo'
                 type="text"
@@ -84,19 +85,6 @@ function handleResetPassword(auth, actionCode, continueUrl, lang, e) {
                 placeholder="Escribe tu correo"
                 callBack={handleMail}
               />
-                </div>      
-                {/* <div className="self-center">
-              <Input
-                flexed
-                label="contraseña"
-                type="password"
-                    id="user_password"
-                    theme="#3730A3"
-                placeholder="Escribe tu contraseña actual"
-                callBack={handlePassword}
-                    />
-                </div> */}
-                <div className="self-center">
               <Input
                 label="Nueva contraseña"
                 type="password"
@@ -111,6 +99,7 @@ function handleResetPassword(auth, actionCode, continueUrl, lang, e) {
               submit
               full
               icon={<AiFillCaretRight className="mr-2" />}
+
               type="standard"
               text="Enviar"
             />
