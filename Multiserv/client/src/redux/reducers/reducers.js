@@ -35,12 +35,12 @@ function rootReducer(state = initalState, {type, payload}){
             }
         case ORDERALPH:
             return{
-                ...payload,
+                ...state,
                 servicios: payload
             }
         case ORDERRAT:
             return{
-                ...payload,
+                ...state,
                 servicios: payload
             }
         default:
