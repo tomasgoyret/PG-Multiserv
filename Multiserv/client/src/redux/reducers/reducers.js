@@ -1,4 +1,7 @@
 import { 
+    BUSCAR,
+    ORDERALPH,
+    ORDERRAT,
     SERVICIOS,
     USUARIOS
 } from "../actionTypes/actionTypes";
@@ -7,6 +10,7 @@ import {
 const initalState = {
     servicios: [],
     usuarios: [],
+    aux: []
 }
 
 function rootReducer(state = initalState, {type, payload}){
@@ -14,7 +18,14 @@ function rootReducer(state = initalState, {type, payload}){
         case SERVICIOS:
             return{
                 ...state,
-                servicios: payload
+                servicios: payload,
+                aux: payload
+            }
+        case BUSCAR:
+            let newServ = state.aux.filter(serv => serv.title.toLowerCase().includes(payload.toLowerCase()))
+            return{
+                ...state,
+                servicios: newServ
             }
         case USUARIOS:
             console.log(payload)
@@ -22,10 +33,19 @@ function rootReducer(state = initalState, {type, payload}){
                 ...state,
                 usuarios: payload
             }
-
+        case ORDERALPH:
+            return{
+                ...state,
+                servicios: payload
+            }
+        case ORDERRAT:
+            return{
+                ...state,
+                servicios: payload
+            }
         default:
             return state;
     }
 }
 
-export default rootReducer;
+export default rootReducer
