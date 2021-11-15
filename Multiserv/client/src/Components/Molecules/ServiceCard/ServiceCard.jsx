@@ -6,26 +6,9 @@ import Image from '../../Atoms/Image/Image'
 import StarRating from '../../Atoms/StarRating/StarRating'
 
 
-const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service, className }) => {
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
-    const mockup = {
-        id: "1xSqIn1AFenrk3drarSX",
-        currency: 'MXN',
-        title: "Un mueblecito",
-        min: 2000,
-        max: 3400,
-        category: "Carpintería",
-        description: "Tailwind CSS is the utility-first CSS framework for those looking to rapidly build custom designs. Rather than predesigned components, Tailwind CSS comes with basic utility classes meant for customization. The documentation highly recommends downloading the framework via npm or yarn to gain full access to component customization.",
-        rating: 3.4,
-        uidUser: "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
-        photos: [
-            "https://i.ytimg.com/vi/j5bz8tp5JQ0/maxresdefault.jpg",
-            "https://resources.sears.com.mx/medios-plazavip/fotos/productos_sears1/original/3163922.jpg",
-            "https://muebla.com.mx/storage/2020/October/week4/57526_img_2097_e2_copia.png"
-        ]
-
-    }
     const contGrad = {
         background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
     }
@@ -35,7 +18,7 @@ const ServiceCard = ({ service }) => {
         backgroundPosition: 'top center'
     }
     return (
-        <div className="w-96 flex-shrink-0 m-4 filter drop-shadow-md transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-lg">
+        <div className={`${className} w-96 flex-shrink-0 m-4 filter drop-shadow-md transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-lg`}>
             <div className="rounded-t-lg w-96 h-60 bg-indigo-50 flex justify-center items-center">
                 <Image
                     loadedHandler={() => {

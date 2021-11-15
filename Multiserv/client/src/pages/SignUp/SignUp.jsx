@@ -7,6 +7,7 @@ import SeparadorO from '../../Components/Atoms/SeparadorO/SeparadorO';
 import EmailPasswordForm from '../../Components/Organisms/EmailPasswordForm/EmailPasswordForm';
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import UserRegister from '../../Components/Organisms/UserRegister/UserRegister';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false)
@@ -61,8 +62,23 @@ const SignUp = () => {
             })
             .catch(error => {
                 setLoading(false)
-                alert('error')
-                console.log(error);
+                if (error.response) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.response.data.code === 'app/network-error' ? "No pudimos conectarnos a internet" : error.response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'X'
+                    })
+                    console.log(error.response);
+                } else if (error.request) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Ocurrió un error. Vuelve a intentarlo",
+                        icon: 'error',
+                        confirmButtonText: 'X'
+                    })
+                    console.log(error.response)
+                }
             })
         }
     }, [user, loading])
