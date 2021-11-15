@@ -62,8 +62,8 @@ const SignUp = () => {
                         title:'Bienvenido a Multiservicios',
                         text:' Tu cuenta ha sido creada exitosamente',
                         icon:'success',
-                        showConfirmButton: false
-                        //timer: 1500
+                        showConfirmButton: false,
+                        timer: 1500
                       })
                     redirectToHome()
             })
