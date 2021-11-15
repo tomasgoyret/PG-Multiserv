@@ -40,8 +40,10 @@ const Home = () => {
     return (
         <div className="flex">
             <Nav clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' imgClass='w-16' imagen={foto} imgName='Logo' arr={arr} />
-            <div className="w-full">
-                <ServiceCard />
+            <div style={{ scrollBehavior: 'smooth' }} className="w-full flex flex-wrap h-screen overflow-y-auto">
+                {servicios.map((service, index) => (
+                    <ServiceCard key={index} service={service} />
+                ))}
             </div>
         </div>
     )

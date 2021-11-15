@@ -1,14 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react'
+import React, { useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { FaHeartBroken } from 'react-icons/fa'
 import Image from '../../Atoms/Image/Image'
 import StarRating from '../../Atoms/StarRating/StarRating'
 
 
-const ServiceCard = () => {
-    const service = {
+const ServiceCard = ({ service }) => {
+    const [loadingImg, setLoadingImg] = useState(true)
+    const [failedImg, setFailedImg] = useState(false)
+    const mockup = {
         id: "1xSqIn1AFenrk3drarSX",
+        currency: 'MXN',
         title: "Un mueblecito",
-        priceRange: "$2000-$12000",
+        min: 2000,
+        max: 3400,
         category: "Carpintería",
         description: "Tailwind CSS is the utility-first CSS framework for those looking to rapidly build custom designs. Rather than predesigned components, Tailwind CSS comes with basic utility classes meant for customization. The documentation highly recommends downloading the framework via npm or yarn to gain full access to component customization.",
         rating: 3.4,
@@ -29,8 +35,26 @@ const ServiceCard = () => {
         backgroundPosition: 'top center'
     }
     return (
-        <div className="w-96 m-4 filter drop-shadow-md transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-lg">
-            <Image name="photo1" imagen={service.photos[0]} imgClass=" rounded-t-lg" />
+        <div className="w-96 flex-shrink-0 m-4 filter drop-shadow-md transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-lg">
+            <div className="rounded-t-lg w-96 h-60 bg-indigo-50 flex justify-center items-center">
+                <Image
+                    loadedHandler={() => {
+                        setLoadingImg(false)
+                        setFailedImg(false)
+                    }}
+                    failedHandler={() => {
+                        setLoadingImg(false)
+                        setFailedImg(true)
+                    }}
+                    name="photo1"
+                    imagen={service.photos[0]}
+                    imgClass={`object-cover rounded-t-lg w-96 h-60 ${loadingImg || failedImg ? 'hidden' : ''}`}
+                />
+                <div className={`flex flex-col ${loadingImg || failedImg ? '' : 'hidden'}`}>
+                    <AiOutlineLoading3Quarters className={`${!loadingImg && 'hidden'} text-5xl text-indigo-900 animate-spin`} />
+                    <FaHeartBroken className={`${!failedImg && 'hidden'} text-5xl text-indigo-900`} />
+                </div>
+            </div>
             <div className="bg-white relative flex flex-col rounded-b-lg">
                 <div className=" absolute -top-5  px-4 flex w-full justify-between">
                     <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
@@ -39,13 +63,13 @@ const ServiceCard = () => {
                 </div>
                 <div className="pt-6 px-4 relative">
                     <div className="mb-2">
-                        <div className="flex">
-                            <h1 className="self-center text-lg font-semibold text-gray-800" >{service.title}</h1>
-                            <div className="self-center">
+                        <div className="flex justify-between">
+                            <span className="self-center text-lg font-semibold text-gray-800 w-3/6" >{service.title}</span>
+                            <div className="self-center inline-flex">
                                 <StarRating rating={service.rating} />
                             </div>
                         </div>
-                        <span className="self-center text-sm font-medium text-gray-500">Desde $2,000.00 MXN</span>
+                        <span className="self-center text-sm font-medium text-gray-500">{`Desde $${service.min.toFixed(2)} ${service.currency}`}</span>
                     </div>
                     <div className="max-h-14 overflow-hidden">
                         <p className="text-gray-500 font-normal leading-tight tracking-wide">{service.description}</p>
@@ -63,8 +87,8 @@ const ServiceCard = () => {
                                 className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="ml-4 flex flex-col">
-                            <h1 className="font-semibold text-gray-800">Muebles Troncoso</h1>
-                            <span className="text-sm text-gray-600">Guadalajara, Jalisco</span>
+                            <h1 className="font-semibold text-gray-800">Provider name</h1>
+                            <span className="text-sm text-gray-600">Aditional data</span>
                         </div>
                     </div>
                 </div>
