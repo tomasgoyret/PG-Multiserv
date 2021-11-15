@@ -1,11 +1,16 @@
 import React from "react";
+import { Navigate, useNavigate } from "react-router";
 import CardInfomativaFormulario from "../../Components/Organisms/CardInformativaFormulario/CardInformativaFormulario";
 import FormularioSignIn from "../../Components/Organisms/FormularioSignIn/FormularioSignIn";
 import s from "./SignIn.module.css";
+// import Home from "../Home/Home";
 // borrar
 
 const SignIn = () => {
-
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    if(datosSesionFromLocalStorage){
+        return <Navigate to={'/home'} />
+    }
     return(
         <div className={s.SignIn}>
             <div className={s.SignIn__Container}>
