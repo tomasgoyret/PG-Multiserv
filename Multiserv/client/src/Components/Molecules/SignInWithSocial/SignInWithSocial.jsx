@@ -28,7 +28,7 @@ const SignInWithSocial = () => {
                     action={googleRegister}
                 />
             </div>
-            <div className="px-4 py-2">
+            {/* <div className="px-4 py-2">
                 <Button
                     icon={<FaFacebook className="text-2xl mr-3" />}
                     theme="#1877f2"
@@ -37,7 +37,7 @@ const SignInWithSocial = () => {
                     full
                     action={() => { console.log('hola') }}
                 />
-            </div>
+            </div> */}
         </>
     )
 }
