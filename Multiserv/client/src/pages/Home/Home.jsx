@@ -12,7 +12,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, resetOrder, filterCats } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -27,6 +27,7 @@ const Home = () => {
     const [verPerfil, setVerPerfil] = useState(false)
     const [buscador, setBuscador] = useState('')
     const [order, setOrder] = useState(null)
+    const [filter, setFilter] = useState(null)
     const dispatch = useDispatch()
     const handleBuscador = (texto) => {
         setBuscador(texto)
@@ -48,6 +49,20 @@ const Home = () => {
             }
         }
     }, [order])
+
+    useEffect(() => {
+        if (filter !== null) {
+            if (filter.value === 'none'){
+                dispatch(resetOrder())
+            } else{
+                dispatch(filterCats(filter.name))
+            }
+        }
+    }, [filter])
+
+    const handleListValue2 = (obj) => {
+        setFilter(obj)
+    }
 
     useEffect(() => {
         buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
@@ -105,6 +120,40 @@ const Home = () => {
             icon: <BsSortDown className="text-xl" />
         },
     ]
+    const optionsFilter = [
+        {
+            name: 'Sin filtrar',
+            value: 'none'
+        },
+        {
+            name: 'Carpintería',
+            value: 'Carpintería'
+        },
+        {
+            name: 'Peluquería',
+            value: 'Peluquería'
+        },
+        {
+            name: 'Limpieza',
+            value: 'Limpieza'
+        },
+        {
+            name: 'Herrería',
+            value: 'Herrería'
+        },
+        {
+            name: 'Abogacía',
+            value: 'Abogacía'
+        },
+        {
+            name: 'Electricista',
+            value: 'Electricista'
+        },
+        {
+            name: 'Mantenimiento',
+            value: 'Mantenimiento'
+        },
+    ]
     const handleClick = () => {
         setVerPerfil(!verPerfil);
     }
@@ -115,32 +164,32 @@ const Home = () => {
     }
 
     var name = "Inicia Sesión "
-    if(localStorage.length>0 && datosSesionFromLocalStorage.displayName){
+    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
         name = datosSesionFromLocalStorage.displayName
-     }
+    }
 
     const resultadoNombre = validarLogitudNombre(name)
-    const modal = ( 
+    const modal = (
         verPerfil ?
-        <div className={s.UserProfile__OnClick}>
-            <img src={foto} alt="" />
-            <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
-            <br />
-            {datosSesionFromLocalStorage? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago 
-                btn="Regresar"
-                page=""
-                clase="w-2/5"
-                btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
-           />)}
-        </div>
-        :
-        null)
+            <div className={s.UserProfile__OnClick}>
+                <img src={foto} alt="" />
+                <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
+                <br />
+                {datosSesionFromLocalStorage ? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago
+                    btn="Regresar"
+                    page=""
+                    clase="w-2/5"
+                    btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
+                />)}
+            </div>
+            :
+            null)
 
 
     return (
         <div className="flex">
-            <Nav 
-                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' 
+            <Nav
+                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900'
                 imgClass='w-16 rounded-full cursor-pointer'
                 imgOnClick={handleClick}
                 imagen={foto}
@@ -158,30 +207,40 @@ const Home = () => {
                     <div className="w-full flex flex-col h-screen">
                         <div style={{ zIndex: 500 }} className="flex flex-row filter drop-shadow-md bg-white">
                             <Input
+                                theme="#0C4A6E"
+                                label="Buscar por nombre"
+                                placeholder='Buscar...'
+                                type='text'
+                                id='buscar'
+                                callBack={handleBuscador}
+                            />
+                            <div className="self-center flex flex-row">
+                                <span className="text-gray-600 self-center font-medium">Ordenar por: </span>
+                                <ListBox
+                                    className="border-gray-400"
+                                    options={options}
+                                    callBack={handleListValue}
+                                    text="Selecciona una opción..."
                                     theme="#0C4A6E"
-                                    label="Buscar por nombre"
-                    placeholder='Buscar...'
-                    type='text'
-                    id='buscar'
-                    callBack={handleBuscador}
-                />
-                                <div className="self-center flex flex-row">
-                                    <span className="text-gray-600 self-center font-medium">Ordenar por: </span>
-                                    <ListBox
-                                        className="border-gray-400"
-                                        options={options}
-                                        callBack={handleListValue}
-                                        text="Selecciona una opción..."
-                                        theme="#0C4A6E"
-                                    />
-                                </div>
+                                />
                             </div>
-                            <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
+                            <div className="self-center flex flex-row">
+                                <span className="text-gray-600 self-center font-medium">Filtrar por: </span>
+                                <ListBox
+                                    className="border-gray-400"
+                                    options={optionsFilter}
+                                    callBack={handleListValue2}
+                                    text="Selecciona una opción..."
+                                    theme="#0C4A6E"
+                                />
+                            </div>
+                        </div>
+                        <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
 
-                {servicios.map((service, index) => (
-                    <ServiceCard key={index} service={service} />
-                ))}
-                            </div>
+                            {servicios.map((service, index) => (
+                                <ServiceCard key={index} service={service} />
+                            ))}
+                        </div>
                     </div>
                 )
             }
