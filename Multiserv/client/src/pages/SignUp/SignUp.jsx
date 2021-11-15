@@ -45,21 +45,27 @@ const SignUp = () => {
             phone
         })
         setLoading(true)
-        axios.post('http://localhost:3005/agregar-usuario', user)
-            .then(user => {
-                setLoading(false)
-                console.log(user);
-                redirectToHome()
+    }
+    const redirectToHome = () => {
+        navigate('/home')
+    }
+    useEffect(() => {
+        if (loading) {
+            axios.post('http://localhost:3005/agregar-usuario', user)
+                .then(response => {
+                    const newUser = response.data.user
+                    localStorage.setItem("datoSesion", JSON.stringify(newUser))
+                    setLoading(false)
+                    console.log(newUser);
+                    redirectToHome()
             })
             .catch(error => {
                 setLoading(false)
                 alert('error')
                 console.log(error);
             })
-    }
-    const redirectToHome = () => {
-        navigate('/home')
-    }
+        }
+    }, [user, loading])
     return (
         <div className="bg-gray-50 h-screen flex flex-col justify-center items-center">
             <div style={{ width: '350px', backgroundColor: '#fdfdfd' }} className="self-center my-12 rounded-md shadow-lg transition-all ease-out duration-300">

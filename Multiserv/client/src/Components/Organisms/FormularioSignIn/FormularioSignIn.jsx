@@ -9,6 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
+import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
 
 const FormularioSignIn = () => {
     const [disabledSignIn, setDisabledSignIn] = useState(true)
@@ -105,31 +106,14 @@ const FormularioSignIn = () => {
                 </div>
                 <img src={`${datosSesionFromLocalStorage.photoURL}`} />
             </div> ) 
-            :
-            <form>
-                <Encabezado2
+                    : (
+                        <div>
+                            <Encabezado2
                     clases="pt-4 pb-3 flex justify-center"
                     titulo="Sign In"
-                />
-                <div className="px-4 py-2">
-                    <Button
-                        type="white"
-                        icon={<FcGoogle className="text-2xl mr-3" />}
-                        text="Continuar con Google"
-                        full
-                        action={googleSignIn}
-                    />
-                </div>
-                {/* <div className="px-4 py-2">
-                    <Button
-                        icon={<FaFacebook className="text-2xl mr-3" />}
-                        theme="#1877f2"
-                        customTextColor="#fffff"
-                        text="Continuar con Facebook"
-                        full
-                        action={() => { console.log('hola') }}
-                    />
-                </div> */}
+                            />
+                            <SignInWithSocial afterLogin={redirectToHome} />
+                            <form onSubmit={signIn}>
                 <SeparadorO />
                 <Input
                     type="email"
@@ -156,14 +140,15 @@ const FormularioSignIn = () => {
                         customTextColor="#FFFFF"
                         text="Ingresar"
                         full
-                        disabled={!disabledSignIn}
-                        action={signIn}
+                                        disabled={!disabledSignIn}
                     />
                 </div>
                 <div className="px-4 py-2">
                     <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace <span className="font-semibold text-indigo-800 cursor-pointer">Restablecer Contraseña</span></p>
                 </div>
-            </form>}
+                            </form>
+                        </div>
+                    )}
 
         </div>
     )

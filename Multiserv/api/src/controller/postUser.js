@@ -34,7 +34,7 @@ const {db, auth} = require("../db.js");
             //     }
             //     const proveedor = await db.collection("proveedores").add(newProvider);
             // }
-        res.status(200).json({msg: "Usuario Creado", userId: newUser.uid})
+          res.status(200).json({msg: "Usuario Creado", user: newUser})
 
 
         } catch(error) {
