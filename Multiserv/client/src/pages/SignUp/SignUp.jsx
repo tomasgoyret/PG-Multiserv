@@ -58,6 +58,13 @@ const SignUp = () => {
                     localStorage.setItem("datoSesion", JSON.stringify(newUser))
                     setLoading(false)
                     console.log(newUser);
+                    Swal.fire({
+                        title:'Bienvenido a Multiservicios',
+                        text:' Tu cuenta ha sido creada exitosamente',
+                        icon:'success',
+                        showConfirmButton: false
+                        //timer: 1500
+                      })
                     redirectToHome()
             })
             .catch(error => {
