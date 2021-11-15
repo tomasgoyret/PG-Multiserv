@@ -85,7 +85,7 @@ const Home = () => {
         <div className="flex">
             <Nav 
                 clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900' 
-                imgClass='w-16 rounded-full' 
+                imgClass='w-16 rounded-full cursor-pointer'
                 imgOnClick={handleClick}
                 imagen={foto}
                 imgName='Logo' 
