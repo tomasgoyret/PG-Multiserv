@@ -16,6 +16,7 @@ import { services } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
+import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
 
 const Home = () => {
     const servicios = useSelector((state) => state.servicios)
@@ -57,14 +58,24 @@ const Home = () => {
         return nombres;
     }
 
-    const resultadoNombre = validarLogitudNombre(datosSesionFromLocalStorage.displayName)
+    var name = "Inicia Sesión "
+    if(localStorage.length>0 && datosSesionFromLocalStorage.displayName){
+        name = datosSesionFromLocalStorage.displayName
+     }
+
+    const resultadoNombre = validarLogitudNombre(name)
     const modal = ( 
         verPerfil ?
         <div className={s.UserProfile__OnClick}>
-            <img src={datosSesionFromLocalStorage.photoURL} alt="" />
+            <img src={foto} alt="" />
             <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
             <br />
-            <button onClick={logout}>Logout</button>
+            {datosSesionFromLocalStorage? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago 
+                btn="Regresar"
+                page=""
+                clase="w-2/5"
+                btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
+           />)}
         </div>
         :
         null)
