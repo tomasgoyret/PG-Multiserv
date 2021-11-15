@@ -38,6 +38,19 @@ export const users = () => {
 }
 /* Buscar Servicio */
 export const buscar = (nombre) => { return { type: BUSCAR, payload: nombre } }
+/* Filtrado por categoria */
+export const filterCats = (nombre) => {
+    return async function (dispatch) {
+        let servFiltered = `${server}/filter?category=${nombre}`;
+        const response = await axios(servFiltered);
+        const categorys = response.data.map(serv => serv.servicio)
+        console.log(categorys)
+        return dispatch({
+            type: ORDERALPH,
+            payload: categorys
+        })
+    }
+}
 /* Ordenar Servicios */
 /* Por alfabeto */
 export const orderAlph = (by) => {
