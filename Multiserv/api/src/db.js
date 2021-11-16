@@ -71,18 +71,40 @@ const {
   Servicios,
   Usuarios,
   Categorias,
-  Direcciones
+  Direcciones, 
+  Citas, 
+  Horarios,
+  Resenas,
 } = sequelize.models;
 
 
-// Aca vendrian las relaciones
-
+// Relación 1 a muchos Usuarios--> Servicios
 Usuarios.hasMany(Servicios);
 Servicios.belongsTo(Usuarios);
 
-Servicios.belongsToMany(Categorias, { through: "Servicios_Categorias" });
-Categorias.belongsToMany(Servicios, { through: "Servicios_Categorias" });
-//
+//Relación 1 a 1 Usuarios ---> Direcciones
+Usuarios.belongsTo(Direcciones);
+Direcciones.belongsTo(Usuarios);
+
+//Relación muchos a muchos Usuario ---> Citas
+Usuarios.belongsToMany(Citas, { through: "Usuarios_Citas" });
+Citas.belongsToMany(Usuarios, { through: "Usuarios_Citas" });
+
+// Relación 1 a muchos Categorías --> Servicios
+Categorias.hasMany(Servicios);
+Servicios.belongsTo(Categorias);
+
+// Relación 1 a muchos Reseñas --> Servicios
+Servicios.hasMany(Resenas);
+Resenas.belongsTo(Servicios);
+
+// Relación 1 a muchos Servicios --> Citas
+Servicios.hasMany(Citas);
+Citas.belongsTo(Servicios);
+
+//Relación 1 a 1 Servicios ---> Horarios
+Servicios.belongsTo(Horarios);
+Horarios.belongsTo(Servicios);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
