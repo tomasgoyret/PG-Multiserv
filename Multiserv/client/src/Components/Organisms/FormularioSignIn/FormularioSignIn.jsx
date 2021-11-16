@@ -5,8 +5,7 @@ import Button from "../../Atoms/Button/Button";
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 import { useNavigate } from "react-router";
 import { signWithGoogle } from '../../../Firebase';
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { ImSpinner9 } from "react-icons/im";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
 import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
@@ -14,6 +13,7 @@ import { Link } from "react-router-dom";
 
 
 const FormularioSignIn = () => {
+    const [loading, setLoading] = useState(false)
     const [disabledSignIn, setDisabledSignIn] = useState(true)
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
@@ -48,6 +48,7 @@ const FormularioSignIn = () => {
     var user;
     const signIn = async (e) => {
         e.preventDefault();
+        setLoading(true)
         console.log("hola1")
         const auth = getAuth()
       
@@ -55,9 +56,11 @@ const FormularioSignIn = () => {
             .then(userCredential => {
                 user = userCredential.user
                 localStorage.setItem("datoSesion",JSON.stringify(user))
+                setLoading(false)
                 redirectToHome()
             })
             .catch(error => {
+                setLoading(false)
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 Swal.fire({
@@ -70,25 +73,6 @@ const FormularioSignIn = () => {
             });
     }
 
-    const googleSignIn = (e) => {
-        e.preventDefault();
-        console.log("hola2")
-        signWithGoogle()
-            .then((result) => {
-                localStorage.setItem("datoSesion",JSON.stringify(result.user))
-                redirectToHome()
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Los datos no son validos',
-                    icon: 'error',
-                    confirmButtonText: 'X'
-                  })
-            })
-    }
-
-    
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const cerrarSesion = () =>{
         localStorage.removeItem("datoSesion")
@@ -136,13 +120,14 @@ const FormularioSignIn = () => {
                 />
                 <div className="px-4 py-2">
                     <Button
+                                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                         className="px-4 py-2"
                         submit
                         theme="#155E75"
                         customTextColor="#FFFFF"
-                        text="Ingresar"
+                                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
                         full
-                                        disabled={!disabledSignIn}
+                                        disabled={loading || !disabledSignIn}
                     />
                 </div>
                 <div className="px-4 py-2">
