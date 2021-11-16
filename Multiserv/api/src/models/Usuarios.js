@@ -30,10 +30,6 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       primaryKey: true
     },
-    idAddress: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     disable: {
       type: DataTypes.BOOLEAN,
       allowNull: false
