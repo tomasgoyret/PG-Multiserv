@@ -33,7 +33,7 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
         <div css={flexed && flexedStyle} className="my-2 px-4">
             <label
                 htmlFor={id}
-                className={`${flexed ? 'text-sm mb-2' : 'text-base'} font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>
+                className={`${!label && 'hidden'} ${flexed ? 'text-sm mb-2' : 'text-base'} font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>
                 {label}
             </label>
             <input
