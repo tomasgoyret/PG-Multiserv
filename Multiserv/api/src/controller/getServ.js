@@ -1,32 +1,34 @@
-const { db } = require("../db.js");
+const { Servicios } = require("../db.js");
 
 // get all services
 
 const getServ = async (req, res) => {
     const {name} = req.query;
     try {
-        const peticion = await db.collection("services").get();
-        const { docs } = peticion
-        if (docs.length <= 0) {
-            res.send('No hay Servicios agregados aun')
-        }
-        else {
-            const services = docs.map(serv => {
-                let servicio = serv.data();
-                return { servicio }
-            })
+        const peticion = await Servicios.findAll();
+        res.send(peticion)
+    }
+//         const { docs } = peticion
+//         if (docs.length <= 0) {
+//             res.send('No hay Servicios agregados aun')
+//         }
+//         else {
+//             const services = docs//.map(serv => {
+//             //     let servicio = serv.data();
+//                 return { services }
+//             }
 
-// onSearch query by name 
+// // onSearch query by name 
 
-            if(name){
-                const servicesName = services.filter(serv => serv.servicio.title.toLowerCase().includes(name.toLowerCase()))
-                res.json(servicesName)
-            }
-            else{
-            res.json(services)
-            }
-        }
-    } catch (error) {
+//             if(name){
+//                 const servicesName = services.filter(serv => serv.servicio.title.toLowerCase().includes(name.toLowerCase()))
+//                 res.json(servicesName)
+//             }
+//             else{
+//             res.json(services)
+//             }
+//         }
+    catch (error) {
         console.log(error)
     }
 };

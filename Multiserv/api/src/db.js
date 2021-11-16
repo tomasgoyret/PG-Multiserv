@@ -80,8 +80,8 @@ const {
 Usuarios.hasMany(Servicios);
 Servicios.belongsTo(Usuarios);
 
-Servicios.belongsToMany(Categorias, { through: "Servicios_Categorias" });
-Categorias.belongsToMany(Servicios, { through: "Servicios_Categorias" });
+// Servicios.belongsToMany(Categorias, { through: "Servicios_Categorias" });
+// Categorias.belongsToMany(Servicios, { through: "Servicios_Categorias" });
 //
 
 module.exports = {

@@ -5,8 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("appointment", {
     id: {
-        type: DataTypes.STRING,
-        autoIncrement: true,
+        type: DataTypes.UUID,
         primaryKey: true,
     },
     date: {

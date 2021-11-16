@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     days: {
-        type: DataTypes.ARRAY,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
     },
   });
