@@ -70,7 +70,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 const {
   Servicios,
   Usuarios,
-  Categorias
+  Categorias,
+  Direcciones
 } = sequelize.models;
 
 
