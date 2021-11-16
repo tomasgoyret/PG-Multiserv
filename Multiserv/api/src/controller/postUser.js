@@ -18,15 +18,16 @@ const {db, auth} = require("../db.js");
     const postUser = async(req, res)=>{
         const {name, lastName, mail, password, photoURL, phone} = req.body; 
         try{
-        const newUser= await auth.createUser({
-            email: mail,
-            emailVerified: false,
-            phoneNumber: phone,
-            password: password,
-            displayName: `${name} ${lastName}`,
-            photoURL,
-            disabled: false,
-          })
+        const userData = {
+          email: mail,
+          emailVerified: false,
+          password: password,
+          displayName: `${name} ${lastName}`,
+          photoURL,
+          disabled: false,
+        }
+        phone && (userData['phoneNumber'] = phone)
+        const newUser= await auth.createUser(userData)
             // if(isProvider) {
             //     const newProvider= {
             //         uid: newUser.uid,
