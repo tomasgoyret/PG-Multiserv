@@ -4,15 +4,43 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("servicios", {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    currency: {
+      type: DataTypes.ENUM('USD', 'MXN', 'ARS', 'COP'),
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    max: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    min: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    uidProvider: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    max: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    photos: {
+      type: DataTypes.ARRAY
+    },
+    idAdress: {
+      type: DataTypes.STRING,
+    },
   });
 };
