@@ -207,7 +207,7 @@ const Home = () => {
                 {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center mt-2 w-2/5 mt-3"><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md">Log out</button></div>) : (<ButtonXartiago
                     btn="Regresar"
                     page=""
-                    clase="w-2/5 mt-3"
+                    clase="w-2/5 mt-5"
                     btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
                 />)}
             </div>
