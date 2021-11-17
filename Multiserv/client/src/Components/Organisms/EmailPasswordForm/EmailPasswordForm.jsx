@@ -4,6 +4,10 @@ import Input from '../../Atoms/Input/Input'
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 const EmailPasswordForm = ({ callBack }) => {
+    const [error, setError] = useState({
+        type: '',
+        message: ''
+    })
     const [mail, setMail] = useState('')
     const handleMailChanges = (text) => {
         setMail(text)
@@ -22,7 +26,35 @@ const EmailPasswordForm = ({ callBack }) => {
     useEffect(() => {
         const emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+        if (password.length === 0) {
+            setError({
+                type: '',
+                message: ''
+            })
+        }
+        if (mail.length && !emailValid.test(mail)) {
+            setError({
+                type: 'email',
+                message: 'Escribe un email válido'
+            })
+        }
+        if (password.length > 0 && password.length < 6) {
+            setError({
+                type: 'password',
+                message: 'La contraseña debe de contener al menos 6 caracteres'
+            })
+        }
+        if (password.length >= 6 && password !== confirmPassword) {
+            setError({
+                type: 'Password equality',
+                message: 'Las contraseñas no coinciden'
+            })
+        }
         if (emailValid.test(mail) && password.length >= 6 && password === confirmPassword) {
+            setError({
+                type: '',
+                message: ''
+            })
             setDisabledSignUp(true)
         } else {
             setDisabledSignUp(false)
@@ -44,6 +76,7 @@ const EmailPasswordForm = ({ callBack }) => {
                     label="Email:"
                     placeholder="Escribe tu correo"
                     flexed
+                    error={error.type === 'email' || false}
                     callBack={handleMailChanges}
                 />
             </div>
@@ -53,6 +86,7 @@ const EmailPasswordForm = ({ callBack }) => {
                     theme="#164E63"
                     label="Contraseña:"
                     flexed
+                    error={error.type === 'password' || false}
                     placeholder="Crea una contraseña"
                     callBack={handlePasswordChanges}
                 />
@@ -63,10 +97,12 @@ const EmailPasswordForm = ({ callBack }) => {
                     theme="#164E63"
                     label="Confirmar contraseña:"
                     flexed
+                    error={error.type === 'Password equality' || false}
                     placeholder="Confirmar contraseña"
                     callBack={handleConfirmChanges}
                 />
             </div>
+            <p className="px-4 font-semibold text-sm text-red-800">{error.message}</p>
             <div className="px-4 py-2">
                 <Button
                     submit
@@ -78,7 +114,6 @@ const EmailPasswordForm = ({ callBack }) => {
                 />
                 <div className="w-full h-1 my-4">
                 </div>
-
             </div>
         </form>
     )

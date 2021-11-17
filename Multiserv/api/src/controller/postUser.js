@@ -18,15 +18,16 @@ const {db, auth} = require("../db.js");
     const postUser = async(req, res)=>{
         const {name, lastName, mail, password, photoURL, phone} = req.body; 
         try{
-        const newUser= await auth.createUser({
-            email: mail,
-            emailVerified: false,
-            phoneNumber: phone,
-            password: password,
-            displayName: `${name} ${lastName}`,
-            photoURL,
-            disabled: false,
-          })
+        const userData = {
+          email: mail,
+          emailVerified: false,
+          password: password,
+          displayName: `${name} ${lastName}`,
+          photoURL,
+          disabled: false,
+        }
+        phone && (userData['phoneNumber'] = phone)
+        const newUser= await auth.createUser(userData)
             // if(isProvider) {
             //     const newProvider= {
             //         uid: newUser.uid,
@@ -34,12 +35,12 @@ const {db, auth} = require("../db.js");
             //     }
             //     const proveedor = await db.collection("proveedores").add(newProvider);
             // }
-        res.status(200).json({msg: "Usuario Creado", userId: newUser.uid})
+          res.status(200).json({msg: "Usuario Creado", user: newUser})
 
 
         } catch(error) {
-          console.log(error)
-                res.status(404).json(error.message)
+          console.log(error.message)
+                res.status(404).json(error)
             }     
     }
  

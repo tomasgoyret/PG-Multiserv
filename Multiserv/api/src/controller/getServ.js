@@ -2,7 +2,7 @@ const { db } = require("../db.js");
 
 // get all services
 
-const getServices = async (req, res) => {
+const getServ = async (req, res) => {
     const {name} = req.query;
     try {
         const peticion = await db.collection("services").get();
@@ -33,7 +33,7 @@ const getServices = async (req, res) => {
 
 // get user by id specific
 
-const getServicesId = async (req, res) => {
+const getServId = async (req, res) => {
     const {id} = req.params;
     try {
         const peticion = await db.collection("services").where('id', '==', id).get();
@@ -53,6 +53,6 @@ const getServicesId = async (req, res) => {
 };
 
 module.exports = {
-    getServices,
-    getServicesId
+    getServ,
+    getServId
 };

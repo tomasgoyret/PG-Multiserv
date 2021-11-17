@@ -5,6 +5,7 @@ const getFilter = async (req, res) => {
 
     const query  = req.query;
 
+
     // query --> { atributo: valor }
     // Busco en base de datos atributo con ese valor y filtro
     try {   

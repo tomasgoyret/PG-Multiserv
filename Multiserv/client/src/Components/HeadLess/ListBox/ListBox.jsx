@@ -1,21 +1,47 @@
+/** @jsxImportSource @emotion/react */
 import { Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { HiOutlineSelector } from "react-icons/hi";
 import { FiCheck } from "react-icons/fi";
 
-export default function ListBox({ options, callBack, text, theme }) {
-    const [selected, setSelected] = useState('')
-    useEffect(() => {
-        callBack(selected)
-    }, [selected])
-
+export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc }) {
+    const [selected, setSelected] = useState(options[0].name)
+    const [iconSelected, setIconSelected] = useState(options[0].icon || '')
+    /* (value) => {
+        console.log(value)
+        callBack(options[value])
+        setSelected(value)
+    } */
+    const buttonStyle = {
+        borderColor: customBorder ? customBorder : 'unset',
+        outline: '2px solid transparent',
+        outlineOffset: '2px',
+        '&:focus': {
+            outline: '2px solid ',
+            outlineColor: theme
+        }
+    }
     return (
-        <div className="w-72 z-auto">
-            <Listbox value={selected} onChange={setSelected}>
+        <div style={{ width: `${width ? width : '18rem'}` }} className={`${className} ${!width && 'mx-2'}`}>
+            <Listbox value={selected} onChange={(value) => {
+                const obj = options.find(option => option.name === value)
+                callBack(obj)
+
+                if (obj.icon) {
+                    setIconSelected(obj.icon)
+                }
+                setSelected(value)
+            }}>
                 <div className="relative mt-1">
-                    <Listbox.Button className="cursor-pointer font-semibold w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                        <span className="block truncate">{selected ? selected : text}</span>
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <Listbox.Button css={buttonStyle} className={`cursor-pointer font-semibold w-full ${width ? 'py-2.5' : 'py-2'} pl-3 pr-10 text-left ${customBorder ? 'border' : 'shadow-md'} bg-white rounded-lg 
+                     focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
+                        <span className="truncate">{includeIconOnDesc ? (
+                            <span className="flex">
+                                {iconSelected}
+                                <span className="ml-1">{selected}</span>
+                            </span>
+                        ) : selected}</span>
+                        <span className="absolute inset-y-0 right-0 flex items-center ml-2 pr-2 pointer-events-none">
                             <HiOutlineSelector
                                 className="self-center text-xl text-gray-400"
                                 aria-hidden="true"
@@ -28,16 +54,16 @@ export default function ListBox({ options, callBack, text, theme }) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Listbox.Options className="absolute text-left z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Listbox.Options as="div" style={{ zIndex: 1000 }} className="absolute text-left z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             {options.map((option, index) => (
                                 <Listbox.Option
                                     key={index}
                                     as={Fragment}
                                     className={({ active }) =>
-                                        `rounded-md ${active ? ' text-white font-semibold text-amber-900 bg-amber-100' : 'text-gray-900'}
+                                        `rounded-md ${active ? ' text-white font-semibold' : 'text-gray-900'}
                                     select-none relative py-2 pl-10 pr-4 cursor-pointer`
                                     }
-                                    value={option}
+                                    value={option.name}
                                 >
                                     {({ selected, active }) => (
                                         <div style={{ backgroundColor: active ? theme : 'unset' }}>
@@ -45,7 +71,7 @@ export default function ListBox({ options, callBack, text, theme }) {
                                                 className={`${selected || active ? 'font-semibold' : 'font-medium'
                                                     } block truncate`}
                                             >
-                                                {option}
+                                                {option.name}
                                             </span>
                                             {selected ? (
                                                 <span
@@ -55,7 +81,13 @@ export default function ListBox({ options, callBack, text, theme }) {
                                                 >
                                                     <FiCheck className="text-lg" aria-hidden="true" />
                                                 </span>
-                                            ) : null}
+                                            ) : <span
+                                                className={`${active ? 'text-amber-600' : 'text-amber-600'
+                                                    }
+                                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                                            >
+                                                {option.icon || ''}
+                                            </span>}
                                         </div>
                                     )}
                                 </Listbox.Option>

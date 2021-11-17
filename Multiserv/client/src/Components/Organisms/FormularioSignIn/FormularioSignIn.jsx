@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import ButtonXartiago from "../../Atoms/ButtonXartiago/ButtonXartiago";
 import Encabezado2 from "../../Atoms/Encabezados/Encabezado2";
 import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
-// import { signUp, signWithGoogle } from '../../Firebase'
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
-import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
 import { useNavigate } from "react-router";
+import { signWithGoogle } from '../../../Firebase';
+import { ImSpinner9 } from "react-icons/im";
+import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
+import Swal from 'sweetalert2';
+import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
+import { Link } from "react-router-dom";
 
-const FormularioSignIn = () => {
+
+const FormularioSignIn = ({handleModal}) => {
+    const [loading, setLoading] = useState(false)
     const [disabledSignIn, setDisabledSignIn] = useState(true)
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
-    const [sesion, setSesion] = useState({
-        sesion : false,
-        usuario : ""
-    })
     const navigate = useNavigate();
 
     // Handles
@@ -38,44 +39,71 @@ const FormularioSignIn = () => {
         }
     }, [mail, password])
 
-    // Login
-    var user = ""
-    const signIn = (e) => {
+
+    // Funciones
+    const redirectToHome = () => {
+        navigate('/home')
+    }
+
+    var user;
+    const signIn = async (e) => {
         e.preventDefault();
+        setLoading(true)
+        console.log("hola1")
         const auth = getAuth()
+      
         signInWithEmailAndPassword(auth, mail, password)
             .then(userCredential => {
                 user = userCredential.user
-                console.log(user)
-                alert("Iniciaste sesión como "+ user.email)
-                setSesion({
-                    ...sesion,
-                    sesion : true,
-                    usuario : user.email
-                })
+                localStorage.setItem("datoSesion",JSON.stringify(user))
+                setLoading(false)
+                redirectToHome()
             })
             .catch(error => {
-                console.log(error)
+                setLoading(false)
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                
-              });
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Los datos no son validos',
+                    icon: 'error',
+                    confirmButtonText: 'X'
+                  })
+                console.log(errorCode, errorMessage)
+            });
     }
 
-    const redirectToHome = () => {
-        navigate('/')
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    const cerrarSesion = () =>{
+        localStorage.removeItem("datoSesion")
+        navigate("/")
     }
 
-    return(
+
+
+    return (
         <div className="items-center">
-            <form onSubmit={signIn}>
-                <Encabezado2 
-                    clases="pt-4 pb-3 flex justify-center"
+            {
+            datosSesionFromLocalStorage ?
+            (<div> 
+                Sesion Iniciada con : {datosSesionFromLocalStorage.email} 
+                <div className="px-4 py-2">
+                        <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
+                </div>
+                <img src={`${datosSesionFromLocalStorage.photoURL}`} />
+            </div> ) 
+            : (
+            <div>
+                <div className="flex w-full justify-end">
+                <button onClick={handleModal} className="font-semibold inline-flex w-15 text-2xl px-3 text-gray-800 rounded-md transition-all ease-in-out duration-300">X</button>
+                </div>
+                <Encabezado2
+                    clases="pt-2 pb-3 flex justify-center"
                     titulo="Sign In"
                 />
-                <SignInWithSocial 
-                    afterLogin={redirectToHome}
-                />
+                <SignInWithSocial afterLogin={redirectToHome} />
+                <form onSubmit={signIn}>
+                <SeparadorO />
                 <Input
                     type="email"
                     id="user_mail"
@@ -95,19 +123,24 @@ const FormularioSignIn = () => {
                 />
                 <div className="px-4 py-2">
                     <Button
+                                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                         className="px-4 py-2"
                         submit
                         theme="#155E75"
                         customTextColor="#FFFFF"
-                        text="Ingresar"
+                                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
                         full
-                        disabled={!disabledSignIn}
+                                        disabled={loading || !disabledSignIn}
                     />
                 </div>
                 <div className="px-4 py-2">
-                    <p className="text-gray-500 leading-tight text-sm font-sans">Olvidaste tu contraseña? <span className="font-medium">Recuerda</span>, que puedes restablecerla en el siguiente enlace <span className="font-semibold text-indigo-800 cursor-pointer">Restablecer Contraseña</span></p>
+                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace 
+                    <span className="font-semibold text-indigo-800 cursor-pointer"><Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
                 </div>
-            </form>
+                            </form>
+                        </div>
+                    )}
+
         </div>
     )
 }
