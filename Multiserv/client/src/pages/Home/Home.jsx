@@ -7,7 +7,7 @@ import Img from '../../assets/Icons/profile.png'
 /* Icon */
 import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
-import { MdEdit, MdNotifications, MdFavorite } from "react-icons/md";
+import { MdEdit, MdNotifications, MdFavorite, MdHomeRepairService } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 /* React Hooks */
 import { useEffect, useState } from 'react';
@@ -192,6 +192,10 @@ const Home = () => {
                     <div className="flex my-1 items-center pl-3">
                         <MdFavorite className="mr-2" />
                         <span>Lista Favoritos</span>
+                    </div>
+                    <div className="flex my-1 items-center pl-3">
+                        <MdHomeRepairService className="mr-2" />
+                        <span>Ser Provedor</span>
                     </div>
                 </div>
                 {datosSesionFromLocalStorage ? (<button onClick={logout}>Log out</button>) : (<ButtonXartiago
