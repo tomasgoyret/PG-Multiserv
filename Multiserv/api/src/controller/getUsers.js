@@ -1,15 +1,3 @@
-//Cargar Usuarios para test
-const { LlamadoUsers, Users } = require('../Funciones/User');
-
-
-const getDB = async(req, res) => {
-    try{
-        LlamadoUsers(Users);
-        res.send('Usuarios cargados al DB')
-    }
-    catch(err){console.error}
-};
-
 const getUsers = async(req, res) => {
     try{
         LlamadoUsers(Users);
@@ -44,7 +32,6 @@ const getUserEmail = async(req, res) => {
 
 
 module.exports = {
-    getDB,
     getUsers,
     getUserId, 
     getUserEmail
