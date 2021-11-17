@@ -18,7 +18,7 @@ export const services = () => {
     return async function (dispatch) {
         let services = `${server}/services`;
         const response = await axios(services);
-        const dataServ = response.data.map(serv => serv.servicio)
+        const dataServ = response.data
         return dispatch({
             type: SERVICIOS,
             payload: dataServ
