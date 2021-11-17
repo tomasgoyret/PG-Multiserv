@@ -7,6 +7,7 @@ import Img from '../../assets/Icons/profile.png'
 /* Icon */
 import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
+import { MdEdit, MdNotifications, MdFavorite } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 /* React Hooks */
 import { useEffect, useState } from 'react';
@@ -172,10 +173,28 @@ const Home = () => {
     const modal = (
         verPerfil ?
             <div className={s.UserProfile__OnClick}>
-                <img src={foto} alt="" />
-                <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
-                <br />
-                {datosSesionFromLocalStorage ? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago
+                <div className="flex w-full border-b-2 py-5 pr-2">
+                    <img className="mx-2" src={foto} alt="" />
+                    <div className="flex flex-col justify-center truncate">
+                        <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
+                        <span>{datosSesionFromLocalStorage.email}</span>
+                    </div>
+                </div>
+                <div className="flex flex-col w-full justify-center py-2">
+                    <div className="flex my-1 items-center pl-3">
+                        <MdEdit className="mr-2"/>
+                        <span>Editar Perfil</span>
+                    </div>
+                    <div className="flex my-1 items-center pl-3">
+                        <MdNotifications className="mr-2" />
+                        <span>Notificaciones</span>
+                    </div>
+                    <div className="flex my-1 items-center pl-3">
+                        <MdFavorite className="mr-2" />
+                        <span>Lista Favoritos</span>
+                    </div>
+                </div>
+                {datosSesionFromLocalStorage ? (<button onClick={logout}>Log out</button>) : (<ButtonXartiago
                     btn="Regresar"
                     page=""
                     clase="w-2/5"
