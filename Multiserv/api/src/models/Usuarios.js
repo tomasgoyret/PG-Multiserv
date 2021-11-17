@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
     },
     provider: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     uidProvider: {
       type: DataTypes.UUID,
@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
     },
     disabled: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     }
   });
 };

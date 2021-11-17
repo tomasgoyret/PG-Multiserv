@@ -1,7 +1,7 @@
 const { Usuarios, auth } = require("../db.js");
 const { v4: uuidv4 } = require('uuid');
 
-const postUser = async (req, res) => {
+const postUser = async (req, res,next) => {
 
   const {name, lastName, mail, password, photoURL, phone} = req.body; 
 
@@ -18,15 +18,21 @@ const postUser = async (req, res) => {
       disabled: false,
     } 
     phone && (userData['phoneNumber'] = phone)
+
     const newUser = await auth.createUser(userData)
+
+
+    console.log(newUser, "respuesta firebase")
+
+
 
     // Creacion en DB
     
-    const newUserDB = await Usuarios.create({
+    await Usuarios.create({
       uidClient: newUser.uid,
       photoURL,
       phoneNumber: phone,
-      email: newUser.user.email,
+      email: newUser.email,
       displayName: `${name} ${lastName}`,
       provider: false,
       uidProvider: uuidv4(),
@@ -36,7 +42,7 @@ const postUser = async (req, res) => {
     res.send({ msg: "Usuario Creado", user: newUser })
 
   } catch (error) {
-    res.send(error)
+    next(error)
   }
 }
 
