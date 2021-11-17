@@ -4,21 +4,15 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("servicios", {
-    // id: {
-    //   type:DataTypes.INTEGER,
-    //   primaryKey: true,
-    //   autoincrement: true
-    // },
     title: {
       type: DataTypes.STRING,
       allowNull: false
     },
     currency: {
-      type: DataTypes.ENUM('USD', 'MXN', 'ARS', 'COP'),
-      allowNull: false
+      type: DataTypes.ENUM('USD', 'MXN', 'ARS', 'COP')
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1234),
       allowNull: false
     },
     max: {

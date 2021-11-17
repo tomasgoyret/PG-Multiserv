@@ -7,7 +7,8 @@ module.exports = (sequelize) => {
     uidClient: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true,
     },
     photoURL: {
       type: DataTypes.STRING,
@@ -26,7 +27,7 @@ module.exports = (sequelize) => {
     },
     provider: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     uidProvider: {
       type: DataTypes.UUID,
@@ -34,7 +35,7 @@ module.exports = (sequelize) => {
     },
     disabled: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     }
   });
 };
