@@ -27,7 +27,7 @@ const {
 
 
 conn
-    .sync({ force: true })
+    .sync({ force: false })
     .then(async () => {
         await app.listen(PORT || 3001, () => {
             console.log('Server on port', PORT || 3001)

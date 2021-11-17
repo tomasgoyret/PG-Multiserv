@@ -18,23 +18,25 @@ const postUser = async (req, res) => {
       disabled: false,
     } 
     phone && (userData['phoneNumber'] = phone)
+
     const newUser = await auth.createUser(userData)
 
-    console.log(newUser,'asdasd')
     // Creacion en DB
-    
-    const a = await Usuarios.create({
-      uidClient: newUser.UserRecord.uid,
+try{
+    await Usuarios.create({
+      uidClient: newUser.uid,
       photoURL,
       phoneNumber: phone,
-      email: newUser.UserRecord.email,
+      email: mail,
       displayName: `${name} ${lastName}`,
       provider: false,
       uidProvider: uuidv4(),
       disabled: false,
-    }) 
+    }) }
+    catch(e){
+      console.log(e)
+    }
 
-    console.log(a,'DB')
 
     // Creacion en DB
     res.send({ msg: "Usuario Creado", user: newUser })
