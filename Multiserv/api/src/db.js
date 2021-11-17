@@ -83,7 +83,7 @@ Usuarios.hasMany(Servicios);
 Servicios.belongsTo(Usuarios);
 
 //Relación 1 a 1 Usuarios ---> Direcciones
-Usuarios.belongsTo(Direcciones);
+Usuarios.hasOne(Direcciones);
 Direcciones.belongsTo(Usuarios);
 
 //Relación muchos a muchos Usuario ---> Citas
@@ -103,7 +103,7 @@ Servicios.hasMany(Citas);
 Citas.belongsTo(Servicios);
 
 //Relación 1 a 1 Servicios ---> Horarios
-Servicios.belongsTo(Horarios);
+Servicios.hasOne(Horarios);
 Horarios.belongsTo(Servicios);
 
 module.exports = {
