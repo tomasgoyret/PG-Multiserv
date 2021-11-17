@@ -986,30 +986,6 @@ const Users = [
       }]
   },
   {
-    "uid": "lF1FABrqj9bYS4wRn0UKJD1PYOL2",
-    "email": "pgmultiserv@gmail.com",
-    "lastName": "",
-    "emailVerified": true,
-    "name": "Multi Serv",
-    "photoURL": "https://lh3.googleusercontent.com/a/AATXAJxzuEY1TqCVMgmIrQcisD5G0xg8Ec_art3ZYgR0=s96-c",
-    "disabled": false,
-    "metadata": {
-      "lastSignInTime": "Mon, 15 Nov 2021 01:02:49 GMT",
-      "creationTime": "Sat, 13 Nov 2021 19:41:24 GMT"
-    },
-    "passwordHash": "mhzuNqM7dWnwXp6Y_C7hPRQVuj__M-Q34esaRqxalCNEhwYNzMXQ4lZqbc1EFe373XJggM0k_Bhk8Vaan9-ebQ==",
-    "passwordSalt": "6G5ndNyBrHkNLw==",
-    "tokensValidAfterTime": "Mon, 15 Nov 2021 01:02:07 GMT",
-    "providerData": [
-      {
-        "uid": "pgmultiserv@gmail.com",
-        "name": "Multi Serv",
-        "email": "pgmultiserv@gmail.com",
-        "photoURL": "https://lh3.googleusercontent.com/a/AATXAJxzuEY1TqCVMgmIrQcisD5G0xg8Ec_art3ZYgR0=s96-c",
-        "providerId": "password"
-      }]
-  },
-  {
     "uid": "mFP156omuPNdtbUDT3w6ggci3Ox1",
     "email": "ulivargas.02@gmail.com",
     "lastName": "",

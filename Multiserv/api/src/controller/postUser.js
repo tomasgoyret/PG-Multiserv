@@ -3,12 +3,13 @@ const { v4: uuidv4 } = require('uuid');
 
 const postUser = async (req, res,next) => {
 
-  const {name, lastName, mail, password, photoURL, phone} = req.body; 
+  const {name, lastName, mail, password, photoURL, phone, isGoogle, uid} = req.body; 
+ let newUser= false;
 
   try {
 
     // Creacion en Firebase
-
+    if(!isGoogle) {
     const userData = {
       email: mail,
       emailVerified: false,
@@ -19,24 +20,28 @@ const postUser = async (req, res,next) => {
     } 
     phone && (userData['phoneNumber'] = phone)
 
-    const newUser = await auth.createUser(userData)
+    newUser = await auth.createUser(userData)
 
 
     console.log(newUser, "respuesta firebase")
-
+  }
 
 
     // Creacion en DB
 try{
-    await Usuarios.create({
-      uidClient: newUser.uid,
-      photoURL,
-      phoneNumber: phone,
-      email: mail,
-      displayName: `${name} ${lastName}`,
-      provider: false,
-      uidProvider: uuidv4(),
-      disabled: false,
+    const [NuevoUsuario, created]= await Usuarios.findOrCreate({
+      where: {
+        email: mail,
+      },
+      defaults: {
+        uidClient: newUser? newUser.uid : uid,
+        photoURL,
+        phoneNumber: phone,
+        displayName: `${name} ${lastName}`,
+        provider: false,
+        uidProvider: uuidv4(),
+        disabled: false,
+      }
     }) }
     catch(e){
       console.log(e)

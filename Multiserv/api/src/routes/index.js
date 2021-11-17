@@ -10,11 +10,8 @@ const postServRouter = require("./postServ");
 const putServRouter = require("./putServ");
 const deleteServRouter = require("./deleteServ");
 const postCategoriasRouter = require("./postCategorias");
-const getDBRouter = require("./getDB");
 
-// DB
 
-router.use("/DB", getDBRouter);
 
 // Rutas a Usuarios
 

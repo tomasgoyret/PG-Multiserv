@@ -19,7 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const app = require('./src/app');
 const { conn } = require('./src/db.js');
-
+const { LlamadoUsers, DataServices, Users} = require('./src/Funciones/User');
 require('dotenv').config();
 const {
     PORT
@@ -28,12 +28,13 @@ const {
 
 
 conn
-    .sync({ force: false })
+    .sync({ force: true })
     .then(async () => {
+        await LlamadoUsers(Users);
+        await DataServices();
         await app.listen(PORT || 3001, () => {
             console.log('Server on port', PORT || 3001)
         })
     })
     .catch ((e)=>console.log(e.message));
-
 
