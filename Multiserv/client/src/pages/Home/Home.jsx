@@ -9,6 +9,7 @@ import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } fro
 import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
 import { MdEdit, MdNotifications, MdFavorite, MdHomeRepairService } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
+import { BiLogOut } from "react-icons/bi";
 /* React Hooks */
 import { useEffect, useState } from 'react';
 /* React redux */
@@ -198,7 +199,7 @@ const Home = () => {
                         <span>Ser Provedor</span>
                     </div>
                 </div>
-                {datosSesionFromLocalStorage ? (<button onClick={logout}>Log out</button>) : (<ButtonXartiago
+                {datosSesionFromLocalStorage ? (<div className="flex w-full items-center justify-center mt-2"><BiLogOut className="mr-1"/><button onClick={logout}>Log out</button></div>) : (<ButtonXartiago
                     btn="Regresar"
                     page=""
                     clase="w-2/5"
