@@ -51,8 +51,8 @@ let DataServices = async () => {
                 //  })
                 //  console.log(serviciosCreados)
 
-                for await(let s of services) {
-                    await Servicios.create( {
+                for(let s of services) {
+                    const servicio = await Servicios.create( {
                         title: s.title, 
                         currency: s.currency,
                         description: s.description, 
@@ -61,10 +61,11 @@ let DataServices = async () => {
                         rating: parseInt(s.rating), 
                         photos: s.photos, 
                     })
+                    // await servicio.addUsuarios(usuarios.id)
                 }
             }
             catch(err){
-                console.log(err)  
+                console.log(err)
             }
         }      
 
@@ -72,7 +73,7 @@ DataServices();
 
 
 conn
-    .sync({ force: true })
+    .sync({ force: false })
     .then(async () => {
         await app.listen(PORT || 3001, () => {
             console.log('Server on port', PORT || 3001)
