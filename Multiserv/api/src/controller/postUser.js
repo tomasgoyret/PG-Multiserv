@@ -27,18 +27,23 @@ const postUser = async (req, res,next) => {
 
 
     // Creacion en DB
-    
+try{
     await Usuarios.create({
       uidClient: newUser.uid,
       photoURL,
       phoneNumber: phone,
-      email: newUser.email,
+      email: mail,
       displayName: `${name} ${lastName}`,
       provider: false,
       uidProvider: uuidv4(),
       disabled: false,
-    })
+    }) }
+    catch(e){
+      console.log(e)
+    }
 
+
+    // Creacion en DB
     res.send({ msg: "Usuario Creado", user: newUser })
 
   } catch (error) {

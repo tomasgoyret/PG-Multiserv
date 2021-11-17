@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
     // },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     photos: {
       type: DataTypes.ARRAY(DataTypes.STRING)
