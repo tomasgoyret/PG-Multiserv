@@ -5,7 +5,8 @@ import {
     createUserWithEmailAndPassword, 
     signInWithRedirect, 
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    sendEmailVerification
 } from 'firebase/auth'
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,4 +27,8 @@ function signWithGoogle () {
     const googleProvider = new GoogleAuthProvider()
     return signInWithPopup(auth, googleProvider)
 }
-export {auth, signUp, signWithGoogle}
+function verifyEmailAddress() {
+    console.log(auth.currentUser)
+    return sendEmailVerification(auth.currentUser)
+}
+export {auth, signUp, signWithGoogle, verifyEmailAddress}

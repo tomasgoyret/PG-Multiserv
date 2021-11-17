@@ -28,14 +28,8 @@ const {db, auth} = require("../db.js");
         }
         phone && (userData['phoneNumber'] = phone)
         const newUser= await auth.createUser(userData)
-            // if(isProvider) {
-            //     const newProvider= {
-            //         uid: newUser.uid,
-            //         email: newUser.email
-            //     }
-            //     const proveedor = await db.collection("proveedores").add(newProvider);
-            // }
-          res.status(200).json({msg: "Usuario Creado", user: newUser})
+        
+        res.status(200).json({msg: "Usuario Creado", user: newUser})
 
 
         } catch(error) {

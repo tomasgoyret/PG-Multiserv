@@ -5,6 +5,7 @@ import Components from "./pages/Components/Components";
 import PasswordChange from "./pages/PasswordChange/PasswordChange";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/passwordChange" element={<PasswordChange />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
         <Route path="/test" element={<PasswordChange />} />
+        <Route path="/email-verification" element={<VerifyEmail />} />
       </Routes>
     </div>
   );
