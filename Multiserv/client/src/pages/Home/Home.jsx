@@ -165,9 +165,11 @@ const Home = () => {
         return nombres;
     }
 
-    var name = "Inicia Sesión "
+    var name = " Invitado"
+    var email = ""
     if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
         name = datosSesionFromLocalStorage.displayName
+        email = datosSesionFromLocalStorage.email
     }
 
     const resultadoNombre = validarLogitudNombre(name)
@@ -177,32 +179,35 @@ const Home = () => {
                 <div className="flex w-full border-b-2 py-5 pr-2">
                     <img className="mx-2" src={foto} alt="" />
                     <div className="flex flex-col justify-center truncate">
-                        <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
-                        <span>{datosSesionFromLocalStorage.email}</span>
+                        <span className="font-semibold text-xl">{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
+                        <span className="text-sm text-gray-500 -mt-1">{email}</span>
                     </div>
                 </div>
-                <div className="flex flex-col w-full justify-center py-2">
-                    <div className="flex my-1 items-center pl-3">
-                        <MdEdit className="mr-2"/>
-                        <span>Editar Perfil</span>
+                {
+                    email !== "" &&
+                    <div className="flex flex-col w-full justify-center py-2">
+                        <div className="flex my-1 items-center pl-3">
+                            <MdEdit className="mr-2"/>
+                            <span className="font-semibold">Editar Perfil</span>
+                        </div>
+                        <div className="flex my-1 items-center pl-3">
+                            <MdNotifications className="mr-2" />
+                            <span className="font-semibold">Notificaciones</span>
+                        </div>
+                        <div className="flex my-1 items-center pl-3">
+                            <MdFavorite className="mr-2" />
+                            <span className="font-semibold">Lista Favoritos</span>
+                        </div>
+                        <div className="flex my-1 items-center pl-3">
+                            <MdHomeRepairService className="mr-2" />
+                            <span className="font-semibold">Ser Provedor</span>
+                        </div>
                     </div>
-                    <div className="flex my-1 items-center pl-3">
-                        <MdNotifications className="mr-2" />
-                        <span>Notificaciones</span>
-                    </div>
-                    <div className="flex my-1 items-center pl-3">
-                        <MdFavorite className="mr-2" />
-                        <span>Lista Favoritos</span>
-                    </div>
-                    <div className="flex my-1 items-center pl-3">
-                        <MdHomeRepairService className="mr-2" />
-                        <span>Ser Provedor</span>
-                    </div>
-                </div>
-                {datosSesionFromLocalStorage ? (<div className="flex w-full items-center justify-center mt-2"><BiLogOut className="mr-1"/><button onClick={logout}>Log out</button></div>) : (<ButtonXartiago
+                }
+                {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center mt-2 w-2/5 mt-3"><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md">Log out</button></div>) : (<ButtonXartiago
                     btn="Regresar"
                     page=""
-                    clase="w-2/5"
+                    clase="w-2/5 mt-3"
                     btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
                 />)}
             </div>
