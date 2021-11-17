@@ -1,43 +1,54 @@
-const {db, auth} = require("../db.js");
+const { Usuarios, auth } = require("../db.js");
+const { v4: uuidv4 } = require('uuid');
 
-// const postUser = async (req, res) => {
-//     try {
-//         const {nombre, apellido, correo} = req.body;
-//         const nuevoUsuario = {
-//             nombre,
-//             apellido,
-//             correo
-//         };
-//         const user = await db.collection("usuarios").add(nuevoUsuario);
-//         res.status(201).json({msg: "Usuario Creado", userId: user.id})
-//     } catch(error) {
-//         console.log(error);
-//     }
-//   }
+const postUser = async (req, res,next) => {
 
-    const postUser = async(req, res)=>{
-        const {name, lastName, mail, password, photoURL, phone} = req.body; 
-        try{
-        const userData = {
-          email: mail,
-          emailVerified: false,
-          password: password,
-          displayName: `${name} ${lastName}`,
-          photoURL,
-          disabled: false,
-        }
-        phone && (userData['phoneNumber'] = phone)
-        const newUser= await auth.createUser(userData)
-        
-        res.status(200).json({msg: "Usuario Creado", user: newUser})
+  const {name, lastName, mail, password, photoURL, phone} = req.body; 
+
+  try {
+
+    // Creacion en Firebase
+
+    const userData = {
+      email: mail,
+      emailVerified: false,
+      password: password,
+      displayName: `${name} ${lastName}`,
+      photoURL,
+      disabled: false,
+    } 
+    phone && (userData['phoneNumber'] = phone)
+
+    const newUser = await auth.createUser(userData)
 
 
-        } catch(error) {
-          console.log(error.message)
-                res.status(404).json(error)
-            }     
+    console.log(newUser, "respuesta firebase")
+
+
+
+    // Creacion en DB
+try{
+    await Usuarios.create({
+      uidClient: newUser.uid,
+      photoURL,
+      phoneNumber: phone,
+      email: mail,
+      displayName: `${name} ${lastName}`,
+      provider: false,
+      uidProvider: uuidv4(),
+      disabled: false,
+    }) }
+    catch(e){
+      console.log(e)
     }
- 
 
 
-  module.exports = postUser;
+    // Creacion en DB
+    res.send({ msg: "Usuario Creado", user: newUser })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = postUser;

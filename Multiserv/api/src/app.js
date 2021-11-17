@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const cors = require("cors");
 const middleware = require('./middleware');
 
+require('./db.js');
+
 const app = express();
 
 // middlewares
