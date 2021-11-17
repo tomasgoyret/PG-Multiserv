@@ -186,19 +186,22 @@ const Home = () => {
                 {
                     email !== "" &&
                     <div className="flex flex-col w-full justify-center py-2">
-                        <div className="flex my-1 items-center pl-3">
-                            <MdEdit className="mr-2"/>
-                            <span className="font-semibold">Editar Perfil</span>
-                        </div>
-                        <div className="flex my-1 items-center pl-3">
+                        <LinkTo page="profile" 
+                            render={(
+                            <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
+                                <MdEdit className="mr-2"/>
+                                <span className="font-semibold">Editar Perfil</span>
+                            </div>)}
+                        />
+                        <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
                             <MdNotifications className="mr-2" />
                             <span className="font-semibold">Notificaciones</span>
                         </div>
-                        <div className="flex my-1 items-center pl-3">
+                        <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
                             <MdFavorite className="mr-2" />
                             <span className="font-semibold">Lista Favoritos</span>
                         </div>
-                        <div className="flex my-1 items-center pl-3">
+                        <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
                             <MdHomeRepairService className="mr-2" />
                             <span className="font-semibold">Ser Provedor</span>
                         </div>
