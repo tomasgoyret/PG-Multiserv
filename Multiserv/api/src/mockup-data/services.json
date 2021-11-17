@@ -1,0 +1,18 @@
+[
+    {
+            "min": 2000,
+            "description": "Morbi tristique ipsum eleifend dui condimentum, sit amet facilisis est lacinia. Fusce commodo risus elementum sapien venenatis lobortis. Nam ac viverra ex, at ullamcorper augue. Phasellus at ultricies turpis, vel placerat diam. Nulla vel euismod metus. Aliquam porta semper erat, blandit ornare ipsum consequat id. Cras elementum dui quis quam pharetra efficitur. Integer dictum risus id justo sollicitudin sodales. Aenean eu justo quis tortor posuere finibus tristique a ipsum.  ",
+            "uidUser": "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
+            "title": "Mueblería La paz",
+            "category": "Carpintería",
+            "photos": [
+                "https://i.ytimg.com/vi/j5bz8tp5JQ0/maxresdefault.jpg",
+                "https://resources.sears.com.mx/medios-plazavip/fotos/productos_sears1/original/3163922.jpg",
+                "https://muebla.com.mx/storage/2020/October/week4/57526_img_2097_e2_copia.png"
+            ],
+            "currency": "MXN",
+            "max": 12000,
+            "rating": "4"
+    }
+
+]

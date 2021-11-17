@@ -7,7 +7,8 @@ module.exports = (sequelize) => {
     uidClient: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true,
     },
     photoURL: {
       type: DataTypes.STRING,
