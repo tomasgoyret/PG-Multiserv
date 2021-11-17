@@ -163,7 +163,7 @@ const Home = () => {
         return nombres;
     }
 
-    var name = "Usuario Invitado"
+    var name = "Inicia Sesión "
     if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
         name = datosSesionFromLocalStorage.displayName
     }
@@ -176,8 +176,8 @@ const Home = () => {
                 <span>{`${resultadoNombre[0]} ${resultadoNombre[1]}`}</span>
                 <br />
                 {datosSesionFromLocalStorage ? (<button onClick={logout}>Logout</button>) : (<ButtonXartiago
-                    btn="Sign In"
-                    page="sign-in"
+                    btn="Regresar"
+                    page=""
                     clase="w-2/5"
                     btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
                 />)}

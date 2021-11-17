@@ -12,7 +12,7 @@ import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial"
 import { Link } from "react-router-dom";
 
 
-const FormularioSignIn = () => {
+const FormularioSignIn = ({handleModal}) => {
     const [loading, setLoading] = useState(false)
     const [disabledSignIn, setDisabledSignIn] = useState(true)
     const [mail, setMail] = useState('')
@@ -92,14 +92,17 @@ const FormularioSignIn = () => {
                 </div>
                 <img src={`${datosSesionFromLocalStorage.photoURL}`} />
             </div> ) 
-                    : (
-                        <div>
-                            <Encabezado2
-                    clases="pt-4 pb-3 flex justify-center"
+            : (
+            <div>
+                <div className="flex w-full justify-end">
+                <button onClick={handleModal} className="font-semibold inline-flex w-15 text-2xl px-3 text-gray-800 rounded-md transition-all ease-in-out duration-300">X</button>
+                </div>
+                <Encabezado2
+                    clases="pt-2 pb-3 flex justify-center"
                     titulo="Sign In"
-                            />
-                            <SignInWithSocial afterLogin={redirectToHome} />
-                            <form onSubmit={signIn}>
+                />
+                <SignInWithSocial afterLogin={redirectToHome} />
+                <form onSubmit={signIn}>
                 <SeparadorO />
                 <Input
                     type="email"
