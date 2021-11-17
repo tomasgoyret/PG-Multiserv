@@ -5,7 +5,7 @@ import FormularioSignIn from "../../Components/Organisms/FormularioSignIn/Formul
 import s from "./SignIn.module.css";
 
 
-const SignIn = () => {
+const SignIn = ({handleModal}) => {
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     if(datosSesionFromLocalStorage){
         return <Navigate to={'/home'} />
@@ -14,10 +14,10 @@ const SignIn = () => {
         <div className={s.SignIn}>
             <div className={s.SignIn__Container}>
                 <div className={s.SignIn__Container__Contenido}>
-                    <CardInfomativaFormulario />
+                    <CardInfomativaFormulario/>
                 </div>
                 <div className={s.SignIn__Container__Formulario}>
-                    <FormularioSignIn />
+                    <FormularioSignIn  handleModal={handleModal}/>
                 </div>
             </div>
         </div>
