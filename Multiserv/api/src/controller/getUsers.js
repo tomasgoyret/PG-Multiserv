@@ -1,46 +1,23 @@
-const { db, auth } = require("../db.js");
+//Cargar Usuarios para test
+const { LlamadoUsers, Users } = require('../Funciones/User');
 
-// const getUsers = async(req, res) => {
-//     try {
-//         const peticion = await db.collection("usuarios").get();
-//         const { docs } = peticion;
-        
-//         const usuarios = docs.map( usuario => {
-//             let data = usuario.data()
-//             return {
-//                 id:usuario.id,
-//                 ...data
-//             }
-//             })
-//         res.json(usuarios)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
 
-const getUsers = async(req, res) => {
-    try {
-        const peticion = await auth.listUsers()
-        res.status(200).json(peticion.users)
-    } catch (error) {
-        res.status(400).json(error)
+const getDB = async(req, res) => {
+    try{
+        LlamadoUsers(Users);
+        res.send('Usuarios cargados al DB')
     }
+    catch(err){console.error}
 };
 
-// const getUserId = async(req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const peticion = await db.collection("usuarios").doc(id).get();
-//         let data = peticion.data()
-//         const usuario =  {
-//             id: id,
-//             ...data
-//         }
-//         res.json(usuario)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
+const getUsers = async(req, res) => {
+    try{
+        LlamadoUsers(Users);
+        res.send('Usuarios cargados al DB')
+    }
+    catch(err){console.error}
+};
+
 
 const getUserId = async(req, res) => {
     const { id } = req.params;
@@ -67,6 +44,7 @@ const getUserEmail = async(req, res) => {
 
 
 module.exports = {
+    getDB,
     getUsers,
     getUserId, 
     getUserEmail
