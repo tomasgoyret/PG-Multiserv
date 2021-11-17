@@ -78,34 +78,36 @@ const {
 } = sequelize.models;
 
 
-// Relación 1 a muchos Usuarios--> Servicios
-Usuarios.hasMany(Servicios);
-Servicios.belongsTo(Usuarios);
-
-//Relación 1 a 1 Usuarios ---> Direcciones
+// Usuarios 
 Usuarios.hasOne(Direcciones);
-Direcciones.belongsTo(Usuarios);
+Usuarios.hasMany(Servicios);
+Usuarios.hasMany(Resenas);
+Usuarios.hasMany(Citas);
 
-//Relación muchos a muchos Usuario ---> Citas
-Usuarios.belongsToMany(Citas, { through: "Usuarios_Citas" });
-Citas.belongsToMany(Usuarios, { through: "Usuarios_Citas" });
 
-// Relación 1 a muchos Categorías --> Servicios
-Categorias.hasMany(Servicios);
-Servicios.belongsTo(Categorias);
-
-// Relación 1 a muchos Reseñas --> Servicios
+// Servicios 
+Servicios.belongsTo(Usuarios);
+Servicios.hasOne(Direcciones);
+Servicios.hasMany(Categorias);
 Servicios.hasMany(Resenas);
-Resenas.belongsTo(Servicios);
-
-// Relación 1 a muchos Servicios --> Citas
 Servicios.hasMany(Citas);
-Citas.belongsTo(Servicios);
+
+// Categorias 
+Categorias.belongsToMany(Servicios,{through: 'services_category'});
+
+// Direcciones
+Direcciones.belongsTo(Usuarios);
+Direcciones.belongsTo(Servicios);
+Direcciones.belongsTo(Citas);
+
+// Reviews
+Resenas.belongsTo(Servicios);
+Resenas.belongsTo(Usuarios);
+
 
 //Relación 1 a 1 Servicios ---> Horarios
 Servicios.hasOne(Horarios);
 Horarios.belongsTo(Servicios);
-
 
 
 // Version con firebase
