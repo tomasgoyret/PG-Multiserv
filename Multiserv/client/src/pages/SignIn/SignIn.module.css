@@ -4,6 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(5px);
+    position: fixed;
 }
 
 .SignIn__Container{
@@ -11,7 +13,8 @@
     width: 60%;
     display: flex;
     box-shadow: 1px 3px 5px 2px rgba(0, 0, 0, 0.322);
-    border-radius: 5px;
+    border-radius: 7px;
+    background-color: white;
 }
 
 /* Container Contenido */
@@ -22,6 +25,7 @@
     background-position: center;
     background-blend-mode: multiply;
     background-color: rgba(0, 0, 0, 0.205);
+    border-radius: 7px;
 }
 
 /* Container Formulario */

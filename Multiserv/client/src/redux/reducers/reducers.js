@@ -1,4 +1,4 @@
-import { 
+import {
     BUSCAR,
     ORDERALPH,
     ORDERRAT,
@@ -16,10 +16,10 @@ const initalState = {
     aux: []
 }
 
-function rootReducer(state = initalState, {type, payload}){
-    switch(type){
+function rootReducer(state = initalState, { type, payload }) {
+    switch (type) {
         case SERVICIOS:
-            return{
+            return {
                 ...state,
                 loadingServices: false,
                 servicios: payload,
@@ -27,32 +27,57 @@ function rootReducer(state = initalState, {type, payload}){
             }
         case BUSCAR:
             let newServ = state.aux.filter(serv => serv.title.toLowerCase().includes(payload.toLowerCase()))
-            return{
+            return {
                 ...state,
                 servicios: newServ
             }
         case FILTERCAT:
-            return{
+            let filteredCat = state.aux.filter(serv => serv.category?.toLowerCase() === payload.toLowerCase())
+            return {
                 ...state,
-                servicios: payload
+                servicios: filteredCat
+            }
+        case ORDERALPH:
+            let orderedAlph = state.servicios
+            if (payload === 'asc') {
+                orderedAlph.sort((prev, post) => {
+                    if (prev.title < post.title) return -1
+                    else if (prev.title > post.title) return 1
+                    else return 0
+                })
+            }
+            else if (payload === 'desc') {
+                orderedAlph.sort((prev, post) => {
+                    if (prev.title.toLowerCase() < post.title.toLowerCase()) return 1
+                    else if (prev.title.toLowerCase() > post.title.toLowerCase()) return -1
+                    else return 0
+                })
+            }
+            console.log(orderedAlph.map(serv => serv.title))
+            return {
+                ...state,
+                servicios: orderedAlph
+            }
+        case ORDERRAT:
+            let orderedRat = state.servicios;
+            if (payload === 'asc') {
+                orderedRat.sort((prev, post) => prev.rating - post.rating)
+            }
+            else if (payload === 'desc') {
+                orderedRat.sort((prev, post) => post.rating - prev.rating)
+            }
+            console.log(orderedRat.map(serv => serv.rating))
+            return {
+                ...state,
+                servicios: orderedRat
             }
         case USUARIOS:
-            return{
+            return {
                 ...state,
                 usuarios: payload
             }
-        case ORDERALPH:
-            return{
-                ...state,
-                servicios: payload
-            }
-        case ORDERRAT:
-            return{
-                ...state,
-                servicios: payload
-            }
         case RESETORDER:
-            return{
+            return {
                 ...state,
                 servicios: state.aux
             }

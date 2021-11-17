@@ -5,15 +5,15 @@ import Button from "../../Atoms/Button/Button";
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 import { useNavigate } from "react-router";
 import { signWithGoogle } from '../../../Firebase';
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { ImSpinner9 } from "react-icons/im";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
 import SignInWithSocial from "../../Molecules/SignInWithSocial/SignInWithSocial";
 import { Link } from "react-router-dom";
 
 
-const FormularioSignIn = () => {
+const FormularioSignIn = ({handleModal}) => {
+    const [loading, setLoading] = useState(false)
     const [disabledSignIn, setDisabledSignIn] = useState(true)
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
@@ -48,6 +48,7 @@ const FormularioSignIn = () => {
     var user;
     const signIn = async (e) => {
         e.preventDefault();
+        setLoading(true)
         console.log("hola1")
         const auth = getAuth()
       
@@ -55,9 +56,11 @@ const FormularioSignIn = () => {
             .then(userCredential => {
                 user = userCredential.user
                 localStorage.setItem("datoSesion",JSON.stringify(user))
+                setLoading(false)
                 redirectToHome()
             })
             .catch(error => {
+                setLoading(false)
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 Swal.fire({
@@ -70,25 +73,6 @@ const FormularioSignIn = () => {
             });
     }
 
-    const googleSignIn = (e) => {
-        e.preventDefault();
-        console.log("hola2")
-        signWithGoogle()
-            .then((result) => {
-                localStorage.setItem("datoSesion",JSON.stringify(result.user))
-                redirectToHome()
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Los datos no son validos',
-                    icon: 'error',
-                    confirmButtonText: 'X'
-                  })
-            })
-    }
-
-    
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const cerrarSesion = () =>{
         localStorage.removeItem("datoSesion")
@@ -108,14 +92,17 @@ const FormularioSignIn = () => {
                 </div>
                 <img src={`${datosSesionFromLocalStorage.photoURL}`} />
             </div> ) 
-                    : (
-                        <div>
-                            <Encabezado2
-                    clases="pt-4 pb-3 flex justify-center"
+            : (
+            <div>
+                <div className="flex w-full justify-end">
+                <button onClick={handleModal} className="font-semibold inline-flex w-15 text-2xl px-3 text-gray-800 rounded-md transition-all ease-in-out duration-300">X</button>
+                </div>
+                <Encabezado2
+                    clases="pt-2 pb-3 flex justify-center"
                     titulo="Sign In"
-                            />
-                            <SignInWithSocial afterLogin={redirectToHome} />
-                            <form onSubmit={signIn}>
+                />
+                <SignInWithSocial afterLogin={redirectToHome} />
+                <form onSubmit={signIn}>
                 <SeparadorO />
                 <Input
                     type="email"
@@ -136,13 +123,14 @@ const FormularioSignIn = () => {
                 />
                 <div className="px-4 py-2">
                     <Button
+                                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                         className="px-4 py-2"
                         submit
                         theme="#155E75"
                         customTextColor="#FFFFF"
-                        text="Ingresar"
+                                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
                         full
-                                        disabled={!disabledSignIn}
+                                        disabled={loading || !disabledSignIn}
                     />
                 </div>
                 <div className="px-4 py-2">

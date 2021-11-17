@@ -6,13 +6,6 @@ import ButtonXartiago from "../../Atoms/ButtonXartiago/ButtonXartiago";
 const CardInfomativaFormulario = () => {
     return(
         <div className="flex flex-col items-center justify-center h-full">
-            <div className="my-4">
-                <ButtonXartiago
-                    btn="Volver"
-                    page=""
-                    btnClass="font-semibold inline-flex w-32 flex-nowrap bg-gray-50 text-gray-900 py-2 px-4 text-lg justify-center items-center rounded-md hover:bg-gray-100 active:bg-white transition-all ease-in-out duration-300"
-                />
-            </div>
             <Encabezado2 
                 clases="text-white"
                 titulo="Bienvenidos"
