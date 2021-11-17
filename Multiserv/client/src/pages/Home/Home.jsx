@@ -38,13 +38,16 @@ const Home = () => {
 
     useEffect(() => {
         if (order !== null) {
+            console.log(order)
             if (order.type === 'none') {
                 dispatch(resetOrder())
             }
             if (order.type === 'alph') {
+                console.log('Se despacho la accion de tipo:', order.type)
                 dispatch(orderAlph(order.value))
             }
             if (order.type === 'rat') {
+                console.log('Se despacho la accion de tipo:', order.type)
                 dispatch(orderRating(order.value))
             }
         }
