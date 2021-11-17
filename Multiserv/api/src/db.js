@@ -14,31 +14,31 @@ const { dbUser, dbPassword, dbHost, dbPORT, dbName } = require("./utils");
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
-        database: dbName,
-        dialect: "postgres",
-        host: dbHost,
-        port: 5432,
-        username: dbUser,
-        password: dbPassword,
-        pool: {
-          max: 3,
-          min: 1,
-          idle: 10000,
+      database: dbName,
+      dialect: "postgres",
+      host: dbHost,
+      port: 5432,
+      username: dbUser,
+      password: dbPassword,
+      pool: {
+        max: 3,
+        min: 1,
+        idle: 10000,
+      },
+      dialectOptions: {
+        ssl: {
+          require: true,
+          // Ref.: https://github.com/brianc/node-postgres/issues/2009
+          rejectUnauthorized: false,
         },
-        dialectOptions: {
-          ssl: {
-            require: true,
-            // Ref.: https://github.com/brianc/node-postgres/issues/2009
-            rejectUnauthorized: false,
-          },
-          keepAlive: true,
-        },
-        ssl: true,
-      })
+        keepAlive: true,
+      },
+      ssl: true,
+    })
     : new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/multiserv`, {
-        logging: false,
-        native: false,
-      });
+      logging: false,
+      native: false,
+    });
 
 const basename = path.basename(__filename);
 
@@ -71,8 +71,8 @@ const {
   Servicios,
   Usuarios,
   Categorias,
-  Direcciones, 
-  Citas, 
+  Direcciones,
+  Citas,
   Horarios,
   Resenas,
 } = sequelize.models;
@@ -106,49 +106,51 @@ Citas.belongsTo(Servicios);
 Servicios.hasOne(Horarios);
 Horarios.belongsTo(Servicios);
 
-module.exports = {
-  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  conn: sequelize, // para importart la conexión { conn } = require('./db.js');
-};
-
 
 
 // Version con firebase
-// const firebase = require("firebase-admin");
+const firebase = require("firebase-admin");
 
-// const {
-//   API_KEY,
-//   AUTH_DOMAIN,
-//   PROJECT_ID,
-//   STORAGE_BUCKET,
-//   KEYPATH,
-//   MESSAGING_SENDER_ID,
-//   APP_ID
-// } = process.env;
-
-
-// const firebaseConfig = {
-//   apiKey: API_KEY,
-//   authDomain: AUTH_DOMAIN,
-//   projectId: PROJECT_ID,
-//   storageBucket: STORAGE_BUCKET,
-//   messagingSenderId: MESSAGING_SENDER_ID,
-//   appId:APP_ID
-// };
+const {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  KEYPATH,
+  MESSAGING_SENDER_ID,
+  APP_ID
+} = process.env;
 
 
-// var serviceAccount = require(KEYPATH);
+const firebaseConfig = {
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId:APP_ID
+};
 
-// firebase.initializeApp({
-//   firebaseConfig,
-//   credential: firebase.credential.cert(serviceAccount)
-// }); 
+
+var serviceAccount = require(KEYPATH);
+
+firebase.initializeApp({
+  firebaseConfig,
+  credential: firebase.credential.cert(serviceAccount)
+}); 
 
 // const db = firebase.firestore();
 
-// const auth= firebase.auth();
+const auth= firebase.auth();
 
-// module.exports = {
-//   db,
-//   auth
-// }
+/* 
+module.exports = {
+  db,
+  auth
+} */
+
+module.exports = {
+  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  conn: sequelize,
+  auth // para importart la conexión { conn } = require('./db.js');
+};
