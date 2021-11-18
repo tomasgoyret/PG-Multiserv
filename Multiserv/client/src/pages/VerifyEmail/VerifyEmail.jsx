@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import Button from '../../Components/Atoms/Button/Button';
 import { RiLoaderLine } from "react-icons/ri";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { auth, verifyEmailAddress } from '../../Firebase';
 import Swal from 'sweetalert2';
 
@@ -58,7 +59,10 @@ const VerifyEmail = () => {
             reset();
         }
     }, [disableVerification, timer])
-
+    const logout = () => {
+        navigate("/")
+        localStorage.removeItem("datoSesion")
+    }
     const sendConfirmMail = () => {
         verifyEmailAddress().then(() => {
             setDisableVerification(true)
@@ -98,6 +102,15 @@ const VerifyEmail = () => {
                         customTextColor="#4C1D95"
                         action={sendConfirmMail}
                     />
+                    <div className="inline-flex flex-row mt-6 pt-4 px-8 border-t border-gray-400">
+                        <span className="font-semibold self-center">¿No es tu email?</span>
+                        <button
+                            onClick={logout}
+                            className="font-semibold py-0.5 px-4 inline-flex self-center bg-indigo-700 ml-4 rounded-full transition-all ease-in-out duration-300 hover:bg-indigo-600 hover:shadow-lg">
+                            <span className="self-center">Salir</span>
+                            <FaLongArrowAltRight className="self-center ml-2" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
