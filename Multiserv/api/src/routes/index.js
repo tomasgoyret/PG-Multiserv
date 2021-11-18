@@ -9,6 +9,9 @@ const getOrderByRouter = require("./getOrderBy");
 const postServRouter = require("./postServ");
 const putServRouter = require("./putServ");
 const deleteServRouter = require("./deleteServ");
+const postCategoriasRouter = require("./postCategorias");
+
+
 
 // Rutas a Usuarios
 
@@ -24,5 +27,9 @@ router.use("/orderby", getOrderByRouter);
 router.use("/newservice", postServRouter);
 router.use("/editservice", putServRouter);
 router.use("/deleteservice", deleteServRouter);
+
+//Rutas de categorias
+
+router.use("/categorias",postCategoriasRouter)
 
 module.exports = router;
