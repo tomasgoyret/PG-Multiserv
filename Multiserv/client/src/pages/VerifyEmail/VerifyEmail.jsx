@@ -9,32 +9,59 @@ const VerifyEmail = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [resended, setResended] = useState(false)
+    const [disableVerification, setDisableVerification] = useState(true)
+    const [timer, setTimer] = useState(60)
     const [userStatus, setUserStatus] = useState(JSON.parse(localStorage.getItem("datoSesion")))
 
     useEffect(() => {
-        if (!userStatus || userStatus.emailVerified) {
-            navigate('/home')
-        }
-        if (userStatus) {
-            const emailFromUser = userStatus.email
-            setEmail(emailFromUser)
-        }
-        auth.onAuthStateChanged(() => {
-            if (auth.currentUser) {
-                const checkIfVerified = setInterval(() => {
-                    auth.currentUser.reload().then(() => {
-                        if (auth.currentUser.emailVerified) {
-                            navigate('/home')
-                            localStorage.setItem("datoSesion", JSON.stringify(auth.currentUser))
-                            clearInterval(checkIfVerified)
-                        }
-                    })
-                }, 3000)
+        let mounted = true
+        if (mounted) {
+            if (!userStatus || userStatus.emailVerified) {
+                navigate('/home')
             }
-        })
+            if (userStatus) {
+                const emailFromUser = userStatus.email
+                setEmail(emailFromUser)
+            }
+
+            auth.onAuthStateChanged(() => {
+                if (auth.currentUser) {
+                    const checkIfVerified = setInterval(() => {
+                        auth.currentUser.reload().then(() => {
+                            if (auth.currentUser.emailVerified) {
+                                navigate('/home')
+                                localStorage.setItem("datoSesion", JSON.stringify(auth.currentUser))
+                                clearInterval(checkIfVerified)
+                            }
+                        })
+                    }, 3000)
+                }
+            })
+        }
+
+        return () => {
+            mounted = false
+        }
     }, [])
+    const reset = () => {
+        setTimer(60)
+        setDisableVerification(false)
+    }
+    useEffect(() => {
+        let disableTimer = null
+        if (disableVerification && timer > 0) {
+            setTimeout(() => {
+                setTimer(timer => timer - 1)
+            }, 1000)
+        }
+        if (timer === 0) {
+            reset();
+        }
+    }, [disableVerification, timer])
+
     const sendConfirmMail = () => {
         verifyEmailAddress().then(() => {
+            setDisableVerification(true)
             Swal.fire(
                 '¡Listo!',
                 `Se reenvió el email de verificación a ${email}`,
@@ -65,7 +92,8 @@ const VerifyEmail = () => {
                 <div className="flex flex-col justify-center items-center">
                     <h4 className="mb-3 font-semibold text-lg">¿No recibiste el email?</h4>
                     <Button
-                        text="Enviar de nuevo"
+                        disabled={disableVerification}
+                        text={`${disableVerification ? `Espere ${timer} segundos` : 'Reenviar link de verificación'}`}
                         theme="#fafafa"
                         customTextColor="#4C1D95"
                         action={sendConfirmMail}
