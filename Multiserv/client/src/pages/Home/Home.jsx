@@ -14,7 +14,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder, filterCats } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -25,6 +25,7 @@ import ListBox from '../../Components/HeadLess/ListBox/ListBox'
 const Home = () => {
     const loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
+    const categorias = useSelector((state) => state.categories)
     const navigate = useNavigate();
     const [verPerfil, setVerPerfil] = useState(false)
     const [buscador, setBuscador] = useState('')
@@ -41,6 +42,10 @@ const Home = () => {
         }
         dispatch(services())
     }, [])
+
+    useEffect(() => {
+        dispatch(getCats())
+    }, [loading])
 
     useEffect(() => {
         if (order !== null) {
@@ -61,21 +66,22 @@ const Home = () => {
 
     useEffect(() => {
         if (filter !== null) {
-            if (filter.value === 'none'){
+            if (filter.value === 'none') {
                 dispatch(resetOrder())
-            } else{
+            } else {
                 dispatch(filterCats(filter.name))
             }
         }
     }, [filter])
 
+    useEffect(() => {
+        buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
+    }, [buscador])
+
     const handleListValue2 = (obj) => {
         setFilter(obj)
     }
 
-    useEffect(() => {
-        buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
-    }, [buscador])
 
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
@@ -133,34 +139,7 @@ const Home = () => {
             name: 'Sin filtrar',
             value: 'none'
         },
-        {
-            name: 'Carpintería',
-            value: 'Carpintería'
-        },
-        {
-            name: 'Peluquería',
-            value: 'Peluquería'
-        },
-        {
-            name: 'Limpieza',
-            value: 'Limpieza'
-        },
-        {
-            name: 'Herrería',
-            value: 'Herrería'
-        },
-        {
-            name: 'Abogacía',
-            value: 'Abogacía'
-        },
-        {
-            name: 'Electricista',
-            value: 'Electricista'
-        },
-        {
-            name: 'Mantenimiento',
-            value: 'Mantenimiento'
-        },
+        ...categorias
     ]
     const handleClick = () => {
         setVerPerfil(!verPerfil);
@@ -193,7 +172,7 @@ const Home = () => {
                     email !== "" &&
                     <div className="flex flex-col w-full justify-center py-2">
                         <div className="flex my-1 items-center pl-3">
-                            <MdEdit className="mr-2"/>
+                            <MdEdit className="mr-2" />
                             <span className="font-semibold">Editar Perfil</span>
                         </div>
                         <div className="flex my-1 items-center pl-3">
