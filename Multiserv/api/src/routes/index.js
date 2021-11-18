@@ -16,7 +16,7 @@ const postCategoriasRouter = require("./postCategorias");
 // Rutas a Usuarios
 
 router.use("/agregar-usuario", postUserRouter); 
-router.use("/api", getUsersRouter);
+router.use("/usuarios", getUsersRouter);
 router.use("/eliminar-usuario", deleteUserRouter);
 
 // Rutas a Servicios

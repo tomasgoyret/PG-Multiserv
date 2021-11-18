@@ -24,11 +24,9 @@ const postUser = async (req, res,next) => {
 
 
     console.log(newUser, "respuesta firebase")
-  }
-
-
+  } else {
     // Creacion en DB
-try{
+   
     const [NuevoUsuario, created]= await Usuarios.findOrCreate({
       where: {
         email: mail,
@@ -43,12 +41,6 @@ try{
         disabled: false,
       }
     }) }
-    catch(e){
-      console.log(e)
-    }
-
-
-    // Creacion en DB
     res.send({ msg: "Usuario Creado", user: newUser })
 
   } catch (error) {
