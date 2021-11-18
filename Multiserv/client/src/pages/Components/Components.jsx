@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import Input from '../../Components/Atoms/Input/Input'
 import Button from '../../Components/Atoms/Button/Button'
+
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from 'react-router';
+import { createSearchParams } from 'react-router-dom';
 
 const Components = () => {
+    const navigate = useNavigate()
     const [miTexto, setMiTexto] = useState('')
 
     const funcionCualquiera = (texto) => {
@@ -20,7 +24,17 @@ const Components = () => {
     function btnAction() {
         alert('hola')
     }
-
+    const params = {
+        mode: 'verifyEmail',
+        oobCode: 'X8Zdo81odOswTbBNwpjKbuvXFtjAPogaPSTIrS27o7kAAAF9Md9CHQ',
+        apiKey: 'AIzaSyDrc0yd6-dO1QPzD13y5WxprAxlRcpCd0I',
+        lang: 'es-419'
+    }
+    const verification = () =>
+        navigate({
+            pathname: '/users-validations',
+            search: `?${createSearchParams(params)}`
+        })
     return (
         <div className="container mx-auto">
             <h1 className="text-4xl">Components</h1>
@@ -130,7 +144,11 @@ const Components = () => {
                 callBack={funcionCualquiera}
             />
             <span>{miTexto}</span>
-
+            <Button
+                type="success"
+                text="verificar email"
+                action={verification}
+            />
         </div>
     )
 }
