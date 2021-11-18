@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
     uidClient: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       primaryKey: true,
     },
     photoURL: {
@@ -23,7 +22,8 @@ module.exports = (sequelize) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
     },
     provider: {
       type: DataTypes.BOOLEAN,

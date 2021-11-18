@@ -1,12 +1,18 @@
-const { db } = require("../db.js");
+const { Usuarios, auth } = require("../db.js");
 
-const deleteUser = async(req, res) => {
+const deleteUser = async (req, res) => {
+    const uidClient = req.params;
     try {
-        const {id} = req.params;
-        db.collection("usuarios").doc(id).delete()
-        res.redirect("/")
-    } catch(error) {
-        console.log(error)
+        //Elimina usuario de Firebase
+        await auth.deleteUser(uidClient.uidClient)
+        .then()
+        
+        //Elimina usuario de DB
+        const usuario = await Usuarios.destroy({where: uidClient });
+        if(usuario === 1) res.json({msg: "El usuario se borró correctamente"});
+
+    } catch (error) {
+        res.json({msg: "El usuario que intenta eliminar no existe"})
     }
 }
 

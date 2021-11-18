@@ -26,9 +26,9 @@ const getUsers = async(req, res) => {
 
 const getUserId = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { uidClient } = req.params;
 
-        const dbUsuario = await Usuarios.findOne({where: { uidClient: id }})
+        const dbUsuario = await Usuarios.findOne({where: { uidClient }})
         const usuario = {
             uidClient: dbUsuario.dataValues.uidClient,
             photoURL: dbUsuario.dataValues.photoURL,
