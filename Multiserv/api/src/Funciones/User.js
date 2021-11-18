@@ -986,28 +986,6 @@ const Users = [
       }]
   },
   {
-    "uid": "mFP156omuPNdtbUDT3w6ggci3Ox1",
-    "email": "ulivargas.02@gmail.com",
-    "lastName": "",
-    "emailVerified": true,
-    "name": "Ulises Vargas Flores",
-    "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GjliENmTgMpKfYLUqvw6t1bz9bDNHgT8NUSHrH5dQ=s96-c",
-    "disabled": false,
-    "metadata": {
-      "lastSignInTime": "Mon, 15 Nov 2021 19:12:36 GMT",
-      "creationTime": "Fri, 12 Nov 2021 17:36:37 GMT"
-    },
-    "tokensValidAfterTime": "Fri, 12 Nov 2021 17:36:37 GMT",
-    "providerData": [
-      {
-        "uid": "107388326810291152629",
-        "name": "Ulises Vargas Flores",
-        "email": "ulivargas.02@gmail.com",
-        "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GjliENmTgMpKfYLUqvw6t1bz9bDNHgT8NUSHrH5dQ=s96-c",
-        "providerId": "google.com"
-      }]
-  },
-  {
     "uid": "rt9lOCJzuuOHyvzVQL2EsWbqeVf2",
     "email": "lgrassa@devhub.com",
     "lastName": "",
