@@ -88,7 +88,7 @@ Usuarios.hasMany(Citas);
 // Servicios 
 Servicios.belongsTo(Usuarios);
 Servicios.hasOne(Direcciones);
-Servicios.hasMany(Categorias);
+Servicios.belongsToMany(Categorias,{through: 'services_category'});
 Servicios.hasMany(Resenas);
 Servicios.hasMany(Citas);
 
