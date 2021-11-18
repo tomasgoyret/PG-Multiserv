@@ -53,7 +53,7 @@ const SignUp = () => {
     }
     useEffect(() => {
         if (loading) {
-            axios.post('http://localhost:3005/agregar-usuario', user)
+            axios.post('agregar-usuario', user)
                 .then(response => {
                     const newUser = response.data.user
                     localStorage.setItem("datoSesion", JSON.stringify(newUser))
