@@ -1,5 +1,49 @@
-const { Usuarios, Servicios } = require("../db");
+const { Usuarios, Servicios, Categorias } = require("../db");
 const { v4: uuidv4 } = require('uuid');
+const Cate = [
+  {
+    "title":"Limpieza"
+  },
+  {
+    "title":"Carpintería"
+  },
+  {
+    "title":"Peluquería"
+  },
+  {
+    "title":"Herrería"
+  },
+  {
+    "title":"Abogacía"
+  },
+  {
+    "title":"Electricista"
+  },
+  {
+    "title":"Mantenimiento"
+  },
+  {
+    "title":"Plomería"
+  },
+]
+
+let Categoriasmockup = async () => {
+  try {
+      for(let s of Cate) {
+       let cat =  s.title.charAt(0).toUpperCase() + s.title.slice(1).toLowerCase()
+       let existe = await Categorias.findOne({ where: { title : cat }})
+        if(existe === null){
+            await Categorias.create({title: cat})
+            console.log(`Se creó la categoría ${cat} correctamente`)
+        } else console.log(`La categoría ${cat} ya existe`)
+      }
+      //console.log("Se crearon las categorías")
+  }
+  catch(err){
+      console.log(err)
+  }
+} 
+
 
 
 
@@ -1529,20 +1573,6 @@ const services = [
 },
 {
   
-      "min": 200,
-      "rating": 4,
-      "max": 1000,
-      "photos": [
-          "https://i.pinimg.com/736x/e8/6c/cd/e86ccd126438d219e666900ff8d88594.jpg"
-      ],
-      "category": "Peluquería","description": "te corto el pelo bara bara",
-      "uidUser": "cVnUrpteAKUvi3evdmmYcD7vQW93",
-      "currency": "MXN",
-      "title": "Peluquero con descuento"
-  
-},
-{
-  
       "title": "Limpiesazo",
       "description": "Integer fermentum, libero non ultricies posuere, nunc massa convallis nisl, id placerat tortor urna ut mauris. Cras id ante non neque mattis sagittis. Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. ",
       "uidUser": "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
@@ -1616,21 +1646,21 @@ const services = [
       "max": 250
   
 },
-{
+// {
   
-      "min": 2000,
-      "rating": "4",
-      "title": "Electron",
-      "photos": [
-          "https://www.mndelgolfo.com/blog/wp-content/uploads/2016/12/consejos-para-un-buen-electricista-1024x576.jpg"
-      ],
-      "max": 12000,
-      "currency": "ARS",
-      "description": "Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit. Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. ",
-      "category": "Electricista",
-      "uidUser": "yqA77K1g9vRQ6cU1VXlk7ocXI8U2"
+//       "min": 2000,
+//       "rating": "4",
+//       "title": "Electron",
+//       "photos": [
+//           "https://www.mndelgolfo.com/blog/wp-content/uploads/2016/12/consejos-para-un-buen-electricista-1024x576.jpg"
+//       ],
+//       "max": 12000,
+//       "currency": "ARS",
+//       "description": "Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit. Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. ",
+//       "category": "Electricista",
+//       "uidUser": "yqA77K1g9vRQ6cU1VXlk7ocXI8U2"
   
-}
+// }
 
 ]
 
@@ -1656,10 +1686,8 @@ const LlamadoUsers = async (usuarios) => {
 
 let DataServices = async () => {
   try {
-    
       for(let s of services) {
         let user = await Usuarios.update({provider: true},{where: { uidClient: s.uidUser }} );
-
           const servicio = await Servicios.create( {
               title: s.title, 
               currency: s.currency,
@@ -1668,8 +1696,13 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-              usuarioUidClient: s.uidUser,
-          })
+             // usuarioUidClient: s.uidUser,
+            })
+            const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
+            await usuario.addServicios(servicio)
+            const category = await Categorias.findOne({ where: { title: s.category}})
+            await servicio.addCategorias(category)
+            console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
       }
   }
   catch(err){
@@ -1681,5 +1714,6 @@ let DataServices = async () => {
 module.exports = {
   LlamadoUsers,
   Users,
-  DataServices
+  DataServices,
+  Categoriasmockup
 };

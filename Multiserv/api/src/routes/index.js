@@ -8,6 +8,7 @@ const postServRouter = require("./postServ");
 const putServRouter = require("./putServ");
 const deleteServRouter = require("./deleteServ");
 const postCategoriasRouter = require("./postCategorias");
+const getCategoriasRouter = require("./getCategorias");
 
 
 
@@ -27,5 +28,6 @@ router.use("/delete-service", deleteServRouter);
 //Rutas de categorias
 
 router.use("/categorias",postCategoriasRouter)
+router.use("/categorias",getCategoriasRouter)
 
 module.exports = router;
