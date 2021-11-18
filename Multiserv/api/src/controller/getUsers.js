@@ -1,38 +1,50 @@
+const { Usuarios } = require("../db")
+
 const getUsers = async(req, res) => {
-    try{
-        LlamadoUsers(Users);
-        res.send('Usuarios cargados al DB')
+    const dbUsuarios = await Usuarios.findAll();
+    let arrayUsuarios = [];
+    try{ 
+        for(let usuario of dbUsuarios) {
+            arrayUsuarios.push({
+                uidClient: usuario.dataValues.uidClient,
+                photoURL: usuario.dataValues.photoURL,
+                displayName: usuario.dataValues.displayName,
+                email: usuario.dataValues.email,
+                provider: usuario.dataValues.provider,
+                uidProvider: usuario.dataValues.uidProvider,
+                disable: usuario.dataValues.disable
+            })
     }
-    catch(err){console.error}
+    
+    res.status(200).json(arrayUsuarios);
+    }
+    catch(err){
+        res.status(404).json({msg: "No hay usuarios en la base de datos"});
+    }
 };
 
 
 const getUserId = async(req, res) => {
-    const { id } = req.params;
-    console.log(id);
     try {
-        const peticion= await auth.getUser(id);
-        res.status(200).json(peticion)
+        const { id } = req.params;
+
+        const dbUsuario = await Usuarios.findOne({where: { uidClient: id }})
+        const usuario = {
+            uidClient: dbUsuario.dataValues.uidClient,
+            photoURL: dbUsuario.dataValues.photoURL,
+            displayName: dbUsuario.dataValues.displayName,
+            email: dbUsuario.dataValues.email,
+            provider: dbUsuario.dataValues.provider,
+            uidProvider: dbUsuario.dataValues.uidProvider,
+            disable: dbUsuario.dataValues.disable
+        }
+        res.status(200).json(usuario);
     } catch (error) {
-        res.status(400).json(error)
+        res.status(404).json({msg: "El usuario no existe en la base de datos"});
     }
 };
-
-//en proceso----->
-const getUserEmail = async(req, res) => {
-    const { email } = req.params;
-    console.log(email);
-    try {
-        const peticion= await auth.getUserByEmail(email);
-        res.status(200).json(peticion)
-    } catch (error) {
-        res.status(400).json(error)
-    }
-};
-
 
 module.exports = {
     getUsers,
-    getUserId, 
-    getUserEmail
+    getUserId
 };
