@@ -25,13 +25,13 @@ require('dotenv').config();
 
 
 conn
-    .sync({ force: false })
+    .sync({ force: true })
     .then(async () => {
         await Categoriasmockup()
         await LlamadoUsers(Users);
         await DataServices();
         await app.listen(process.env.PORT || 3001, () => {
-            console.log('Server on port', process.env.PORT || 3001)
+            console.log('Server on port' || 3001)
         })
     })
     .catch ((e)=>console.log(e.message));
