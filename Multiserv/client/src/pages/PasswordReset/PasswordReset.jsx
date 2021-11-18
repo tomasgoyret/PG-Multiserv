@@ -14,6 +14,7 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail,
 } from 'firebase/auth'
+import Swal from 'sweetalert2';
 
 const PasswordReset = () => {
 const [mail, setMail] = useState("")
@@ -23,18 +24,30 @@ const handleMail = (text) => {
 }
 
 
-function resetPassword () {
+  function resetPassword(e) {
+    e.preventDefault()
   const auth = getAuth();
   sendPasswordResetEmail(auth, mail)
     .then(() => {
       // Password reset email sent!
       // ..
       console.log('OKEY')
+      Swal.fire({
+        title: 'Reestablecer contraseña',
+        text: `Se envió un correo a ${mail}`,
+        icon: 'success'
+      })
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       // ..
+      Swal.fire({
+        title: '¡Error!',
+        text: `${errorMessage}`,
+        icon: 'error',
+        confirmButtonText: 'X'
+      })
       console.log(errorCode,errorMessage)
     });
 }
