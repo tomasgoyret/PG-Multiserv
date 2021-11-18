@@ -4,7 +4,16 @@ const { Servicios, Categorias } = require("../db.js");
 
 const getServ = async (req, res) => {
     try {
-        const servicios = await Servicios.findAll( {include : Categorias});
+        const servicios = await Servicios.findAll( {include :{
+            model: Categorias,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt','servicioId']
+            }
+        },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }})
+        ;
         res.send(servicios)
     }  
     catch (error) {
