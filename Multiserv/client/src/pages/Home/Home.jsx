@@ -31,22 +31,29 @@ const Home = () => {
     const [order, setOrder] = useState(null)
     const [filter, setFilter] = useState(null)
     const dispatch = useDispatch()
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const handleBuscador = (texto) => {
         setBuscador(texto)
     }
     useEffect(() => {
+        if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
+            navigate('/email-verification')
+        }
         dispatch(services())
     }, [])
 
     useEffect(() => {
         if (order !== null) {
+            console.log(order)
             if (order.type === 'none') {
                 dispatch(resetOrder())
             }
             if (order.type === 'alph') {
+                console.log('Se despacho la accion de tipo:', order.type)
                 dispatch(orderAlph(order.value))
             }
             if (order.type === 'rat') {
+                console.log('Se despacho la accion de tipo:', order.type)
                 dispatch(orderRating(order.value))
             }
         }
@@ -70,7 +77,6 @@ const Home = () => {
         buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
     }, [buscador])
 
-    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
         foto = datosSesionFromLocalStorage.photoURL

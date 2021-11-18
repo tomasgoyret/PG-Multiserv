@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import { signWithGoogle } from '../../../Firebase';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -11,6 +12,17 @@ const SignInWithSocial = ({ afterLogin }) => {
             .then((result) => {
                 /* const credential = GoogleAuthProvider.credentialFromResult(result) */
                 localStorage.setItem("datoSesion",JSON.stringify(result.user))
+                console.log(result.user);
+                var user ={
+                    uid: result.user.uid,
+                    mail: result.user.email,
+                    name: result.user.displayName,
+                    lastName: '',
+                    phone: result.user.phoneNumber,
+                    photoURL: result.user.photoURL,
+                    isGoogle: true,
+                }
+                axios.post('http://localhost:3005/agregar-usuario', user)
                 afterLogin()
                 
             })

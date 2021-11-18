@@ -1,32 +1,22 @@
-const { db } = require("../db.js");
+const { Servicios, Categorias } = require("../db.js");
 
 // get all services
 
 const getServ = async (req, res) => {
-    const {name} = req.query;
     try {
-        const peticion = await db.collection("services").get();
-        const { docs } = peticion
-        if (docs.length <= 0) {
-            res.send('No hay Servicios agregados aun')
-        }
-        else {
-            const services = docs.map(serv => {
-                let servicio = serv.data();
-                return { servicio }
-            })
-
-// onSearch query by name 
-
-            if(name){
-                const servicesName = services.filter(serv => serv.servicio.title.toLowerCase().includes(name.toLowerCase()))
-                res.json(servicesName)
+        const servicios = await Servicios.findAll( {include :{
+            model: Categorias,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt','servicioId']
             }
-            else{
-            res.json(services)
-            }
-        }
-    } catch (error) {
+        },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }})
+        ;
+        res.send(servicios)
+    }  
+    catch (error) {
         console.log(error)
     }
 };
@@ -36,17 +26,8 @@ const getServ = async (req, res) => {
 const getServId = async (req, res) => {
     const {id} = req.params;
     try {
-        const peticion = await db.collection("services").where('id', '==', id).get();
-        const { docs } = peticion
-        if (docs.length <= 0) {
-            res.send('No hay Servicios que coincidan')
-        } else {
-            const services = docs.map(serv => {
-                let servicio = serv.data();
-                return { servicio }
-            })
-            res.json(services)
-        }
+        const servicio = await Servicios.findAll({ where:{ id }, include: Categorias });      
+        servicio.length < 1 ? res.send('No hay Servicios que coincidan') : res.send(servicio)
     } catch (error) {
         console.log(error)
     }

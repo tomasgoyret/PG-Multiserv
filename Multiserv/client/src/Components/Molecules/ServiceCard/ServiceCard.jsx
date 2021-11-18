@@ -41,7 +41,7 @@ const ServiceCard = ({ service, className }) => {
             <div className="bg-white relative flex flex-col rounded-b-lg">
                 <div className=" absolute -top-5  px-4 flex w-full justify-between">
                     <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                        <span className="text-white">{service.category}</span>
+                        <span className="text-white">{service.categorias.length>0? service.categorias[0].title : "Sin definir" }</span>
                     </div>
                 </div>
                 <div className="pt-6 px-4 relative">
