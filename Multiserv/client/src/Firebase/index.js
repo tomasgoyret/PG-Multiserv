@@ -6,7 +6,8 @@ import {
     signInWithRedirect, 
     signInWithPopup,
     GoogleAuthProvider,
-    sendEmailVerification
+    sendEmailVerification,
+    applyActionCode
 } from 'firebase/auth'
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -31,4 +32,7 @@ function verifyEmailAddress() {
     console.log(auth.currentUser)
     return sendEmailVerification(auth.currentUser)
 }
-export {auth, signUp, signWithGoogle, verifyEmailAddress}
+function handleEmailVerification(actionCode) {
+    return applyActionCode(auth, actionCode)
+}
+export {auth, signUp, signWithGoogle, verifyEmailAddress, handleEmailVerification}
