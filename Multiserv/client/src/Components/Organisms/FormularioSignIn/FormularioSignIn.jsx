@@ -123,14 +123,14 @@ const FormularioSignIn = ({handleModal}) => {
                 />
                 <div className="px-4 py-2">
                     <Button
-                                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
+                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                         className="px-4 py-2"
                         submit
                         theme="#155E75"
                         customTextColor="#FFFFF"
-                                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
+                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
                         full
-                                        disabled={loading || !disabledSignIn}
+                        disabled={loading || !disabledSignIn}
                     />
                 </div>
                 <div className="px-4 py-2">
