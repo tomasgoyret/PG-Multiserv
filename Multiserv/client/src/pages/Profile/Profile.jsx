@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Profile = () => {
+    const[editarPerfil, setEditarPerfil] = useState("informacion");
+
+    const cambiarAInformacionBasica = () => {
+        setEditarPerfil("informacion")
+    }
+
+    const cambiarAImagen = () => {
+        setEditarPerfil("imagen")
+    }
+
     return(
         <div className="w-full h-screen ">
             <div className={`bg-gray-700 flex w-full h-44 justify-center items-end`}>
@@ -14,16 +24,27 @@ const Profile = () => {
                     <div className="flex justify-center text-xl font-semibold w-full py-3 px-5 mb-2">
                         <h2>Editar Perfil</h2>
                     </div>
-                    <div className="w-full py-3 px-5 hover:bg-gray-100 ">
-                        <h2 className="font-semibold text-md text-gray-600 hover:text-gray-900 ">Informacion basica</h2>
+                    <div className="w-full py-3 px-5 hover:bg-gray-100 " onClick={cambiarAInformacionBasica}>
+                        <button className="font-semibold text-md text-gray-600 hover:text-gray-900 ">Informacion basica</button>
                     </div>
-                    <div className="w-full py-3 px-5 hover:bg-gray-100">
-                        <h2 className="font-semibold text-md text-gray-600 hover:text-gray-900">Imagen de perfil</h2>
+                    <div className="w-full py-3 px-5 hover:bg-gray-100" onClick={cambiarAImagen}>
+                        <button className="font-semibold text-md text-gray-600 hover:text-gray-900">Imagen de perfil</button>
                     </div>
                 </div>
 
                 <div className="border-2 h-100 w-3/4 rounded-md mr-2">
-
+                    {
+                        editarPerfil === "informacion" &&
+                        <div>
+                            <h1>soy la informacion</h1>
+                        </div>
+                    }
+                    {
+                        editarPerfil === "imagen" &&
+                        <div>
+                            <h1>Soy la imagen</h1>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
