@@ -3,6 +3,8 @@ import Input from "../../Components/Atoms/Input/Input";
 import InputSimple from "../../Components/Atoms/InputSimple/InputSimple";
 import Button from "../../Components/Atoms/Button/Button";
 import { ImSpinner9 } from "react-icons/im";
+import axios from "axios";
+import { actualizarDatosUsuario } from "./profileController";
 
 const Profile = () => {
     const[editarPerfil, setEditarPerfil] = useState("informacion");
@@ -70,10 +72,10 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <div className="border-2 h-auto w-3/4 rounded-md mr-2 py-5 px-5">
+                <div className="border-2 h-auto w-3/4 rounded-md mr-2 px-5">
                     {
                         editarPerfil === "informacion" &&
-                        <div className="w-100 flex flex-col">
+                        <div className="w-100 h-full flex flex-col justify-center">
                             <h2 className="source-sans text-xl font-semibold px-3 pb-1">Información basica</h2>
                             <div className="w-100 flex">
                                 <div className="w-1/2 my-2 px-4 flex flex-col">
@@ -88,6 +90,9 @@ const Profile = () => {
                                         onChange={handleChanges}
                                         name="name"
                                     />
+                                    <div className="flex w-full justify-end">
+                                        <span className="text-sm text-gray-400">{`${datosPerfil.name.length}/30`}</span>
+                                    </div>
                                 </div>
                                 {/* Boton apellido */}
                                 <div className="w-1/2 my-2 px-4 flex flex-col">
@@ -102,6 +107,9 @@ const Profile = () => {
                                         onChange={handleChanges}
                                         name="lastName"
                                     />
+                                    <div className="flex w-full justify-end">
+                                        <span className="text-sm text-gray-400">{`${datosPerfil.lastName.length}/30`}</span>
+                                    </div>
                                 </div>
                             </div>
                             <h2 className="source-sans text-xl font-semibold px-3 pt-3 pb-1">Información de contacto</h2>
@@ -124,6 +132,8 @@ const Profile = () => {
                         editarPerfil === "imagen" &&
                         <div>
                             <div className="w-full">
+                            <h2 className="source-sans text-xl font-semibold px-3 pb-1 pt-2">Foto de perfil
+                            import {axios} from acios</h2>
                                 <div className="w-1/2">
                                     <Input
                                         type="file"
