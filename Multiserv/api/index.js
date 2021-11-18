@@ -25,7 +25,7 @@ require('dotenv').config();
 
 
 conn
-    .sync({ force: false })
+    .sync({ force: true })
     .then(async () => {
         await Categoriasmockup()
         await LlamadoUsers(Users);
