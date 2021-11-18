@@ -22,7 +22,7 @@ const SignInWithSocial = ({ afterLogin }) => {
                     photoURL: result.user.photoURL,
                     isGoogle: true,
                 }
-                axios.post('http://localhost:3005/agregar-usuario', user)
+                axios.post('agregar-usuario', user)
                 afterLogin()
                 
             })
