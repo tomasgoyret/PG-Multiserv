@@ -107,43 +107,43 @@ const FormularioSignIn = ({handleModal}) => {
                 />
                 <SignInWithSocial afterLogin={redirectToHome} />
                 <form onSubmit={signIn}>
-                <SeparadorO />
-                <Input
-                    type="email"
-                    id="user_mail"
-                    theme="#164E63"
-                    label="Email:"
-                    placeholder="Ingresa tu Correo"
-                    flexed
-                    callBack={handleMailChanges}
-                />
-                <Input type="password"
-                    id="user_password"
-                    theme="#164E63"
-                    label="Contraseña:"
-                    flexed
-                    placeholder="Ingresa tu Contraseña"
-                    callBack={handlePasswordChanges}
-                />
-                <div className="px-4 py-2">
-                    <Button
-                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
-                        className="px-4 py-2"
-                        submit
-                        theme="#155E75"
-                        customTextColor="#FFFFF"
-                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
-                        full
-                        disabled={loading || !disabledSignIn}
+                    <SeparadorO />
+                    <Input
+                        type="email"
+                        id="user_mail"
+                        theme="#164E63"
+                        label="Email:"
+                        placeholder="Ingresa tu Correo"
+                        flexed
+                        callBack={handleMailChanges}
                     />
-                </div>
-                <div className="px-4 py-2">
-                                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace:
-                                        <span className="font-semibold text-indigo-800 cursor-pointer"><br /> <Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
-                </div>
-                            </form>
-                        </div>
-                    )}
+                    <Input type="password"
+                        id="user_password"
+                        theme="#164E63"
+                        label="Contraseña:"
+                        flexed
+                        placeholder="Ingresa tu Contraseña"
+                        callBack={handlePasswordChanges}
+                    />
+                    <div className="px-4 py-2">
+                        <Button
+                            icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
+                            className="px-4 py-2"
+                            submit
+                            theme="#155E75"
+                            customTextColor="#FFFFF"
+                            text={loading ? 'Iniciando sesión...' : 'Ingresar'}
+                            full
+                            disabled={loading || !disabledSignIn}
+                        />
+                    </div>
+                    <div className="px-4 py-2">
+                        <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace:
+                        <span className="font-semibold text-indigo-800 cursor-pointer"><br /> <Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
+                    </div>
+                </form>
+            </div>
+            )}
 
         </div>
     )

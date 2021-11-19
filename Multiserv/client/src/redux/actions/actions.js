@@ -9,7 +9,7 @@ import {
     USUARIOS,
     RESETORDER,
     FILTERCAT,
-    GETCATS
+    GETCATS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = 'http://localhost:3005';

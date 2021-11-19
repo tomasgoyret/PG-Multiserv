@@ -6,21 +6,23 @@ import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
-import { actualizarDatosUsuario } from "./profileController";
 
 const Profile = () => {
     const[editarPerfil, setEditarPerfil] = useState("informacion");
     const [loading, setLoading] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    const { displayName, email, photoURL, uid } = datosSesionFromLocalStorage;
-    const [nameDatosLocalStorage, lastNameDatosLocalStorage] = displayName.split(" ");
+    const { uid, email, displayName, photoURL } = datosSesionFromLocalStorage;
+    const [nameUser, lastNameUser] = displayName.split(" ");
+    const navigate = useNavigate();
     const [datosPerfil, setDatosPerfil] = useState({
-        name: nameDatosLocalStorage,
-        lastName: lastNameDatosLocalStorage,
+        name: nameUser,
+        lastName: lastNameUser,
         email: email,
     })
+
     
-    const navigate = useNavigate();
+
+
     const eliminarUsuario = (uid) => {
         Swal.fire({
             title: 'Estas seguro?',
@@ -51,6 +53,11 @@ const Profile = () => {
           })
     }
 
+    const handleEliminarUsuario = () => {
+        eliminarUsuario(uid)
+    }
+
+
     // Handlers
     const cambiarAInformacionBasica = () => {
         setEditarPerfil("informacion")
@@ -71,42 +78,49 @@ const Profile = () => {
         })
     }
 
-    const handleEliminarUsuario = () => {
-        const resultado = eliminarUsuario(uid)
-    }
-
+   
     const handleUpdate = async () => {
-        actualizarDatosUsuario({
+        await actualizarDatosUsuario({
             name: datosPerfil.name,
             lastName: datosPerfil.lastName,
             uid: uid,
             photoURL: photoURL,
             phone: ""
         })
+        
     }
 
     const actualizarDatosUsuario = (user) => {
-        const { name, lastName, photoURL, uid } = user;
-    
-        let datosActualizados = 
-    
+        const { name, lastName, photoURL, uid, phone } = user;
+        setLoading(true)
         axios.put(`http://localhost:3005/editar-usuario/${uid}`, {
             name,
             lastName,
-            uid,
             photoURL,
-            phone: ""
+            uid,
+            phone
         })
         .then(response => {
-            localStorage.setItem("datoSesion", JSON.stringify(response.data.usuarioActualizado))
+            setLoading(false)
+            localStorage.setItem("datoSesion", JSON.stringify({
+                ...datosSesionFromLocalStorage,
+                displayName: response.data.usuarioActualizado.displayName,
+                
+            }))
+            Swal.fire(
+                'Actualizado!',
+                'Tus informacion se ha actualizado con exito.',
+                'success'
+              )
         })
         .catch(err => console.log(err))
-        // datosSesionFromLocalStorage.setItem("datoSesion", JSON.stringify(user));
-        console.log(datosActualizados)
     }
 
+    const cerrarSesion = () =>{
+        localStorage.removeItem("datoSesion")
+        navigate("/")
+    }
     
-
     return(
         <div className="w-full h-screen ">
             <div className={`bg-gray-700 flex w-full h-44 justify-center items-end`}>
@@ -128,16 +142,13 @@ const Profile = () => {
                         <button className="font-semibold text-md text-red-600 ">Eliminar cuenta</button>
                     </div>
                     <div className="w-full mt-14">
-                        {/* <Button
-                            icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
-                            className="px-4 py-2"
-                            submit
-                            theme="#155E75"
-                            customTextColor="#FFFFF"
-                            text={loading ? 'Guardado' : 'Guardar'}
-                            full
-                        /> */}
-                        <button onClick={handleUpdate}>guardar</button>
+                        
+                        <button 
+                            className="flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
+                            onClick={handleUpdate}
+                        >
+                            Guardar {loading && <ImSpinner9 className="ml-2 animate-spin" />}
+                        </button>
                     </div>
                 </div>
 
