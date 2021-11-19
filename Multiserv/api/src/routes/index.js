@@ -10,6 +10,7 @@ const putServRouter = require("./putServ");
 const deleteServRouter = require("./deleteServ");
 const postCategoriasRouter = require("./postCategorias");
 const getCategoriasRouter = require("./getCategorias");
+const payServiceRouter = require("./payService");
 
 
 
@@ -26,6 +27,8 @@ router.use("/services", getServRouter);
 router.use("/newservice", postServRouter);
 router.use("/edit-service", putServRouter);
 router.use("/delete-service", deleteServRouter);
+router.use("/pay-service", payServiceRouter);
+
 
 //Rutas de categorias
 
