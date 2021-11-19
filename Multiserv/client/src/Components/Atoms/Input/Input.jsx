@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from 'react'
 
-const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, flexed, error }) => {
+const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, flexed, error, disabled }) => {
     const [value, setValue] = useState('')
 
     const flexedStyle = {
@@ -37,6 +37,7 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
                 {label}
             </label>
             <input
+                disabled={disabled}
                 type={type}
                 name={id}
                 id={id}

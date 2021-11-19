@@ -8,7 +8,8 @@ import {
     SERVICIOS,
     USUARIOS,
     RESETORDER,
-    FILTERCAT
+    FILTERCAT,
+    GETCATS
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -19,6 +20,7 @@ export const services = () => {
         let services = `${server}/services`;
         const response = await axios(services);
         const dataServ = response.data
+        console.log(dataServ)
         return dispatch({
             type: SERVICIOS,
             payload: dataServ
@@ -37,14 +39,30 @@ export const users = () => {
         })
     }
 }
+/* Obtener las categorias  */
+export const getCats = () => {
+    return async function (dispatch) {
+        let categories = `${server}/categorias`;
+        const response = await axios(categories);
+        const dataCats = response.data.map(cat => {
+            return { name: cat.title, value: cat.title }
+        })
+        return dispatch({
+            type: GETCATS,
+            payload: dataCats
+        })
+    }
+}
 /* Filtrado por categoria */
 export const filterCats = (nombre) => { return { type: FILTERCAT, payload: nombre } }
 /* Buscar Servicio */
 export const buscar = (nombre) => { return { type: BUSCAR, payload: nombre } }
 /* Ordenar Servicios */
 /* Por alfabeto */
-export const orderAlph = (by) => { console.log(by)
-     return { type: ORDERALPH, payload: by } }
+export const orderAlph = (by) => {
+    console.log(by)
+    return { type: ORDERALPH, payload: by }
+}
 /* Por rating */
 export const orderRating = (by) => { return { type: ORDERRAT, payload: by } }
 
