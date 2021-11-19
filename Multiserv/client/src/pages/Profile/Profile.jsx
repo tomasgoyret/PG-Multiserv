@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../../Components/Atoms/Input/Input";
 import InputSimple from "../../Components/Atoms/InputSimple/InputSimple";
 import Button from "../../Components/Atoms/Button/Button";
+import { AiFillHome } from "react-icons/ai";
 import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
 import Swal from 'sweetalert2';
@@ -116,14 +117,16 @@ const Profile = () => {
         .catch(err => console.log(err))
     }
 
-    const cerrarSesion = () =>{
-        localStorage.removeItem("datoSesion")
-        navigate("/")
-    }
     
     return(
         <div className="w-full h-screen ">
             <div className={`bg-gray-700 flex w-full h-44 justify-center items-end`}>
+                <div className="w-full flex h-14 absolute top-0">
+                    <button 
+                        onClick={() => navigate("/home")} 
+                        className="flex  text-gray-50 text-3xl font-semibold justify-center items-center ml-3"  
+                    ><AiFillHome size='28' color='white' /></button>
+                </div>
                 {/* Imagen de perfil */}
                 <div className="w-40 h-40 border-2 absolute top-24 rounded-full bg-gray-50" style={{backgroundImage: `url(${photoURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover"}}>
                     
@@ -147,7 +150,7 @@ const Profile = () => {
                             className="flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
                             onClick={handleUpdate}
                         >
-                            Guardar {loading && <ImSpinner9 className="ml-2 animate-spin" />}
+                          {loading && <ImSpinner9 className="mr-2 animate-spin" />} Guardar 
                         </button>
                     </div>
                 </div>

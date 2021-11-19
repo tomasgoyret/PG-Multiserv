@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonXartiago from '../../../Atoms/ButtonXartiago/ButtonXartiago'
 import { handleEmailVerification } from '../../../../Firebase'
 import s from './EmailVerified.module.css'
+import { getErrorMessage } from '../../../../Firebase/errorMessages';
 
 const EmailVerified = ({ validationCode }) => {
     const navigate = useNavigate()
@@ -55,21 +56,6 @@ const EmailVerified = ({ validationCode }) => {
             mounted = false
         }
     }, [showTimer, countDown, triggeredTimer])
-
-    const getErrorMessage = (errorCode) => {
-        switch (errorCode) {
-            case 'auth/expired-action-code':
-                return 'El enlace de verificación ha expirado'
-            case 'auth/invalid-action-code':
-                return 'Es probable que ya se haya usado este enlace de verificación anteriormente o no es un enlace válido'
-            case 'auth/user-disabled':
-                return 'El usuario se encuentra deshabilidato. Crea otra cuenta'
-            case 'auth/user-not-found':
-                return 'No se encontró un usuario asociado a este enlace'
-            default:
-                return '';
-        }
-    }
 
     return (
         <div className="container mx-auto flex flex-col items-center justify-center h-screen">

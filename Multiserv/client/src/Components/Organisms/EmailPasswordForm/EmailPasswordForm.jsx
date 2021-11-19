@@ -102,7 +102,9 @@ const EmailPasswordForm = ({ callBack }) => {
                     callBack={handleConfirmChanges}
                 />
             </div>
-            <p className="px-4 font-semibold text-sm text-red-800">{error.message}</p>
+            <div style={{ height: '20px' }}>
+                <p className="px-4 font-semibold text-sm text-red-800">{error.message}</p>
+            </div>
             <div className="px-4 py-2">
                 <Button
                     submit
