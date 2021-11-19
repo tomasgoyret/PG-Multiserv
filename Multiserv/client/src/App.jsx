@@ -27,6 +27,7 @@ function App() {
         <Route path="/detalle" element={<Detalle />} />
         <Route path="/test" element={<PasswordChange />} />
         <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/test" element={<PasswordChange />} /> */}
         <Route path="/email-verification" element={<VerifyEmail />} />
         <Route path="/user-validations" element={<UsersValidations />} />
       </Routes>
