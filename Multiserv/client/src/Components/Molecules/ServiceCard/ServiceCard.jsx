@@ -59,7 +59,7 @@ const ServiceCard = ({ service, className }) => {
                         <p className="text-gray-500 font-normal leading-tight tracking-wide">{service.description}</p>
                     </div>
                     <div css={contGrad} className="w-full px-8 text-right absolute -bottom-1 left-0">
-                        <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={'/detalle/'+service.id}>Ver más...</Link> </span>
+                        <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={'/detalle/'+service.}>Ver más...</Link> </span>
 
                     </div>
                 </div>
