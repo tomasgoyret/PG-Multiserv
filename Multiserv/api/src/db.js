@@ -76,6 +76,7 @@ const {
   Citas,
   Horarios,
   Resenas,
+  Favoritos
 } = sequelize.models;
 
 
@@ -85,16 +86,11 @@ Usuarios.hasMany(Servicios);
 Usuarios.hasMany(Resenas);
 Usuarios.hasMany(Citas);
 
-
 // Servicios 
 Servicios.belongsTo(Usuarios);
 Servicios.hasOne(Direcciones);
-Servicios.belongsToMany(Categorias,{through: 'services_category'});
 Servicios.hasMany(Resenas);
 Servicios.hasMany(Citas);
-
-// Categorias 
-Categorias.belongsToMany(Servicios,{through: 'services_category'});
 
 // Direcciones
 Direcciones.belongsTo(Usuarios);
@@ -105,6 +101,12 @@ Direcciones.belongsTo(Citas);
 Resenas.belongsTo(Servicios);
 Resenas.belongsTo(Usuarios);
 
+
+// Muchos a Muchos  ---> Favoritos y Categorias
+Usuarios.belongsToMany(Favoritos,{through: 'usuarios_favoritos'});
+Favoritos.belongsToMany(Usuarios,{through: 'usuarios_favoritos'});
+Servicios.belongsToMany(Categorias,{through: 'services_category'});
+Categorias.belongsToMany(Servicios,{through: 'services_category'});
 
 //Relación 1 a 1 Servicios ---> Horarios
 Servicios.hasOne(Horarios);
