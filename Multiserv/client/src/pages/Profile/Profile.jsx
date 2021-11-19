@@ -75,16 +75,37 @@ const Profile = () => {
         const resultado = eliminarUsuario(uid)
     }
 
-    const handleUpdate = () => {
-        const resultado = actualizarDatosUsuario({
+    const handleUpdate = async () => {
+        actualizarDatosUsuario({
             name: datosPerfil.name,
             lastName: datosPerfil.lastName,
             uid: uid,
             photoURL: photoURL,
             phone: ""
         })
-        console.log("este es el resultado", resultado)
     }
+
+    const actualizarDatosUsuario = (user) => {
+        const { name, lastName, photoURL, uid } = user;
+    
+        let datosActualizados = 
+    
+        axios.put(`http://localhost:3005/editar-usuario/${uid}`, {
+            name,
+            lastName,
+            uid,
+            photoURL,
+            phone: ""
+        })
+        .then(response => {
+            localStorage.setItem("datoSesion", JSON.stringify(response.data.usuarioActualizado))
+        })
+        .catch(err => console.log(err))
+        // datosSesionFromLocalStorage.setItem("datoSesion", JSON.stringify(user));
+        console.log(datosActualizados)
+    }
+
+    
 
     return(
         <div className="w-full h-screen ">

@@ -8,6 +8,7 @@ import Profile from "./pages/Profile/Profile";
 import Detalle from "./pages/DetalleServicio/DetalleServicio"
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
+import PasswordChange from "../src/pages/PasswordChange/PasswordChange";
 
 function App() {
   return (
