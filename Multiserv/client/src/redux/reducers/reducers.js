@@ -5,9 +5,7 @@ import {
     SERVICIOS,
     USUARIOS,
     RESETORDER,
-    FILTERCAT,
-    EMPATYSERVICIOID,
-    SERVICIOID
+    FILTERCAT
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -15,29 +13,11 @@ const initalState = {
     loadingServices: true,
     servicios: [],
     usuarios: [],
-    aux: [],
-    detalleServicio:{}
+    aux: []
 }
 
-function rootReducer(state = initalState, {type, payload}){
-    switch(type){
-
-
-        case EMPATYSERVICIOID:
-            return{
-                ...state,
-                loadingServices: false,
-                detalleServicio: {},
-                aux: payload
-            }
-        case SERVICIOID:
-            console.log("entre al reducer .....")
-            return{
-                ...state,
-                loadingServices: false,
-                detalleServicio: payload,
-                aux: payload
-            }
+function rootReducer(state = initalState, { type, payload }) {
+    switch (type) {
         case SERVICIOS:
             return {
                 ...state,
