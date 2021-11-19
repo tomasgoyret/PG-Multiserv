@@ -27,23 +27,6 @@ const Cate = [
   },
 ]
 
-let Categoriasmockup = async () => {
-  try {
-      for(let s of Cate) {
-       let cat =  s.title.charAt(0).toUpperCase() + s.title.slice(1).toLowerCase()
-       let existe = await Categorias.findOne({ where: { title : cat }})
-        if(existe === null){
-            await Categorias.create({title: cat})
-            console.log(`Se creó la categoría ${cat} correctamente`)
-        } else console.log(`La categoría ${cat} ya existe`)
-      }
-      //console.log("Se crearon las categorías")
-  }
-  catch(err){
-      console.log(err)
-  }
-} 
-
 
 
 
@@ -1664,6 +1647,24 @@ const services = [
 
 ]
 
+
+//CATEGORÍAS
+let Categoriasmockup = async () => {
+  try {
+      for(let s of Cate) {
+       let cat =  s.title.charAt(0).toUpperCase() + s.title.slice(1).toLowerCase()
+       let existe = await Categorias.findOne({ where: { title : cat }})
+        if(existe === null){
+            await Categorias.create({title: cat})
+        } else console.log(`La categoría ${cat} ya existe`)
+      }
+      //console.log("Se crearon las categorías")
+  }
+  catch(err){
+      console.log(err)
+  }
+} 
+
 // USUARIOS
 
 const LlamadoUsers = async (usuarios) => {
@@ -1696,13 +1697,13 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-             // usuarioUidClient: s.uidUser,
+              usuarioUidClient: s.uidClient
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
             const category = await Categorias.findOne({ where: { title: s.category}})
             await servicio.addCategorias(category)
-            console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
+            // console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
       }
   }
   catch(err){
