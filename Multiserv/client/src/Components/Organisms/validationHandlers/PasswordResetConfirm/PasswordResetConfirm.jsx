@@ -6,6 +6,7 @@ import Input from '../../../Atoms/Input/Input'
 import { ImSpinner9 } from "react-icons/im";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { handleConfirmPasswordReset, handlePasswordReset } from '../../../../Firebase';
+import { getErrorMessage } from '../../../../Firebase/errorMessages';
 
 const PasswordResetConfirm = ({ validationCode }) => {
     const navigate = useNavigate()
@@ -27,23 +28,6 @@ const PasswordResetConfirm = ({ validationCode }) => {
     }
     const handleConfirmPassword = (text) => {
         setConfirmPassword(text)
-    }
-
-    const getErrorMessage = (errorCode) => {
-        switch (errorCode) {
-            case 'auth/expired-action-code':
-                return 'El enlace de verificación ha expirado'
-            case 'auth/invalid-action-code':
-                return 'Es probable que ya se haya usado este enlace de verificación anteriormente o no es un enlace válido'
-            case 'auth/user-disabled':
-                return 'El usuario se encuentra deshabilidato. Crea otra cuenta'
-            case 'auth/user-not-found':
-                return 'No se encontró un usuario asociado a este enlace'
-            case 'auth/weak-password':
-                return 'La contraseña es demasiado débil. Actualiza la página y vuelve a intentarlo'
-            default:
-                return 'Ocurrió un error desconocido. Vuelve a solicitar restablecer tu contraseña';
-        }
     }
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 import { useNavigate } from "react-router";
-import { signWithGoogle } from '../../../Firebase';
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { ImSpinner9 } from "react-icons/im";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
@@ -137,9 +137,8 @@ const FormularioSignIn = ({handleModal}) => {
                                         disabled={loading || !disabledSignIn}
                     />
                 </div>
-                <div className="px-4 py-2">
-                                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace:
-                                        <span className="font-semibold text-indigo-800 cursor-pointer"><br /> <Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
+                                <div className="px-4 py-2 text-center">
+                                    <span className="font-semibold text-indigo-800 cursor-pointer"><Link to="/passwordReset">Olvidé mi contraseña <HiOutlineArrowNarrowRight className="inline-block" /></Link></span>
                 </div>
                             </form>
                         </div>
