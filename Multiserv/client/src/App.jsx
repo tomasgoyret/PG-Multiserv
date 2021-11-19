@@ -10,6 +10,7 @@ import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
 import PasswordChange from "../src/pages/PasswordChange/PasswordChange";
 import ReviewService from "./Components/Organisms/ReviewService/ReviewService";
+import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
         {/* <Route path="/test" element={<PasswordChange />} /> */}
         <Route path="/email-verification" element={<VerifyEmail />} />
         <Route path="/user-validations" element={<UsersValidations />} />
+        {/*/ Bastian rutas nuevas */}
         <Route path="/review" element={<ReviewService />} />
+        <Route path="/admin" element={<SignInAdmin />} />
       </Routes>
     </div>
   );
