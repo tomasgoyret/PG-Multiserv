@@ -10,7 +10,7 @@ import UsersValidations from "./pages/UsersValidations/UsersValidations";
 
 function App() {
   return (
-    <div>
+    <div className="custom-scrollbar">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
