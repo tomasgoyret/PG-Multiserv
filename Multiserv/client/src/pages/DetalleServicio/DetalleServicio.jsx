@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import{servicesId,empatyServicesId} from "../../redux/actions/actions"
 import React, { useState,useEffect } from 'react'
-import { FaHeartBroken } from 'react-icons/fa'
-
 /* Atoms */
 import LinkTo from '../../Components/Atoms/LinkTo/LinkTo'
 /* Organisms */
@@ -9,64 +8,32 @@ import Nav from "../../Components/Organisms/NavBar/Nav"
 /* Assets */
 import Img from '../../assets/Icons/profile.png'
 /* Icon */
-import { AiFillHome, AiFillCalendar, AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai"
-import { BsFillChatDotsFill, BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from "react-icons/bs";
+import { AiFillHome, AiFillCalendar, AiOutlineLoading3Quarters } from "react-icons/ai"
+import { BsFillChatDotsFill} from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
-/* React Hooks */
-/* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder, filterCats } from '../../redux/actions/actions';
-import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
+import { buscar, resetOrder} from '../../redux/actions/actions';
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
-import Input from '../../Components/Atoms/Input/Input';
 import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
-import ListBox from '../../Components/HeadLess/ListBox/ListBox'
 
 const DetalleServicio = () => {
+   // const id= props.match.params.id;
+     const id= "1xSqIn1AFenrk3drarSX"
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(servicesId(id))
+    },[dispatch,id])
+
+   const servicioID = useSelector((state)=> state.detalleServicio.data)
+   
+    console.log(" mi servicio ",servicioID)
+
     const loading = useSelector((state) => state.loadingServices)
-    const servicios = useSelector((state) => state.servicios)
     const navigate = useNavigate();
     const [verPerfil, setVerPerfil] = useState(false)
     const [buscador, setBuscador] = useState('')
-    const [order, setOrder] = useState(null)
-    const [filter, setFilter] = useState(null)
-    const dispatch = useDispatch()
-    const handleBuscador = (texto) => {
-        setBuscador(texto)
-    }
-    useEffect(() => {
-        dispatch(services())
-    }, [])
-
-    useEffect(() => {
-        if (order !== null) {
-            if (order.type === 'none') {
-                dispatch(resetOrder())
-            }
-            if (order.type === 'alph') {
-                dispatch(orderAlph(order.value))
-            }
-            if (order.type === 'rat') {
-                dispatch(orderRating(order.value))
-            }
-        }
-    }, [order])
-
-    useEffect(() => {
-        if (filter !== null) {
-            if (filter.value === 'none'){
-                dispatch(resetOrder())
-            } else{
-                dispatch(filterCats(filter.name))
-            }
-        }
-    }, [filter])
-
-    const handleListValue2 = (obj) => {
-        setFilter(obj)
-    }
-
+  
     useEffect(() => {
         buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
     }, [buscador])
@@ -87,12 +54,7 @@ const DetalleServicio = () => {
         e.preventDefault();
         localStorage.removeItem("datoSesion")
         navigate("/")
-    }
-    const handleListValue = (obj) => {
-        setOrder(obj)
-    }
-
-  
+    }  
     const handleClick = () => {
         setVerPerfil(!verPerfil);
     }
@@ -148,7 +110,7 @@ const DetalleServicio = () => {
                 loading ? (
                     <div className="w-full flex flex-col h-screen justify-center items-center">
                         <AiOutlineLoading3Quarters className={`text-5xl text-indigo-900 animate-spin`} />
-                        <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
+                        <h1 className="text-xl font-semibold text-gray-800 mt-2">Ingresando a detalles de servicios...</h1>
                     </div>
                 ) : (
                     <div className="w-full flex flex-col h-screen">
@@ -185,7 +147,7 @@ const DetalleServicio = () => {
                                         <span className="self-center text-sm font-medium text-gray-500">{`Desde $`}</span>
                                     </div>
                                   <div className="max-h-14 overflow-hidden">
-                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide">descripcion ...</p>
+                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide"> detalle</p>
                                   </div>
                                 <div className="">
                                   <ButtonXartiago

@@ -21,7 +21,7 @@ function App() {
         </Route>
         {/* <Route path="/passwordChange" element={<PasswordChange />} /> */}
         <Route path="/passwordReset" element={<PasswordReset />} />
-        <Route path="/detalle" element={<Detalle />} />
+        <Route path="/detalle/:id" element={<Detalle />} />
       </Routes>
     </div>
   );

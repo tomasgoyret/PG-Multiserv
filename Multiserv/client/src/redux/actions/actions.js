@@ -7,11 +7,35 @@ import {
     ORDERRAT,
     SERVICIOS,
     USUARIOS,
-    RESETORDER
+    RESETORDER,
+    SERVICIOID,
+    EMPATYSERVICIOID
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = 'http://localhost:3005';
 
+/* Traer detalle de servicio */
+export const servicesId = (id) => {
+
+    console.log("entre al actions "+ id+".....")
+    return async function (dispatch) {
+        let services = `${server}/services/${id}`;
+        const response = await axios(services);
+        return dispatch({
+            type: SERVICIOID,
+            payload: response
+        })
+    }
+}
+/* vacia detalle de servicio */
+export const empatyServicesId = (nro) => {
+    return async function (dispatch) {
+        return dispatch({
+            type: EMPATYSERVICIOID,
+            
+        })
+    }    
+}
 /* Traer servicios */
 export const services = () => {
     return async function (dispatch) {
