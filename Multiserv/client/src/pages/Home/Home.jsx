@@ -171,28 +171,33 @@ const Home = () => {
                 {
                     email !== "" &&
                     <div className="flex flex-col w-full justify-center py-2">
-                        <div className="flex my-1 items-center pl-3">
-                            <MdEdit className="mr-2" />
-                            <span className="font-semibold">Editar Perfil</span>
-                        </div>
+                        <LinkTo page="profile" 
+                            render={(
+                            <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
+                                <MdEdit className="mr-2"/>
+                                <span className="font-semibold">Editar Perfil</span>
+                            </div>)}
+                        />
+                        
                         <div className="flex my-1 items-center pl-3">
                             <MdNotifications className="mr-2" />
                             <span className="font-semibold">Notificaciones</span>
                         </div>
-                        <div className="flex my-1 items-center pl-3">
+                        <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
                             <MdFavorite className="mr-2" />
                             <span className="font-semibold">Lista Favoritos</span>
                         </div>
-                        <div className="flex my-1 items-center pl-3">
+                        <div className="flex items-center pl-3 hover:bg-gray-100 py-2">
                             <MdHomeRepairService className="mr-2" />
                             <span className="font-semibold">Ser Provedor</span>
                         </div>
+                    
                     </div>
                 }
                 {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center mt-2 w-2/5 mt-3"><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md">Log out</button></div>) : (<ButtonXartiago
                     btn="Regresar"
                     page=""
-                    clase="w-2/5 mt-3"
+                    clase="w-2/5 mt-5"
                     btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
                 />)}
             </div>
