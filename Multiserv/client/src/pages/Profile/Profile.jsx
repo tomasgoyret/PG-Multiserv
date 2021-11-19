@@ -6,6 +6,7 @@ import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
+import { actualizarDatosUsuario } from "./profileController";
 
 const Profile = () => {
     const[editarPerfil, setEditarPerfil] = useState("informacion");
@@ -16,11 +17,10 @@ const Profile = () => {
     const [datosPerfil, setDatosPerfil] = useState({
         name: nameDatosLocalStorage,
         lastName: lastNameDatosLocalStorage,
-        email: email
+        email: email,
     })
     
     const navigate = useNavigate();
-
     const eliminarUsuario = (uid) => {
         Swal.fire({
             title: 'Estas seguro?',
@@ -47,11 +47,8 @@ const Profile = () => {
                 .catch(err => {
                     Swal.fire('Changes are not saved', '', 'info')
                 })
-              
             }
-            
           })
-    
     }
 
     // Handlers
@@ -78,6 +75,17 @@ const Profile = () => {
         const resultado = eliminarUsuario(uid)
     }
 
+    const handleUpdate = () => {
+        const resultado = actualizarDatosUsuario({
+            name: datosPerfil.name,
+            lastName: datosPerfil.lastName,
+            uid: uid,
+            photoURL: photoURL,
+            phone: ""
+        })
+        console.log("este es el resultado", resultado)
+    }
+
     return(
         <div className="w-full h-screen ">
             <div className={`bg-gray-700 flex w-full h-44 justify-center items-end`}>
@@ -99,7 +107,7 @@ const Profile = () => {
                         <button className="font-semibold text-md text-red-600 ">Eliminar cuenta</button>
                     </div>
                     <div className="w-full mt-14">
-                        <Button
+                        {/* <Button
                             icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
                             className="px-4 py-2"
                             submit
@@ -107,7 +115,8 @@ const Profile = () => {
                             customTextColor="#FFFFF"
                             text={loading ? 'Guardado' : 'Guardar'}
                             full
-                        />
+                        /> */}
+                        <button onClick={handleUpdate}>guardar</button>
                     </div>
                 </div>
 
