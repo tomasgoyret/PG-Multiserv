@@ -20,14 +20,12 @@ const EmailVerified = ({ validationCode }) => {
         if (inProcess) {
             handleEmailVerification(validationCode)
                 .then(response => {
-                    console.log(response);
                     setInProcess(false)
                     setShowTimer(true)
                     setValidationResult({
                         success: true
                     })
                 }).catch(error => {
-                    console.log(error)
                     setInProcess(false)
                     setValidationResult({
                         failed: error.code

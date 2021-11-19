@@ -2,10 +2,10 @@ import { Route, Routes } from "react-router";
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
-import PasswordChange from "./pages/PasswordChange/PasswordChange";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
+import Detalle from "./pages/DetalleServicio/DetalleServicio"
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
 
@@ -21,8 +21,9 @@ function App() {
           <Route path='/home/profile' element={<Home />} />
           <Route path='/home/schedule' element={<Home />} />
         </Route>
-        <Route path="/passwordChange" element={<PasswordChange />} />
+        {/* <Route path="/passwordChange" element={<PasswordChange />} /> */}
         <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/detalle" element={<Detalle />} />
         <Route path="/test" element={<PasswordChange />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/email-verification" element={<VerifyEmail />} />
