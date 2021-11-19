@@ -48,7 +48,7 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
                 value={value}
                 autoComplete="true"
                 className={`${error ? 'border-2 border-red-800' : 'border border-gray-400'} p-2 rounded-md font-medium`}
-
+                disabled={disabled}
             />
         </div>
     )
