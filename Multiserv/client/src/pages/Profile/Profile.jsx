@@ -4,13 +4,14 @@ import InputSimple from "../../Components/Atoms/InputSimple/InputSimple";
 import Button from "../../Components/Atoms/Button/Button";
 import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
-import { actualizarDatosUsuario } from "./profileController";
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router";
 
 const Profile = () => {
     const[editarPerfil, setEditarPerfil] = useState("informacion");
     const [loading, setLoading] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    const { displayName, email, photoURL } = datosSesionFromLocalStorage;
+    const { displayName, email, photoURL, uid } = datosSesionFromLocalStorage;
     const [nameDatosLocalStorage, lastNameDatosLocalStorage] = displayName.split(" ");
     const [datosPerfil, setDatosPerfil] = useState({
         name: nameDatosLocalStorage,
@@ -18,7 +19,41 @@ const Profile = () => {
         email: email
     })
     
- 
+    const navigate = useNavigate();
+
+    const eliminarUsuario = (uid) => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Al hacer esto perderas todo en tu usuario",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#32C1CD',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar usuario!',
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+              console.log(result)
+            if (result.isConfirmed) {
+                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                .then(async response => {
+                    await Swal.fire(
+                        'Eliminado!',
+                        'Tu usuario se ha eliminado con exito! volveras al inicio',
+                        'success'
+                    )
+                    localStorage.removeItem("datoSesion")
+                    navigate("/")
+                })
+                .catch(err => {
+                    Swal.fire('Changes are not saved', '', 'info')
+                })
+              
+            }
+            
+          })
+    
+    }
+
     // Handlers
     const cambiarAInformacionBasica = () => {
         setEditarPerfil("informacion")
@@ -39,6 +74,10 @@ const Profile = () => {
         })
     }
 
+    const handleEliminarUsuario = () => {
+        const resultado = eliminarUsuario(uid)
+    }
+
     return(
         <div className="w-full h-screen ">
             <div className={`bg-gray-700 flex w-full h-44 justify-center items-end`}>
@@ -56,7 +95,7 @@ const Profile = () => {
                     <div className="w-full py-3 px-5 hover:bg-gray-100 border-l-4 my-2" onClick={cambiarAImagen}>
                         <button className="font-semibold text-md text-gray-600 hover:text-gray-900">Imagen de perfil</button>
                     </div>
-                    <div className="w-full py-3 px-5 hover:bg-red-100 border-l-4 my-2" onClick={cambiarAImagen}>
+                    <div className="w-full py-3 px-5 hover:bg-red-100 border-l-4 my-2" onClick={handleEliminarUsuario}>
                         <button className="font-semibold text-md text-red-600 ">Eliminar cuenta</button>
                     </div>
                     <div className="w-full mt-14">
@@ -132,8 +171,7 @@ const Profile = () => {
                         editarPerfil === "imagen" &&
                         <div>
                             <div className="w-full">
-                            <h2 className="source-sans text-xl font-semibold px-3 pb-1 pt-2">Foto de perfil
-                            import {axios} from acios</h2>
+                            <h2 className="source-sans text-xl font-semibold px-3 pb-1 pt-2">Foto de perfil</h2>
                                 <div className="w-1/2">
                                     <Input
                                         type="file"
