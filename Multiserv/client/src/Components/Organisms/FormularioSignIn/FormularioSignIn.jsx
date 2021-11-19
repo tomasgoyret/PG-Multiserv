@@ -57,7 +57,11 @@ const FormularioSignIn = ({handleModal}) => {
                 user = userCredential.user
                 localStorage.setItem("datoSesion",JSON.stringify(user))
                 setLoading(false)
-                redirectToHome()
+                if (user.emailVerified) {
+                    redirectToHome()
+                } else {
+                    navigate('/email-verification')
+                }
             })
             .catch(error => {
                 setLoading(false)

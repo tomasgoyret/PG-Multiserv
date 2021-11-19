@@ -1,17 +1,20 @@
-const { db } = require("../db.js");
+const { Servicios, Categorias, Usuarios } = require("../db.js");
 
 
-const postServ = async (req, res) => {
-    const { category, description, photos, min, max, rating, title, uidUser, currency } = req.body;
-    const newService = { category, description, photos, min, max, rating, title, uidUser, currency}
+const postServ = async (req, res, next) => {
+    const { title,  currency,  category, description, max, min, uidClient, rating, photos, direccion} = req.body;
+    const newService = { title, currency, description, max, min, rating, photos}
     try {
-        const service = await db.collection("services").add(newService);
-        const serviceUpdate = await db.collection('services').doc(service.id).update({
-            id: service.id
-          })
-        res.send({ msg: "Nuevo servicio agregado correctamente", idService:service.id })
+        // const user = await Usuarios.update({ where: { uidClient: uidProvider } });
+        // user.provider = true;
+        // user.save();
+        const service = await Servicios.create(newService);
+        await service.addCategorias(category)
+        //await service.addUsuarios(uidClient)
+        res.send({ msg: "Nuevo servicio agregado correctamente", servicio:service})
+
     } catch (error) {
-        res.send(error)
+        next(error)
     }
 }
 

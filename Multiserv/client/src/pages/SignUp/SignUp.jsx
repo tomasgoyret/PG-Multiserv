@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { signUp } from '../../Firebase'
 import { useNavigate } from "react-router-dom";
 import SignInWithSocial from '../../Components/Molecules/SignInWithSocial/SignInWithSocial';
 import SeparadorO from '../../Components/Atoms/SeparadorO/SeparadorO';
@@ -8,6 +7,8 @@ import EmailPasswordForm from '../../Components/Organisms/EmailPasswordForm/Emai
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import UserRegister from '../../Components/Organisms/UserRegister/UserRegister';
 import Swal from 'sweetalert2';
+import { auth, verifyEmailAddress } from '../../Firebase';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false)
@@ -52,7 +53,7 @@ const SignUp = () => {
     }
     useEffect(() => {
         if (loading) {
-            axios.post('http://localhost:3005/agregar-usuario', user)
+            axios.post('agregar-usuario', user)
                 .then(response => {
                     const newUser = response.data.user
                     localStorage.setItem("datoSesion", JSON.stringify(newUser))
@@ -63,12 +64,19 @@ const SignUp = () => {
                         text:' Tu cuenta ha sido creada exitosamente',
                         icon:'success',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                       })
-                    redirectToHome()
+                    return signInWithEmailAndPassword(auth, user.mail, user.password)
+                })
+                .then(() => {
+                    verifyEmailAddress()
+                        .then(() => {
+                            navigate('/email-verification')
+                        })
             })
             .catch(error => {
                 setLoading(false)
+                console.log(error)
                 if (error.response) {
                     Swal.fire({
                         title: 'Error!',
@@ -84,7 +92,6 @@ const SignUp = () => {
                         icon: 'error',
                         confirmButtonText: 'X'
                     })
-                    console.log(error.response)
                 }
             })
         }
