@@ -1697,13 +1697,13 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-              usuarioUidClient: s.uidClient
+              //usuarioUidClient: s.uidClient
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
             const category = await Categorias.findOne({ where: { title: s.category}})
             await servicio.addCategorias(category)
-            // console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
+            console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
       }
   }
   catch(err){

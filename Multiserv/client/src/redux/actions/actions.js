@@ -12,7 +12,7 @@ import {
     GETCATS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
-const server = 'http://localhost:3005';
+const server = '';
 
 /* Traer servicios */
 export const services = () => {
