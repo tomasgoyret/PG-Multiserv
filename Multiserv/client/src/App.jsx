@@ -50,15 +50,15 @@ function App() {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
         },
+        {
+          path: '/home/detalleServicio/:id',
+          element: <DetalleServicio />
+        }
       ]
     },
     {
       path: '/passwordReset',
       element: <PasswordReset />
-    },
-    {
-      path: '/detalleServicio/:id',
-      element: <DetalleServicio />
     },
     {
       path: '/email-verification',

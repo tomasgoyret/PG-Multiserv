@@ -5,7 +5,7 @@ import { BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from 
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats, users } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import Input from '../../Components/Atoms/Input/Input';
@@ -29,6 +29,7 @@ const Home = () => {
             navigate('/email-verification')
         }
         dispatch(services())
+        dispatch(users())
     }, [])
 
     useEffect(() => {
