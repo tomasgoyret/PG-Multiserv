@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Input from "../../Components/Atoms/Input/Input";
 import InputSimple from "../../Components/Atoms/InputSimple/InputSimple";
+import { storage } from "../../Firebase";
+import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
 import Button from "../../Components/Atoms/Button/Button";
 import { AiFillHome } from "react-icons/ai";
 import { ImSpinner9 } from "react-icons/im";
@@ -11,6 +13,7 @@ import { useNavigate } from "react-router";
 const Profile = () => {
     const[editarPerfil, setEditarPerfil] = useState("informacion");
     const [loading, setLoading] = useState(false)
+    const [loading2, setLoading2] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const { uid, email, displayName, photoURL } = datosSesionFromLocalStorage;
     const [nameUser, lastNameUser] = displayName.split(" ");
@@ -19,7 +22,12 @@ const Profile = () => {
         name: nameUser,
         lastName: lastNameUser,
         email: email,
+        photoURL:photoURL
     })
+
+    const [image, setImage] = useState('');
+
+  
 
     
 
@@ -72,6 +80,29 @@ const Profile = () => {
 
     }
 
+    const handleImageChanges = (e) => {
+        setImage(e.target.files[0]);
+    }
+
+    const handleUpload = async () => {
+        setLoading2(true)
+        // cargarlo a firebase storage
+        try {
+        const fileRef= ref(storage, `/Profilepic/${image.name}`);
+        await uploadBytes(fileRef, image);
+        //obtener url de descarga
+         const urlDownload = await getDownloadURL(fileRef);
+         setDatosPerfil({
+             ...datosPerfil,
+             photoURL:urlDownload
+        })   
+        setLoading2(false);
+        } catch(err){
+           console.log(err)
+        }
+
+    }
+
     const handleChanges = (e) => {
         setDatosPerfil({
             ...datosPerfil,
@@ -85,7 +116,7 @@ const Profile = () => {
             name: datosPerfil.name,
             lastName: datosPerfil.lastName,
             uid: uid,
-            photoURL: photoURL,
+            photoURL: datosPerfil.photoURL,
             phone: ""
         })
         
@@ -103,16 +134,20 @@ const Profile = () => {
         })
         .then(response => {
             setLoading(false)
+            console.log(response);
             localStorage.setItem("datoSesion", JSON.stringify({
                 ...datosSesionFromLocalStorage,
                 displayName: response.data.usuarioActualizado.displayName,
+                photoURL: response.data.usuarioActualizado.photoURL
                 
             }))
             Swal.fire(
                 'Actualizado!',
-                'Tus informacion se ha actualizado con exito.',
+                'Tu información se ha actualizado con éxito.',
                 'success'
               )
+
+            navigate('/home');
         })
         .catch(err => console.log(err))
     }
@@ -128,7 +163,7 @@ const Profile = () => {
                     ><AiFillHome size='28' color='white' /></button>
                 </div>
                 {/* Imagen de perfil */}
-                <div className="w-40 h-40 border-2 absolute top-24 rounded-full bg-gray-50" style={{backgroundImage: `url(${photoURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover"}}>
+                <div className="w-40 h-40 border-2 absolute top-24 rounded-full bg-gray-50" style={{backgroundImage: `url(${datosPerfil.photoURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover"}}>
                     
                 </div>
                 <h2 className="absolute top-64 mt-1 text-xl font-semibold" >{`${datosPerfil.name} ${datosPerfil.lastName}`}</h2>
@@ -217,15 +252,21 @@ const Profile = () => {
                             <div className="w-full">
                             <h2 className="source-sans text-xl font-semibold px-3 pb-1 pt-2">Foto de perfil</h2>
                                 <div className="w-1/2">
-                                    <Input
+                                    <input
+                                        className="border border-gray-400 p-2 rounded-md font-medium" 
                                         type="file"
                                         id="file"
                                         theme="#164E63"
                                         label="Imagen de perfil:"
-                                        flexed
-                                        callBack={handleMailChanges}
+                                        onChange={handleImageChanges}
                                     />
                                 </div>
+                                <button 
+                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
+                            onClick={handleUpload}
+                        >
+                          {loading2 && <ImSpinner9 className="mr-2 animate-spin" />} Subir
+                        </button>
                             </div>
                         </div>
                     }
