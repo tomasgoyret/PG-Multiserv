@@ -11,14 +11,14 @@ payService.pago = (req, res) => {
   const{id} = req.body;
     let preference = {
     items: [{
-        title: "Mi nuevo servicio en Multiservicos",
+        title: "Publicación en Multiservicos",
         unit_price: 100,
         quantity: 1,
     }],
     back_urls: {
-      success: "https://http://localhost:3000/pago-confirm",
-      failure: "https://http://localhost:3000/pago-confirm",
-      pending: "https://http://localhost:3000/pago-confirm",
+      success: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home",
+      failure: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home",
+      pending: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home",
     },
     auto_return: "approved",
     external_reference: id,
