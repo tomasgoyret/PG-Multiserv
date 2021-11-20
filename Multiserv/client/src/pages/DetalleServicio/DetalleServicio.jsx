@@ -92,7 +92,7 @@ const DetalleServicio = () => {
             :
             null)
 
-    let idProveedor = servicioID[0].usuarioUidClient
+    //let idProveedor = servicioID[0].usuarioUidClient
 
     return (
         <div>
@@ -124,7 +124,7 @@ const DetalleServicio = () => {
                                <div className="p-0.5 rounded-full border-2 border-cyan-800  ">
                                   <div  css={userProfile} className="w-17 h-16 rounded-full " />
                                   <h1 className="font-semibold text-gray-700">Proveedor</h1>
-                                  <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${idProveedor}`} >detalle...</Link></span>
+                                  <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${1}`} >detalle...</Link></span>
                                </div>
                                 
                            </div>
