@@ -107,21 +107,27 @@ const ControlPanel = () => {
                                     <span className="text-gray-500 text-sm -mt-1">{cliente.email}</span>
                                     <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {cliente.uidClient}</span>
                                 </div>
-                                <div className="flex w-1/2 justify-end">
-                                    <div className="flex w-80 items-center">
-                                        <div className="w-12 h-4 rounded-lg bg-green-500 mr-2"></div>
-                                        <button 
-                                            className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                        >
-                                        Volver Admin 
-                                        </button>
-                                        <button 
-                                            className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
-                                        >
-                                        Eliminar 
-                                        </button>
+                                <div className="flex w-1/2 justify-between">
+                                        <div className="flex flex-col w-20 justify-center items-center">
+                                            <div className="flex items-center">
+                                                <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                                <h2 className="font-semibold text-lg">Administrador</h2>
+                                            </div>
+                                            <span className="text-sm">Activo</span>
+                                        </div>
+                                        <div className="flex w-80 items-center">
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                            >
+                                            volver admin
+                                            </button>
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                            >
+                                            Eliminar 
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         ))
                     }
@@ -171,13 +177,19 @@ const ControlPanel = () => {
                                         <span className="text-gray-500 text-sm -mt-1">{provider.email}</span>
                                         <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {provider.uidClient}</span>
                                     </div>
-                                    <div className="flex w-1/2 justify-end">
+                                    <div className="flex w-1/2 justify-between">
+                                        <div className="flex flex-col w-20 justify-center items-center">
+                                            <div className="flex items-center">
+                                                <div className="w-4 h-4 rounded-full bg-gray-500 mr-2"></div>
+                                                <h2 className="font-semibold text-lg">Administrador</h2>
+                                            </div>
+                                            <span className="text-sm">No Activo</span>
+                                        </div>
                                         <div className="flex w-80 items-center">
-                                            <div className="w-12 h-4 rounded-lg bg-green-500 mr-2"></div>
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                             >
-                                            Volver Admin 
+                                            volver admin
                                             </button>
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
@@ -298,7 +310,7 @@ const ControlPanel = () => {
                                                     <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
                                                     <h2 className="font-semibold text-lg">Estado</h2>
                                                 </div>
-                                                <span className="text-sm">Actvo</span>
+                                                <span className="text-sm">Activo</span>
                                             </div>
                                             <div className="flex w-80 items-center">
                                                 <button 
