@@ -2,7 +2,7 @@ const { Usuarios, auth } = require("../db.js");
 
 const putUser = async (req, res,next) => {
  const {uidClient} = req.params;
- const {name, lastName, mail, password, photoURL, phone} = req.body; 
+ const {name, lastName, mail, password, photoURL, phone, isAdmin} = req.body; 
  let newUser= false;
 
   try {
@@ -12,6 +12,7 @@ const putUser = async (req, res,next) => {
       displayName: `${name} ${lastName}`,
       photoURL,
       disabled: false,
+      isAdmin
     } 
     phone && (userData['phoneNumber'] = phone)
 
