@@ -47,10 +47,10 @@ function App() {
           path: '/home/chat',
           element: <div><h1>chat</h1></div>
         },
-        {
-          path: '/home/profile',
-          element: <div><h1>profile</h1></div>
-        },
+        // {
+        //   path: '/home/profile',
+        //   element: <div><h1>profile</h1></div>
+        // },
         {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
@@ -82,13 +82,14 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/components" element={<Components />} />
-        <Route path='/home' element={<Home />} > 
-          <Route path='/home/chat' element={<Home />} />
-          <Route path='/home/profile' element={<Home />} />
-          <Route path='/home/schedule' element={<Home />} />
+        <Route path="/"/>
+        <Route path="/signup"/>
+        <Route path="/components" />
+        <Route path='/home'> 
+          <Route path='/home/chat'/>
+          {/* <Route path='/home/profile'/> */}
+          <Route path='/home/schedule'/>
+
         </Route>
         {/* <Route path="/passwordChange" element={<PasswordChange />} /> */}
         <Route path="/passwordReset" element={<PasswordReset />} />
@@ -100,6 +101,14 @@ function App() {
         <Route path="/admin" element={<SignInAdmin />} />
         <Route path="/control-panel" element={<ControlPanel />} />
         {/* <Route path="/pago" element={<Pago/>} /> */}
+        {/* <Route path="/passwordChange"/> */}
+        <Route path="/passwordReset"/>
+        <Route path="/detalle"/>
+        <Route path="/profile" />
+        {/* <Route path="/test" /> */}
+        <Route path="/email-verification"/>
+        <Route path="/user-validations" />
+        {/* <Route path="/pago"/> */}
       </Routes>
     <div className="custom-scrollbar">
       {routing}
