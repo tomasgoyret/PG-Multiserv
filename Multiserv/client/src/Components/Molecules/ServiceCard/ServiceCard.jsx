@@ -4,6 +4,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaHeartBroken } from 'react-icons/fa'
 import Image from '../../Atoms/Image/Image'
 import StarRating from '../../Atoms/StarRating/StarRating'
+import { Link } from 'react-router-dom'
 
 
 const ServiceCard = ({ service, className }) => {
@@ -58,7 +59,7 @@ const ServiceCard = ({ service, className }) => {
                         <p className="text-gray-500 font-normal leading-tight tracking-wide">{service.description}</p>
                     </div>
                     <div css={contGrad} className="w-full px-8 text-right absolute -bottom-1 left-0">
-                        <span className="cursor-pointer inline-flex font-medium text-cyan-800">Ver más...</span>
+                    <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleServicio/${service.id}`} >Ver más...</Link></span>
                     </div>
                 </div>
                 <div className="flex border-t border-gray-200 mx-4 my-4 pt-4">
