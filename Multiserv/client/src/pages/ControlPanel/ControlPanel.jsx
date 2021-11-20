@@ -51,12 +51,38 @@ const ControlPanel = () => {
                         'El usuario se ha eliminado con exito!',
                         'success'
                     )
+                    console.log(response)
                 })
                 .catch(err => {
                     Swal.fire('Changes are not saved', '', 'info')
                 })
             }
           })
+    }
+
+    // cambiar admin
+    const adminTrue = (user) => {
+        const [name, lastName] = user.displayName.trim().split(" ");
+        const { uidClient } = user;
+        const userModificado = {
+            email: user.email,
+            name: name,
+            lastName: lastName,
+            isAdmin: true,
+            photoURL: user.photoURL
+        }
+        // setLoading(true)
+        axios.put(`https://editar-usuario/${uidClient}`, userModificado)
+        .then(response => {
+            // setLoading(false)
+            console.log(response);
+            Swal.fire(
+                'Actualizado!',
+                'Tu información se ha actualizado con éxito.',
+                'success'
+              )
+        })
+        .catch(err => console.log(err))
     }
 
 
@@ -142,17 +168,26 @@ const ControlPanel = () => {
                                 <div className="flex w-1/2 justify-between">
                                         <div className="flex flex-col w-20 justify-center items-center">
                                             <div className="flex items-center">
-                                                <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                                <div className={`w-4 h-4 rounded-full mr-2 ${cliente.isAdmin ? "bg-green-500" : "bg-gray-500"}`}></div>
                                                 <h2 className="font-semibold text-lg">Administrador</h2>
                                             </div>
-                                            <span className="text-sm">Activo</span>
+                                            <span className="text-sm">{cliente.isAdmin ? "Activo" : "No Activo"}</span>
                                         </div>
                                         <div className="flex w-80 items-center">
-                                            <button 
-                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                            >
-                                            volver admin
-                                            </button>
+                                            {
+                                                cliente.isAdmin ?
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                >
+                                                quitar admin
+                                                </button>
+                                                :
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                >
+                                                volver admin
+                                                </button>
+                                            }
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                                                 onClick={() => eliminarUsuario(cliente.uidClient)}    
@@ -213,17 +248,29 @@ const ControlPanel = () => {
                                     <div className="flex w-1/2 justify-between">
                                         <div className="flex flex-col w-20 justify-center items-center">
                                             <div className="flex items-center">
-                                                <div className="w-4 h-4 rounded-full bg-gray-500 mr-2"></div>
+                                                <div className={`w-4 h-4 rounded-full mr-2 ${provider.isAdmin ? "bg-green-500" : "bg-gray-500"}`}></div>
                                                 <h2 className="font-semibold text-lg">Administrador</h2>
                                             </div>
-                                            <span className="text-sm">No Activo</span>
+                                            <span className="text-sm">{provider.isAdmin ? "Activo" : "No Activo"}</span>
                                         </div>
                                         <div className="flex w-80 items-center">
+                                        {
+                                            provider.isAdmin ?
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                             >
+                                            quitar admin
+                                            </button>
+                                            :
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                onClick={() => adminTrue({ 
+                                                    ...provider,
+                                                })}
+                                            >
                                             volver admin
                                             </button>
+                                            }
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                                             >
