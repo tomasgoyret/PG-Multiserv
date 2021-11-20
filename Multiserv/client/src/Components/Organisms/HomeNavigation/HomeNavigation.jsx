@@ -39,7 +39,7 @@ const HomeNavigation = () => {
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} />,
-        <LinkTo linkClass='m-4 flex justify-center' page='home/profile' render={<FaUserAlt size='28' color='white' />} />,
+        <LinkTo linkClass='m-4 flex justify-center' page='profile' render={<FaUserAlt size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} />
     ]
     const newService = () => {
@@ -61,10 +61,11 @@ const HomeNavigation = () => {
                     {
                         email !== "" &&
                         <div className="flex flex-col w-full justify-center py-2">
+                            <LinkTo page= "profile" render= {
                             <div className="flex my-1 items-center pl-3">
                                 <MdEdit className="mr-2" />
                                 <span className="font-semibold">Editar Perfil</span>
-                            </div>
+                            </div>} />
                             <div className="flex my-1 items-center pl-3">
                                 <MdNotifications className="mr-2" />
                                 <span className="font-semibold">Notificaciones</span>
