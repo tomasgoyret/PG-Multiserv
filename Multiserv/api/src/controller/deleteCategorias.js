@@ -10,4 +10,4 @@ const deleteCategorias = async (req, res) => {
     }
 }
 
-module.export = deleteCategorias
+module.exports = deleteCategorias
