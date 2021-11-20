@@ -30,7 +30,7 @@ export const services = () => {
 /* Traer Usuarios */
 export const users = () => {
     return async function (dispatch) {
-        let users = `${server}/api`;
+        let users = `${server}/usuarios`;
         const response = await axios(users);
         const dataUsers = response.data.map(user => user)
         return dispatch({
