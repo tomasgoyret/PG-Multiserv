@@ -10,6 +10,10 @@ import {
     RESETORDER,
     FILTERCAT,
     GETCATS,
+    SERVICIOID,
+    EMPATYSERVICIOID,
+    USUARIOID,
+    EMPATYUSUARIO
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -67,3 +71,47 @@ export const orderAlph = (by) => {
 export const orderRating = (by) => { return { type: ORDERRAT, payload: by } }
 
 export const resetOrder = (action) => { return { type: RESETORDER } }
+
+//Traer detalle de USUARIO
+export const usuarioId = (id) => {
+    console.log("entre al actions "+ id+".....")
+    return async function (dispatch) {
+        let services =` ${server}/usuarios/${id}`;
+        const response = await axios(services);
+        return dispatch({
+            type: USUARIOID,
+            payload: response.data
+        })
+    }
+}
+// vacia detalle de USUARIO /
+export const empatyusuarioId = (id) => {
+    return async function (dispatch) {
+        return dispatch({
+            type: EMPATYUSUARIO,
+
+        })
+    }
+}
+
+// Traer detalle de servicio /
+export const servicesId = (id) => {
+    console.log("entre al actions "+ id+".....")
+    return async function (dispatch) {
+        let services = `${server}/services/${id}`;
+        const response = await axios(services);
+        return dispatch({
+            type: SERVICIOID,
+            payload: response.data
+        })
+    }
+}
+// vacia detalle de servicio */
+export const empatyServicesId = (id) => {
+    return async function (dispatch) {
+        return dispatch({
+            type: EMPATYSERVICIOID,
+
+        })
+    }
+}
