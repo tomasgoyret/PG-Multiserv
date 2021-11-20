@@ -91,6 +91,7 @@ function App() {
     <div className="custom-scrollbar">
       {routing}
     </div>
+    </div>
   );
 }
 
