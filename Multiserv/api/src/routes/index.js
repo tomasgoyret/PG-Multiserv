@@ -12,6 +12,7 @@ const getCategoriasRouter = require("./getCategorias");
 const getFavRouter = require("./getFav.js");
 const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
+const deleteCategoriasRouter = require("./deleteCategorias");
 
 // Rutas a Usuarios
 router.use("/agregar-usuario", postUserRouter); 
@@ -25,6 +26,7 @@ router.use("/edit-service", putServRouter);
 router.use("/delete-service", deleteServRouter);
 
 //Rutas de categorias
+router.use("/categorias", deleteCategoriasRouter)
 router.use("/categorias", postCategoriasRouter)
 router.use("/categorias", getCategoriasRouter)
 
