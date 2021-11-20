@@ -4,7 +4,7 @@ import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth'
 import { useNavigate } from "react-router";
-import { signWithGoogle } from '../../../Firebase';
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { ImSpinner9 } from "react-icons/im";
 import SeparadorO from "../../Atoms/SeparadorO/SeparadorO";
 import Swal from 'sweetalert2';
@@ -88,65 +88,67 @@ const FormularioSignIn = ({handleModal}) => {
     return (
         <div className="items-center">
             {
-            datosSesionFromLocalStorage ?
-            (<div> 
-                Sesion Iniciada con : {datosSesionFromLocalStorage.email} 
-                <div className="px-4 py-2">
-                        <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
-                </div>
-                <img src={`${datosSesionFromLocalStorage.photoURL}`} />
-            </div> ) 
-            : (
-            <div>
-                <div className="flex w-full justify-end">
-                <button onClick={handleModal} className="font-semibold inline-flex w-15 text-2xl px-3 text-gray-800 rounded-md transition-all ease-in-out duration-300">X</button>
-                </div>
-                <Encabezado2
-                    clases="pt-2 pb-3 flex justify-center"
-                    titulo="Sign In"
-                />
-                <SignInWithSocial afterLogin={redirectToHome} />
-                <form onSubmit={signIn}>
-                <SeparadorO />
-                <Input
-                    type="email"
-                    id="user_mail"
-                    theme="#164E63"
-                    label="Email:"
-                    placeholder="Ingresa tu Correo"
-                    flexed
-                    callBack={handleMailChanges}
-                />
-                <Input type="password"
-                    id="user_password"
-                    theme="#164E63"
-                    label="Contraseña:"
-                    flexed
-                    placeholder="Ingresa tu Contraseña"
-                    callBack={handlePasswordChanges}
-                />
-                <div className="px-4 py-2">
-                    <Button
-                                        icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
-                        className="px-4 py-2"
-                        submit
-                        theme="#155E75"
-                        customTextColor="#FFFFF"
-                                        text={loading ? 'Iniciando sesión...' : 'Ingresar'}
-                        full
-                                        disabled={loading || !disabledSignIn}
+                datosSesionFromLocalStorage ?
+                (<div> 
+                    Sesion Iniciada con : {datosSesionFromLocalStorage.email} 
+                    <div className="px-4 py-2">
+                            <button type="button" onClick={cerrarSesion}>Cerrar Sesión</button>
+                    </div>
+                    <img src={`${datosSesionFromLocalStorage.photoURL}`} />
+                </div>) 
+                :
+                (<div>
+                    <div className="flex w-full justify-end">
+                    <button onClick={handleModal} className="font-semibold inline-flex w-15 text-2xl px-3 text-gray-800 rounded-md transition-all ease-in-out duration-300">X</button>
+                    </div>
+                    <Encabezado2
+                        clases="pt-2 pb-3 flex justify-center"
+                        titulo="Sign In"
                     />
-                </div>
-                <div className="px-4 py-2">
-                    <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace 
-                    <span className="font-semibold text-indigo-800 cursor-pointer"><Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
-                </div>
-                            </form>
+                    <SignInWithSocial afterLogin={redirectToHome} />
+                    <form onSubmit={signIn}>
+                        <SeparadorO />
+                        <Input
+                            type="email"
+                            id="user_mail"
+                            theme="#164E63"
+                            label="Email:"
+                            placeholder="Ingresa tu Correo"
+                            flexed
+                            callBack={handleMailChanges}
+                        />
+                        <Input type="password"
+                            id="user_password"
+                            theme="#164E63"
+                            label="Contraseña:"
+                            flexed
+                            placeholder="Ingresa tu Contraseña"
+                            callBack={handlePasswordChanges}
+                        />
+                        <div className="px-4 py-2">
+                            <Button
+                                icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
+                                className="px-4 py-2"
+                                submit
+                                theme="#155E75"
+                                customTextColor="#FFFFF"
+                                text={loading ? 'Iniciando sesión...' : 'Ingresar'}
+                                full
+                                disabled={loading || !disabledSignIn}
+                            />
                         </div>
-                    )}
+                        <div className="px-4 py-2">
+                            <p className="text-gray-500 leading-tight text-sm font-sans">¿Olvidaste tu contraseña? <span className="font-medium">Recuerda</span> que puedes restablecerla en el siguiente enlace:
+                            <span className="font-semibold text-indigo-800 cursor-pointer"><br /> <Link to="/passwordReset">Restablecer Contraseña</Link></span></p>
+                        </div>
+                    </form>
+                </div>
+            )}
+            <div className="px-4 py-2 text-center">
+                <span className="font-semibold text-indigo-800 cursor-pointer"><Link to="/passwordReset">Olvidé mi contraseña <HiOutlineArrowNarrowRight className="inline-block" /></Link></span>
+                </div>
+    </div>
+)}
 
-        </div>
-    )
-}
 
 export default FormularioSignIn;

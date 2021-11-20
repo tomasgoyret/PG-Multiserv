@@ -3,6 +3,7 @@ const router = Router();
 const postUserRouter = require('./addUser');
 const getUsersRouter = require("./getUsers");
 const deleteUserRouter = require("./deleteUser");
+const editUserRouter = require("./editUser");
 const getServRouter = require("./getServ");
 const postServRouter = require("./postServ");
 const putServRouter = require("./putServ");
@@ -14,16 +15,22 @@ const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 
+const payServiceRouter = require("./payService");
+
+
 // Rutas a Usuarios
 router.use("/agregar-usuario", postUserRouter); 
 router.use("/usuarios", getUsersRouter);
 router.use("/eliminar-usuario", deleteUserRouter);
+router.use("/editar-usuario", editUserRouter);
 
 // Rutas a Servicios
 router.use("/services", getServRouter);
 router.use("/newservice", postServRouter);
 router.use("/edit-service", putServRouter);
 router.use("/delete-service", deleteServRouter);
+router.use("/pay-service", payServiceRouter);
+
 
 //Rutas de categorias
 router.use("/categorias", deleteCategoriasRouter)

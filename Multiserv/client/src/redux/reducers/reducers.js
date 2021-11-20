@@ -5,7 +5,8 @@ import {
     SERVICIOS,
     USUARIOS,
     RESETORDER,
-    FILTERCAT
+    FILTERCAT,
+    GETCATS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -13,7 +14,8 @@ const initalState = {
     loadingServices: true,
     servicios: [],
     usuarios: [],
-    aux: []
+    aux: [],
+    categories: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -31,8 +33,13 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 servicios: newServ
             }
+        case GETCATS:
+            return{
+                ...state,
+                categories: payload
+            }
         case FILTERCAT:
-            let filteredCat = state.aux.filter(serv => serv.category?.toLowerCase() === payload.toLowerCase())
+            let filteredCat = state.aux.filter(serv => serv.categorias[0].title?.toLowerCase() === payload.toLowerCase())
             return {
                 ...state,
                 servicios: filteredCat
@@ -81,6 +88,7 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 servicios: state.aux
             }
+        
         default:
             return state;
     }
