@@ -36,23 +36,6 @@ const Home = () => {
     }, [loading])
 
     useEffect(() => {
-        if (order !== null) {
-            console.log(order)
-            if (order.type === 'none') {
-                dispatch(resetOrder())
-            }
-            if (order.type === 'alph') {
-                console.log('Se despacho la accion de tipo:', order.type)
-                dispatch(orderAlph(order.value))
-            }
-            if (order.type === 'rat') {
-                console.log('Se despacho la accion de tipo:', order.type)
-                dispatch(orderRating(order.value))
-            }
-        }
-    }, [order])
-
-    useEffect(() => {
         if (filter !== null) {
             if (filter.value === 'none') {
                 dispatch(resetOrder())
@@ -69,11 +52,22 @@ const Home = () => {
     const handleListValue2 = (obj) => {
         setFilter(obj)
     }
-
+    
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-
+    
     const handleListValue = (obj) => {
         setOrder(obj)
+        if (obj.type === 'none') {
+            dispatch(resetOrder())
+        }
+        if (obj.type === 'alph') {
+            console.log('Se despacho la accion de tipo:', obj.type)
+            dispatch(orderAlph(obj.value))
+        }
+        if (obj.type === 'rat') {
+            console.log('Se despacho la accion de tipo:', obj.type)
+            dispatch(orderRating(obj.value))
+        }
     }
     const options = [
         {
