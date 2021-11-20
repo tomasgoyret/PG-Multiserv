@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React ,{ useEffect, useState } from 'react';
-import ButtonXartiago from "../../Components/Atoms/ButtonXartiago/ButtonXartiago";
-import { useNavigate } from 'react-router';
 
 
 
 
 const Pago = () => {
     const [linkdePago,setLinkPago] = useState("")
-    let id = "IDdelServicio"
+    let id = {id : "prueba"}
     const handleRedirect = ()=>{
         window.open(linkdePago)
     }
