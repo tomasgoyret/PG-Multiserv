@@ -5,6 +5,8 @@ import { MdHomeRepairService, MdCategory } from "react-icons/md";
 import ImagenPerfil from "../../assets/Icons/profile.png";
 import { users, services, getCats } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import Swal from 'sweetalert2';
 
 
 const ControlPanel = () => {
@@ -27,6 +29,36 @@ const ControlPanel = () => {
     const cambiarAServicios = () => {
         setVistaUsuarios("servicios")
     }
+
+    // Eliminar usuario
+    const eliminarUsuario = (uid) => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Al hacer esto perderas todo en tu usuario",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#32C1CD',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar usuario!',
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+              console.log(result)
+            if (result.isConfirmed) {
+                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                .then(async response => {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El usuario se ha eliminado con exito!',
+                        'success'
+                    )
+                })
+                .catch(err => {
+                    Swal.fire('Changes are not saved', '', 'info')
+                })
+            }
+          })
+    }
+
 
     useEffect(() => {
         dispatch(users())
@@ -123,6 +155,7 @@ const ControlPanel = () => {
                                             </button>
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                onClick={() => eliminarUsuario(cliente.uidClient)}    
                                             >
                                             Eliminar 
                                             </button>

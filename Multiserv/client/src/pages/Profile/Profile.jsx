@@ -23,7 +23,7 @@ const Profile = () => {
 
     
 
-
+    // Eliminar usuario
     const eliminarUsuario = (uid) => {
         Swal.fire({
             title: 'Estas seguro?',
