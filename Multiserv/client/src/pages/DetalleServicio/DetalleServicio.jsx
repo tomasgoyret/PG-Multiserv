@@ -35,7 +35,7 @@ const DetalleServicio = () => {
 //     dispatch(usuarioId(idUs))
 //    },[dispatch,idUs])
 //   const usuarioID = useSelector((state)=> state.detalleUsuario)
-  console.log(servicesId)
+
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
@@ -92,8 +92,9 @@ const DetalleServicio = () => {
             :
             null)
 
-    return (
+    let idProveedor = servicioID[0].usuarioUidClient
 
+    return (
         <div>
         <div className="flex">
             <Nav
@@ -123,7 +124,7 @@ const DetalleServicio = () => {
                                <div className="p-0.5 rounded-full border-2 border-cyan-800  ">
                                   <div  css={userProfile} className="w-17 h-16 rounded-full " />
                                   <h1 className="font-semibold text-gray-700">Proveedor</h1>
-                                  <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${servicioID}`} >detalle...</Link></span>
+                                  <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${idProveedor}`} >detalle...</Link></span>
                                </div>
                                 
                            </div>
@@ -160,13 +161,13 @@ const DetalleServicio = () => {
                                   <div className="max-h-40 overflow-hidden">
                                     <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicioID[0].description}`}</p>
                                   </div>
-                                <div className="">
+                                {/* <div className="">
                                   <ButtonXartiago
                                      btn="Sacar Turno"
                                      page="detalle/signup"
                                      btnClass="flex justify-center font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 "
                                   />
-                                 </div>
+                                 </div> */}
                                 
                             </div>
                 
