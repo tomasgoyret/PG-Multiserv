@@ -118,7 +118,7 @@ const SignUp = () => {
                     </span>
                 </div>
             </div>
-            <div css={formStyle} className="self-center mb-4 md:my-4 rounded-md shadow-lg flex flex-col">
+            <div css={formStyle} className="self-center mb-4 md:my-4 rounded-md filter drop-shadow-2xl flex flex-col">
                 <div>
 
                     {step === 1 && (<div>

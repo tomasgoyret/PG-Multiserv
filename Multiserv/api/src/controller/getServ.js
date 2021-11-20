@@ -7,7 +7,10 @@ const getServ = async (req, res) => {
         const servicios = await Servicios.findAll( {include :{
             model: Categorias,
             attributes: {
-                exclude: ['createdAt', 'updatedAt','servicioId']
+                exclude: ['createdAt', 'updatedAt']
+            },
+            through: {
+                attributes: []
             }
         },
             attributes: {

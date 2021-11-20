@@ -1697,7 +1697,8 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-              usuarioUidClient: s.uidClient
+              //usuarioUidClient: s.uidClient
+              estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
