@@ -23,10 +23,10 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    // uidProvider: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
+    estadoDePago: {
+      type: DataTypes.ENUM('Pendiente', 'Aprobado', 'Rechazado'),
+      defaultValue: 'Pendiente'
+    },
     rating: {
       type: DataTypes.INTEGER,
       allowNull: true
