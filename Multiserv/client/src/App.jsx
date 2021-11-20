@@ -11,6 +11,7 @@ import UsersValidations from "./pages/UsersValidations/UsersValidations";
 import PasswordChange from "../src/pages/PasswordChange/PasswordChange";
 import ReviewService from "./Components/Organisms/ReviewService/ReviewService";
 import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
+import ControlPanel from "./pages/ControlPanel/ControlPanel";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         {/*/ Bastian rutas nuevas */}
         <Route path="/review" element={<ReviewService />} />
         <Route path="/admin" element={<SignInAdmin />} />
+        <Route path="/control-panel" element={<ControlPanel />} />
       </Routes>
     </div>
   );
