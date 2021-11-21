@@ -16,11 +16,14 @@ import {
 /* Estado global */
 const initalState = {
     loadingServices: true,
+    loadingServicesDetalle: true,
+    loadingProveedorDetalle: true,
     servicios: [],
     usuarios: [],
     aux: [],
     categories: [],
-    detalleServicio: {}
+    detalleServicio: {},
+    detalleUsuario: {}
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -103,7 +106,7 @@ function rootReducer(state = initalState, { type, payload }) {
             console.log("entre al usuario .....")
             return {
                 ...state,
-                loadingServices: false,
+                loadingProveedorDetalle: false,
                 detalleUsuario: payload,
             }
 
@@ -116,7 +119,7 @@ function rootReducer(state = initalState, { type, payload }) {
         case SERVICIOID:
             return {
                 ...state,
-                loadingServices: false,
+                loadingServicesDetalle: false,
                 detalleServicio: payload,
             }
 

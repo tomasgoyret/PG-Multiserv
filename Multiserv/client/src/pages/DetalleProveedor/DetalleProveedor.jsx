@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import Logo from '../../assets/Icons/personalMark.png';
-import{servicesId,empatyServicesId,usuarioId,empatyusuarioId} from "../../redux/actions/actions"
+import{usuarioId,empatyusuarioId} from "../../redux/actions/actions"
 import React, { useState,useEffect } from 'react'
 import LinkTo from '../../Components/Atoms/LinkTo/LinkTo'
 import Nav from "../../Components/Organisms/NavBar/Nav"
@@ -13,29 +13,25 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
 import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
+import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import StarRating from '../../Components/Atoms/StarRating/StarRating'
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-const DetalleServicio = () => {
+const DetalleProveedor = () => {
     let {id} = useParams();
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
-    const loading = useSelector((state) => state.loadingServicesDetalle)
+    const loading = useSelector((state) => state.loadingProveedorDetalle)
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    
 
-    useEffect(()=>{
-        dispatch(servicesId(id))
-    },[dispatch,id])
-   const servicioID = useSelector((state)=> state.detalleServicio)
-//const idUs =servicioID[0].usuarioUidClient
-//    useEffect(()=>{
-//     dispatch(usuarioId(idUs))
-//    },[dispatch,idUs])
-//   const usuarioID = useSelector((state)=> state.detalleUsuario)
-
+    console.log(id)
+   useEffect(()=>{
+    dispatch(usuarioId(id))
+   },[dispatch,id])
+   
+  const proveedorId = useSelector((state)=> state.detalleUsuario)
+  console.log(proveedorId)
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
@@ -92,9 +88,8 @@ const DetalleServicio = () => {
             :
             null)
 
-    //let idProveedor = servicioID[0].usuarioUidClient
-
     return (
+
         <div>
         <div className="flex">
             <Nav
@@ -115,24 +110,16 @@ const DetalleServicio = () => {
                 ) : (
                     <div className="w-full flex flex-col h-screen">
                        <div className="px- pt-6 pb-4">
-                        <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
+                        <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles</h1>
                        </div>
 
                         <div className="flex border-t border-gray-200 mx-4 my-4 pt-4">
-                            <div className="flex">
-                             {/* user info */}
-                               <div className="p-0.5 rounded-full border-2 border-cyan-800  ">
-                                  <div  css={userProfile} className="w-17 h-16 rounded-full " />
-                                  <h1 className="font-semibold text-gray-700">{servicioID[0].usuarioUidClient}</h1> 
-                                  <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${servicioID[0].usuarioUidClient}`} >detalle...</Link></span>
-                               </div>
-                                
-                           </div>
+                           
 
                            <div className="bg-white relative flex flex-col rounded-b-lg">
                                <div className=" absolute -top-5  px-4 flex w-full justify-between">
                                     <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                                      <span className="text-white">{servicioID[0].categorias[0].title}</span>
+                                      <span className="text-white">{proveedorId.displayName}</span>
                                     </div>
                                 </div>
                                 <Image
@@ -145,29 +132,44 @@ const DetalleServicio = () => {
                                     setFailedImg(true)
                                     }}
                                     name="photo1"
-                                    imagen={servicioID[0].photos[0]}
+                                    //imagen={usuarioID}
                                     imgClass={`object-cover rounded-t-lg w-100 h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
                                 />
                                 <div className="pt-6 px-4 relative">
                                     <div className="mb-2">
                                          <div className="flex justify-between">
-                                           <span className="self-center text-lg font-semibold text-gray-800 w-3/6" >{servicioID[0].title}</span>
+                                           <span className="self-center text-lg font-semibold text-gray-800 w-3/6" >{proveedorId.displayName}</span>
                                             <div className="self-center inline-flex">
-                                             <StarRating rating={servicioID[0].rating} />
+                                             {/* <StarRating rating={usuarioID} /> */}
                                             </div>
                                          </div>
-                                        <span className="self-center text-sm font-medium text-gray-500">{`Desde ${servicioID[0].min} ${servicioID[0].currency} a ${servicioID[0].max} ${servicioID[0].currency}`}</span>
+                                        <span className="self-center text-sm font-medium text-gray-500">{`correo ${proveedorId.email}`}</span>
                                     </div>
                                   <div className="max-h-40 overflow-hidden">
-                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicioID[0].description}`}</p>
+                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`celular :  ${proveedorId.phoneNumber}`}</p>
                                   </div>
-                                {/* <div className="">
+
+
+                                  <div className="px- pt-6 pb-4">
+                                   <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de sus servicios</h1>
+                                  </div>
+
+
+                                  <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
+
+                             {/* {( proveedorId.servicios?.map((service, index) => (
+                              <ServiceCard key={index} service={service} />
+                                )))}
+                              */}
+                               </div>
+
+                                <div className="">
                                   <ButtonXartiago
-                                     btn="Sacar Turno"
-                                     page="detalle/signup"
+                                     btn="volver"
+                                     page="/home"
                                      btnClass="flex justify-center font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 "
                                   />
-                                 </div> */}
+                                 </div>
                                 
                             </div>
                 
@@ -183,4 +185,4 @@ const DetalleServicio = () => {
     )
 }
 
-export default DetalleServicio
+export default DetalleProveedor
