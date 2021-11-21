@@ -7,6 +7,10 @@ import {
     RESETORDER,
     FILTERCAT,
     GETCATS,
+    SERVICIOID,
+    EMPATYSERVICIOID,
+    USUARIOID,
+    EMPATYUSUARIO
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -16,6 +20,7 @@ const initalState = {
     usuarios: [],
     aux: [],
     categories: [],
+    detalleServicio: {}
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -34,7 +39,7 @@ function rootReducer(state = initalState, { type, payload }) {
                 servicios: newServ
             }
         case GETCATS:
-            return{
+            return {
                 ...state,
                 categories: payload
             }
@@ -88,7 +93,33 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 servicios: state.aux
             }
-        
+        case EMPATYUSUARIO:
+            return {
+                ...state,
+                loadingServices: false,
+                detalleUsuario: {},
+            }
+        case USUARIOID:
+            console.log("entre al usuario .....")
+            return {
+                ...state,
+                loadingServices: false,
+                detalleUsuario: payload,
+            }
+
+        case EMPATYSERVICIOID:
+            return {
+                ...state,
+                loadingServices: false,
+                detalleServicio: {},
+            }
+        case SERVICIOID:
+            return {
+                ...state,
+                loadingServices: false,
+                detalleServicio: payload,
+            }
+
         default:
             return state;
     }

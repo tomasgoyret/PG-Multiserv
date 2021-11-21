@@ -5,7 +5,7 @@ import Components from "./pages/Components/Components";
 import SignIn from "./pages/SignIn/SignIn";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
-import Detalle from "./pages/DetalleServicio/DetalleServicio"
+import DetalleServicio from "./pages/DetalleServicio/DetalleServicio";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
 import PasswordChange from "../src/pages/PasswordChange/PasswordChange";
@@ -55,15 +55,15 @@ function App() {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
         },
+        {
+          path: '/home/detalleServicio/:id',
+          element: <DetalleServicio />
+        }
       ]
     },
     {
       path: '/passwordReset',
       element: <PasswordReset />
-    },
-    {
-      path: '/detalle',
-      element: <Detalle />
     },
     {
       path: '/email-verification',
@@ -103,7 +103,7 @@ function App() {
         {/* <Route path="/pago" element={<Pago/>} /> */}
         {/* <Route path="/passwordChange"/> */}
         <Route path="/passwordReset"/>
-        <Route path="/detalle"/>
+        <Route path="/detalleServicio/:id"/>
         <Route path="/profile" />
         {/* <Route path="/test" /> */}
         <Route path="/email-verification"/>

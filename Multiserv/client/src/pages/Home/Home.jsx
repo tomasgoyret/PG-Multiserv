@@ -5,7 +5,7 @@ import { BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from 
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats, users } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import Input from '../../Components/Atoms/Input/Input';
@@ -29,28 +29,12 @@ const Home = () => {
             navigate('/email-verification')
         }
         dispatch(services())
+        dispatch(users())
     }, [])
 
     useEffect(() => {
         dispatch(getCats())
     }, [loading])
-
-    useEffect(() => {
-        if (order !== null) {
-            console.log(order)
-            if (order.type === 'none') {
-                dispatch(resetOrder())
-            }
-            if (order.type === 'alph') {
-                console.log('Se despacho la accion de tipo:', order.type)
-                dispatch(orderAlph(order.value))
-            }
-            if (order.type === 'rat') {
-                console.log('Se despacho la accion de tipo:', order.type)
-                dispatch(orderRating(order.value))
-            }
-        }
-    }, [order])
 
     useEffect(() => {
         if (filter !== null) {
@@ -69,11 +53,22 @@ const Home = () => {
     const handleListValue2 = (obj) => {
         setFilter(obj)
     }
-
+    
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-
+    
     const handleListValue = (obj) => {
         setOrder(obj)
+        if (obj.type === 'none') {
+            dispatch(resetOrder())
+        }
+        if (obj.type === 'alph') {
+            console.log('Se despacho la accion de tipo:', obj.type)
+            dispatch(orderAlph(obj.value))
+        }
+        if (obj.type === 'rat') {
+            console.log('Se despacho la accion de tipo:', obj.type)
+            dispatch(orderRating(obj.value))
+        }
     }
     const options = [
         {
