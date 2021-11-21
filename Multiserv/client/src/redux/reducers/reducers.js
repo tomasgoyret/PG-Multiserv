@@ -6,7 +6,7 @@ import {
     USUARIOS,
     RESETORDER,
     FILTERCAT,
-    GETCATS
+    GETCATS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -15,7 +15,7 @@ const initalState = {
     servicios: [],
     usuarios: [],
     aux: [],
-    categories: []
+    categories: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -88,6 +88,7 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 servicios: state.aux
             }
+        
         default:
             return state;
     }

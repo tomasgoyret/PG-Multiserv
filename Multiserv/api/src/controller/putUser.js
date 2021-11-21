@@ -8,7 +8,6 @@ const putUser = async (req, res,next) => {
   try {
     const userData = {
       email: mail,
-      emailVerified: false,
       password: password,
       displayName: `${name} ${lastName}`,
       photoURL,
@@ -18,14 +17,16 @@ const putUser = async (req, res,next) => {
 
     // Update en Firebase
     var updatedUser = await auth.updateUser(uidClient, userData);
-    console.log(updatedUser, "respuesta firebase");
+    // console.log(updatedUser, "respuesta firebase");
    
     // Update en DB
     const updatedDb= await Usuarios.update(userData,{
-            where: { uidClient }
+            where: { uidClient: uidClient }
             } );
-    const usuarioActualizado= await Usuarios.findOne({where: { uidClient }})
-    res.send({ msg: "Usuario Actualizado", usuarioActualizado})
+    console.log(updatedDb)
+    const usuarioActualizado= await Usuarios.findByPk(uidClient)
+    console.log(usuarioActualizado)
+    res.send({ msg: "Usuario Actualizado", usuarioActualizado })
 
   } catch (error) {
     next(error)
