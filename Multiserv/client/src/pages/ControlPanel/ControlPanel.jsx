@@ -138,6 +138,105 @@ const ControlPanel = () => {
           })
     }
 
+    const eliminarCategoria = (id) => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Al hacer esto perderas esta categoria",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#32C1CD',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar categoria!',
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+              console.log(result)
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:3005/categorias/${id}`)
+                .then(response => {
+                    Swal.fire(
+                        'Eliminado!',
+                        'La categoria se ha eliminado con exito!',
+                        'success'
+                    )
+                    dispatch(getCats())
+                })
+                .catch(err => {
+                    Swal.fire('Ha ocurrido un error', '', 'info')
+                })
+            }
+          })
+    }
+
+    const eliminarServicio = (id) => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Al hacer esto perderas este servicio",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#32C1CD',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar servicio!',
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+              console.log(result)
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:3005/delete-service/${id}`)
+                .then(response => {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El servicio se ha eliminado con exito!',
+                        'success'
+                    )
+                    dispatch(services())
+                })
+                .catch(err => {
+                    Swal.fire('Ha ocurrido un error', '', 'info')
+                })
+            }
+          })
+    }
+
+    const mostrarDescripcion = (service) => {
+        console.log(service)
+        Swal.fire({
+            title: 'Descripción!',
+            text: service.description,
+            imageUrl: service.photos[0],
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
+    }
+
+    const agregarCategoria = () => {
+        Swal.fire({
+            title: '¿Cual es el nombre de la nueva categoria?',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Agregar',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.post("http://localhost:3005/categorias", {
+                    title: result.value
+                })
+                .then(response => {
+                    Swal.fire(
+                        'Categoria Agregada',
+                        'La categoria se ha agregado con exito!',
+                        'success'
+                    )
+                    dispatch(getCats())
+                })
+            }
+          })
+        
+    }
+
     useEffect(() => {
         dispatch(users())
         dispatch(services())
@@ -373,6 +472,7 @@ const ControlPanel = () => {
                         <div className="w-full flex border-2 items-center py-4 px-4 my-2">
                             <div className="flex flex-col w-1/2">
                                 <h2 className="text-2xl font-semibold font-sans">{categoria.name}</h2>
+                                <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {categoria.id}</span>
                             </div>
                             <div className="flex w-1/2 justify-end">
                                 <div className="flex w-80 items-center">
@@ -384,12 +484,15 @@ const ControlPanel = () => {
                                     </button>
                                     <button 
                                         className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                        onClick={() => eliminarCategoria(categoria.id)}
                                     >
                                     Eliminar 
                                     </button>
                                 </div>
                             </div>
-                            <div className="flex items-end justify-center w-20 h-20 pb-1 fixed button-0 bg-green-500 hover:bg-green-700 right-4 bottom-4  rounded-full text-8xl text-gray-50 cursor-pointer">
+                            <div className="flex items-end justify-center w-20 h-20 pb-1 fixed button-0 bg-green-500 hover:bg-green-700 right-4 bottom-4  rounded-full text-8xl text-gray-50 cursor-pointer"
+                                onClick={() => agregarCategoria()}
+                            >
                                 +
                             </div>
                         </div>
@@ -449,11 +552,13 @@ const ControlPanel = () => {
                                             <div className="flex w-80 items-center">
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => mostrarDescripcion(servicio)}
                                                 >
-                                                Editar
+                                                Ver descripción
                                                 </button>
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                    onClick={() => eliminarServicio(servicio.id)}
                                                 >
                                                 Eliminar 
                                                 </button>

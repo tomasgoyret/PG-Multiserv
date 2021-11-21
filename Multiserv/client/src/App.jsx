@@ -93,7 +93,7 @@ function App() {
         </Route>
         {/* <Route path="/passwordChange" element={<PasswordChange />} /> */}
         <Route path="/passwordReset" element={<PasswordReset />} />
-        <Route path="/detalle" element={<Detalle />} />
+        {/* <Route path="/detalle" element={<Detalle />} /> */}
         {/* <Route path="/test" element={<PasswordChange />} /> */}
         <Route path="/email-verification" element={<VerifyEmail />} />
         <Route path="/user-validations" element={<UsersValidations />} />
