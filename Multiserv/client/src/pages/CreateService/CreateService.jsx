@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router'
 import Input from '../../Components/Atoms/Input/Input';
 import ReactCountryFlag from "react-country-flag"
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
+import SimpleProgressBar from '../../Components/Atoms/SimpleProgressBar/SimpleProgressBar';
+import Button from '../../Components/Atoms/Button/Button';
+import { FaPlus } from "react-icons/fa";
 
 const CreateService = () => {
     const navigate = useNavigate();
@@ -16,6 +19,7 @@ const CreateService = () => {
         max: '',
         currency: 'MXN'
     })
+    const [stepForm, setStepForm] = useState(0)
     const handleSetService = (cat) => {
         return (text) => {
             setService({
@@ -24,6 +28,12 @@ const CreateService = () => {
             })
         }
     }
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            setStepForm(1)
+        }, 500)
+        return () => clearTimeout(delay)
+    }, [])
     const monedas = [
         {
             name: 'MXN',
@@ -95,71 +105,70 @@ const CreateService = () => {
     }, [])
 
     const { uid } = useParams()
+    /* <div className="border w-2/3 mx-auto">
+                        <div className="mb-4 flex justify-between">
+                            <div className="w-1/3 self-center">
+                                <Input
+                                    type="number"
+                                    id="min"
+                                    theme="#164E63"
+                                    label="Precio mínimo:"
+                                    placeholder="Precio"
+                                    flexed
+                                    callBack={handleSetService('min')}
+                                />
+                            </div>
+                            <div className="w-1/3 self-center">
+                                <Input
+                                    type="number"
+                                    id="max"
+                                    theme="#164E63"
+                                    label="Precio máximo:"
+                                    placeholder="Precio"
+                                    flexed
+                                    callBack={handleSetService('max')}
+                                />
+                            </div>
+                            <div className="w-1/3 self-center pt-3">
+                                <div className="relative mx-4">
+                                    <span className={`absolute -top-6 text-sm font-semibold text-gray-600 select-none cursor-pointer`}>Moneda local:</span>
 
-    return (
-        <div className="contianer flex justify-center items-center mx-auto w-full bg-gray-400">
-            <div
-                className="rounded-md bg-white mx-8 py-4 px-6 flex flex-col lg:flex-row justify-center items-center w-full h-96">
-                <div className="mx-4 border w-full">
-                    <div className="mb-4">
-                        <Input
-                            type="text"
-                            id="title"
-                            theme="#164E63"
-                            label="Escribe un título para tu servicio:"
-                            placeholder="Título"
-                            flexed
-                            callBack={handleSetService('title')}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <Input
-                            type="textarea"
-                            height='120px'
-                            id="description"
-                            theme="#164E63"
-                            label="Escribe una descripción atractiva:"
-                            flexed
-                            placeholder="Ingresa tus apellidos"
-                            callBack={handleSetService('description')}
-                        />
-                    </div>
-                </div>
-                <div className="mx-4 border w-full">
-                    <div className="mb-4 flex justify-between">
-                        <div className="w-1/3 self-center">
-                            <Input
-                                type="number"
-                                id="min"
-                                theme="#164E63"
-                                label="Precio mínimo:"
-                                placeholder="Precio"
-                                flexed
-                                callBack={handleSetService('min')}
-                            />
+                                    <div className="flex flex-row mt-3">
+                                        <ListBox
+                                            customBorder="#9CA3AF"
+                                            className="self-center"
+                                            width='10rem'
+                                            options={monedas}
+                                            callBack={handleCurrency}
+                                            text="..."
+                                            theme="#0C4A6E"
+                                            includeIconOnDesc
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-1/3 self-center">
-                            <Input
-                                type="number"
-                                id="max"
-                                theme="#164E63"
-                                label="Precio máximo:"
-                                placeholder="Precio"
-                                flexed
-                                callBack={handleSetService('max')}
-                            />
-                        </div>
-                        <div className="w-1/3 self-center pt-3">
-                            <div className="relative mx-4">
-                                <span className={`absolute -top-6 text-sm font-semibold text-gray-600 select-none cursor-pointer`}>Moneda local:</span>
-
-                                <div className="flex flex-row mt-3">
+                        <div className="mt-4">
+                            <div className="flex justify-between mx-4">
+                                <div className="mr-4">
                                     <ListBox
                                         customBorder="#9CA3AF"
                                         className="self-center"
-                                        width='10rem'
-                                        options={monedas}
-                                        callBack={handleCurrency}
+                                        width='15rem'
+                                        options={categorias}
+                                        callBack={(object) => { console.log(object.name) }}
+                                        text="..."
+                                        theme="#0C4A6E"
+                                        includeIconOnDesc
+                                    />
+                                </div>
+                                <div className="">
+                                    <ListBox
+                                        customBorder="#9CA3AF"
+                                        className="self-center"
+                                        width='15rem'
+                                        options={categorias}
+                                        callBack={(object) => { console.log(object.name) }}
                                         text="..."
                                         theme="#0C4A6E"
                                         includeIconOnDesc
@@ -167,35 +176,213 @@ const CreateService = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="mt-4">
-                        <div className="flex justify-between mx-4">
-                            <div className="mr-4">
-                                <ListBox
-                                    customBorder="#9CA3AF"
-                                    className="self-center"
-                                    width='15rem'
-                                    options={categorias}
-                                    callBack={(object) => { console.log(object.name) }}
-                                    text="..."
-                                    theme="#0C4A6E"
-                                    includeIconOnDesc
-                                />
+                    </div> */
+    const addStep = () => {
+        if (stepForm < 3) {
+            setStepForm(stepForm + 1)
+        }
+    }
+    const decreaseStep = () => {
+        if (stepForm > 1) {
+            setStepForm(stepForm - 1)
+        }
+    }
+    return (
+        <div className="contianer flex justify-center items-center mx-auto w-full bg-gray-400">
+            <div
+                style={{ height: '34rem', width: '100%' }}
+                className="rounded-md bg-white mx-8 py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
+                <div id="status" className="w-full text-center">
+                    <h1 className="text-4xl font-semibold text-cyan-900 mb-6">Crear un nuevo servicio</h1>
+                    <div id="progress-description" className="flex flex-row mb-2">
+                        <div id="step1" className="w-full flex justify-center" >
+                            <div className={`px-4 rounded-full font-semibold text-white bg-cyan-900 ${stepForm >= 1 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
+                                <span>Información del servicio</span>
                             </div>
-                            <div className="">
-                                <ListBox
-                                    customBorder="#9CA3AF"
-                                    className="self-center"
-                                    width='15rem'
-                                    options={categorias}
-                                    callBack={(object) => { console.log(object.name) }}
-                                    text="..."
-                                    theme="#0C4A6E"
-                                    includeIconOnDesc
-                                />
+                        </div>
+                        <div id="step2" className="w-full flex justify-center" >
+                            <div className={`px-4 -ml-3 rounded-full font-semibold text-white bg-cyan-900 ${stepForm >= 2 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
+                                <span>Imagen de portada</span>
+                            </div>
+                        </div>
+                        <div id="step3" className="w-full flex justify-center" >
+                            <div className={`px-4 -ml-3 rounded-full font-semibold text-white bg-cyan-900 ${stepForm === 3 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
+                                <span>Pagar y finalizar</span>
                             </div>
                         </div>
                     </div>
+                    <div id='progress' className="w-full flex flex-row transition-all ease-out duration-300 ">
+                        <div className="z-40 relative flex w-full h-max">
+                            <div className={`z-10 absolute right-0 left-0 m-auto flex justify-center items-center w-8 h-8 rounded-full ${stepForm >= 1 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'} transition-all ease-in-out duration-200`}>
+                                <span className="text-center font-semibold self-center">1</span>
+                            </div>
+                            <div className="absolute -bottom-3 z-0 w-full self-center -my-2">
+                                <SimpleProgressBar color="#164E63" status={stepForm >= 1 ? '100%' : '0%'} />
+                            </div>
+                        </div>
+
+                        <div style={{ marginLeft: '-5px' }} className="z-30 relative flex w-full h-max">
+                            <div className={`z-10 absolute right-0 left-0 m-auto flex justify-center items-center w-8 h-8 rounded-full ${stepForm >= 2 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'} transition-all ease-in-out duration-200`}>
+                                <span className="text-center font-semibold self-center">2</span>
+                            </div>
+                            <div className="absolute -bottom-3 z-0 w-full self-center -my-2">
+                                <SimpleProgressBar color="#164E63" status={stepForm >= 2 ? '100%' : '0%'} />
+                            </div>
+                        </div>
+
+                        <div style={{ marginLeft: '-5px' }} className="z-20 relative flex w-full h-max">
+                            <div className={`z-10 absolute right-0 left-0 m-auto flex justify-center items-center w-8 h-8 rounded-full ${stepForm >= 3 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'} transition-all ease-in-out duration-200`}>
+                                <span className="text-center font-semibold self-center">3</span>
+                            </div>
+                            <div className="absolute -bottom-3 z-0 w-full self-center -my-2">
+                                <SimpleProgressBar color="#164E63" status={stepForm >= 3 ? '100%' : '0%'} />
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id='content' className="flex flex-row justify-center items-between mt-9 w-full h-full px-8">
+
+                    <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex mt-3' : 'hidden'} w-full`}>
+                        <div className="border-r mx-auto w-1/2 pr-6">
+                            <div className="mb-4">
+                                <Input
+                                    type="text"
+                                    id="title"
+                                    theme="#164E63"
+                                    label="Escribe un título para tu servicio:"
+                                    placeholder="Título"
+                                    flexed
+                                    callBack={handleSetService('title')}
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <Input
+                                    type="textarea"
+                                    height='120px'
+                                    id="description"
+                                    theme="#164E63"
+                                    label="Escribe una descripción atractiva:"
+                                    flexed
+                                    placeholder="Ingresa tus apellidos"
+                                    callBack={handleSetService('description')}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="w-1/2 mx-auto pl-6">
+                            <div className="mb-4 flex w-full">
+                                <div className="self-center">
+                                    <Input
+                                        type="number"
+                                        id="min"
+                                        theme="#164E63"
+                                        label="Precio mínimo:"
+                                        placeholder="Precio"
+                                        flexed
+                                        callBack={handleSetService('min')}
+                                    />
+                                </div>
+                                <div className="self-center">
+                                    <Input
+                                        type="number"
+                                        id="max"
+                                        theme="#164E63"
+                                        label="Precio máximo:"
+                                        placeholder="Precio"
+                                        flexed
+                                        callBack={handleSetService('max')}
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="mt-4">
+                                <div className="flex mx-4">
+                                    <div className="self-center pt-3">
+                                        <div className="relative mr-4">
+                                            <span className={`absolute -top-5 text-sm font-semibold text-gray-600 select-none cursor-pointer`}>Moneda local:</span>
+
+                                            <div className="flex flex-row mt-3">
+                                                <ListBox
+                                                    customBorder="#9CA3AF"
+                                                    className="self-center"
+                                                    width='10rem'
+                                                    options={monedas}
+                                                    callBack={handleCurrency}
+                                                    text="..."
+                                                    theme="#0C4A6E"
+                                                    includeIconOnDesc
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mx-4">
+                                        <span className="font-semibold text-gray-600 text-sm ">Seleccione una categoría:</span>
+                                        <ListBox
+                                            customBorder="#9CA3AF"
+                                            className="self-center"
+                                            width='15rem'
+                                            options={categorias}
+                                            callBack={(object) => { console.log(object.name) }}
+                                            text="..."
+                                            theme="#0C4A6E"
+                                            includeIconOnDesc
+                                        />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step2" className={`${stepForm === 2 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
+                        <input
+                            onChange={() => { console.log('algo') }}
+                            type="file"
+                            name="foto5"
+                            id="foto5"
+                            accept="image/jpeg"
+                            className="inputfile" />
+
+                        <label htmlFor="foto5" className="hover:border-transparent hover:shadow-lg hover:bg-white focus:outline-none rounded-lg border-2 border-dashed text-indigo-300 border-indigo-200 hover:text-green-600 flex flex-col items-center justify-center p-4 mx-0 sm:mr-4 mb-2 sm:mb-0 transition-all duration-500 ease-in-out cursor-pointer w-full h-full">
+                            <FaPlus className="text-4xl" />
+                            <span className="google-sans font-semibold block">Haz click para agregar una foto</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="buttons" className="flex w-full flex-row justify-between px-48 border-t border-gray-200 mt-4 pt-4">
+                    {/* <button onClick={decreaseStep} className="px-6 py-2 rounded-md bg-gray-200 text-cyan-900 transition-all duration-300">
+                        <span className="font-semibold">
+                            Atrás
+                        </span>
+                    </button>
+                    <button onClick={addStep} className="px-6 py-2 rounded-md bg-cyan-900 text-gray-50 transition-all duration-300">
+                        <span className="font-semibold">
+                            Siguiente
+                        </span>
+                    </button> */}
+                    <Button
+                        text="Atrás"
+                        customTextColor='#155E75'
+                        theme="#E5E7EB"
+                        action={decreaseStep}
+                        disabled={stepForm === 1}
+                    />
+                    {stepForm !== 3 && <Button
+                        text="Siguiente"
+                        customTextColor="#FFFFF"
+                        theme="#155E75"
+                        action={addStep}
+                    />}
+                    {stepForm === 3 && <Button
+                        text="Finalizar"
+                        customTextColor="#FFFFF"
+                        theme="#155E75"
+                        action={() => { console.log('finalizar') }}
+                    />}
+
                 </div>
             </div>
         </div>
