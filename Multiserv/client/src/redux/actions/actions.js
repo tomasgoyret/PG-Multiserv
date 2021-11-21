@@ -128,9 +128,9 @@ export const getListFavorites = (uid) => {
 }
 
 /* Eliminar de la Lista de Favoritos por Id */
-export const deleteListFavorites = (uid) => {
+export const deleteListFavorites = (id, uidClient) => {
     return async function (dispatch) {
-        let fav = `${server}/eliminar-fav/${uid}`;
+        let fav = `${server}/eliminar-fav/?id=${id}&uidClient=${uidClient}`;
         const response = await axios.delete(fav);
         const listaFav = response.data
         return dispatch({
