@@ -19,6 +19,7 @@ const DetalleServicio = () => {
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
+    const loading = useSelector((state) => state.loadingServicesDetalle)
     const loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
@@ -32,7 +33,6 @@ const DetalleServicio = () => {
     const servicio = servicios.filter(serv => serv.id === Number(id))
     const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
     console.log(usuario)
-
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
@@ -80,8 +80,9 @@ const DetalleServicio = () => {
             :
             null)
 
-    return (
+    //let idProveedor = servicioID[0].usuarioUidClient
 
+    return (
         <div>
             <div className="flex">
                 {modal}

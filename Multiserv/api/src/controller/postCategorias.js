@@ -6,7 +6,6 @@ const postCategorias = async(req,res,next) =>{
     let cat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()
     try {
         let existe = await Categorias.findOne({ where: { title: cat }})
-        console.log(existe)
         if(existe === null){
             await Categorias.create({title: cat})
             res.send(`Se creó la categoría ${cat} correctamente`)
