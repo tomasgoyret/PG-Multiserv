@@ -10,7 +10,11 @@ import {
     SERVICIOID,
     EMPATYSERVICIOID,
     USUARIOID,
-    EMPATYUSUARIO
+    EMPATYUSUARIO,
+    CLIENTES_BUSCADOS,
+    PROVEDORES_BUSCADOS,
+    SERVICIOS_BUSCADOS,
+    CATEGORIAS_BUSCADAS, 
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -20,7 +24,11 @@ const initalState = {
     usuarios: [],
     aux: [],
     categories: [],
-    detalleServicio: {}
+    detalleServicio: {},
+    provedoresBuscados: [],
+    clientesBuscados: [],
+    serviciosBuscados: [],
+    categoriasBuscadas: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -119,7 +127,30 @@ function rootReducer(state = initalState, { type, payload }) {
                 loadingServices: false,
                 detalleServicio: payload,
             }
-
+        case CLIENTES_BUSCADOS:
+            const auxClientesBuscados = state.usuarios.filter(usuario => usuario.displayName.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                clientesBuscados: auxClientesBuscados
+            }
+        case PROVEDORES_BUSCADOS:
+            const auxProvedoresBuscados = state.usuarios.filter(usuario => usuario.displayName.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                provedoresBuscados: auxProvedoresBuscados
+            }
+        case SERVICIOS_BUSCADOS:
+            const auxServiciosBuscados = state.servicios.filter(servicio => servicio.title.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                serviciosBuscados: auxServiciosBuscados
+            }
+        case CATEGORIAS_BUSCADAS:
+            const auxCategoriasBuscadas = state.categories.filter(categoria => categoria.name.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                categoriasBuscadas: auxCategoriasBuscadas
+            }
         default:
             return state;
     }

@@ -3,7 +3,7 @@ import Imagen from "../../../src/assets/images/img1.webp";
 import { FaUser, FaUserTie } from "react-icons/fa";
 import { MdHomeRepairService, MdCategory } from "react-icons/md";
 import ImagenPerfil from "../../assets/Icons/profile.png";
-import { users, services, getCats } from "../../redux/actions/actions";
+import { users, services, getCats, buscarClientes, buscarProvedores, buscarServicios, buscarCategorias } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from 'sweetalert2';
@@ -11,8 +11,38 @@ import Swal from 'sweetalert2';
 
 const ControlPanel = () => {
     const [vistaUsuarios, setVistaUsuarios] = useState("clientes");
-    const { usuarios, servicios, categories } = useSelector(state => state);
+    const { usuarios, servicios, categories, clientesBuscados, provedoresBuscados, serviciosBuscados, categoriasBuscadas } = useSelector(state => state);
     const dispatch = useDispatch();
+    const [clientSearchValue, setClientSearchValue] = useState("");
+    const [providerSearchValue, setProviderSearchValue] = useState("");
+    const [serviceSearchValue, setServiceSearchValue] = useState("");
+    const [categoriSearchValue, setCategoriSearchValue] = useState("");
+    
+
+
+    const handleChangeBuscadorClientes = (e) => {
+        setClientSearchValue(e.target.value)
+        dispatch(buscarClientes(e.target.value))
+        dispatch(users())
+    }
+
+    const handleChangeBuscadorProvedores = (e) => {
+        setProviderSearchValue(e.target.value)
+        dispatch(buscarProvedores(e.target.value))
+        dispatch(users())
+    }
+    
+    const handleChangeBuscadorServicios = (e) => {
+        setServiceSearchValue(e.target.value)
+        dispatch(buscarServicios(e.target.value))
+        dispatch(services())
+    }
+    
+    const handleChangeBuscadorCategorias = (e) => {
+        setCategoriSearchValue(e.target.value)
+        dispatch(buscarCategorias(e.target.value))
+        dispatch(getCats())
+    }
 
     const cambiarAProvedor = () => {
         setVistaUsuarios("provedores")
@@ -31,7 +61,7 @@ const ControlPanel = () => {
     }
 
     // Eliminar usuario
-    const eliminarUsuario = (uid) => {
+    const eliminarUsuarioClient = (uid) => {
         Swal.fire({
             title: 'Estas seguro?',
             text: "Al hacer esto perderas todo en tu usuario",
@@ -56,12 +86,43 @@ const ControlPanel = () => {
                 .catch(err => {
                     Swal.fire('Changes are not saved', '', 'info')
                 })
+                setClientSearchValue("")
+            }
+          })
+    }
+
+    const eliminarUsuarioProvider = (uid) => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Al hacer esto perderas todo en tu usuario",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#32C1CD',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar usuario!',
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+              console.log(result)
+            if (result.isConfirmed) {
+                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                .then(async response => {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El usuario se ha eliminado con exito!',
+                        'success'
+                    )
+                    dispatch(users())
+                })
+                .catch(err => {
+                    Swal.fire('Changes are not saved', '', 'info')
+                })
+                setProviderSearchValue("")
             }
           })
     }
 
     // cambiar admin
-    const adminTrue = (user) => {
+    const adminTrueClient = (user) => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
@@ -81,11 +142,39 @@ const ControlPanel = () => {
                 'success'
             )
             dispatch(users())
+            setClientSearchValue("")  
+
         })
         .catch(err => console.log(err))
     }
 
-    const adminFalse = (user) => {
+    const adminTrueProvider = (user) => {
+        const { uidClient } = user;
+        const { displayName, photoURL, phone } = user;
+        const [name, lastName] = displayName.trim().split(" ");
+        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+            name: name,
+            lastName: lastName,
+            photoURL: photoURL,
+            phone: phone,
+            isAdmin: true
+        })
+        .then(response => {
+            console.log(response)
+            // setLoading(false)
+            Swal.fire(
+                'Actualizado!',
+                `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
+                'success'
+            )
+            dispatch(users())
+            setProviderSearchValue("")  
+
+        })
+        .catch(err => console.log(err))
+    }
+
+    const adminFalseClient = (user) => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
@@ -105,6 +194,34 @@ const ControlPanel = () => {
                 'success'
             )
             dispatch(users())
+            setClientSearchValue("")  
+
+        })
+        .catch(err => console.log(err))
+    }
+
+    const adminFalseProvider = (user) => {
+        const { uidClient } = user;
+        const { displayName, photoURL, phone } = user;
+        const [name, lastName] = displayName.trim().split(" ");
+        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+            name: name,
+            lastName: lastName,
+            photoURL: photoURL,
+            phone: phone,
+            isAdmin: false
+        })
+        .then(response => {
+            console.log(response)
+            // setLoading(false)
+            Swal.fire(
+                'Actualizado!',
+                `Permisos revocados!`,
+                'success'
+            )
+            dispatch(users())
+            setProviderSearchValue("")  
+
         })
         .catch(err => console.log(err))
     }
@@ -133,6 +250,7 @@ const ControlPanel = () => {
                         'success'
                     )
                     dispatch(getCats())
+                    setCategoriSearchValue("")
                 })
             }
           })
@@ -163,6 +281,7 @@ const ControlPanel = () => {
                 .catch(err => {
                     Swal.fire('Ha ocurrido un error', '', 'info')
                 })
+                setCategoriSearchValue("")
             }
           })
     }
@@ -192,6 +311,7 @@ const ControlPanel = () => {
                 .catch(err => {
                     Swal.fire('Ha ocurrido un error', '', 'info')
                 })
+                setServiceSearchValue("")
             }
           })
     }
@@ -232,6 +352,7 @@ const ControlPanel = () => {
                     )
                     dispatch(getCats())
                 })
+                setCategoriSearchValue("")
             }
           })
         
@@ -241,7 +362,7 @@ const ControlPanel = () => {
         dispatch(users())
         dispatch(services())
         dispatch(getCats())
-    }, []);
+    }, [clientSearchValue]);
 
     return(
         <div className="w-full flex">
@@ -254,8 +375,8 @@ const ControlPanel = () => {
                     <h2 className="text-md font-semibold ">Administrar usuarios</h2>
                 </div>
                 <div className="w-full flex flex-col items-start   mt-2"> 
-                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-200 px-4" onClick={cambiarAClientes}><FaUser width="30px" height="30px" className="mr-2"/><span>Clientes</span></button>
-                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-200 px-4" onClick={cambiarAProvedor}><FaUserTie width="30px" height="30px" className="mr-2" /><span>Provedores</span></button>
+                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-300 focus:bg-gray-500 focus:text-gray-50 px-4" onClick={cambiarAClientes}><FaUser width="30px" height="30px" className="mr-2"/><span >Clientes</span></button>
+                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-300 focus:bg-gray-500 focus:text-gray-50  px-4" onClick={cambiarAProvedor}><FaUserTie width="30px" height="30px" className="mr-2"/><span className="focus:text-gray-50">Provedores</span></button>
                 </div>
                 {/* Fin seccion administrar usuarios */}
 
@@ -264,7 +385,7 @@ const ControlPanel = () => {
                     <h2 className="text-md font-semibold ">Administrar servicios</h2>
                 </div>
                 <div className="w-full flex flex-col items-start   mt-2"> 
-                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-200 px-4" onClick={cambiarAServicios}><MdHomeRepairService width="30px" height="30px" className="mr-2"/><span>Servicios</span></button>
+                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-300 focus:bg-gray-500 focus:text-gray-50 px-4" onClick={cambiarAServicios}><MdHomeRepairService width="30px" height="30px" className="mr-2"/><span>Servicios</span></button>
                 </div>
                 {/* Fin seccion administrar servicios */}
 
@@ -273,7 +394,7 @@ const ControlPanel = () => {
                     <h2 className="text-md font-semibold ">Administrar categorias</h2>
                 </div>
                 <div className="w-full flex flex-col items-start   mt-2"> 
-                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-200 px-4" onClick={cambiarACategorias}><MdCategory width="30px" height="30px" className="mr-2"/><span>Categorias</span></button>
+                    <button className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-300 focus:bg-gray-500 focus:text-gray-50 px-4" onClick={cambiarACategorias}><MdCategory width="30px" height="30px" className="mr-2"/><span>Categorias</span></button>
                 </div>
                 {/* Fin seccion administrar categorias */}
             </div>
@@ -291,8 +412,9 @@ const ControlPanel = () => {
                                     className="border border-gray-400 p-2 rounded-md font-medium w-1/2" 
                                     type="text"
                                     id="lastName"
-                                    onChange={() => {}}
+                                    onChange={handleChangeBuscadorClientes}
                                     name="lastName"
+                                    value={clientSearchValue}
                                     placeholder="Busca por nombre de provedor"
                                 />
                             </div>
@@ -308,6 +430,52 @@ const ControlPanel = () => {
                     {/* Inicio contenedor separado del buscador */}
                     <div className="mt-20 w-full">
                     {
+                        clientSearchValue.length > 0 ?
+                            clientesBuscados?.map(cliente => (
+                            <div className="w-full flex border-2 items-center py-2 px-2 my-2">
+                                <div className="h-20 w-24 rounded-full mr-4" style={{backgroundImage: `url(${cliente.photoURL})`, backgroundSize: "cover"}}></div>
+                                <div className="flex flex-col w-1/2">
+                                    <h2 className="text-1xl font-bold font-sans">{cliente.displayName}(Cliente)</h2>
+                                    <span className="text-gray-500 text-sm -mt-1">{cliente.email}</span>
+                                    <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {cliente.uidClient}</span>
+                                </div>
+                                <div className="flex w-1/2 justify-between">
+                                        <div className="flex flex-col w-20 justify-center items-center">
+                                            <div className="flex items-center">
+                                                <div className={`w-4 h-4 rounded-full mr-2 ${cliente.isAdmin ? "bg-green-500" : "bg-gray-500"}`}></div>
+                                                <h2 className="font-semibold text-lg">Administrador</h2>
+                                            </div>
+                                            <span className="text-sm">{cliente.isAdmin ? "Activo" : "No Activo"}</span>
+                                        </div>
+                                        <div className="flex w-80 items-center">
+                                            {
+                                                cliente.isAdmin ?
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => adminFalseClient({ ...cliente, })}
+                                                >
+                                                quitar admin
+                                                </button>
+                                                :
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => adminTrueClient({ ...cliente })}
+                                                >
+                                                volver admin
+                                                </button>
+                                            }
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                onClick={() => eliminarUsuarioClient(cliente.uidClient)}    
+                                            >
+                                            Eliminar 
+                                            </button>
+                                        </div>
+                                    </div>
+                            </div>
+                        ))
+                        :
+                        clientSearchValue.length === 0 &&
                         usuarios?.map(cliente => (
                             <div className="w-full flex border-2 items-center py-2 px-2 my-2">
                                 <div className="h-20 w-24 rounded-full mr-4" style={{backgroundImage: `url(${cliente.photoURL})`, backgroundSize: "cover"}}></div>
@@ -329,21 +497,24 @@ const ControlPanel = () => {
                                                 cliente.isAdmin ?
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                                    onClick={() => adminFalse({ ...cliente, })}
+                                                    onClick={() => {
+                                                        adminFalseClient({...cliente})
+                                                        
+                                                    }}
                                                 >
                                                 quitar admin
                                                 </button>
                                                 :
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                                    onClick={() => adminTrue({ ...cliente, })}
+                                                    onClick={() => adminTrueClient({ ...cliente, })}
                                                 >
                                                 volver admin
                                                 </button>
                                             }
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
-                                                onClick={() => eliminarUsuario(cliente.uidClient)}    
+                                                onClick={() => eliminarUsuarioClient(cliente.uidClient)}    
                                             >
                                             Eliminar 
                                             </button>
@@ -351,6 +522,7 @@ const ControlPanel = () => {
                                     </div>
                             </div>
                         ))
+                        
                     }
                     {/* Fin contenedor separado del buscador */}
                     </div>
@@ -371,7 +543,8 @@ const ControlPanel = () => {
                                     className="border border-gray-400 p-2 rounded-md font-medium w-1/2" 
                                     type="text"
                                     id="lastName"
-                                    onChange={() => {}}
+                                    onChange={handleChangeBuscadorProvedores}
+                                    value={providerSearchValue}
                                     name="lastName"
                                     placeholder="Busca por nombre de provedor"
                                 />
@@ -388,6 +561,55 @@ const ControlPanel = () => {
                     {/* Inicio contenedor separado del buscador */}
                     <div className="mt-20 w-full">
                     {
+                        providerSearchValue.length > 0 ?
+                            provedoresBuscados?.map(provider => {
+                            if(provider.provider){
+                                return (
+                                <div className="w-full flex border-2 items-center py-2 px-2 my-2">
+                                    <div className="h-20 w-24 rounded-full mr-4" style={{backgroundImage: `url(${provider.photoURL})`, backgroundSize: "cover"}}></div>
+                                    <div className="flex flex-col w-1/2">
+                                        <h2 className="text-1xl font-bold font-sans">{provider.displayName}(Provedor)</h2>
+                                        <span className="text-gray-500 text-sm -mt-1">{provider.email}</span>
+                                        <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {provider.uidClient}</span>
+                                    </div>
+                                    <div className="flex w-1/2 justify-between">
+                                        <div className="flex flex-col w-20 justify-center items-center">
+                                            <div className="flex items-center">
+                                                <div className={`w-4 h-4 rounded-full mr-2 ${provider.isAdmin ? "bg-green-500" : "bg-gray-500"}`}></div>
+                                                <h2 className="font-semibold text-lg">Administrador</h2>
+                                            </div>
+                                            <span className="text-sm">{provider.isAdmin ? "Activo" : "No Activo"}</span>
+                                        </div>
+                                        <div className="flex w-80 items-center">
+                                        {
+                                            provider.isAdmin ?
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                onClick={() => adminFalseProvider({ ...provider, })}
+                                            >
+                                            quitar admin
+                                            </button>
+                                            :
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                onClick={() => adminTrueProvider({ ...provider, })}
+                                            >
+                                            volver admin
+                                            </button>
+                                            }
+                                            <button 
+                                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                onClick={() => eliminarUsuarioProvider(provider.uidClient)}
+                                            >
+                                            Eliminar 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        })
+                        :
+                        providerSearchValue.length === 0 &&
                         usuarios?.map(provider => {
                             if(provider.provider){
                                 return (
@@ -411,20 +633,21 @@ const ControlPanel = () => {
                                             provider.isAdmin ?
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                                onClick={() => adminFalse({ ...provider, })}
+                                                onClick={() => adminFalseProvider({ ...provider, })}
                                             >
                                             quitar admin
                                             </button>
                                             :
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                                onClick={() => adminTrue({ ...provider, })}
+                                                onClick={() => adminTrueProvider({ ...provider, })}
                                             >
                                             volver admin
                                             </button>
                                             }
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                onClick={() => eliminarUsuarioProvider(provider.uidClient)}
                                             >
                                             Eliminar 
                                             </button>
@@ -453,7 +676,8 @@ const ControlPanel = () => {
                                     className="border border-gray-400 p-2 rounded-md font-medium w-1/2" 
                                     type="text"
                                     id="lastName"
-                                    onChange={() => {}}
+                                    onChange={handleChangeBuscadorCategorias}
+                                    value={categoriSearchValue}
                                     name="lastName"
                                     placeholder="Busca por nombre de categoria"
                                 />
@@ -468,6 +692,38 @@ const ControlPanel = () => {
                     {/* Inicio contenedor separado del buscador */}
                     <div className="mt-20 w-full">
                     {
+                    categoriSearchValue.length > 0 ?
+                        categoriasBuscadas?.map(categoria => (
+                        <div className="w-full flex border-2 items-center py-4 px-4 my-2">
+                            <div className="flex flex-col w-1/2">
+                                <h2 className="text-2xl font-semibold font-sans">{categoria.name}</h2>
+                                <span className="text-gray-800 font-sans font-semibold text-sm ">ID: {categoria.id}</span>
+                            </div>
+                            <div className="flex w-1/2 justify-end">
+                                <div className="flex w-80 items-center">
+                                    <button 
+                                        className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                        onClick={() => editarNombreCategorias(categoria.id)}
+                                    >
+                                    Editar
+                                    </button>
+                                    <button 
+                                        className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                        onClick={() => eliminarCategoria(categoria.id)}
+                                    >
+                                    Eliminar 
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="flex items-end justify-center w-20 h-20 pb-1 fixed button-0 bg-green-500 hover:bg-green-700 right-4 bottom-4  rounded-full text-8xl text-gray-50 cursor-pointer"
+                                onClick={() => agregarCategoria()}
+                            >
+                                +
+                            </div>
+                        </div>
+                    ))
+                    :
+                    categoriSearchValue.length === 0 &&
                     categories?.map(categoria => (
                         <div className="w-full flex border-2 items-center py-4 px-4 my-2">
                             <div className="flex flex-col w-1/2">
@@ -519,7 +775,8 @@ const ControlPanel = () => {
                                         className="border border-gray-400 p-2 rounded-md font-medium w-1/2" 
                                         type="text"
                                         id="lastName"
-                                        onChange={() => {}}
+                                        onChange={handleChangeBuscadorServicios}
+                                        value={serviceSearchValue}
                                         name="lastName"
                                         placeholder="Busca por nombre de servicio"
                                     />
@@ -534,6 +791,41 @@ const ControlPanel = () => {
                         {/* Inicio contenedor separado del buscador */}
                         <div className="mt-20 w-full">
                             {
+                                serviceSearchValue.length > 0 ?
+                                    serviciosBuscados?.map(servicio => (
+                                    <div className="w-full flex border-2 items-center py-4 px-4 my-2">
+                                        <div className="flex flex-col w-1/2">
+                                            <h2 className="text-2xl font-semibold font-sans">{servicio.title}</h2>
+                                            <span className="text-gray-700 font-sans font-semibold text-sm ">{`Precio: ${servicio.min} - ${servicio.max} (${servicio.currency})`}</span>
+                                            <span className="text-gray-700 font-sans font-semibold text-sm ">ID: {servicio.id}</span>
+                                        </div>
+                                        <div className="flex w-1/2 justify-between">
+                                            <div className="flex flex-col w-20 justify-center items-center">
+                                                <div className="flex items-center">
+                                                    <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                                    <h2 className="font-semibold text-lg">Estado</h2>
+                                                </div>
+                                                <span className="text-sm">Activo</span>
+                                            </div>
+                                            <div className="flex w-80 items-center">
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => mostrarDescripcion(servicio)}
+                                                >
+                                                Ver descripción
+                                                </button>
+                                                <button 
+                                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                                    onClick={() => eliminarServicio(servicio.id)}
+                                                >
+                                                Eliminar 
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                                :
+                                serviceSearchValue.length === 0 &&
                                 servicios?.map(servicio => (
                                     <div className="w-full flex border-2 items-center py-4 px-4 my-2">
                                         <div className="flex flex-col w-1/2">
