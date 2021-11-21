@@ -10,6 +10,7 @@ import UsersValidations from "./pages/UsersValidations/UsersValidations";
 import CreateService from "./pages/CreateService/CreateService";
 import HomeNavigation from "./Components/Organisms/HomeNavigation/HomeNavigation";
 import Profile from "./pages/Profile/Profile";
+import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 
 function App() {
   const routes = [
@@ -70,6 +71,10 @@ function App() {
     {
       path: '/profile',
       element: <Profile />
+    },
+    {
+      path: '/confirmServ',
+      element: <ConfirmServicio />
     },
   ]
   /*
