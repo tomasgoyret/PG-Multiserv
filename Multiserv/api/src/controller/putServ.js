@@ -1,8 +1,20 @@
-const { db } = require("../db.js");
+const { Servicios } = require("../db.js");
 
-const putServ = async (req, res) => {
+const putServ = async (req, res,next) => {
     const { id } = req.params;
-    const { title, currency,  category, description, max, min, rating, photos, direccion} = req.body;
+    let { title, currency,  category, description, max, min, rating, photos, direccion, estadoDePago} = req.body;
+    let traduccion = ""
+    console.log(estadoDePago)
+    if( estadoDePago==="approved"){
+        traduccion = "Aprobado"
+    }
+    if(estadoDePago==="rejected"){
+        traduccion = "Rechazado"
+    }
+    if( estadoDePago==="in_process"){
+        traduccion = "Pendiente"
+    }
+    
     try {
         const serv = await Servicios.update({
             title,
@@ -13,14 +25,15 @@ const putServ = async (req, res) => {
             min,
             rating,
             photos,
-            direccion
+            direccion,
+            estadoDePago: traduccion
         },{
             where: { id }
             } );
         res.send({ msg: "Servicio actualizado correctamente", serv})
     }
     catch (error) {
-        res.send(error)
+        next(error)
     }
 }
 
