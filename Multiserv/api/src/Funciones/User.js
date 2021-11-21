@@ -1,4 +1,4 @@
-const { Usuarios, Servicios, Categorias } = require("../db");
+const { Usuarios, Servicios, Categorias, auth } = require("../db");
 const { v4: uuidv4 } = require('uuid');
 const Cate = [
   {
@@ -26,16 +26,12 @@ const Cate = [
     "title":"Plomería"
   },
 ]
-
-
-
-
 const Users = [
   {
     "uid": "120XIVqAf2axAT0A3nCUe8IwYf63",
     "email": "movilpcsoporte@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+527581038416",
     "disabled": false,
@@ -63,7 +59,7 @@ const Users = [
     "uid": "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
     "email": "econewd@toplist.cz",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": " Gavrielle Colville",
     "photoURL": "http://dummyimage.com/420x600.png/5fa2dd/ffffff",
     "phone": "+33790188415",
@@ -93,7 +89,7 @@ const Users = [
     "uid": "1kh0flCWktUFAXiauKTP9adr5nX2",
     "email": "kjayne9@cdbaby.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lurleen Schuler ",
     "photoURL": "http://dummyimage.com/726x600.png/ff4444/ffffff",
     "phone": "+387923314028",
@@ -151,7 +147,7 @@ const Users = [
     "uid": "49KPmJcVR3SikQvSz1tzTSKvpAt1",
     "email": "lbresson0@wsj.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dorris Youster",
     "photoURL": "http://dummyimage.com/664x600.png/cc0000/ffffff",
     "phone": "+553606386008",
@@ -185,6 +181,7 @@ const Users = [
     "name": "sebastian murillo",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GgE8ziChGgU6Oq0rFjtXUDPalTOfARsKxb3dfBEVg=s96-c",
     "disabled": false,
+    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Wed, 17 Nov 2021 04:05:52 GMT",
       "creationTime": "Wed, 17 Nov 2021 02:48:11 GMT"
@@ -225,7 +222,7 @@ const Users = [
     "uid": "85TbCWA9T6XcTDQ9ZxQ0OBHdk1y1",
     "email": "dowain0@nature.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lilas Grass",
     "photoURL": "http://dummyimage.com/550x600.png/dddddd/000000",
     "phone": "+11234567890",
@@ -255,7 +252,7 @@ const Users = [
     "uid": "8Jjncs68ayUaPiMvkrlQVx0twXc2",
     "email": "uli.vargas111@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Flores",
     "phone": "+521234567890",
     "disabled": false,
@@ -283,7 +280,7 @@ const Users = [
     "uid": "8pYN2k171rdXmItOnlBM8oWfMto2",
     "email": "mtullyc@blinklist.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Shandee Hanbury-Brown",
     "photoURL": "http://dummyimage.com/505x600.png/dddddd/000000",
     "phone": "+48681608609",
@@ -313,7 +310,7 @@ const Users = [
     "uid": "9efBGf2m8EN8plsp2GrFsvYPgrU2",
     "email": "prueba15@email.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847711",
     "disabled": false,
@@ -341,7 +338,7 @@ const Users = [
     "uid": "AAyUS14K7dOgx6n4o1Z6jTRxSe12",
     "email": "prueba4@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "bastian alzate",
     "phone": "+573043345431",
     "disabled": false,
@@ -369,7 +366,7 @@ const Users = [
     "uid": "AKbJM3iYJgMiyXVefx6oYDeDVWv2",
     "email": "demoprueba@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Santa Prueba",
     "phone": "+522222343434",
     "disabled": false,
@@ -397,7 +394,7 @@ const Users = [
     "uid": "ARyejqzqP2ZqLKMjC36DinqKDZB3",
     "email": "maargoesgil@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
     "metadata": {
       "lastSignInTime": null,
@@ -439,7 +436,7 @@ const Users = [
     "uid": "B9I519nVrHYPayK8wISGR8yBED12",
     "email": "llarking1@wunderground.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Bondy Eckart",
     "photoURL": "http://dummyimage.com/527x600.png/5fa2dd/ffffff",
     "phone": "+627858477411",
@@ -469,7 +466,7 @@ const Users = [
     "uid": "D3mD8tiBmPeRr3zjHZBIL9ByFJa2",
     "email": "bastian@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
     "metadata": {
       "lastSignInTime": "Fri, 12 Nov 2021 15:43:06 GMT",
@@ -489,7 +486,7 @@ const Users = [
     "uid": "DuVMn1lhI4MNwmBznD7sCwCU5bo1",
     "email": "uli.vargas12345@outlook.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dafne Vargas",
     "phone": "+523216549871",
     "disabled": false,
@@ -517,7 +514,7 @@ const Users = [
     "uid": "Jt99gleUHOb5YprmjzWiC0tsVIP2",
     "email": "jesusa@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Jesus Vargas",
     "phone": "+523333058659",
     "disabled": false,
@@ -589,7 +586,7 @@ const Users = [
     "uid": "OT5EWmdv5semxeULjWhDQta2jfr1",
     "email": "dafnegonzalez.tdi2a@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dafne Gonzalez",
     "phone": "+523312780559",
     "disabled": false,
@@ -617,7 +614,7 @@ const Users = [
     "uid": "P0upDcdcC3aLEBzbhQxTC9q1lqC3",
     "email": "prueba13@prueba13.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847713",
     "disabled": false,
@@ -667,7 +664,7 @@ const Users = [
     "uid": "RjnjO80l0JglWzoS1PVaS7eiZ1Z2",
     "email": "prueba2@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "prueba pruebaa",
     "phone": "+573043345438",
     "disabled": false,
@@ -695,7 +692,7 @@ const Users = [
     "uid": "TEPzKwoQ5MPd09QNVNGbQbOJm8m1",
     "email": "agodson5@prweb.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Amalea Godson",
     "photoURL": "http://dummyimage.com/502x600.png/dddddd/000000",
     "disabled": false,
@@ -743,7 +740,7 @@ const Users = [
     "uid": "V2hJmouZzPhsgnAFV2Wrps8kIYb2",
     "email": "tomas@tomas.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847789",
     "disabled": false,
@@ -771,7 +768,7 @@ const Users = [
     "uid": "WJ7c4YIiX4WJIkt5iVWGQuppOjW2",
     "email": "uli.vargas548@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+521234565891",
     "disabled": false,
@@ -830,7 +827,7 @@ const Users = [
     "uid": "YYCtHMRJHfaEmqSk8ENNoZSFe1i1",
     "email": "prueba14@email.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847710",
     "disabled": false,
@@ -858,7 +855,7 @@ const Users = [
     "uid": "aek3mVCThCbCJrHsFG7sHgtjNQF2",
     "email": "beckart6@goodreads.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Linell Larking",
     "photoURL": "http://dummyimage.com/648x600.png/5fa2dd/ffffff",
     "disabled": false,
@@ -882,7 +879,7 @@ const Users = [
     "uid": "bNIPIC49wkcn2YfmyBKv0DXh50P2",
     "email": "colo_goyret@hotmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847715",
     "disabled": false,
@@ -910,7 +907,7 @@ const Users = [
     "uid": "eK7xM4QxffNSO51JafCb1yiB9u02",
     "email": "uli.vargas123@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Gonzalez",
     "phone": "+521234567891",
     "disabled": false,
@@ -938,7 +935,7 @@ const Users = [
     "uid": "fCK6wjtRHweXfjQPMtVCXsAqogs2",
     "email": "tomas.goyret@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847719",
     "disabled": false,
@@ -966,8 +963,9 @@ const Users = [
     "uid": "kMe67U3R59RqmpgG59IvKoZwTCH2",
     "email": "multiserv@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
+    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Mon, 15 Nov 2021 02:51:05 GMT",
       "creationTime": "Fri, 12 Nov 2021 13:22:39 GMT"
@@ -986,7 +984,7 @@ const Users = [
     "uid": "kNSNWwN8Q4PGIj627FBQHQLkC203",
     "email": "shanburybrown8@devhub.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Murdock Tully",
     "photoURL": "http://dummyimage.com/543x600.png/cc0000/ffffff",
     "phone": "+546477250902",
@@ -1016,7 +1014,7 @@ const Users = [
     "uid": "rt9lOCJzuuOHyvzVQL2EsWbqeVf2",
     "email": "lgrassa@devhub.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Domenico Owain",
     "photoURL": "http://dummyimage.com/519x600.png/ff4444/ffffff",
     "phone": "+423633543705",
@@ -1046,7 +1044,7 @@ const Users = [
     "uid": "ryVoXVOqdrbdLNZev1m8THjAhW63",
     "email": "dyousterb@latimes.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lin Bresson ",
     "photoURL": "http://dummyimage.com/704x600.png/ff4444/ffffff",
     "phone": "+608314423112",
@@ -1104,7 +1102,7 @@ const Users = [
     "uid": "vl9IIVwDSue0XSrYWkCLn31hCN02",
     "email": "movilpc.soporte@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+523312878378",
     "disabled": false,
@@ -1132,7 +1130,7 @@ const Users = [
     "uid": "xgSmCViIZcbLv9k6IrekcXCBr0E2",
     "email": "uli.vargas@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+523333208416",
     "disabled": false,
@@ -1160,7 +1158,7 @@ const Users = [
     "uid": "xikCYZABF5XrgDvpRWwH9vdAhNy2",
     "email": "lschuler7@gnu.org",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Kalli Jayne",
     "photoURL": "http://dummyimage.com/718x600.png/dddddd/000000",
     "phone": "+355244707314",
@@ -1190,7 +1188,7 @@ const Users = [
     "uid": "xxAiEz9j4uThTHcCmpDuwqkvPst2",
     "email": "bastianalzate@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "bastian alzate",
     "phone": "+573043345434",
     "disabled": false,
@@ -1218,7 +1216,7 @@ const Users = [
     "uid": "yusOXdPOqGUrgSWENMeHUV8j5an2",
     "email": "uli.vargas02@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "disabled": false,
     "metadata": {
@@ -1240,7 +1238,7 @@ const Users = [
     "uid": "yyoSUvSMbFbJc48iAfL2bNj6chk1",
     "email": "gcolville4@skype.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Emmy Conew",
     "photoURL": "http://dummyimage.com/750x600.png/5fa2dd/ffffff",
     "phone": "+989652356648",
@@ -1670,16 +1668,17 @@ let Categoriasmockup = async () => {
 const LlamadoUsers = async (usuarios) => {
   for (let index = 0; index < usuarios.length; index++) {
     const user = usuarios[index];
-    await Usuarios.create({
+    const nuevo= {
       uidClient: user.uid,
       photoURL: user.photoURL,
       phoneNumber: user.phone,
       email: user.email,
       displayName: `${user.name} ${user.lastName}`,
       provider: false,
-      uidProvider: uuidv4(),
       disabled: false,
-    })
+    }
+    await Usuarios.create(nuevo);
+
   }
 }
 
@@ -1698,12 +1697,13 @@ let DataServices = async () => {
               rating: parseInt(s.rating), 
               photos: s.photos,
               //usuarioUidClient: s.uidClient
+              estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
             const category = await Categorias.findOne({ where: { title: s.category}})
             await servicio.addCategorias(category)
-            console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
+            // console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
       }
   }
   catch(err){
