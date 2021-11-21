@@ -72,31 +72,37 @@ function App() {
       element: <Profile />
     },
   ]
-  let routing = useRoutes(routes);
-  return (
-    <div>
+  /*
+  <div>
       <Routes>
         <Route path="/"/>
         <Route path="/signup"/>
         <Route path="/components" />
         <Route path='/home'> 
           <Route path='/home/chat'/>
-          {/* <Route path='/home/profile'/> */}
+
+          <Route path='/home/profile'/>
           <Route path='/home/schedule'/>
 
         </Route>
-        {/* <Route path="/passwordChange"/> */}
+        <Route path="/passwordChange"/>
         <Route path="/passwordReset"/>
         <Route path="/detalleServicio/:id"/>
         <Route path="/profile" />
-        {/* <Route path="/test" /> */}
+        <Route path="/test" />
         <Route path="/email-verification"/>
         <Route path="/user-validations" />
-        {/* <Route path="/pago"/> */}
+        <Route path="/pago"/>
       </Routes>
     <div className="custom-scrollbar">
       {routing}
     </div>
+    </div>
+   */
+  let routing = useRoutes(routes);
+  return (
+    <div className="custom-scrollbar">
+      {routing}
     </div>
   );
 }
