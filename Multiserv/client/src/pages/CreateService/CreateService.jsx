@@ -336,6 +336,15 @@ const CreateService = () => {
                                 </>
                             )}
                     </div>
+                    <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
+                        <div className="w-1/2 flex flex-col">
+                            <div className="my-4">
+                                <span className='text-md font-semibold text-2xl text-cyan-900'>Titulo</span>
+                                <span className='text-md'>{service.title}</span>
+                            </div>
+                        </div>
+                        <div className="w-1/2"></div>
+                    </div>
                 </div>
                 <div id="buttons" className="flex w-full flex-row justify-between px-48 border-t border-gray-200 mt-4 pt-4">
 
