@@ -5,7 +5,8 @@ import ReactCountryFlag from "react-country-flag"
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
 import SimpleProgressBar from '../../Components/Atoms/SimpleProgressBar/SimpleProgressBar';
 import Button from '../../Components/Atoms/Button/Button';
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import Image from '../../Components/Atoms/Image/Image';
 
 const CreateService = () => {
     const navigate = useNavigate();
@@ -19,6 +20,8 @@ const CreateService = () => {
         max: '',
         currency: 'MXN'
     })
+    const [loadedImg, setLoadedImg] = useState(false)
+    const [img, setImg] = useState(null)
     const [stepForm, setStepForm] = useState(0)
     const handleSetService = (cat) => {
         return (text) => {
@@ -92,6 +95,11 @@ const CreateService = () => {
             name: 'categoria 5'
         },
     ]
+    const handleImage = (e) => {
+        setLoadedImg(true)
+        console.log(URL.createObjectURL(e.target.files[0]));
+        setImg(URL.createObjectURL(e.target.files[0]))
+    }
     const handleCurrency = (obj) => {
         setService({
             ...service,
@@ -105,78 +113,7 @@ const CreateService = () => {
     }, [])
 
     const { uid } = useParams()
-    /* <div className="border w-2/3 mx-auto">
-                        <div className="mb-4 flex justify-between">
-                            <div className="w-1/3 self-center">
-                                <Input
-                                    type="number"
-                                    id="min"
-                                    theme="#164E63"
-                                    label="Precio mínimo:"
-                                    placeholder="Precio"
-                                    flexed
-                                    callBack={handleSetService('min')}
-                                />
-                            </div>
-                            <div className="w-1/3 self-center">
-                                <Input
-                                    type="number"
-                                    id="max"
-                                    theme="#164E63"
-                                    label="Precio máximo:"
-                                    placeholder="Precio"
-                                    flexed
-                                    callBack={handleSetService('max')}
-                                />
-                            </div>
-                            <div className="w-1/3 self-center pt-3">
-                                <div className="relative mx-4">
-                                    <span className={`absolute -top-6 text-sm font-semibold text-gray-600 select-none cursor-pointer`}>Moneda local:</span>
 
-                                    <div className="flex flex-row mt-3">
-                                        <ListBox
-                                            customBorder="#9CA3AF"
-                                            className="self-center"
-                                            width='10rem'
-                                            options={monedas}
-                                            callBack={handleCurrency}
-                                            text="..."
-                                            theme="#0C4A6E"
-                                            includeIconOnDesc
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-4">
-                            <div className="flex justify-between mx-4">
-                                <div className="mr-4">
-                                    <ListBox
-                                        customBorder="#9CA3AF"
-                                        className="self-center"
-                                        width='15rem'
-                                        options={categorias}
-                                        callBack={(object) => { console.log(object.name) }}
-                                        text="..."
-                                        theme="#0C4A6E"
-                                        includeIconOnDesc
-                                    />
-                                </div>
-                                <div className="">
-                                    <ListBox
-                                        customBorder="#9CA3AF"
-                                        className="self-center"
-                                        width='15rem'
-                                        options={categorias}
-                                        callBack={(object) => { console.log(object.name) }}
-                                        text="..."
-                                        theme="#0C4A6E"
-                                        includeIconOnDesc
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div> */
     const addStep = () => {
         if (stepForm < 3) {
             setStepForm(stepForm + 1)
@@ -338,8 +275,30 @@ const CreateService = () => {
                     </div>
 
                     <div id="step2" className={`${stepForm === 2 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
+                        {loadedImg ?
+                            <div className="h-full overflow-y-hidden relative">
+                                <div className="absolute top-0 right-0">
+                                    <button
+                                        className="p-2"
+                                        onClick={() => {
+                                            setLoadedImg(false)
+                                            setImg(null)
+                                        }}
+                                    >
+                                        <FaTimes className="text-lg text-white" />
+                                    </button>
+                                </div>
+                                <Image
+                                    name="photo1"
+                                    imagen={img}
+                                    imgClass={`object-cover rounded-lg h-72`}
+                                />
+                            </div>
+                            :
+                            (
+                                <>
                         <input
-                            onChange={() => { console.log('algo') }}
+                                        onChange={handleImage}
                             type="file"
                             name="foto5"
                             id="foto5"
@@ -350,19 +309,12 @@ const CreateService = () => {
                             <FaPlus className="text-4xl" />
                             <span className="google-sans font-semibold block">Haz click para agregar una foto</span>
                         </label>
+                                </>
+                            )}
                     </div>
                 </div>
                 <div id="buttons" className="flex w-full flex-row justify-between px-48 border-t border-gray-200 mt-4 pt-4">
-                    {/* <button onClick={decreaseStep} className="px-6 py-2 rounded-md bg-gray-200 text-cyan-900 transition-all duration-300">
-                        <span className="font-semibold">
-                            Atrás
-                        </span>
-                    </button>
-                    <button onClick={addStep} className="px-6 py-2 rounded-md bg-cyan-900 text-gray-50 transition-all duration-300">
-                        <span className="font-semibold">
-                            Siguiente
-                        </span>
-                    </button> */}
+
                     <Button
                         text="Atrás"
                         customTextColor='#155E75'
