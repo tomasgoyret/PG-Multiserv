@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import { getCats } from '../../redux/actions/actions';
 import Input from '../../Components/Atoms/Input/Input';
+import { useSelector, useDispatch } from 'react-redux'
 import ReactCountryFlag from "react-country-flag"
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
 import SimpleProgressBar from '../../Components/Atoms/SimpleProgressBar/SimpleProgressBar';
@@ -9,13 +11,16 @@ import { FaPlus, FaTimes } from "react-icons/fa";
 import Image from '../../Components/Atoms/Image/Image';
 
 const CreateService = () => {
+    const [disabledNext, setDisabledNext] = useState(true)
+    const categoriasDb = useSelector((state) => state.categories)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
     const [service, setService] = useState({
         title: '',
         description: '',
-        categorias: [],
+        categorias: ['Limpieza'],
         min: '',
         max: '',
         currency: 'MXN'
@@ -32,11 +37,29 @@ const CreateService = () => {
         }
     }
     useEffect(() => {
+        if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
+            navigate('/')
+        }
+        dispatch(getCats())
         const delay = setTimeout(() => {
             setStepForm(1)
         }, 500)
         return () => clearTimeout(delay)
     }, [])
+
+    useEffect(() => {
+        const isFalsy = Object.values(service).some(value => {
+            if (!value) {
+                return true;
+            }
+            return false;
+        });
+        if (isFalsy) {
+            setDisabledNext(true)
+        } else {
+            setDisabledNext(false)
+        }
+    }, [service])
     const monedas = [
         {
             name: 'MXN',
@@ -78,27 +101,14 @@ const CreateService = () => {
             />
         },
     ]
-    const categorias = [
-        {
-            name: 'categoria 1'
-        },
-        {
-            name: 'categoria 2'
-        },
-        {
-            name: 'categoria 3'
-        },
-        {
-            name: 'categoria 4'
-        },
-        {
-            name: 'categoria 5'
-        },
-    ]
     const handleImage = (e) => {
         setLoadedImg(true)
-        console.log(URL.createObjectURL(e.target.files[0]));
+        setService({
+            ...service,
+            img: [URL.createObjectURL(e.target.files[0])]
+        })
         setImg(URL.createObjectURL(e.target.files[0]))
+
     }
     const handleCurrency = (obj) => {
         setService({
@@ -106,11 +116,6 @@ const CreateService = () => {
             currency: obj.name
         })
     }
-    useEffect(() => {
-        if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
-            navigate('/')
-        }
-    }, [])
 
     const { uid } = useParams()
 
@@ -127,7 +132,7 @@ const CreateService = () => {
     return (
         <div className="contianer flex justify-center items-center mx-auto w-full bg-gray-400">
             <div
-                style={{ height: '34rem', width: '100%' }}
+                style={{ height: '36rem', width: '100%' }}
                 className="rounded-md bg-white mx-8 py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
                 <div id="status" className="w-full text-center">
                     <h1 className="text-4xl font-semibold text-cyan-900 mb-6">Crear un nuevo servicio</h1>
@@ -257,16 +262,35 @@ const CreateService = () => {
 
                                     <div className="mx-4">
                                         <span className="font-semibold text-gray-600 text-sm ">Seleccione una categoría:</span>
-                                        <ListBox
-                                            customBorder="#9CA3AF"
-                                            className="self-center"
-                                            width='15rem'
-                                            options={categorias}
-                                            callBack={(object) => { console.log(object.name) }}
-                                            text="..."
-                                            theme="#0C4A6E"
-                                            includeIconOnDesc
-                                        />
+                                        <div style={{ zIndex: '9999' }}>
+                                            {
+                                                categoriasDb.length
+                                                    ?
+                                                    (
+                                                        <ListBox
+                                                            customBorder="#9CA3AF"
+                                                            className="self-center"
+                                                            width='15rem'
+                                                            options={categoriasDb}
+                                                            callBack={(text) => {
+                                                                setService({
+                                                                    ...service,
+                                                                    categorias: [text.name]
+                                                                })
+                                                            }}
+                                                            text="..."
+                                                            theme="#0C4A6E"
+                                                            includeIconOnDesc
+                                                        />
+                                                    ) :
+
+                                                    (
+                                                        <div style={{ width: '15rem' }} className=" self-center mt-1 px-4 py-2 bg-gray-100 text-black font-semibold rounded-md border-gray-300">
+                                                            <span>Cargando...</span>
+                                                        </div>
+                                                    )}
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -323,6 +347,7 @@ const CreateService = () => {
                         disabled={stepForm === 1}
                     />
                     {stepForm !== 3 && <Button
+                        disabled={disabledNext}
                         text="Siguiente"
                         customTextColor="#FFFFF"
                         theme="#155E75"
