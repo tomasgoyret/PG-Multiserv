@@ -1,4 +1,4 @@
-const { Usuarios, Servicios, Categorias } = require("../db");
+const { Usuarios, Servicios, Categorias, auth } = require("../db");
 const { v4: uuidv4 } = require('uuid');
 const Cate = [
   {
@@ -26,10 +26,6 @@ const Cate = [
     "title":"Plomería"
   },
 ]
-
-
-
-
 const Users = [
   {
     "uid": "120XIVqAf2axAT0A3nCUe8IwYf63",
@@ -1672,16 +1668,17 @@ let Categoriasmockup = async () => {
 const LlamadoUsers = async (usuarios) => {
   for (let index = 0; index < usuarios.length; index++) {
     const user = usuarios[index];
-    await Usuarios.create({
+    const nuevo= {
       uidClient: user.uid,
       photoURL: user.photoURL,
       phoneNumber: user.phone,
       email: user.email,
       displayName: `${user.name} ${user.lastName}`,
       provider: false,
-      uidProvider: uuidv4(),
       disabled: false,
-    })
+    }
+    await Usuarios.create(nuevo);
+
   }
 }
 
