@@ -51,6 +51,10 @@ function App() {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
         },
+        {
+          path: '/home/detalleServicio/:id',
+          element: <DetalleServicio />
+        }
       ]
     },
     {

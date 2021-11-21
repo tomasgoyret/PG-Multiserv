@@ -16,6 +16,9 @@ const getFavRouter = require("./getFav.js");
 const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
+const resenaRouter= require("./resenas")
+
+
 
 
 // Rutas a Usuarios
@@ -42,5 +45,8 @@ router.use("/edit-categorias",putCategoriasRouter)
 router.use("/favoritos", getFavRouter)
 router.use("/agregar-fav", postFavRouter)
 router.use("/eliminar-fav", deleteFavRouter)
+
+//Rutas reseñas
+router.use("/resena", resenaRouter)
 
 module.exports = router;

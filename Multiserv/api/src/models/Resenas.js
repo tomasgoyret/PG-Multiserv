@@ -21,13 +21,8 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    uidClient: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    idService: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
+    details: {
+      type: DataTypes.STRING(1234)
+    }
   });
 };

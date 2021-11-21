@@ -22,15 +22,21 @@ const DetalleServicio = () => {
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
     const loading = useSelector((state) => state.loadingServicesDetalle)
+    const loading = useSelector((state) => state.loadingServices)
+    const servicios = useSelector((state) => state.servicios)
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    
 
     useEffect(()=>{
         dispatch(servicesId(id))
     },[dispatch,id])
    const servicioID = useSelector((state)=> state.detalleServicio)
 //const idUs =servicioID[0].usuarioUidClient
+   const servicio = servicios.filter(serv => serv.id === Number(id))
+   console.log(servicio)
+   console.log(servicio[0].categorias)
+   console.log(servicio.photos)
+//     const idUs =servicioID.data[0].usuarioUidClient
 //    useEffect(()=>{
 //     dispatch(usuarioId(idUs))
 //    },[dispatch,idUs])
@@ -43,12 +49,6 @@ const DetalleServicio = () => {
         foto = datosSesionFromLocalStorage.photoURL
     }
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-    const arr = [
-        <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
-        <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} />,
-        <LinkTo linkClass='m-4 flex justify-center' page='home/profile' render={<FaUserAlt size='28' color='white' />} />,
-        <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} />
-    ]
 
     const logout = (e) => {
         e.preventDefault();
@@ -97,14 +97,6 @@ const DetalleServicio = () => {
     return (
         <div>
         <div className="flex">
-            <Nav
-                clase='w-20 h-screen p-4 pt-6 flex flex-col justify-between justify-center bg-blue-900'
-                imgClass='w-16 rounded-full cursor-pointer'
-                imgOnClick={handleClick}
-                imagen={foto}
-                imgName='Logo'
-                arr={arr}
-            />
             {modal}
             {
                 loading ? (
@@ -125,6 +117,7 @@ const DetalleServicio = () => {
                                   <div  css={userProfile} className="w-17 h-16 rounded-full " />
                                   <h1 className="font-semibold text-gray-700">{servicioID[0].usuarioUidClient}</h1> 
                                   <span className="cursor-pointer inline-flex font-medium text-cyan-800"><Link to={`/detalleProveedor/${servicioID[0].usuarioUidClient}`} >detalle...</Link></span>
+
                                </div>
                                 
                            </div>
@@ -132,7 +125,7 @@ const DetalleServicio = () => {
                            <div className="bg-white relative flex flex-col rounded-b-lg">
                                <div className=" absolute -top-5  px-4 flex w-full justify-between">
                                     <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                                      <span className="text-white">{servicioID[0].categorias[0].title}</span>
+                                      <span className="text-white">{servicio[0].categorias[0].title} </span>
                                     </div>
                                 </div>
                                 <Image
@@ -145,21 +138,21 @@ const DetalleServicio = () => {
                                     setFailedImg(true)
                                     }}
                                     name="photo1"
-                                    imagen={servicioID[0].photos[0]}
+                                    imagen={servicio[0].photos[0]}
                                     imgClass={`object-cover rounded-t-lg w-100 h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
                                 />
                                 <div className="pt-6 px-4 relative">
                                     <div className="mb-2">
                                          <div className="flex justify-between">
-                                           <span className="self-center text-lg font-semibold text-gray-800 w-3/6" >{servicioID[0].title}</span>
+                                           <span className="self-center text-lg font-semibold text-gray-800 w-3/6" >{servicio[0].title}</span>
                                             <div className="self-center inline-flex">
-                                             <StarRating rating={servicioID[0].rating} />
+                                             <StarRating rating={servicio[0].rating} />
                                             </div>
                                          </div>
-                                        <span className="self-center text-sm font-medium text-gray-500">{`Desde ${servicioID[0].min} ${servicioID[0].currency} a ${servicioID[0].max} ${servicioID[0].currency}`}</span>
+                                        <span className="self-center text-sm font-medium text-gray-500">{`Desde ${servicio[0].min} ${servicio[0].currency} a ${servicio[0].max} ${servicio[0].currency}`}</span>
                                     </div>
                                   <div className="max-h-40 overflow-hidden">
-                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicioID[0].description}`}</p>
+                                    <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicio[0].description}`}</p>
                                   </div>
                                 {/* <div className="">
                                   <ButtonXartiago
