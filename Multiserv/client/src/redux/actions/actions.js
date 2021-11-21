@@ -68,7 +68,7 @@ export const buscar = (nombre) => { return { type: BUSCAR, payload: nombre } }
 /* Ordenar Servicios */
 /* Por alfabeto */
 export const orderAlph = (by) => {
-    console.log(by)
+    //console.log(by)
     return { type: ORDERALPH, payload: by }
 }
 /* Por rating */
@@ -78,7 +78,7 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
-    console.log("entre al actions "+ id+".....")
+    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services =` ${server}/usuarios/${id}`;
         const response = await axios(services);
@@ -100,7 +100,7 @@ export const empatyusuarioId = (id) => {
 
 // Traer detalle de servicio /
 export const servicesId = (id) => {
-    console.log("entre al actions "+ id+".....")
+    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services = `${server}/services/${id}`;
         const response = await axios(services);

@@ -16,7 +16,6 @@ const getFavRouter = require("./getFav.js");
 const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
-
 const resenaRouter= require("./resenas")
 
 
