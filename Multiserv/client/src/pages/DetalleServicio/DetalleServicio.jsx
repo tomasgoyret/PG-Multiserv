@@ -30,6 +30,7 @@ const DetalleServicio = () => {
     //     dispatch(servicesId(id))
     // },[dispatch,id])
    const servicio = servicios.filter(serv => serv.id === Number(id))
+   // servicio retornaba un arreglo 
    console.log(servicio)
    console.log(servicio[0].categorias)
    console.log(servicio.photos)
