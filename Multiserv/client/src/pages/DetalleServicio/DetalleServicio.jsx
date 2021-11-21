@@ -19,7 +19,6 @@ const DetalleServicio = () => {
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
-    const loading = useSelector((state) => state.loadingServicesDetalle)
     const loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
