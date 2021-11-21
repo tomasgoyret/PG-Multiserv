@@ -39,7 +39,7 @@ const Home = () => {
     useEffect(() => {
         if (filter !== null) {
             if (filter.value === 'none') {
-                dispatch(resetOrder())
+                dispatch(services())
             } else {
                 dispatch(filterCats(filter.name))
             }
@@ -47,7 +47,7 @@ const Home = () => {
     }, [filter])
 
     useEffect(() => {
-        buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(resetOrder())
+        buscador.length > 0 ? dispatch(buscar(buscador)) : dispatch(services())
     }, [buscador])
 
     const handleListValue2 = (obj) => {
@@ -59,7 +59,7 @@ const Home = () => {
     const handleListValue = (obj) => {
         setOrder(obj)
         if (obj.type === 'none') {
-            dispatch(resetOrder())
+            dispatch(services())
         }
         if (obj.type === 'alph') {
             console.log('Se despacho la accion de tipo:', obj.type)
