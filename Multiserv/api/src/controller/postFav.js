@@ -1,4 +1,4 @@
-const { Favoritos, Usuarios, usuarios_favoritos } = require("../db.js");
+const { Favoritos, Usuarios } = require("../db.js");
 const { v4: uuidv4 } = require('uuid');
 
 const postFav = async (req, res) => {
