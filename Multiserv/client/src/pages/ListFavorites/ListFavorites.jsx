@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { getListFavorites, deleteListFavorites } from "../../redux/actions/actions";
 
 const ListFavorites = ({ favoritos, getListFavorites, deleteListFavorites }) => {
-    let { uid } = useParams();
+    var { uid } = useParams();
 
   useEffect(() => {
     getListFavorites(uid);
   }, []);
 
   let eliminarFav = (e) => {
-    deleteListFavorites(e.target.name)
+    deleteListFavorites(e.target.name,uid)
   }
 
   return (
