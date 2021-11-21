@@ -27,7 +27,8 @@ payService.pago = (req, res) => {
     .create(preference)
     .then(function (respuesta) {
       const redireccion = respuesta.body.init_point;
-      res.send(redireccion);
+      console.log(redireccion);
+      res.send(redireccion)
     })
     .catch(function (error) {
       error;
