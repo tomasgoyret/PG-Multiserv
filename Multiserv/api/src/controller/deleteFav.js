@@ -4,7 +4,7 @@ const { Favoritos } = require("../db.js");
 
 const deleteFav = async (req, res) => {
 
-    const { id, uidClient } = req.params;
+    const { id, uidClient } = req.query;
 
     try {
         const eliminado = await Favoritos.destroy({
@@ -23,4 +23,4 @@ const deleteFav = async (req, res) => {
     }
 };
 
-module.exports = deleteFav;
+module.exports = deleteFav
