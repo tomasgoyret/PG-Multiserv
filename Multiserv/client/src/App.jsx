@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
 import DetalleServicio from "./pages/DetalleServicio/DetalleServicio";
+import DetalleProveedor from "./pages/DetalleProveedor/DetalleProveedor";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
 import CreateService from "./pages/CreateService/CreateService";
@@ -61,6 +62,14 @@ function App() {
       element: <PasswordReset />
     },
     {
+      path: '/detalleServicio/:id',
+      element: <DetalleServicio />
+    },
+    {
+      path: '/detalleProveedor/:id',
+      element: <DetalleProveedor />
+    },
+    {
       path: '/email-verification',
       element: <VerifyEmail />
     },
@@ -89,6 +98,7 @@ function App() {
         {/* <Route path="/passwordChange"/> */}
         <Route path="/passwordReset"/>
         <Route path="/detalleServicio/:id"/>
+        <Route path="/detalleProveedor/:id"/>
         <Route path="/profile" />
         {/* <Route path="/test" /> */}
         <Route path="/email-verification"/>
