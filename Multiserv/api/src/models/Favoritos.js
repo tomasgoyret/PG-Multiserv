@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
     idService: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
   });
 };

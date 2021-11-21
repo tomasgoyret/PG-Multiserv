@@ -57,7 +57,8 @@ const getUserId = async (req, res) => {
         //     uidProvider: dbUsuario.dataValues.uidProvider,
         //     disable: dbUsuario.dataValues.disable
         // }
-        dbUsuario === 1 ? res.send(dbUsuario) : res.send(`No existe usuario con uid: ${uidClient}`)
+        dbUsuario ? res.send(dbUsuario) :
+        res.send("El usuario no existe en la base de datos");
     } catch (error) {
         res.status(404).json({ msg: "El usuario no existe en la base de datos" });
     }

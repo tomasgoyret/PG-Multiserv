@@ -10,7 +10,9 @@ import {
     SERVICIOID,
     EMPATYSERVICIOID,
     USUARIOID,
-    EMPATYUSUARIO
+    EMPATYUSUARIO,
+    FAVORITES,
+    ELIMINARFAVORITES
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -20,7 +22,8 @@ const initalState = {
     usuarios: [],
     aux: [],
     categories: [],
-    detalleServicio: {}
+    detalleServicio: {},
+    misFavoritos: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -65,7 +68,6 @@ function rootReducer(state = initalState, { type, payload }) {
                     else return 0
                 })
             }
-            console.log(orderedAlph.map(serv => serv.title))
             return {
                 ...state,
                 servicios: orderedAlph
@@ -78,7 +80,6 @@ function rootReducer(state = initalState, { type, payload }) {
             else if (payload === 'desc') {
                 orderedRat.sort((prev, post) => post.rating - prev.rating)
             }
-            console.log(orderedRat.map(serv => serv.rating))
             return {
                 ...state,
                 servicios: orderedRat
@@ -100,11 +101,20 @@ function rootReducer(state = initalState, { type, payload }) {
                 detalleUsuario: {},
             }
         case USUARIOID:
-            console.log("entre al usuario .....")
             return {
                 ...state,
                 loadingServices: false,
                 detalleUsuario: payload,
+            }
+        case FAVORITES:
+            return {
+                ...state,
+                misFavoritos: payload,
+            }
+        case ELIMINARFAVORITES:
+            return {
+                ...state,
+                misFavoritos: payload,
             }
 
         case EMPATYSERVICIOID:
