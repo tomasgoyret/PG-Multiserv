@@ -9,7 +9,7 @@ const postResena= async (req, res)=> {
         };
         try{ 
             const [resena, created] = await Resenas.findOrCreate({
-                where: {usuarioUidClient: uidClient},
+                where: {usuarioUidClient: uidClient, servicioId: id},
                 defaults: {
                     title,
                     details,
