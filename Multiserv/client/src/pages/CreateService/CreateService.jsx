@@ -9,6 +9,7 @@ import SimpleProgressBar from '../../Components/Atoms/SimpleProgressBar/SimplePr
 import Button from '../../Components/Atoms/Button/Button';
 import { FaPlus, FaTimes } from "react-icons/fa";
 import Image from '../../Components/Atoms/Image/Image';
+import axios from 'axios';
 
 const CreateService = () => {
     const [disabledNext, setDisabledNext] = useState(true)
@@ -23,7 +24,8 @@ const CreateService = () => {
         categorias: ['Limpieza'],
         min: '',
         max: '',
-        currency: 'MXN'
+        currency: 'MXN',
+        img:[]
     })
     const [loadedImg, setLoadedImg] = useState(false)
     const [img, setImg] = useState(null)
@@ -129,6 +131,46 @@ const CreateService = () => {
             setStepForm(stepForm - 1)
         }
     }
+
+    const [nuevServ, setnuevoServ] = useState({})
+
+    useEffect(async ()=>{
+            if (stepForm === 3){
+            let nuevoServ = {
+            title : service.title,  
+            currency: service.currency,  
+            category: service.categorias, 
+            description: service.description, 
+            max: service.max, 
+            min: service.min, 
+            uidClient: uid,
+            photos: service.img
+            }
+            try {
+                let serv = await axios.post (`newservice`,nuevoServ)
+                setnuevoServ(serv.data.servicio)
+                console.log("se creó el servicio")
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    },[stepForm])
+
+    const [link, setLink] = useState("")
+
+    const linkPago = async (uid) => {
+        try {
+            let link = await axios.post(`pay-service`, {id : `${uid}`})
+            setLink(link.data)
+            window.open(link.data)
+           // window.location.href = "/home"
+            console.log(link.data)
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
     return (
         <div className="contianer flex justify-center items-center mx-auto w-full bg-gray-400">
             <div
@@ -363,10 +405,10 @@ const CreateService = () => {
                         action={addStep}
                     />}
                     {stepForm === 3 && <Button
-                        text="Finalizar"
+                        text="Pagar"
                         customTextColor="#FFFFF"
                         theme="#155E75"
-                        action={() => { console.log('finalizar') }}
+                        action={()=>{linkPago(nuevServ.id)}}
                     />}
 
                 </div>
