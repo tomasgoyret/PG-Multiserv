@@ -1,10 +1,7 @@
-import { Outlet, Route, Routes, useRoutes } from "react-router";
+import { useRoutes } from "react-router";
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
-
-
-import SignIn from "./pages/SignIn/SignIn";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
 import Detalle from "./pages/DetalleServicio/DetalleServicio"

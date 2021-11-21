@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from 'react'
 
-const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, flexed, error, disabled }) => {
+const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, flexed, error, disabled,
+    height }) => {
     const [value, setValue] = useState('')
 
     const flexedStyle = {
@@ -15,6 +16,8 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
         outline: '2px solid transparent',
         outlineOffset: '2px',
         width: flexed ? '100%' : '16rem',
+        height: height ? height : 'unset',
+        whiteSpace: 'pre-wrap',
         '&:focus': {
             outline: '2px solid ',
             outlineColor: theme
@@ -36,7 +39,7 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
                 className={`${!label && 'hidden'} ${flexed ? 'text-sm mb-2' : 'text-base'} font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>
                 {label}
             </label>
-            <input
+            {type !== 'textarea' && <input
                 disabled={disabled}
                 type={type}
                 name={id}
@@ -47,9 +50,24 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
                 onChange={handleInputValue}
                 value={value}
                 autoComplete="true"
-                className={`${error ? 'border-2 border-red-800' : 'border border-gray-400'} p-2 rounded-md font-medium`}
+                className={`${error ? 'border-2 border-red-800' : 'border border-gray-400'} px-2 ${height ? 'overflow-x-scroll py-0.5' : 'py-2 overflow-x-auto'} rounded-md font-medium`}
 
-            />
+            />}
+            {type === 'textarea' && <textarea
+                disabled={disabled}
+                type={type}
+                name={id}
+                id={id}
+                key={id}
+                placeholder={placeholder}
+                css={style}
+                onChange={handleInputValue}
+                value={value}
+                autoComplete="true"
+                style={{ resize: "none" }}
+                className={`custom-scrollbar ${error ? 'border-2 border-red-800' : 'border border-gray-400'} px-2 ${height ? 'py-0.5' : 'py-2'} rounded-md font-medium`}
+
+            />}
         </div>
     )
 }
