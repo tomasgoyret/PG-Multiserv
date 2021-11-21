@@ -45,7 +45,7 @@ export const getCats = () => {
         let categories = `${server}/categorias`;
         const response = await axios(categories);
         const dataCats = response.data.map(cat => {
-            return { name: cat.title, value: cat.title }
+            return { id: cat.id, name: cat.title, value: cat.title }
         })
         return dispatch({
             type: GETCATS,

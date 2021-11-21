@@ -51,7 +51,7 @@ const ControlPanel = () => {
                         'El usuario se ha eliminado con exito!',
                         'success'
                     )
-                    console.log(response)
+                    dispatch(users())
                 })
                 .catch(err => {
                     Swal.fire('Changes are not saved', '', 'info')
@@ -62,29 +62,81 @@ const ControlPanel = () => {
 
     // cambiar admin
     const adminTrue = (user) => {
-        const [name, lastName] = user.displayName.trim().split(" ");
         const { uidClient } = user;
-        const userModificado = {
-            email: user.email,
+        const { displayName, photoURL, phone } = user;
+        const [name, lastName] = displayName.trim().split(" ");
+        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
             name: name,
             lastName: lastName,
-            isAdmin: true,
-            photoURL: user.photoURL
-        }
-        // setLoading(true)
-        axios.put(`https://editar-usuario/${uidClient}`, userModificado)
+            photoURL: photoURL,
+            phone: phone,
+            isAdmin: true
+        })
         .then(response => {
+            console.log(response)
             // setLoading(false)
-            console.log(response);
             Swal.fire(
                 'Actualizado!',
-                'Tu información se ha actualizado con éxito.',
+                `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
                 'success'
-              )
+            )
+            dispatch(users())
         })
         .catch(err => console.log(err))
     }
 
+    const adminFalse = (user) => {
+        const { uidClient } = user;
+        const { displayName, photoURL, phone } = user;
+        const [name, lastName] = displayName.trim().split(" ");
+        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+            name: name,
+            lastName: lastName,
+            photoURL: photoURL,
+            phone: phone,
+            isAdmin: false
+        })
+        .then(response => {
+            console.log(response)
+            // setLoading(false)
+            Swal.fire(
+                'Actualizado!',
+                `Permisos revocados!`,
+                'success'
+            )
+            dispatch(users())
+        })
+        .catch(err => console.log(err))
+    }
+
+    const editarNombreCategorias = (id) => {
+        Swal.fire({
+            title: '¿Cual es el nuevo nombre?',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Modificar',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put("http://localhost:3005/edit-categorias", {
+                    id, 
+                    newTitle: result.value
+                })
+                .then(response => {
+                    Swal.fire(
+                        'Modificado!',
+                        'Nombre de categoria cambiado con exito!',
+                        'success'
+                    )
+                    dispatch(getCats())
+                })
+            }
+          })
+    }
 
     useEffect(() => {
         dispatch(users())
@@ -178,12 +230,14 @@ const ControlPanel = () => {
                                                 cliente.isAdmin ?
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => adminFalse({ ...cliente, })}
                                                 >
                                                 quitar admin
                                                 </button>
                                                 :
                                                 <button 
                                                     className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                    onClick={() => adminTrue({ ...cliente, })}
                                                 >
                                                 volver admin
                                                 </button>
@@ -258,15 +312,14 @@ const ControlPanel = () => {
                                             provider.isAdmin ?
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                                onClick={() => adminFalse({ ...provider, })}
                                             >
                                             quitar admin
                                             </button>
                                             :
                                             <button 
                                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                                onClick={() => adminTrue({ 
-                                                    ...provider,
-                                                })}
+                                                onClick={() => adminTrue({ ...provider, })}
                                             >
                                             volver admin
                                             </button>
@@ -325,6 +378,7 @@ const ControlPanel = () => {
                                 <div className="flex w-80 items-center">
                                     <button 
                                         className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                        onClick={() => editarNombreCategorias(categoria.id)}
                                     >
                                     Editar
                                     </button>
