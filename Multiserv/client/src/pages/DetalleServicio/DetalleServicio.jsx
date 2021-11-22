@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
@@ -19,6 +18,8 @@ import axios from 'axios'
 
 const DetalleServicio = () => {
     let { id } = useParams();
+    var idFav = '';
+    var  value = false;
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
@@ -69,12 +70,25 @@ const DetalleServicio = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'top center'
     }
+    const seteoFav = () => {
+        value = !value;
+        agregarFav()
+    }
+
     const agregarFav = async () => {
-        await axios.post('http://localhost:3005/agregar-fav', {
+
+        if(value === true) {
+            const res = await axios.post('agregar-fav', {
             idService: current,
             uidClient: usuario.uidClient
-        })
-        return alert('Agregado a Favoritos')
+            });
+            idFav = res.data.id || res.data[0].id;
+            return alert('Agregado a Favoritos')
+        }   
+        else{
+            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${usuario.uidClient}`)
+            return alert('Eliminado de Favoritos')
+        }
 
     }
     const resultadoNombre = validarLogitudNombre(name)
@@ -178,9 +192,9 @@ const DetalleServicio = () => {
                                                 <button className='flex justify-center ml-2 font-semibold  w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
                                                     Pedir Turno
                                                 </button>
-                                                <button onClick={agregarFav} className="flex justify-center ml-2 font-semibold w-auto text-lg px-4 py-1 bg-yellow-600 text-gray-50 hover:bg-yellow-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 ">
+                                                <button onClick={seteoFav} className="flex justify-center ml-2 font-semibold w-auto text-lg px-4 py-1 bg-yellow-600 text-gray-50 hover:bg-yellow-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 "> 
                                                     Añadir favorito
-                                                </button>
+                                                </button> 
                                             </div>
                                         </div>
                                     </div>
@@ -199,3 +213,4 @@ const DetalleServicio = () => {
 }
 
 export default DetalleServicio
+
