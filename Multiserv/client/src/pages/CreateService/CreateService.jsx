@@ -13,6 +13,8 @@ import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
+import { storage } from "../../Firebase";
+import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
 
 const CreateService = () => {
     const [disabledNext, setDisabledNext] = useState(true)
@@ -32,6 +34,8 @@ const CreateService = () => {
         currency: 'MXN',
         img:[]
     })
+
+    const [imageToLoad, setImageToLoad] = useState('');
     const [loadedImg, setLoadedImg] = useState(false)
     const [img, setImg] = useState(null)
     const [stepForm, setStepForm] = useState(0)
@@ -108,14 +112,26 @@ const CreateService = () => {
             />
         },
     ]
-    const handleImage = (e) => {
-        setLoadedImg(true)
+
+    const handleImage = async (e) => {
+        //detectar el archivo
+        setImageToLoad(e.target.files[0]);
+        setImg(URL.createObjectURL(e.target.files[0]));
+        // cargarlo a firebase storage
+        try {
+        const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
+        await uploadBytes(fileRef, imageToLoad);
+        //obtener url de descarga
+        const urlDownload = await getDownloadURL(fileRef);
+        setLoadedImg(true);
         setService({
             ...service,
-            img: [URL.createObjectURL(e.target.files[0])]
-        })
-        setImg(URL.createObjectURL(e.target.files[0]))
+            img: [urlDownload]
+        }) 
 
+        } catch(err){
+           console.log(err)
+        }
     }
     const handleCurrency = (obj) => {
         setService({
