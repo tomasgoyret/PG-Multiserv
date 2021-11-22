@@ -208,10 +208,10 @@ const CreateService = () => {
     }
 
     return (
-        <div className="contianer flex justify-center items-center mx-auto w-full bg-gray-400">
+        <div className="container flex justify-center items-center mx-auto w-full bg-gray-400 px-8 py-4">
             <div
-                style={{ height: '36rem', width: '100%' }}
-                className="rounded-md bg-white mx-8 py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
+                style={{ height: '100%', width: '100%' }}
+                className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
                 <div id="status" className="w-full text-center">
                     <h1 className="text-4xl font-semibold text-cyan-900 mb-6 border-b border-gray-100">Crear un nuevo servicio</h1>
                     <div id="progress-description" className="flex flex-row mb-2">
