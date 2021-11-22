@@ -1,8 +1,7 @@
-import { Outlet, Route, Routes, useRoutes } from "react-router";
+import { useRoutes } from "react-router";
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
-import SignIn from "./pages/SignIn/SignIn";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
 import DetalleServicio from "./pages/DetalleServicio/DetalleServicio";
@@ -16,6 +15,8 @@ import ControlPanel from "./pages/ControlPanel/ControlPanel";
 import CreateService from "./pages/CreateService/CreateService";
 import HomeNavigation from "./Components/Organisms/HomeNavigation/HomeNavigation";
 import Profile from "./pages/Profile/Profile";
+import ListFavorites from "./pages/ListFavorites/ListFavorites";
+import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 
 
 function App() {
@@ -43,6 +44,10 @@ function App() {
         {
           path: '/home/:uid/new-service',
           element: <CreateService />
+        },
+        {
+          path: '/home/:uid/list-favorites',
+          element: <ListFavorites />
         },
         {
           path: '/home/chat',
@@ -86,43 +91,54 @@ function App() {
       path: '/profile',
       element: <Profile />
     },
+    {
+      path: '/confirmServ',
+      element: <ConfirmServicio />
+    },
   ]
-  let routing = useRoutes(routes);
-  return (
-    <div>
+  /*
+  <div>
       <Routes>
         <Route path="/"/>
         <Route path="/signup"/>
         <Route path="/components" />
         <Route path='/home'> 
           <Route path='/home/chat'/>
-          {/* <Route path='/home/profile'/> */}
+
+          <Route path='/home/profile'/>
           <Route path='/home/schedule'/>
 
         </Route>
-        {/* <Route path="/passwordChange" element={<PasswordChange />} /> */}
+        <Route path="/passwordChange"/>
+        <Route path="/passwordChange" element={<PasswordChange />} /> 
         <Route path="/passwordReset" element={<PasswordReset />} />
-        {/* <Route path="/detalle" element={<Detalle />} /> */}
-        {/* <Route path="/test" element={<PasswordChange />} /> */}
+        <Route path="/detalle" element={<Detalle />} />
+        <Route path="/test" element={<PasswordChange />} />
         <Route path="/email-verification" element={<VerifyEmail />} />
         <Route path="/user-validations" element={<UsersValidations />} />
         <Route path="/review" element={<ReviewService />} />
         <Route path="/admin" element={<SignInAdmin />} />
         <Route path="/control-panel" element={<ControlPanel />} />
-        {/* <Route path="/pago" element={<Pago/>} /> */}
-        {/* <Route path="/passwordChange"/> */}
+         <Route path="/pago" element={<Pago/>} />
+        <Route path="/passwordChange"/>
         <Route path="/passwordReset"/>
         <Route path="/detalleServicio/:id"/>
         <Route path="/detalleProveedor/:id"/>
         <Route path="/profile" />
-        {/* <Route path="/test" /> */}
+        <Route path="/test" />
         <Route path="/email-verification"/>
         <Route path="/user-validations" />
-        {/* <Route path="/pago"/> */}
+        <Route path="/pago"/>
       </Routes>
     <div className="custom-scrollbar">
       {routing}
     </div>
+    </div>
+   */
+  let routing = useRoutes(routes);
+  return (
+    <div className="custom-scrollbar">
+      {routing}
     </div>
   );
 }
