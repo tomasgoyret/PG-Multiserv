@@ -92,6 +92,10 @@ function App() {
       element: <Profile />
     },
     {
+      path: '/control-panel',
+      element: <ControlPanel />
+    },
+    {
       path: '/confirmServ',
       element: <ConfirmServicio />
     },
