@@ -52,6 +52,7 @@ const HomeNavigation = () => {
         navigate(`/home/${uid}/new-service`)
     }
     const listFav = () => {
+        setVerPerfil(false)
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/list-favorites`)
     }
