@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Imagen from "../../../assets/images/img1.webp"
 import StarRating from "../../Atoms/StarRating/StarRating";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getReviews, users, usuarioId } from "../../../redux/actions/actions";
 
-const ReviewService = () => {
-    const array = [1,2,3,4,5,6,7]
+const ReviewService = ({id}) => {
+    const dispatch = useDispatch()
+    const { reviews, usuarios } = useSelector(state => state)
+
+    useEffect(() => {
+        dispatch(getReviews(2))
+        dispatch(users())
+    }, [])
+
 
     return(
         <div className="w-full h-screen">
@@ -12,21 +22,22 @@ const ReviewService = () => {
             </div>
             <div className="w-full h-auto flex flex-col my-5 mx-2">
                 {
-                    array?.map(comentario => 
-                    (<div className="flex flex-col w-1/2 h-40 ">
-                        <div className="flex items-center"> 
-                            <div className="border-2 rounded-full h-10 w-10" >
-                                <img src={Imagen} className="w-full h-full" />
+                    reviews?.map(comentario => (
+                        <div className="flex flex-col w-1/2 h-auto ">
+                            <div className="flex items-center"> 
+                                <div className="border-2 rounded-full h-10 w-10" >
+                                    {/* <img src={Imagen} className="w-full h-full" /> */}
+                                </div>
+                                <h2 className="font-semibold text-1xl ml-2">Sebas</h2>
                             </div>
-                            <h2 className="font-semibold text-1xl ml-2">Sebastian</h2>
+                            <div>
+                                <StarRating rating={comentario.rating}/> 
+                            </div>
+                            <div className="w-full text-md text-gray-700">
+                                <span className="w-full">{comentario.details}</span>
+                            </div>
                         </div>
-                        <div>
-                            <StarRating rating={5}/> 
-                        </div>
-                        <div className="w-full text-md text-gray-700">
-                            <span className="w-full">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</span>
-                        </div>
-                    </div>))
+                    ))
                 }
             </div>
         </div>

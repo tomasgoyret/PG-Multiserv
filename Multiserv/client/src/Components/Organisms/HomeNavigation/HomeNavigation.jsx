@@ -47,6 +47,10 @@ const HomeNavigation = () => {
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/new-service`)
     }
+    const listFav = () => {
+        const uid = datosSesionFromLocalStorage.uid
+        navigate(`/home/${uid}/list-favorites`)
+    }
 
     const modal = () => {
         return verPerfil ?
@@ -62,23 +66,34 @@ const HomeNavigation = () => {
                     {
                         email !== "" &&
                         <div className="flex flex-col w-full justify-center py-2">
-                            <LinkTo page= "profile" render= {
-                            <div className="flex my-1 items-center pl-3">
-                                <MdEdit className="mr-2" />
-                                <span className="font-semibold">Editar Perfil</span>
-                            </div>} />
-                            <div className="flex my-1 items-center pl-3">
-                                <MdNotifications className="mr-2" />
-                                <span className="font-semibold">Notificaciones</span>
+                            <div className="w-full hover:bg-sky-900 hover:text-white py-2">
+                                <LinkTo page= "profile" render= {
+                                <div className="flex my-1 items-center pl-3">
+                                    <MdEdit className="mr-2" />
+                                    <span className="font-semibold">Editar Perfil</span>
+                                </div>} />
                             </div>
-                            <div className="flex my-1 items-center pl-3">
-                                <MdFavorite className="mr-2" />
-                                <span className="font-semibold">Lista Favoritos</span>
+                            <div className="w-full hover:bg-sky-900 hover:text-white py-2">
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                    <MdNotifications className="mr-2" />
+                                    <span className="font-semibold">Notificaciones</span>
+                                </button>
                             </div>
-                            <button onClick={newService} className="inline-flex w-max auto my-1 items-center px-3 rounded-full hover:bg-sky-900 hover:text-white transition-all">
-                                <MdHomeRepairService className="mr-2" />
-                                <span className="font-semibold">Crear un servicio</span>
-                            </button>
+                            <div onClick={() => {
+                                listFav()
+                                handleClick()
+                            }} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                    <MdFavorite className="mr-2" />
+                                    <span className="font-semibold">Lista Favoritos</span>
+                                </button>
+                            </div>
+                            <div onClick={newService} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                    <MdHomeRepairService className="mr-2" />
+                                    <span className="font-semibold">Crear un servicio</span>
+                                </button>
+                            </div>
                         </div>
                     }
                     {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center w-2/5 mt-3"><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md">Log out</button></div>) : (<ButtonXartiago

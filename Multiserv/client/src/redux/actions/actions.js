@@ -14,10 +14,13 @@ import {
     EMPATYSERVICIOID,
     USUARIOID,
     EMPATYUSUARIO,
+    FAVORITES,
+    ELIMINARFAVORITES,
     CLIENTES_BUSCADOS,
     PROVEDORES_BUSCADOS,
     SERVICIOS_BUSCADOS,
     CATEGORIAS_BUSCADAS,
+    REVIEWS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -28,7 +31,6 @@ export const services = () => {
         let services = `${server}/services`;
         const response = await axios(services);
         const dataServ = response.data
-        console.log(dataServ)
         return dispatch({
             type: SERVICIOS,
             payload: dataServ
@@ -68,7 +70,6 @@ export const buscar = (nombre) => { return { type: BUSCAR, payload: nombre } }
 /* Ordenar Servicios */
 /* Por alfabeto */
 export const orderAlph = (by) => {
-    //console.log(by)
     return { type: ORDERALPH, payload: by }
 }
 /* Por rating */
@@ -78,7 +79,6 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
-    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services =` ${server}/usuarios/${id}`;
         const response = await axios(services);
@@ -100,7 +100,6 @@ export const empatyusuarioId = (id) => {
 
 // Traer detalle de servicio /
 export const servicesId = (id) => {
-    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services = `${server}/services/${id}`;
         const response = await axios(services);
@@ -120,6 +119,31 @@ export const empatyServicesId = (id) => {
     }
 }
 
+/* Traer Lista de Favoritos por Id */
+export const getListFavorites = (uid) => {
+    return async function (dispatch) {
+        let fav = `${server}/favoritos/${uid}`;
+        const response = await axios(fav);
+        const listaFav = response.data
+        return dispatch({
+            type: FAVORITES,
+            payload: listaFav
+        })
+    }
+}
+
+/* Eliminar de la Lista de Favoritos por Id */
+export const deleteListFavorites = (id, uidClient) => {
+    return async function (dispatch) {
+        let fav = `${server}/eliminar-fav/?id=${id}&uidClient=${uidClient}`;
+        const response = await axios.delete(fav);
+        const listaFav = response.data
+        return dispatch({
+            type: ELIMINARFAVORITES,
+            payload: listaFav
+        })
+    }
+}
 export const buscarClientes = (user) => {
     return {
         type: CLIENTES_BUSCADOS,
@@ -148,4 +172,15 @@ export const buscarCategorias = (categoria) => {
     }
 }
 
-
+// Traer reviews
+export const getReviews = (id) => {
+    //console.log("entre al actions "+ id+".....")
+    return async function (dispatch) {
+        let review = `${server}/resena/${id}`;
+        const response = await axios(review);
+        return dispatch({
+            type: REVIEWS,
+            payload: response.data
+        })
+    }
+}

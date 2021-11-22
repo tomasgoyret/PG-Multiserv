@@ -7,8 +7,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
 import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
-import StarRating from '../../Components/Atoms/StarRating/StarRating'
+import StarRating from '../../Components/Atoms/StarRating/StarRating';
 import { useParams } from "react-router-dom";
+import ReviewService from "../../Components/Organisms/ReviewService/ReviewService";
 import WP from '../../assets/images/WhatsApp.png';
 import LD from '../../assets/images/LinkedIn.png';
 import FB from '../../assets/images/Facebook.png';
@@ -92,7 +93,7 @@ const DetalleServicio = () => {
                             <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                         </div>
                     ) : (
-                            <div className="w-full flex flex-col h-screen">
+                            <div className="w-full flex flex-col overflow-y-auto h-screen">
                                 <div className="px- pt-6 pb-4">
                                     <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                                 </div>
@@ -173,10 +174,14 @@ const DetalleServicio = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <ReviewService />
+                                </div>
                             </div>
-                            )
-                }
+                        )}
                         </div>
+                        
+
         </div>
             )
 }

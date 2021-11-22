@@ -12,7 +12,7 @@ const getFav = async (req, res) => {
             attributes: {
                 exclude: ['createdAt', 'updatedAt']
             }
-        });
+        } );
         favoritos.length === 0 ? res.send('No hay favoritos') : res.send(favoritos)
     }
     catch (error) {
