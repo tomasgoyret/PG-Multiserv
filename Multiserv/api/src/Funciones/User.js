@@ -2291,7 +2291,8 @@ let DataServices = async () => {
   try {
       for(let s of services) {
         let user = await Usuarios.update({provider: true},{where: { uidClient: s.uidUser }} );
-          const servicio = await Servicios.create( {
+        let userID = await Usuarios.findOne({where: { uidClient: s.uidUser }} )
+        const servicio = await Servicios.create( {
               title: s.title, 
               currency: s.currency,
               description: s.description, 
@@ -2299,7 +2300,7 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-              //usuarioUidClient: s.uidClient
+              nameUser: userID.displayName,
               estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
