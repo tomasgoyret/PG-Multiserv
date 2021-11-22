@@ -5,12 +5,18 @@ import Components from "./pages/Components/Components";
 import PasswordReset from "./pages/PasswordReset/PasswordReset"
 import Home from "./pages/Home/Home";
 import DetalleServicio from "./pages/DetalleServicio/DetalleServicio";
+import DetalleProveedor from "./pages/DetalleProveedor/DetalleProveedor";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import UsersValidations from "./pages/UsersValidations/UsersValidations";
+import PasswordChange from "../src/pages/PasswordChange/PasswordChange";
+import ReviewService from "./Components/Organisms/ReviewService/ReviewService";
+import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
+import ControlPanel from "./pages/ControlPanel/ControlPanel";
 import CreateService from "./pages/CreateService/CreateService";
 import HomeNavigation from "./Components/Organisms/HomeNavigation/HomeNavigation";
 import Profile from "./pages/Profile/Profile";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
+
 
 function App() {
   const routes = [
@@ -61,6 +67,14 @@ function App() {
       element: <PasswordReset />
     },
     {
+      path: '/detalleServicio/:id',
+      element: <DetalleServicio />
+    },
+    {
+      path: '/detalleProveedor/:id',
+      element: <DetalleProveedor />
+    },
+    {
       path: '/email-verification',
       element: <VerifyEmail />
     },
@@ -91,8 +105,20 @@ function App() {
 
         </Route>
         <Route path="/passwordChange"/>
+        <Route path="/passwordChange" element={<PasswordChange />} /> 
+        <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/detalle" element={<Detalle />} />
+        <Route path="/test" element={<PasswordChange />} />
+        <Route path="/email-verification" element={<VerifyEmail />} />
+        <Route path="/user-validations" element={<UsersValidations />} />
+        <Route path="/review" element={<ReviewService />} />
+        <Route path="/admin" element={<SignInAdmin />} />
+        <Route path="/control-panel" element={<ControlPanel />} />
+         <Route path="/pago" element={<Pago/>} />
+        <Route path="/passwordChange"/>
         <Route path="/passwordReset"/>
         <Route path="/detalleServicio/:id"/>
+        <Route path="/detalleProveedor/:id"/>
         <Route path="/profile" />
         <Route path="/test" />
         <Route path="/email-verification"/>
