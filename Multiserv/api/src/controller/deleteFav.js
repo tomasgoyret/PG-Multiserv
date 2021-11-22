@@ -5,7 +5,7 @@ const { Favoritos } = require("../db.js");
 const deleteFav = async (req, res) => {
 
     const { id, uidClient } = req.query;
-
+ console.log(id, uidClient);
     try {
         const eliminado = await Favoritos.destroy({
             where: {id}
