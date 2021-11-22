@@ -213,4 +213,3 @@ const DetalleServicio = () => {
 }
 
 export default DetalleServicio
-
