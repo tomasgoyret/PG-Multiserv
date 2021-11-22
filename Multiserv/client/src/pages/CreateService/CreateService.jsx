@@ -13,14 +13,16 @@ import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
+import { ImSpinner9 } from "react-icons/im";
 import { storage } from "../../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
 
 const CreateService = () => {
     const [disabledNext, setDisabledNext] = useState(true)
     const categoriasDb = useSelector((state) => state.categories)
-    const [loadingSave, setLoadingSave] = useState(false)
-    const [loadingPayment, setLoadingPayment] = useState(false)
+    const [loadingSave, setLoadingSave] = useState(false);
+    const [uploadImg, setuploadImg] = useState(false);
+    const [loadingPayment, setLoadingPayment] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
@@ -116,23 +118,29 @@ const CreateService = () => {
     const handleImage = async (e) => {
         //detectar el archivo
         setImageToLoad(e.target.files[0]);
-        setImg(URL.createObjectURL(e.target.files[0]));
-        // cargarlo a firebase storage
-        try {
-        const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
-        await uploadBytes(fileRef, imageToLoad);
-        //obtener url de descarga
-        const urlDownload = await getDownloadURL(fileRef);
-        setLoadedImg(true);
-        setService({
-            ...service,
-            img: [urlDownload]
-        }) 
+        setImg(URL.createObjectURL(e.target.files[0]));  
+        setLoadedImg(true); 
 
-        } catch(err){
-           console.log(err)
-        }
     }
+    const handleUpload= async () => {
+          // cargarlo a firebase storage
+          setuploadImg(true)
+        try {
+            const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
+            await uploadBytes(fileRef, imageToLoad);
+            //obtener url de descarga
+            const urlDownload = await getDownloadURL(fileRef);   
+            setService({
+                ...service,
+                img: [urlDownload]
+            })   
+            setuploadImg(false);
+            } catch(err){
+               console.log(err)
+            }
+
+    }
+    
     const handleCurrency = (obj) => {
         setService({
             ...service,
@@ -376,26 +384,34 @@ const CreateService = () => {
                             </div>
                         </div>
                     </div>
-
+                                                    
                     <div id="step2" className={`${stepForm === 2 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
                         {loadedImg ?
-                            <div className="h-full overflow-y-hidden relative">
-                                <div className="absolute top-0 right-0">
-                                    <button
-                                        className="p-2"
-                                        onClick={() => {
-                                            setLoadedImg(false)
-                                            setImg(null)
-                                        }}
-                                    >
-                                        <FaTimes className="text-lg text-white" />
-                                    </button>
+                        <div className="flex flex-col">
+                                <div className="h-full overflow-y-hidden relative">
+                                    <div className="absolute top-0 right-0">
+                                        <button
+                                            className="p-2"
+                                            onClick={() => {
+                                                setLoadedImg(false)
+                                                setImg(null)
+                                            }}
+                                        >
+                                            <FaTimes className="text-lg text-white" />
+                                        </button>
+                                    </div>
+                                    <Image
+                                        name="photo1"
+                                        imagen={img}
+                                        imgClass={`object-cover rounded-lg h-72`}
+                                    />
                                 </div>
-                                <Image
-                                    name="photo1"
-                                    imagen={img}
-                                    imgClass={`object-cover rounded-lg h-72`}
-                                />
+                                <button 
+                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
+                            onClick={handleUpload}
+                        >
+                          {uploadImg && <ImSpinner9 className="mr-2 animate-spin" />} Subir
+                        </button>
                             </div>
                             :
                             (
