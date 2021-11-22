@@ -25,12 +25,12 @@ require('dotenv').config();
 
 
 conn
-    .sync({ force: false })
-    .then(async () => {/*
+    .sync({ force: true })
+    .then(async () => {
         await LlamadoUsers(Users);
         await Categoriasmockup();
         await DataServices();
-        await ResenasMockup();*/
+        await ResenasMockup();
         await app.listen(process.env.PORT || 3001, () => {
             console.log('Server on port '+ process.env.PORT || 3001)
         })
