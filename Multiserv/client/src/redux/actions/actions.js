@@ -15,7 +15,11 @@ import {
     USUARIOID,
     EMPATYUSUARIO,
     FAVORITES,
-    ELIMINARFAVORITES
+    ELIMINARFAVORITES,
+    CLIENTES_BUSCADOS,
+    PROVEDORES_BUSCADOS,
+    SERVICIOS_BUSCADOS,
+    CATEGORIAS_BUSCADAS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -50,7 +54,7 @@ export const getCats = () => {
         let categories = `${server}/categorias`;
         const response = await axios(categories);
         const dataCats = response.data.map(cat => {
-            return { name: cat.title, value: cat.title }
+            return { id: cat.id, name: cat.title, value: cat.title }
         })
         return dispatch({
             type: GETCATS,
@@ -139,3 +143,31 @@ export const deleteListFavorites = (id, uidClient) => {
         })
     }
 }
+export const buscarClientes = (user) => {
+    return {
+        type: CLIENTES_BUSCADOS,
+        payload: user
+    }
+}
+
+export const buscarProvedores = (user) => {
+    return {
+        type: PROVEDORES_BUSCADOS,
+        payload: user
+    }
+}
+
+export const buscarServicios = (servicio) => {
+    return {
+        type: SERVICIOS_BUSCADOS,
+        payload: servicio
+    }
+}
+
+export const buscarCategorias = (categoria) => {
+    return {
+        type: CATEGORIAS_BUSCADAS,
+        payload: categoria
+    }
+}
+
