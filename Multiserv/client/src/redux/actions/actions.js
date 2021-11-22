@@ -18,6 +18,7 @@ import {
     PROVEDORES_BUSCADOS,
     SERVICIOS_BUSCADOS,
     CATEGORIAS_BUSCADAS,
+    REVIEWS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -148,4 +149,15 @@ export const buscarCategorias = (categoria) => {
     }
 }
 
-
+// Traer reviews
+export const getReviews = (id) => {
+    //console.log("entre al actions "+ id+".....")
+    return async function (dispatch) {
+        let review = `${server}/resena/${id}`;
+        const response = await axios(review);
+        return dispatch({
+            type: REVIEWS,
+            payload: response.data
+        })
+    }
+}
