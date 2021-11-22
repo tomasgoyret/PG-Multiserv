@@ -32,10 +32,12 @@ const postFav = async (req, res) => {
         else {
             const servicio = await Servicios.findOne({ where: { id: idService } });
             const title = servicio.title;
+            const photos = servicio.photos;
             const newFav = await Favoritos.create({
                 id: uuidv4(),
                 idService,
-                title
+                title,
+                photos
             });
             await newFav.addUsuarios(uidClient);
             res.send({uidClient, id:newFav.id})
