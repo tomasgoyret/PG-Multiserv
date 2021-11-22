@@ -43,6 +43,7 @@ const HomeNavigation = () => {
         <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} />
     ]
     const newService = () => {
+        setVerPerfil(false)
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/new-service`)
     }
