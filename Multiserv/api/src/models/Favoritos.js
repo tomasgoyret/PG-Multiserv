@@ -16,6 +16,10 @@ module.exports = (sequelize) => {
     title: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    photos: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false
     }
   });
 };
