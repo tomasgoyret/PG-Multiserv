@@ -410,7 +410,7 @@ const CreateService = () => {
                             className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
                             onClick={handleUpload}
                         >
-                          {uploadImg && <ImSpinner9 className="mr-2 animate-spin" />} Subir
+                                    {uploadImg ? <> <ImSpinner9 className="mr-2 animate-spin" /> Cargando...</> : 'Subir'}
                         </button>
                             </div>
                             :
