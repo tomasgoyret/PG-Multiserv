@@ -14,21 +14,6 @@ const ReviewService = ({id}) => {
         dispatch(users())
     }, [])
 
-    let array = [];
-    let contador = 0;
-    while(reviews[contador]){
-        array = usuarios.filter(usuario => {
-            if(usuario.uidClient.includes(reviews[contador].usuarioUidClient)){
-                ++contador;
-                return{
-                    ...reviews[contador],
-                    displayName: usuario.displayName
-                }
-            }
-        })
-    }
-
-    console.log(array)
 
     return(
         <div className="w-full h-screen">
@@ -37,28 +22,22 @@ const ReviewService = ({id}) => {
             </div>
             <div className="w-full h-auto flex flex-col my-5 mx-2">
                 {
-                    // reviews?.map(async comentario => {
-                    //     axios(`http://localhost:3005/usuarios/${comentario.usuarioUidClient}`)
-                    //     .then(response => {
-                    //         return (
-                    //             <div className="flex flex-col w-1/2 h-auto ">
-                    //                 <div className="flex items-center"> 
-                    //                     <div className="border-2 rounded-full h-10 w-10" >
-                    //                         {/* <img src={Imagen} className="w-full h-full" /> */}
-                    //                     </div>
-                    //                     <h2 className="font-semibold text-1xl ml-2">{response.data.displayName}</h2>
-                    //                 </div>
-                    //                 <div>
-                    //                     <StarRating rating={comentario.rating}/> 
-                    //                 </div>
-                    //                 <div className="w-full text-md text-gray-700">
-                    //                     <span className="w-full">{comentario.details}</span>
-                    //                 </div>
-                    //             </div>
-                    //         )
-                    //     })
-                        
-                    // })
+                    reviews?.map(comentario => (
+                        <div className="flex flex-col w-1/2 h-auto ">
+                            <div className="flex items-center"> 
+                                <div className="border-2 rounded-full h-10 w-10" >
+                                    {/* <img src={Imagen} className="w-full h-full" /> */}
+                                </div>
+                                <h2 className="font-semibold text-1xl ml-2">Sebas</h2>
+                            </div>
+                            <div>
+                                <StarRating rating={comentario.rating}/> 
+                            </div>
+                            <div className="w-full text-md text-gray-700">
+                                <span className="w-full">{comentario.details}</span>
+                            </div>
+                        </div>
+                    ))
                 }
             </div>
         </div>
