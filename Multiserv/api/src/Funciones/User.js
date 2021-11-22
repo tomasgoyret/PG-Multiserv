@@ -198,7 +198,7 @@ const Users = [
       }]
   },
   {
-    "uid": "6wR1QaMH0oQn8J91uuy64W5ZMAq1",
+    "uid": "jyfyxnzngrhJfGeZz4FCClvgO8K2",
     "email": "espinozalezama@gmail.com",
     "lastName": "",
     "emailVerified": true,
