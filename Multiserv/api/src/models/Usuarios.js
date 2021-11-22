@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
+      unique: true
     },
     photoURL: {
       type: DataTypes.STRING,
@@ -29,13 +30,13 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
-    uidProvider: {
-      type: DataTypes.UUID,
-      primaryKey: true
-    },
     disabled: {
       type: DataTypes.BOOLEAN,
       allowNull: true
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
 };

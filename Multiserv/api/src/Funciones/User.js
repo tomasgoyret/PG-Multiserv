@@ -1,5 +1,6 @@
-const { Usuarios, Servicios, Categorias } = require("../db");
+const { Usuarios, Servicios, Categorias, Resenas, auth } = require("../db");
 const { v4: uuidv4 } = require('uuid');
+// const { where } = require("sequelize/types");
 const Cate = [
   {
     "title":"Limpieza"
@@ -26,33 +27,12 @@ const Cate = [
     "title":"Plomería"
   },
 ]
-
-let Categoriasmockup = async () => {
-  try {
-      for(let s of Cate) {
-       let cat =  s.title.charAt(0).toUpperCase() + s.title.slice(1).toLowerCase()
-       let existe = await Categorias.findOne({ where: { title : cat }})
-        if(existe === null){
-            await Categorias.create({title: cat})
-            console.log(`Se creó la categoría ${cat} correctamente`)
-        } else console.log(`La categoría ${cat} ya existe`)
-      }
-      //console.log("Se crearon las categorías")
-  }
-  catch(err){
-      console.log(err)
-  }
-} 
-
-
-
-
 const Users = [
   {
     "uid": "120XIVqAf2axAT0A3nCUe8IwYf63",
     "email": "movilpcsoporte@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+527581038416",
     "disabled": false,
@@ -80,7 +60,7 @@ const Users = [
     "uid": "18Ixm0v0hsWQDo6lPbYR0SnMPry2",
     "email": "econewd@toplist.cz",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": " Gavrielle Colville",
     "photoURL": "http://dummyimage.com/420x600.png/5fa2dd/ffffff",
     "phone": "+33790188415",
@@ -110,7 +90,7 @@ const Users = [
     "uid": "1kh0flCWktUFAXiauKTP9adr5nX2",
     "email": "kjayne9@cdbaby.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lurleen Schuler ",
     "photoURL": "http://dummyimage.com/726x600.png/ff4444/ffffff",
     "phone": "+387923314028",
@@ -168,7 +148,7 @@ const Users = [
     "uid": "49KPmJcVR3SikQvSz1tzTSKvpAt1",
     "email": "lbresson0@wsj.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dorris Youster",
     "photoURL": "http://dummyimage.com/664x600.png/cc0000/ffffff",
     "phone": "+553606386008",
@@ -202,6 +182,7 @@ const Users = [
     "name": "sebastian murillo",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GgE8ziChGgU6Oq0rFjtXUDPalTOfARsKxb3dfBEVg=s96-c",
     "disabled": false,
+    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Wed, 17 Nov 2021 04:05:52 GMT",
       "creationTime": "Wed, 17 Nov 2021 02:48:11 GMT"
@@ -217,7 +198,7 @@ const Users = [
       }]
   },
   {
-    "uid": "6wR1QaMH0oQn8J91uuy64W5ZMAq1",
+    "uid": "jyfyxnzngrhJfGeZz4FCClvgO8K2",
     "email": "espinozalezama@gmail.com",
     "lastName": "",
     "emailVerified": true,
@@ -242,7 +223,7 @@ const Users = [
     "uid": "85TbCWA9T6XcTDQ9ZxQ0OBHdk1y1",
     "email": "dowain0@nature.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lilas Grass",
     "photoURL": "http://dummyimage.com/550x600.png/dddddd/000000",
     "phone": "+11234567890",
@@ -272,7 +253,7 @@ const Users = [
     "uid": "8Jjncs68ayUaPiMvkrlQVx0twXc2",
     "email": "uli.vargas111@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Flores",
     "phone": "+521234567890",
     "disabled": false,
@@ -300,7 +281,7 @@ const Users = [
     "uid": "8pYN2k171rdXmItOnlBM8oWfMto2",
     "email": "mtullyc@blinklist.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Shandee Hanbury-Brown",
     "photoURL": "http://dummyimage.com/505x600.png/dddddd/000000",
     "phone": "+48681608609",
@@ -330,7 +311,7 @@ const Users = [
     "uid": "9efBGf2m8EN8plsp2GrFsvYPgrU2",
     "email": "prueba15@email.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847711",
     "disabled": false,
@@ -358,7 +339,7 @@ const Users = [
     "uid": "AAyUS14K7dOgx6n4o1Z6jTRxSe12",
     "email": "prueba4@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "bastian alzate",
     "phone": "+573043345431",
     "disabled": false,
@@ -386,7 +367,7 @@ const Users = [
     "uid": "AKbJM3iYJgMiyXVefx6oYDeDVWv2",
     "email": "demoprueba@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Santa Prueba",
     "phone": "+522222343434",
     "disabled": false,
@@ -414,7 +395,7 @@ const Users = [
     "uid": "ARyejqzqP2ZqLKMjC36DinqKDZB3",
     "email": "maargoesgil@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
     "metadata": {
       "lastSignInTime": null,
@@ -456,7 +437,7 @@ const Users = [
     "uid": "B9I519nVrHYPayK8wISGR8yBED12",
     "email": "llarking1@wunderground.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Bondy Eckart",
     "photoURL": "http://dummyimage.com/527x600.png/5fa2dd/ffffff",
     "phone": "+627858477411",
@@ -486,7 +467,7 @@ const Users = [
     "uid": "D3mD8tiBmPeRr3zjHZBIL9ByFJa2",
     "email": "bastian@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
     "metadata": {
       "lastSignInTime": "Fri, 12 Nov 2021 15:43:06 GMT",
@@ -506,7 +487,7 @@ const Users = [
     "uid": "DuVMn1lhI4MNwmBznD7sCwCU5bo1",
     "email": "uli.vargas12345@outlook.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dafne Vargas",
     "phone": "+523216549871",
     "disabled": false,
@@ -534,7 +515,7 @@ const Users = [
     "uid": "Jt99gleUHOb5YprmjzWiC0tsVIP2",
     "email": "jesusa@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Jesus Vargas",
     "phone": "+523333058659",
     "disabled": false,
@@ -606,7 +587,7 @@ const Users = [
     "uid": "OT5EWmdv5semxeULjWhDQta2jfr1",
     "email": "dafnegonzalez.tdi2a@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Dafne Gonzalez",
     "phone": "+523312780559",
     "disabled": false,
@@ -634,7 +615,7 @@ const Users = [
     "uid": "P0upDcdcC3aLEBzbhQxTC9q1lqC3",
     "email": "prueba13@prueba13.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847713",
     "disabled": false,
@@ -684,7 +665,7 @@ const Users = [
     "uid": "RjnjO80l0JglWzoS1PVaS7eiZ1Z2",
     "email": "prueba2@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "prueba pruebaa",
     "phone": "+573043345438",
     "disabled": false,
@@ -712,7 +693,7 @@ const Users = [
     "uid": "TEPzKwoQ5MPd09QNVNGbQbOJm8m1",
     "email": "agodson5@prweb.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Amalea Godson",
     "photoURL": "http://dummyimage.com/502x600.png/dddddd/000000",
     "disabled": false,
@@ -760,7 +741,7 @@ const Users = [
     "uid": "V2hJmouZzPhsgnAFV2Wrps8kIYb2",
     "email": "tomas@tomas.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847789",
     "disabled": false,
@@ -788,7 +769,7 @@ const Users = [
     "uid": "WJ7c4YIiX4WJIkt5iVWGQuppOjW2",
     "email": "uli.vargas548@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+521234565891",
     "disabled": false,
@@ -847,7 +828,7 @@ const Users = [
     "uid": "YYCtHMRJHfaEmqSk8ENNoZSFe1i1",
     "email": "prueba14@email.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847710",
     "disabled": false,
@@ -875,7 +856,7 @@ const Users = [
     "uid": "aek3mVCThCbCJrHsFG7sHgtjNQF2",
     "email": "beckart6@goodreads.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Linell Larking",
     "photoURL": "http://dummyimage.com/648x600.png/5fa2dd/ffffff",
     "disabled": false,
@@ -899,7 +880,7 @@ const Users = [
     "uid": "bNIPIC49wkcn2YfmyBKv0DXh50P2",
     "email": "colo_goyret@hotmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847715",
     "disabled": false,
@@ -927,7 +908,7 @@ const Users = [
     "uid": "eK7xM4QxffNSO51JafCb1yiB9u02",
     "email": "uli.vargas123@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Gonzalez",
     "phone": "+521234567891",
     "disabled": false,
@@ -955,7 +936,7 @@ const Users = [
     "uid": "fCK6wjtRHweXfjQPMtVCXsAqogs2",
     "email": "tomas.goyret@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Tomás Goyret",
     "phone": "+543874847719",
     "disabled": false,
@@ -983,8 +964,9 @@ const Users = [
     "uid": "kMe67U3R59RqmpgG59IvKoZwTCH2",
     "email": "multiserv@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "disabled": false,
+    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Mon, 15 Nov 2021 02:51:05 GMT",
       "creationTime": "Fri, 12 Nov 2021 13:22:39 GMT"
@@ -1003,7 +985,7 @@ const Users = [
     "uid": "kNSNWwN8Q4PGIj627FBQHQLkC203",
     "email": "shanburybrown8@devhub.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Murdock Tully",
     "photoURL": "http://dummyimage.com/543x600.png/cc0000/ffffff",
     "phone": "+546477250902",
@@ -1033,7 +1015,7 @@ const Users = [
     "uid": "rt9lOCJzuuOHyvzVQL2EsWbqeVf2",
     "email": "lgrassa@devhub.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Domenico Owain",
     "photoURL": "http://dummyimage.com/519x600.png/ff4444/ffffff",
     "phone": "+423633543705",
@@ -1063,7 +1045,7 @@ const Users = [
     "uid": "ryVoXVOqdrbdLNZev1m8THjAhW63",
     "email": "dyousterb@latimes.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Lin Bresson ",
     "photoURL": "http://dummyimage.com/704x600.png/ff4444/ffffff",
     "phone": "+608314423112",
@@ -1121,7 +1103,7 @@ const Users = [
     "uid": "vl9IIVwDSue0XSrYWkCLn31hCN02",
     "email": "movilpc.soporte@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+523312878378",
     "disabled": false,
@@ -1149,7 +1131,7 @@ const Users = [
     "uid": "xgSmCViIZcbLv9k6IrekcXCBr0E2",
     "email": "uli.vargas@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "phone": "+523333208416",
     "disabled": false,
@@ -1177,7 +1159,7 @@ const Users = [
     "uid": "xikCYZABF5XrgDvpRWwH9vdAhNy2",
     "email": "lschuler7@gnu.org",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Kalli Jayne",
     "photoURL": "http://dummyimage.com/718x600.png/dddddd/000000",
     "phone": "+355244707314",
@@ -1207,7 +1189,7 @@ const Users = [
     "uid": "xxAiEz9j4uThTHcCmpDuwqkvPst2",
     "email": "bastianalzate@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "bastian alzate",
     "phone": "+573043345434",
     "disabled": false,
@@ -1235,7 +1217,7 @@ const Users = [
     "uid": "yusOXdPOqGUrgSWENMeHUV8j5an2",
     "email": "uli.vargas02@gmail.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Ulises Vargas",
     "disabled": false,
     "metadata": {
@@ -1257,7 +1239,7 @@ const Users = [
     "uid": "yyoSUvSMbFbJc48iAfL2bNj6chk1",
     "email": "gcolville4@skype.com",
     "lastName": "",
-    "emailVerified": false,
+    "emailVerified": true,
     "name": "Emmy Conew",
     "photoURL": "http://dummyimage.com/750x600.png/5fa2dd/ffffff",
     "phone": "+989652356648",
@@ -1663,23 +1645,644 @@ const services = [
 // }
 
 ]
+const reviews = [
+  {
+  "id": 6,
+  "title": "sed accumsan felis",
+  "details": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
+  "rating": 1,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 22,
+  "title": "quis",
+  "details": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
+  "rating": 1,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 1,
+  "title": "pede venenatis non",
+  "details": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.\n\nNullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
+  "rating": 4,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 7,
+  "title": "vel ipsum praesent blandit",
+  "details": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+  "rating": 3,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 19,
+  "title": "erat nulla tempus vivamus",
+  "details": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+  "rating": 3,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 11,
+  "title": "maecenas rhoncus aliquam",
+  "details": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 4,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 24,
+  "title": "ligula in lacus curabitur",
+  "details": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.",
+  "rating": 4,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 2,
+  "title": "justo lacinia",
+  "details": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+  "rating": 2,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 21,
+  "title": "natoque penatibus",
+  "details": "Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
+  "rating": 4,
+  "uidClient": "18Ixm0v0hsWQDo6lPbYR0SnMPry2"
+}, {
+  "id": 1,
+  "title": "in imperdiet et commodo",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 3,
+  "uidClient": "3LurXDgQOmfcAi5dQdcyPQZENwA3"
+}, {
+  "id": 19,
+  "title": "ante ipsum primis in",
+  "details": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+  "rating": 2,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 9,
+  "title": "turpis adipiscing lorem",
+  "details": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
+  "rating": 1,
+  "uidClient": "3LurXDgQOmfcAi5dQdcyPQZENwA3"
+}, {
+  "id": 14,
+  "title": "eros elementum pellentesque quisque porta",
+  "details": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+  "rating": 4,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 4,
+  "title": "turpis elementum ligula vehicula consequat",
+  "details": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
+  "rating": 5,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 4,
+  "title": "orci luctus et",
+  "details": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
+  "rating": 2,
+  "uidClient": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+}, {
+  "id": 9,
+  "title": "proin at turpis a",
+  "details": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+  "rating": 2,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 24,
+  "title": "vel augue vestibulum ante",
+  "details": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  "rating": 3,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 15,
+  "title": "elit sodales",
+  "details": "Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.",
+  "rating": 1,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 4,
+  "title": "lacinia sapien quis libero",
+  "details": "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
+  "rating": 5,
+  "uidClient": "49KPmJcVR3SikQvSz1tzTSKvpAt1"
+}, {
+  "id": 1,
+  "title": "ultrices",
+  "details": "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+  "rating": 4,
+  "uidClient": "49KPmJcVR3SikQvSz1tzTSKvpAt1"
+}, {
+  "id": 16,
+  "title": "amet sapien",
+  "details": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
+  "rating": 5,
+  "uidClient": "49KPmJcVR3SikQvSz1tzTSKvpAt1"
+}, {
+  "id": 20,
+  "title": "fusce lacus",
+  "details": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
+  "rating": 3,
+  "uidClient": "49KPmJcVR3SikQvSz1tzTSKvpAt1"
+}, {
+  "id": 4,
+  "title": "lacinia",
+  "details": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 4,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 16,
+  "title": "pulvinar lobortis est phasellus sit",
+  "details": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+  "rating": 5,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 20,
+  "title": "posuere metus vitae ipsum",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 3,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 24,
+  "title": "etiam justo etiam",
+  "details": "Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+  "rating": 5,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 3,
+  "title": "donec ut",
+  "details": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+  "rating": 4,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 9,
+  "title": "sem sed sagittis nam",
+  "details": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+  "rating": 3,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 6,
+  "title": "semper sapien",
+  "details": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+  "rating": 3,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 5,
+  "title": "in sapien iaculis congue",
+  "details": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+  "rating": 4,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 3,
+  "title": "in porttitor pede justo",
+  "details": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.",
+  "rating": 5,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 18,
+  "title": "ornare imperdiet sapien urna",
+  "details": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  "rating": 3,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 10,
+  "title": "morbi vel lectus",
+  "details": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
+  "rating": 2,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 18,
+  "title": "non interdum",
+  "details": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
+  "rating": 3,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 20,
+  "title": "nunc donec quis orci",
+  "details": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  "rating": 5,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 13,
+  "title": "ac consequat",
+  "details": "Sed ante. Vivamus tortor. Duis mattis egestas metus.",
+  "rating": 2,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 2,
+  "title": "a libero nam dui",
+  "details": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+  "rating": 4,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 15,
+  "title": "sem",
+  "details": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
+  "rating": 1,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 12,
+  "title": "ac est lacinia nisi",
+  "details": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
+  "rating": 1,
+  "uidClient": "Jt99gleUHOb5YprmjzWiC0tsVIP2"
+}, {
+  "id": 10,
+  "title": "est et",
+  "details": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+  "rating": 2,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 15,
+  "title": "nulla dapibus dolor vel",
+  "details": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.",
+  "rating": 2,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 22,
+  "title": "risus auctor sed tristique in",
+  "details": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+  "rating": 3,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 6,
+  "title": "volutpat convallis morbi odio odio",
+  "details": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+  "rating": 3,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 12,
+  "title": "in lacus",
+  "details": "Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+  "rating": 1,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 8,
+  "title": "eu magna vulputate luctus",
+  "details": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
+  "rating": 1,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 18,
+  "title": "tincidunt in leo maecenas",
+  "details": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.",
+  "rating": 3,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 24,
+  "title": "vestibulum",
+  "details": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.",
+  "rating": 2,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 20,
+  "title": "nunc nisl",
+  "details": "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+  "rating": 5,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 11,
+  "title": "quis orci eget orci",
+  "details": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
+  "rating": 5,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 3,
+  "title": "dapibus",
+  "details": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
+  "rating": 3,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 15,
+  "title": "sapien",
+  "details": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+  "rating": 5,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 2,
+  "title": "neque libero convallis",
+  "details": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+  "rating": 5,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 18,
+  "title": "dui proin leo",
+  "details": "Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 5,
+  "title": "quisque",
+  "details": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
+  "rating": 5,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 16,
+  "title": "quis turpis eget",
+  "details": "Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.",
+  "rating": 4,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 6,
+  "title": "in quis justo",
+  "details": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+  "rating": 1,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 12,
+  "title": "vehicula condimentum",
+  "details": "Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
+  "rating": 5,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 14,
+  "title": "quis",
+  "details": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+  "rating": 5,
+  "uidClient": "6eSb268Y1FTMQGUSpL8Wmo7TXK83"
+}, {
+  "id": 6,
+  "title": "elementum nullam varius",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 24,
+  "title": "eros viverra eget congue",
+  "details": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  "rating": 3,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 16,
+  "title": "et",
+  "details": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+  "rating": 2,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 18,
+  "title": "tristique in",
+  "details": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+  "rating": 5,
+  "uidClient": "aek3mVCThCbCJrHsFG7sHgtjNQF2"
+}, {
+  "id": 23,
+  "title": "morbi a ipsum",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 15,
+  "title": "luctus et ultrices posuere",
+  "details": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.",
+  "rating": 3,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 12,
+  "title": "semper rutrum nulla nunc",
+  "details": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.\n\nMauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.",
+  "rating": 3,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 12,
+  "title": "in faucibus orci",
+  "details": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
+  "rating": 2,
+  "uidClient": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+}, {
+  "id": 3,
+  "title": "in hac habitasse",
+  "details": "Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 11,
+  "title": "tristique fusce congue diam id",
+  "details": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
+  "rating": 5,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 16,
+  "title": "vel augue vestibulum",
+  "details": "Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl.",
+  "rating": 3,
+  "uidClient": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+}, {
+  "id": 3,
+  "title": "blandit mi in porttitor",
+  "details": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+  "rating": 1,
+  "uidClient": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+}, {
+  "id": 18,
+  "title": "eleifend luctus",
+  "details": "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
+  "rating": 5,
+  "uidClient": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+}, {
+  "id": 1,
+  "title": "pharetra magna ac consequat metus",
+  "details": "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
+  "rating": 5,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 11,
+  "title": "suspendisse potenti cras in",
+  "details": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
+  "rating": 1,
+  "uidClient": "eK7xM4QxffNSO51JafCb1yiB9u02"
+}, {
+  "id": 22,
+  "title": "mi pede malesuada in imperdiet",
+  "details": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+  "rating": 5,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 2,
+  "title": "nisl ut volutpat sapien",
+  "details": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 16,
+  "title": "scelerisque mauris sit amet",
+  "details": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
+  "rating": 2,
+  "uidClient": "aek3mVCThCbCJrHsFG7sHgtjNQF2"
+}, {
+  "id": 23,
+  "title": "nulla elit ac",
+  "details": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+  "rating": 2,
+  "uidClient": "aek3mVCThCbCJrHsFG7sHgtjNQF2"
+}, {
+  "id": 21,
+  "title": "parturient montes nascetur ridiculus mus",
+  "details": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+  "rating": 2,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 7,
+  "title": "ligula in",
+  "details": "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
+  "rating": 4,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 14,
+  "title": "fringilla",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 3,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 17,
+  "title": "porttitor pede justo eu massa",
+  "details": "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
+  "rating": 5,
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+}, {
+  "id": 11,
+  "title": "arcu adipiscing",
+  "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
+  "rating": 5,
+  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+}, {
+  "id": 3,
+  "title": "ultrices libero non mattis pulvinar",
+  "details": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+  "rating": 3,
+  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+}, {
+  "id": 3,
+  "title": "massa id lobortis convallis tortor",
+  "details": "Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
+  "rating": 2,
+  "uidClient": "aek3mVCThCbCJrHsFG7sHgtjNQF2"
+}, {
+  "id": 4,
+  "title": "curabitur at ipsum ac",
+  "details": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
+  "rating": 5,
+  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+}, {
+  "id": 17,
+  "title": "primis in faucibus",
+  "details": "In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+  "rating": 1,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 9,
+  "title": "morbi vestibulum velit id pretium",
+  "details": "In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+  "rating": 4,
+  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+}, {
+  "id": 17,
+  "title": "et ultrices posuere cubilia",
+  "details": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+  "rating": 3,
+  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+}, {
+  "id": 13,
+  "title": "ut suscipit a",
+  "details": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+  "rating": 1,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 9,
+  "title": "nulla pede ullamcorper augue a",
+  "details": "In congue. Etiam justo. Etiam pretium iaculis justo.",
+  "rating": 1,
+  "uidClient": "aek3mVCThCbCJrHsFG7sHgtjNQF2"
+}, {
+  "id": 10,
+  "title": "varius integer ac leo",
+  "details": "Duis aliquam convallis nunc. Proin at turpis a peVde posuere nonummy. Integer non velit.",
+  "rating": 4,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 7,
+  "title": "mauris ullamcorper",
+  "details": "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
+  "rating": 5,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 21,
+  "title": "sit amet cursus",
+  "details": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  "rating": 1,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 20,
+  "title": "accumsan felis ut at dolor",
+  "details": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+  "rating": 2,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 21,
+  "title": "venenatis turpis enim",
+  "details": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.",
+  "rating": 4,
+  "uidClient": "ARyejqzqP2ZqLKMjC36DinqKDZB3"
+}, {
+  "id": 13,
+  "title": "ut",
+  "details": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+  "rating": 4,
+  "uidClient": "ARyejqzqP2ZqLKMjC36DinqKDZB3"
+}, {
+  "id": 16,
+  "title": "donec",
+  "details": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
+  "rating": 1,
+  "uidClient": "1kh0flCWktUFAXiauKTP9adr5nX2"
+}, {
+  "id": 19,
+  "title": "amet sapien dignissim",
+  "details": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+  "rating": 1,
+  "uidClient": "ARyejqzqP2ZqLKMjC36DinqKDZB3"
+}, {
+  "id": 15,
+  "title": "dui vel",
+  "details": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
+  "rating": 1,
+  "uidClient": "ARyejqzqP2ZqLKMjC36DinqKDZB3"
+}, {
+  "id": 10,
+  "title": "cras mi",
+  "details": "Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl.",
+  "rating": 1,
+  "uidClient": "ARyejqzqP2ZqLKMjC36DinqKDZB3"
+}
+]
+
+//CATEGORÍAS
+let Categoriasmockup = async () => {
+  try {
+      for(let s of Cate) {
+       let cat =  s.title.charAt(0).toUpperCase() + s.title.slice(1).toLowerCase()
+       let existe = await Categorias.findOne({ where: { title : cat }})
+        if(existe === null){
+            await Categorias.create({title: cat})
+        } else console.log(`La categoría ${cat} ya existe`)
+      }
+     console.log("Categorías creadas")
+  }
+  catch(err){
+      console.log(err)
+  }
+} 
 
 // USUARIOS
 
 const LlamadoUsers = async (usuarios) => {
   for (let index = 0; index < usuarios.length; index++) {
     const user = usuarios[index];
-    await Usuarios.create({
+    const nuevo= {
       uidClient: user.uid,
       photoURL: user.photoURL,
       phoneNumber: user.phone,
       email: user.email,
       displayName: `${user.name} ${user.lastName}`,
       provider: false,
-      uidProvider: uuidv4(),
       disabled: false,
-    })
+    }
+    await Usuarios.create(nuevo);
   }
+  console.log("Usuarios creados");
 }
 
 // SERVICIOS
@@ -1696,24 +2299,60 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-             // usuarioUidClient: s.uidUser,
+              //usuarioUidClient: s.uidClient
+              estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
             const category = await Categorias.findOne({ where: { title: s.category}})
             await servicio.addCategorias(category)
-            console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
+            // console.log(`Crea categoría ${category.title} para servicio ${s.title} de usuario ${usuario.displayName}`)
       }
+      console.log("Servicios creados");
   }
   catch(err){
       console.log(err)
   }
 } 
 
+let ResenasMockup = async () => {
+
+  try{
+    for(let r of reviews) {     
+      const [resena, created] = await Resenas.findOrCreate({ 
+        where:{ 
+          usuarioUidClient: r.uidClient,
+          servicioId: r.id
+        },
+        defaults: {
+          title: r.title, 
+          details: r.details, 
+          rating: r.rating
+        }
+      });
+      if(!created) console.log("La reseña ya existe " + r.title);
+        else {
+        const servicio = await Servicios.findByPk(r.id); 
+        const usuario = await Usuarios.findOne({
+          where: {
+            uidClient: r.uidClient
+          }
+        }); 
+        await servicio.addResenas(resena);
+        await usuario.addResenas(resena);
+      }
+    }
+    console.log("Reseñas creadas");
+
+} catch(err){
+    console.log(err)
+}
+}
 
 module.exports = {
   LlamadoUsers,
   Users,
   DataServices,
-  Categoriasmockup
+  Categoriasmockup,
+  ResenasMockup
 };

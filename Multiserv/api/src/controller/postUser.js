@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const postUser = async (req, res,next) => {
 
-  const {name, lastName, mail, password, photoURL, phone, isGoogle, uid} = req.body; 
+  const {name, lastName, mail, password, photoURL, phone, isGoogle, uid, isAdmin} = req.body; 
  let newUser= false;
 
   try {
@@ -24,7 +24,7 @@ const postUser = async (req, res,next) => {
 
 
     console.log(newUser, "respuesta firebase")
-  } else {
+  } 
     // Creacion en DB
    
     const [NuevoUsuario, created]= await Usuarios.findOrCreate({
@@ -35,12 +35,13 @@ const postUser = async (req, res,next) => {
         uidClient: newUser? newUser.uid : uid,
         photoURL,
         phoneNumber: phone,
+        isAdmin,
         displayName: `${name} ${lastName}`,
         provider: false,
         uidProvider: uuidv4(),
         disabled: false,
       }
-    }) }
+    }) 
     res.send({ msg: "Usuario Creado", user: newUser })
 
   } catch (error) {

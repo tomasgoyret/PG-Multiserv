@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSearchParams } from "react-router-dom";
 import EmailVerified from '../../Components/Organisms/validationHandlers/EmailVerified/EmailVerified';
+import PasswordResetConfirm from '../../Components/Organisms/validationHandlers/PasswordResetConfirm/PasswordResetConfirm';
 
 const UsersValidations = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -14,6 +15,7 @@ const UsersValidations = () => {
     const getTypeOfValidation = () => {
         switch (params.mode) {
             case 'resetPassword':
+                return <PasswordResetConfirm validationCode={params.oobCode} />
                 // Display reset password handler and UI.
                 //handleResetPassword(auth, actionCode, continueUrl, lang);
                 break;

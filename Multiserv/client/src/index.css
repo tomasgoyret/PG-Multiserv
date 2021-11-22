@@ -9,3 +9,30 @@
 .source-sans {
     font-family: 'Source Sans Pro', sans-serif;
 }
+:root{
+    --scrollbarBG: #3b3b3b4d;
+    --thumbBG: #d8d8d8;
+}
+.custom-scrollbar::-webkit-scrollbar{
+    width: 6px;
+  }
+  .custom-scrollbar{
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+  }
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }

@@ -5,15 +5,38 @@ import {
     SERVICIOS,
     USUARIOS,
     RESETORDER,
-    FILTERCAT
+    FILTERCAT,
+    GETCATS,
+    SERVICIOID,
+    EMPATYSERVICIOID,
+    USUARIOID,
+    EMPATYUSUARIO,
+    FAVORITES,
+    ELIMINARFAVORITES,
+    CLIENTES_BUSCADOS,
+    PROVEDORES_BUSCADOS,
+    SERVICIOS_BUSCADOS,
+    CATEGORIAS_BUSCADAS,
+    REVIEWS 
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
 const initalState = {
     loadingServices: true,
+    loadingServicesDetalle: true,
+    loadingProveedorDetalle: true,
     servicios: [],
     usuarios: [],
-    aux: []
+    aux: [],
+    categories: [],
+    detalleServicio: {},
+    misFavoritos: [],
+    provedoresBuscados: [],
+    clientesBuscados: [],
+    serviciosBuscados: [],
+    categoriasBuscadas: [],
+    detalleUsuario: {},
+    reviews: []
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -31,8 +54,13 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 servicios: newServ
             }
+        case GETCATS:
+            return {
+                ...state,
+                categories: payload
+            }
         case FILTERCAT:
-            let filteredCat = state.aux.filter(serv => serv.category?.toLowerCase() === payload.toLowerCase())
+            let filteredCat = state.aux.filter(serv => serv.categorias[0].title?.toLowerCase() === payload.toLowerCase())
             return {
                 ...state,
                 servicios: filteredCat
@@ -53,7 +81,6 @@ function rootReducer(state = initalState, { type, payload }) {
                     else return 0
                 })
             }
-            console.log(orderedAlph.map(serv => serv.title))
             return {
                 ...state,
                 servicios: orderedAlph
@@ -66,7 +93,6 @@ function rootReducer(state = initalState, { type, payload }) {
             else if (payload === 'desc') {
                 orderedRat.sort((prev, post) => post.rating - prev.rating)
             }
-            console.log(orderedRat.map(serv => serv.rating))
             return {
                 ...state,
                 servicios: orderedRat
@@ -80,6 +106,70 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 servicios: state.aux
+            }
+        case EMPATYUSUARIO:
+            return {
+                ...state,
+                loadingServices: false,
+                detalleUsuario: {},
+            }
+        case USUARIOID:
+            return {
+                ...state,
+                loadingProveedorDetalle: false,
+                detalleUsuario: payload,
+            }
+        case FAVORITES:
+            return {
+                ...state,
+                misFavoritos: payload,
+            }
+        case ELIMINARFAVORITES:
+            return {
+                ...state,
+                misFavoritos: payload,
+            }
+
+        case EMPATYSERVICIOID:
+            return {
+                ...state,
+                loadingServices: false,
+                detalleServicio: {},
+            }
+        case SERVICIOID:
+            return {
+                ...state,
+                loadingServicesDetalle: false,
+                detalleServicio: payload,
+            }
+        case CLIENTES_BUSCADOS:
+            const auxClientesBuscados = state.usuarios.filter(usuario => usuario.displayName.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                clientesBuscados: auxClientesBuscados
+            }
+        case PROVEDORES_BUSCADOS:
+            const auxProvedoresBuscados = state.usuarios.filter(usuario => usuario.displayName.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                provedoresBuscados: auxProvedoresBuscados
+            }
+        case SERVICIOS_BUSCADOS:
+            const auxServiciosBuscados = state.servicios.filter(servicio => servicio.title.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                serviciosBuscados: auxServiciosBuscados
+            }
+        case CATEGORIAS_BUSCADAS:
+            const auxCategoriasBuscadas = state.categories.filter(categoria => categoria.name.toLowerCase().includes(payload.toLowerCase()))
+            return {
+                ...state,
+                categoriasBuscadas: auxCategoriasBuscadas
+            }
+        case REVIEWS:
+            return {
+                ...state,
+                reviews: payload
             }
         default:
             return state;

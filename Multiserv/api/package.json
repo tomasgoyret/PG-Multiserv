@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon index.js",
+    "dev": "nodemon index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -15,6 +15,7 @@
     "npm": ">=6.14.6"
   },
   "dependencies": {
+    "axios": "^0.23.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -24,11 +25,11 @@
     "firebase-admin": "^10.0.0",
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0",    
-    "axios": "^0.23.0",
+    "mercadopago": "^1.5.9",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "nodemon": "^2.0.15",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -38,4 +39,4 @@
     "supertest": "^6.0.1",
     "supertest-session": "^4.1.0"
   }
-} 
+}
