@@ -93,7 +93,7 @@ const DetalleServicio = () => {
                             <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                         </div>
                     ) : (
-                            <div className="w-full flex flex-col h-screen">
+                            <div className="w-full flex flex-col overflow-y-auto h-screen">
                                 <div className="px- pt-6 pb-4">
                                     <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                                 </div>
