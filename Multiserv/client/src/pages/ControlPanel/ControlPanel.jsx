@@ -361,9 +361,9 @@ const ControlPanel = () => {
     }
 
     useEffect(() => {
-        if(!detalleUsuario.isAdmin){
-            navigate("/home")
-        }
+        // if(!detalleUsuario.isAdmin){
+        //     navigate("/home")
+        // }
         dispatch(users())
         dispatch(services())
         dispatch(getCats())
