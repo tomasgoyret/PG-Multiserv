@@ -72,7 +72,7 @@ const ServiceCard = ({ service, className }) => {
                                 className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="ml-4 flex flex-col">
-                            <h1 className="font-semibold text-gray-800">{/* {service.usuarioUidClient} */}Nombre</h1>
+                            <h1 className="font-semibold text-gray-800"> {service.nameUser} </h1>
                             <span className="text-sm text-gray-600">
                                 {service.currency === 'MXN' ? 'Mexico' 
                                     : service.currency === 'COP' ? 'Colombia' 
