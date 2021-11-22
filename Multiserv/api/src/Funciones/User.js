@@ -205,7 +205,6 @@ const Users = [
     "name": "Alejandra Espinoza Lezama",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GjQ9L88wJys19mswndj-_zKq8Ei3TbubBC86qtCpJc=s96-c",
     "disabled": false,
-    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Mon, 15 Nov 2021 01:57:03 GMT",
       "creationTime": "Mon, 15 Nov 2021 00:48:20 GMT"
@@ -2252,7 +2251,6 @@ const LlamadoUsers = async (usuarios) => {
       displayName: `${user.name} ${user.lastName}`,
       provider: false,
       disabled: false,
-      isAdmin: user.isAdmin? user.isAdmin : false
     }
     await Usuarios.create(nuevo);
   }
