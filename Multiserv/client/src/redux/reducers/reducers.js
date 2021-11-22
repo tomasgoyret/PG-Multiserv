@@ -16,7 +16,8 @@ import {
     CLIENTES_BUSCADOS,
     PROVEDORES_BUSCADOS,
     SERVICIOS_BUSCADOS,
-    CATEGORIAS_BUSCADAS, 
+    CATEGORIAS_BUSCADAS,
+    REVIEWS 
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -34,7 +35,8 @@ const initalState = {
     clientesBuscados: [],
     serviciosBuscados: [],
     categoriasBuscadas: [],
-    detalleUsuario: {}
+    detalleUsuario: {},
+    reviews: []
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -163,6 +165,11 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 categoriasBuscadas: auxCategoriasBuscadas
+            }
+        case REVIEWS:
+            return {
+                ...state,
+                reviews: payload
             }
         default:
             return state;
