@@ -80,7 +80,7 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
     return async function (dispatch) {
-        let services =` ${server}/usuarios/${id}`;
+        let services =`${server}/usuarios/${id}`;
         const response = await axios(services);
         return dispatch({
             type: USUARIOID,
@@ -93,7 +93,6 @@ export const empatyusuarioId = (id) => {
     return async function (dispatch) {
         return dispatch({
             type: EMPATYUSUARIO,
-
         })
     }
 }
