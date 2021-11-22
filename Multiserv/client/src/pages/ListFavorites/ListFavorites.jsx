@@ -1,38 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getListFavorites, deleteListFavorites } from "../../redux/actions/actions";
 
-const ListFavorites = ({ favoritos, getListFavorites, deleteListFavorites }) => {
-    var { uid } = useParams();
+const ListFavorites = () => {
+  var { uid } = useParams();
+  const { servicios, misFavoritos } = useSelector(state => state)
+  const dispatch = useDispatch()
+  const idFavs = misFavoritos.map(fav => Number(fav.idService))
+
+  const favoritos = servicios.filter(serv => idFavs.includes(serv.id)) // aqui me traigo los objetos 
 
   useEffect(() => {
-    getListFavorites(uid);
+    dispatch(getListFavorites(uid));
   }, []);
+  console.log(misFavoritos[0])
+  console.log(favoritos[0])
 
-  let eliminarFav = (e) => {
-    deleteListFavorites(e.target.name,uid)
+  const eliminarFav = (e) => {
+    dispatch(deleteListFavorites(e.target.name, uid))
   }
 
   return (
-    <div className="block  bg-green-100">
-      <h1 className="">Mis favoritos ♥</h1>
-      <ul className="">
-        { typeof favoritos !== 'string'  && favoritos.length > 0 
-          ? favoritos.map((favorito) => ( <div key={favorito.id}>
-              <li >{favorito.title} ♥</li>
-              <button name={favorito.id} onClick={(e) => eliminarFav(e)}> Eliminar </button> </div>
-            ))
-          : <li className="" >No hay favoritos</li>}
-      </ul>
+    <div className="w-full h-screen block p-4 ">
+      <h1 className="text-4xl font-bold pb-4 border-b-2 border-gray-200">Mis Favoritos</h1>
+      <div className="mt-2 grid grid-cols-3 gap-4">
+        {typeof favoritos !== 'string' && favoritos.length > 0
+          ? favoritos.map((favorito) => (
+            <div className='w-full shadow my-1 p-3 rounded-lg flex' key={favorito.id}>
+              <div>
+                <img className='w-36 rounded' src={favorito.photos[0]} alt={favorito.title} />
+              </div>
+              <div className='ml-4 flex flex-col'>
+                <span className='text-xl font-semibold' >{favorito.title}</span>
+                <button className='bg-red-500 rounded my-1 text-white font-bold' name={favorito.id} onClick={eliminarFav}>Eliminar</button>
+                <button className='bg-cyan-600 rounded my-1 text-white font-bold' >Ver</button>
+              </div>
+            </div>
+          ))
+          : <span className="justify-center" >No hay favoritos</span>}
+      </div>
 
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    favoritos: state.misFavoritos,
-  };
-};
 
-export default connect(mapStateToProps, { getListFavorites, deleteListFavorites })(ListFavorites);
+
+export default ListFavorites

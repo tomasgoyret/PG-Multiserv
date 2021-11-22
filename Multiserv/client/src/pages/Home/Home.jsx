@@ -14,22 +14,25 @@ import ListBox from '../../Components/HeadLess/ListBox/ListBox'
 const Home = () => {
     const loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
+    const usuarios = useSelector(state => state.usuarios)
     const categorias = useSelector((state) => state.categories)
     const navigate = useNavigate();
     const [buscador, setBuscador] = useState('')
     const [order, setOrder] = useState(null)
     const [filter, setFilter] = useState(null)
     const dispatch = useDispatch()
+    
+
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const handleBuscador = (texto) => {
         setBuscador(texto)
     }
 
     useEffect(() => {
-        if(datosSesionFromLocalStorage){
+        if (datosSesionFromLocalStorage) {
             dispatch(usuarioId(datosSesionFromLocalStorage.uid))
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
@@ -37,7 +40,7 @@ const Home = () => {
         }
         dispatch(services())
         dispatch(users())
-        
+
     }, [])
 
     useEffect(() => {
@@ -61,9 +64,9 @@ const Home = () => {
     const handleListValue2 = (obj) => {
         setFilter(obj)
     }
-    
+
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-    
+
     const handleListValue = (obj) => {
         setOrder(obj)
         if (obj.type === 'none') {
@@ -117,7 +120,6 @@ const Home = () => {
         },
         ...categorias
     ]
-
     return (
         <>
             {
@@ -159,10 +161,9 @@ const Home = () => {
                             </div>
                         </div>
                         <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
-
-                            {servicios.map((service, index) => (
-                                <ServiceCard key={index} service={service} />
-                            ))}
+                            {servicios.map((service, index) => {
+                                return (<ServiceCard key={index} service={service} />)
+                            })}
                         </div>
                     </div>
                 )
