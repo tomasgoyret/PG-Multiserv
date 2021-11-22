@@ -395,6 +395,10 @@ const CreateService = () => {
                                             onClick={() => {
                                                 setLoadedImg(false)
                                                 setImg(null)
+                                                setService({
+                                                    ...service,
+                                                    img: []
+                                                })  
                                             }}
                                         >
                                             <FaTimes className="text-lg text-white" />
@@ -406,18 +410,19 @@ const CreateService = () => {
                                         imgClass={`object-cover rounded-lg h-72`}
                                     />
                                 </div>
+                                {service.img.length===0 ? 
                                 <button 
                             className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
                             onClick={handleUpload}
                         >
                           {uploadImg && <ImSpinner9 className="mr-2 animate-spin" />} Subir
-                        </button>
+                        </button>:<h1 className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold text-green-800">Imagen subida</h1>}
                             </div>
                             :
                             (
                                 <>
                         <input
-                                        onChange={handleImage}
+                            onChange={handleImage}
                             type="file"
                             name="foto5"
                             id="foto5"
