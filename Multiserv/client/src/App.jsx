@@ -95,6 +95,10 @@ function App() {
       path: '/confirmServ',
       element: <ConfirmServicio />
     },
+    {
+      path: '/control-panel',
+      element: <ControlPanel />
+    },
   ]
   /*
   <div>
