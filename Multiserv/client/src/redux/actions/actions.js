@@ -13,7 +13,11 @@ import {
     SERVICIOID,
     EMPATYSERVICIOID,
     USUARIOID,
-    EMPATYUSUARIO
+    EMPATYUSUARIO,
+    CLIENTES_BUSCADOS,
+    PROVEDORES_BUSCADOS,
+    SERVICIOS_BUSCADOS,
+    CATEGORIAS_BUSCADAS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -49,7 +53,7 @@ export const getCats = () => {
         let categories = `${server}/categorias`;
         const response = await axios(categories);
         const dataCats = response.data.map(cat => {
-            return { name: cat.title, value: cat.title }
+            return { id: cat.id, name: cat.title, value: cat.title }
         })
         return dispatch({
             type: GETCATS,
@@ -64,7 +68,7 @@ export const buscar = (nombre) => { return { type: BUSCAR, payload: nombre } }
 /* Ordenar Servicios */
 /* Por alfabeto */
 export const orderAlph = (by) => {
-    console.log(by)
+    //console.log(by)
     return { type: ORDERALPH, payload: by }
 }
 /* Por rating */
@@ -74,7 +78,7 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
-    console.log("entre al actions "+ id+".....")
+    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services =` ${server}/usuarios/${id}`;
         const response = await axios(services);
@@ -96,7 +100,7 @@ export const empatyusuarioId = (id) => {
 
 // Traer detalle de servicio /
 export const servicesId = (id) => {
-    console.log("entre al actions "+ id+".....")
+    //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
         let services = `${server}/services/${id}`;
         const response = await axios(services);
@@ -115,3 +119,33 @@ export const empatyServicesId = (id) => {
         })
     }
 }
+
+export const buscarClientes = (user) => {
+    return {
+        type: CLIENTES_BUSCADOS,
+        payload: user
+    }
+}
+
+export const buscarProvedores = (user) => {
+    return {
+        type: PROVEDORES_BUSCADOS,
+        payload: user
+    }
+}
+
+export const buscarServicios = (servicio) => {
+    return {
+        type: SERVICIOS_BUSCADOS,
+        payload: servicio
+    }
+}
+
+export const buscarCategorias = (categoria) => {
+    return {
+        type: CATEGORIAS_BUSCADAS,
+        payload: categoria
+    }
+}
+
+
