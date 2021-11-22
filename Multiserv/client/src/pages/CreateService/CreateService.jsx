@@ -390,9 +390,11 @@ const CreateService = () => {
                         <div className="flex flex-col">
                                 <div className="h-full overflow-y-hidden relative">
                                     <div className="absolute top-0 right-0">
+                                    {service.img.length===0 ? 
                                         <button
                                             className="p-2"
                                             onClick={() => {
+                
                                                 setLoadedImg(false)
                                                 setImg(null)
                                                 setService({
@@ -400,9 +402,9 @@ const CreateService = () => {
                                                     img: []
                                                 })  
                                             }}
-                                        >
+                                        >  
                                             <FaTimes className="text-lg text-white" />
-                                        </button>
+                                        </button> : null }
                                     </div>
                                     <Image
                                         name="photo1"
