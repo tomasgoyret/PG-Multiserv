@@ -5,6 +5,7 @@ import { FaHeartBroken } from 'react-icons/fa'
 import Image from '../../Atoms/Image/Image'
 import StarRating from '../../Atoms/StarRating/StarRating'
 import { Link } from 'react-router-dom'
+/* React-redux */
 
 
 const ServiceCard = ({ service, className }) => {
@@ -71,8 +72,15 @@ const ServiceCard = ({ service, className }) => {
                                 className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="ml-4 flex flex-col">
-                            <h1 className="font-semibold text-gray-800">Provider name</h1>
-                            <span className="text-sm text-gray-600">Aditional data</span>
+                            <h1 className="font-semibold text-gray-800">{/* {service.usuarioUidClient} */}Nombre</h1>
+                            <span className="text-sm text-gray-600">
+                                {service.currency === 'MXN' ? 'Mexico' 
+                                    : service.currency === 'COP' ? 'Colombia' 
+                                    : service.currency === 'ARS' ? 'Argentina'
+                                    : service.currency === 'USD' ? 'Estados Unidos'
+                                    : ''    
+                                }
+                            </span>
                         </div>
                     </div>
                 </div>
