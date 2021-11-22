@@ -16,9 +16,9 @@ payService.pago = (req, res) => {
         quantity: 1,
     }],
     back_urls: {
-      success: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/confirmServ",
-      failure: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/confirmServ",
-      pending: "https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/confirmServ",
+      success: "https://pg-multiserv.vercel.app/confirmServ",
+      failure: "https://pg-multiserv.vercel.app/confirmServ",
+      pending: "https://pg-multiserv.vercel.app/confirmServ",
     },
     auto_return: "approved",
     external_reference: id,
