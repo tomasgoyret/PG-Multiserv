@@ -24,12 +24,20 @@ const Home = () => {
     const handleBuscador = (texto) => {
         setBuscador(texto)
     }
+
+    useEffect(() => {
+        if(datosSesionFromLocalStorage){
+            dispatch(usuarioId(datosSesionFromLocalStorage.uid))
+        }
+    },[])
+
     useEffect(() => {
         if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
             navigate('/email-verification')
         }
         dispatch(services())
         dispatch(users())
+        
     }, [])
 
     useEffect(() => {

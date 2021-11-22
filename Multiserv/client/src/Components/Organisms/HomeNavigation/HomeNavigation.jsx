@@ -56,9 +56,7 @@ const HomeNavigation = () => {
         navigate(`/home/${uid}/list-favorites`)
     }
 
-    useEffect(() => {
-        dispatch(usuarioId(datosSesionFromLocalStorage.uid))
-    },[])
+    
 
     const modal = () => {
         return verPerfil ?
