@@ -6,9 +6,9 @@ const postServ = async (req, res, next) => {
     try {
         const usuario = await Usuarios.findByPk(uidClient)        
         const newService = {
-            title, currency, description,
+            title, currency, description, max, min, rating, photos,
             usuarioUidClient: uidClient,
-            nameUser: usuario.displayName, max, min, rating, photos,
+            nameUser: usuario.displayName
         }
         const service = await Servicios.create(newService);
         await usuario.addServicios(service)
