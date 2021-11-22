@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getListFavorites, deleteListFavorites } from "../../redux/actions/actions";
 
-const ListFavorites = () => {
+const ListFavorites = () => {  
+  const navigate = useNavigate()
   var { uid } = useParams();
   const { servicios, misFavoritos } = useSelector(state => state)
   const dispatch = useDispatch()
-  const idFavs = misFavoritos.map(fav => Number(fav.idService))
-
-  const favoritos = servicios.filter(serv => idFavs.includes(serv.id)) // aqui me traigo los objetos 
+  var favoritos = '';
+  if(typeof misFavoritos !== 'string' && misFavoritos.length > 0 ){ favoritos = misFavoritos}
 
   useEffect(() => {
     dispatch(getListFavorites(uid));
   }, []);
-  console.log(misFavoritos[0])
-  console.log(favoritos[0])
 
   const eliminarFav = (e) => {
     dispatch(deleteListFavorites(e.target.name, uid))
   }
-
+  const irAlLink = (e) => {
+    navigate(`/detalleServicio/${e.target.name}`)
+  }
   return (
     <div className="w-full h-screen block p-4 ">
       <h1 className="text-4xl font-bold pb-4 border-b-2 border-gray-200">Mis Favoritos</h1>
@@ -34,7 +34,7 @@ const ListFavorites = () => {
               <div className='ml-4 flex flex-col'>
                 <span className='text-xl font-semibold' >{favorito.title}</span>
                 <button className='bg-red-500 rounded my-1 text-white font-bold' name={favorito.id} onClick={eliminarFav}>Eliminar</button>
-                <button className='bg-cyan-600 rounded my-1 text-white font-bold' >Ver</button>
+                <button onClick={irAlLink} name={favorito.idService} className='bg-cyan-600 rounded my-1 text-white font-bold' >Ver</button>
               </div>
             </div>
           ))
