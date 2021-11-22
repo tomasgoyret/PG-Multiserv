@@ -161,9 +161,11 @@ const Home = () => {
                             </div>
                         </div>
                         <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
-                            {servicios.map((service, index) => {
-                                return (<ServiceCard key={index} service={service} />)
-                            })}
+
+                            {servicios.map((service, index) => ( service.estadoDePago === 'Aprobado' ? 
+                                <ServiceCard key={index} service={service} /> : ''
+                            ))}
+                            
                         </div>
                     </div>
                 )

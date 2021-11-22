@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    nameUser: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     currency: {
       type: DataTypes.ENUM('USD', 'MXN', 'ARS', 'COP')
     },

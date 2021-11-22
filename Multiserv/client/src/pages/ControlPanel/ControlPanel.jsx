@@ -76,7 +76,7 @@ const ControlPanel = () => {
           }).then((result) => {
               console.log(result)
             if (result.isConfirmed) {
-                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                axios(`eliminar-usuario/${uid}`)
                 .then(async response => {
                     Swal.fire(
                         'Eliminado!',
@@ -106,7 +106,7 @@ const ControlPanel = () => {
           }).then((result) => {
               console.log(result)
             if (result.isConfirmed) {
-                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                axios(`eliminar-usuario/${uid}`)
                 .then(async response => {
                     Swal.fire(
                         'Eliminado!',
@@ -128,7 +128,7 @@ const ControlPanel = () => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
-        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+        axios.put(`editar-usuario/${uidClient}`, {
             name: name,
             lastName: lastName,
             photoURL: photoURL,
@@ -154,7 +154,7 @@ const ControlPanel = () => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
-        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+        axios.put(`editar-usuario/${uidClient}`, {
             name: name,
             lastName: lastName,
             photoURL: photoURL,
@@ -180,7 +180,7 @@ const ControlPanel = () => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
-        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+        axios.put(`editar-usuario/${uidClient}`, {
             name: name,
             lastName: lastName,
             photoURL: photoURL,
@@ -206,7 +206,7 @@ const ControlPanel = () => {
         const { uidClient } = user;
         const { displayName, photoURL, phone } = user;
         const [name, lastName] = displayName.trim().split(" ");
-        axios.put(`http://localhost:3005/editar-usuario/${uidClient}`, {
+        axios.put(`editar-usuario/${uidClient}`, {
             name: name,
             lastName: lastName,
             photoURL: photoURL,
@@ -241,7 +241,7 @@ const ControlPanel = () => {
             allowOutsideClick: () => !Swal.isLoading()
           }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.put("http://localhost:3005/edit-categorias", {
+                await axios.put("edit-categorias", {
                     id, 
                     newTitle: result.value
                 })
@@ -271,7 +271,7 @@ const ControlPanel = () => {
           }).then((result) => {
               console.log(result)
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3005/categorias/${id}`)
+                axios.delete(`categorias/${id}`)
                 .then(response => {
                     Swal.fire(
                         'Eliminado!',
@@ -301,7 +301,7 @@ const ControlPanel = () => {
           }).then((result) => {
               console.log(result)
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3005/delete-service/${id}`)
+                axios.delete(`delete-service/${id}`)
                 .then(response => {
                     Swal.fire(
                         'Eliminado!',
@@ -343,7 +343,7 @@ const ControlPanel = () => {
             allowOutsideClick: () => !Swal.isLoading()
           }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.post("http://localhost:3005/categorias", {
+                await axios.post("categorias", {
                     title: result.value
                 })
                 .then(response => {
