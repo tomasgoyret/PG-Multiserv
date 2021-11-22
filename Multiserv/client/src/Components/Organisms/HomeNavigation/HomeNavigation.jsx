@@ -43,8 +43,13 @@ const HomeNavigation = () => {
         <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} />
     ]
     const newService = () => {
+        setVerPerfil(false)
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/new-service`)
+    }
+    const listFav = () => {
+        const uid = datosSesionFromLocalStorage.uid
+        navigate(`/home/${uid}/list-favorites`)
     }
 
     const modal = () => {
@@ -70,7 +75,7 @@ const HomeNavigation = () => {
                                 <MdNotifications className="mr-2" />
                                 <span className="font-semibold">Notificaciones</span>
                             </div>
-                            <div className="flex my-1 items-center pl-3">
+                            <div onClick={listFav} className="inline-flex w-max auto my-1 items-center px-3 rounded-full hover:bg-sky-900 hover:text-white transition-all">
                                 <MdFavorite className="mr-2" />
                                 <span className="font-semibold">Lista Favoritos</span>
                             </div>
