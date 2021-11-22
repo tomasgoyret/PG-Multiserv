@@ -15,6 +15,7 @@ import ControlPanel from "./pages/ControlPanel/ControlPanel";
 import CreateService from "./pages/CreateService/CreateService";
 import HomeNavigation from "./Components/Organisms/HomeNavigation/HomeNavigation";
 import Profile from "./pages/Profile/Profile";
+import ListFavorites from "./pages/ListFavorites/ListFavorites";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 
 
@@ -43,6 +44,10 @@ function App() {
         {
           path: '/home/:uid/new-service',
           element: <CreateService />
+        },
+        {
+          path: '/home/:uid/list-favorites',
+          element: <ListFavorites />
         },
         {
           path: '/home/chat',
