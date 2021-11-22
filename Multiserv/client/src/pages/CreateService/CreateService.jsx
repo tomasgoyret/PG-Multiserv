@@ -16,12 +16,17 @@ import Swal from 'sweetalert2';
 import { ImSpinner9 } from "react-icons/im";
 import { storage } from "../../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+import { BsCloudArrowUpFill, BsCloudCheckFill } from "react-icons/bs";
+import { AiFillExclamationCircle } from "react-icons/ai";
+import { IoMdInformationCircle } from "react-icons/io";
 
 const CreateService = () => {
     const [disabledNext, setDisabledNext] = useState(true)
     const categoriasDb = useSelector((state) => state.categories)
     const [loadingSave, setLoadingSave] = useState(false);
     const [uploadImg, setuploadImg] = useState(false);
+    const [imageOnCloud, setImageOnCloud] = useState(false)
+    const [failedUpload, setFailedUpload] = useState(false)
     const [loadingPayment, setLoadingPayment] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -125,18 +130,30 @@ const CreateService = () => {
     const handleUpload= async () => {
           // cargarlo a firebase storage
           setuploadImg(true)
+
         try {
             const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
             await uploadBytes(fileRef, imageToLoad);
             //obtener url de descarga
             const urlDownload = await getDownloadURL(fileRef);   
+            setImageOnCloud(true)
+            setFailedUpload(false)
             setService({
                 ...service,
                 img: [urlDownload]
             })   
             setuploadImg(false);
+            setDisabledNext(false)
             } catch(err){
                console.log(err)
+            Swal.fire({
+                title: 'Error!',
+                text: 'Ocurrió un error. Vuelve a intentarlo',
+                icon: 'error',
+                confirmButtonText: 'X'
+            })
+            setImageOnCloud(false)
+            setFailedUpload(true)
             }
 
     }
@@ -191,7 +208,11 @@ const CreateService = () => {
                 }
             }
     },[stepForm])
-
+    useEffect(() => {
+        if (stepForm === 2 && !loadedImg) {
+            setDisabledNext(true)
+        }
+    }, [disabledNext, stepForm, loadedImg])
     const [link, setLink] = useState("")
 
     const linkPago = async (uid) => {
@@ -390,7 +411,7 @@ const CreateService = () => {
                         <div className="flex flex-col">
                                 <div className="h-full overflow-y-hidden relative">
                                     <div className="absolute top-0 right-0">
-                                        <button
+                                        {!uploadImg && !imageOnCloud && <button
                                             className="p-2"
                                             onClick={() => {
                                                 setLoadedImg(false)
@@ -398,7 +419,21 @@ const CreateService = () => {
                                             }}
                                         >
                                             <FaTimes className="text-lg text-white" />
-                                        </button>
+                                        </button>}
+                                    </div>
+                                    <div className="absolute w-1/2 h-1/2 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
+                                        <div className="relative">
+                                            <div style={{ animation: uploadImg ? 'spin 5s linear infinite' : 'none' }} className={`border-2 ${uploadImg && 'border-dashed'} w-16 h-16 rounded-full`}>
+                                            </div>
+                                            <button
+                                                onClick={handleUpload}
+                                                disabled={uploadImg || imageOnCloud}
+                                                className={`flex justify-center items-center absolute w-16 h-16 m-auto top-0 left-0 rounded-full text-white text-3xl ${uploadImg || imageOnCloud && 'cursor-not-allowed'} `}>
+                                                {imageOnCloud ? <BsCloudCheckFill className="self-center" />
+                                                    : <BsCloudArrowUpFill className="self-center" />}
+                                                {failedUpload && <AiFillExclamationCircle />}
+                                            </button>
+                                        </div>
                                     </div>
                                     <Image
                                         name="photo1"
@@ -406,12 +441,18 @@ const CreateService = () => {
                                         imgClass={`object-cover rounded-lg h-72`}
                                     />
                                 </div>
-                                <button 
-                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-800 hover:bg-green-900 text-gray-50"
-                            onClick={handleUpload}
-                        >
-                                    {uploadImg ? <> <ImSpinner9 className="mr-2 animate-spin" /> Cargando...</> : 'Subir'}
-                        </button>
+
+
+                                <div className="flex flex-row justify-center items-center">
+                                    <div
+                                        className={`inline-flex flex-nowrap py-0.5 px-4 mt-1 justify-center items-center rounded-md font-semibold ${!uploadImg && !failedUpload && 'bg-blue-900'} ${uploadImg && 'bg-green-800 '} ${failedUpload && 'bg-red-800 '} text-gray-50`}
+                                    >
+                                        {uploadImg && <> <ImSpinner9 className="mr-2 animate-spin" /> Cargando foto...</>}
+                                        {!uploadImg && !failedUpload && !imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Haz click en el botón para cargar imagen</>}
+                                        {imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Se cargó con éxito, haz click en siguiente</>}
+                                        {failedUpload && <> <IoMdInformationCircle className="mr-2" /> No se pudo cargar la imagen</>}
+                                    </div>
+                                </div>
                             </div>
                             :
                             (
