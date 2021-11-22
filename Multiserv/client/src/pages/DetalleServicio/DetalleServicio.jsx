@@ -14,6 +14,8 @@ import WP from '../../assets/images/WhatsApp.png';
 import LD from '../../assets/images/LinkedIn.png';
 import FB from '../../assets/images/Facebook.png';
 import TW from '../../assets/images/Twitter.png';
+import { useLocation } from 'react-router'
+import axios from 'axios'
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -29,6 +31,11 @@ const DetalleServicio = () => {
     /* const url = `https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home/detalleServicio/${id}`; */
     const url = `https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home`;
     const hashTag = 'Servicios ';
+    const location = useLocation()
+    const current = location.pathname.replace(/\D/g, '')
+
+    console.log(id) // Esto es lo mismo
+    console.log(current) // Esto es lo mismo
 
     const servicio = servicios.filter(serv => serv.id === Number(id))
     const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
@@ -61,6 +68,14 @@ const DetalleServicio = () => {
         // backgroundImage: `url(${usuarioID.data.photoURL})`,
         backgroundSize: 'cover',
         backgroundPosition: 'top center'
+    }
+    const agregarFav = async () => {
+        await axios.post('http://localhost:3005/agregar-fav', {
+            idService: current,
+            uidClient: usuario.uidClient
+        })
+        return alert('Agregado a Favoritos')
+
     }
     const resultadoNombre = validarLogitudNombre(name)
     const modal = (
@@ -160,10 +175,10 @@ const DetalleServicio = () => {
                                                 <a className='mr-2' rel="noopener noreferrer" href={`https://www.linkedin.com/shareArticle?url=${url}`} target="_blank" >
                                                     <Image name="linkedInShareServices" imagen={LD} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
                                                 </a>
-                                                <button className='flex justify-center ml-2 font-semibold inline-flex w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
+                                                <button className='flex justify-center ml-2 font-semibold  w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
                                                     Pedir Turno
                                                 </button>
-                                                <button className="flex justify-center ml-2 font-semibold w-auto text-lg px-4 py-1 bg-yellow-600 text-gray-50 hover:bg-yellow-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 ">
+                                                <button onClick={agregarFav} className="flex justify-center ml-2 font-semibold w-auto text-lg px-4 py-1 bg-yellow-600 text-gray-50 hover:bg-yellow-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 ">
                                                     Añadir favorito
                                                 </button>
                                             </div>
