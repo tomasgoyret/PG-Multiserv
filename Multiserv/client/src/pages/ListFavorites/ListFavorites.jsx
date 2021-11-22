@@ -5,17 +5,21 @@ import { getListFavorites, deleteListFavorites } from "../../redux/actions/actio
 
 const ListFavorites = () => {
   var { uid } = useParams();
+  let favoritos = [];
   const { servicios, misFavoritos } = useSelector(state => state)
   const dispatch = useDispatch()
-  const idFavs = misFavoritos.map(fav => Number(fav.idService))
+  console.log(misFavoritos,'aca')
+  const idFavs = typeof misFavoritos !== 'string' && misFavoritos.length > 0 ? misFavoritos.map(fav => Number(fav.idService)) : ''
 
-  const favoritos = servicios.filter(serv => idFavs.includes(serv.id)) // aqui me traigo los objetos 
+    if(Array.isArray(idFavs)) {
+      favoritos = servicios.filter(serv => idFavs.includes(serv.id)) // aqui me traigo los objetos 
+    }
 
   useEffect(() => {
     dispatch(getListFavorites(uid));
   }, []);
-  console.log(misFavoritos[0])
-  console.log(favoritos[0])
+  // // console.log(misFavoritos[0])
+  // console.log(favoritos[0])
 
   const eliminarFav = (e) => {
     dispatch(deleteListFavorites(e.target.name, uid))
