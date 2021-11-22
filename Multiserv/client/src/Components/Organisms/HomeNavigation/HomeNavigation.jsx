@@ -79,14 +79,17 @@ const HomeNavigation = () => {
                                     <span className="font-semibold">Notificaciones</span>
                                 </button>
                             </div>
-                            <div onClick={listFav} className="w-full hover:bg-sky-900 hover:text-white py-2">
+                            <div onClick={() => {
+                                listFav()
+                                handleClick()
+                            }} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
                                 <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                     <MdFavorite className="mr-2" />
                                     <span className="font-semibold">Lista Favoritos</span>
                                 </button>
                             </div>
-                            <div className="w-full hover:bg-sky-900 hover:text-white py-2">
-                                <button onClick={newService} className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                            <div onClick={newService} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                     <MdHomeRepairService className="mr-2" />
                                     <span className="font-semibold">Crear un servicio</span>
                                 </button>
