@@ -27,6 +27,7 @@ const initalState = {
     loadingProveedorDetalle: true,
     servicios: [],
     usuarios: [],
+    servXUser: [],
     aux: [],
     categories: [],
     detalleServicio: {},

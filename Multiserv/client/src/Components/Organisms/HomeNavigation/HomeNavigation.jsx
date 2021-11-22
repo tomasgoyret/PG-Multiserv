@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router';
 import { AiFillHome, AiFillCalendar } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
@@ -9,9 +9,13 @@ import Nav from '../NavBar/Nav';
 import { MdEdit, MdFavorite, MdHomeRepairService, MdNotifications } from 'react-icons/md';
 import s from "../../Organisms/UserProfile/UserProfile.module.css"
 import ButtonXartiago from '../../Atoms/ButtonXartiago/ButtonXartiago';
+import { usuarioId } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HomeNavigation = () => {
-    const navigate = useNavigate()
+    const { detalleUsuario } = useSelector(state => state)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
     const [verPerfil, setVerPerfil] = useState(false)
@@ -51,6 +55,8 @@ const HomeNavigation = () => {
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/list-favorites`)
     }
+
+    
 
     const modal = () => {
         return verPerfil ?
@@ -94,6 +100,18 @@ const HomeNavigation = () => {
                                     <span className="font-semibold">Crear un servicio</span>
                                 </button>
                             </div>
+                            { 
+                            detalleUsuario.isAdmin &&
+                            <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                                <LinkTo page="control-panel" render={
+                                    <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                        <MdHomeRepairService className="mr-2" />
+                                        <span className="font-semibold">Panel de administración</span>
+                                    </button>
+                                }
+                                />
+                            </div>
+                            }
                         </div>
                     }
                     {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center w-2/5 mt-3"><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md">Log out</button></div>) : (<ButtonXartiago

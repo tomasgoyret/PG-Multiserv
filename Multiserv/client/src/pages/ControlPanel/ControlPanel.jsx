@@ -7,16 +7,18 @@ import { users, services, getCats, buscarClientes, buscarProvedores, buscarServi
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router";
 
 
 const ControlPanel = () => {
     const [vistaUsuarios, setVistaUsuarios] = useState("clientes");
-    const { usuarios, servicios, categories, clientesBuscados, provedoresBuscados, serviciosBuscados, categoriasBuscadas } = useSelector(state => state);
+    const { usuarios, servicios, categories, clientesBuscados, provedoresBuscados, serviciosBuscados, categoriasBuscadas, detalleUsuario } = useSelector(state => state);
     const dispatch = useDispatch();
     const [clientSearchValue, setClientSearchValue] = useState("");
     const [providerSearchValue, setProviderSearchValue] = useState("");
     const [serviceSearchValue, setServiceSearchValue] = useState("");
     const [categoriSearchValue, setCategoriSearchValue] = useState("");
+    const navigate = useNavigate();
     
 
 
@@ -359,9 +361,13 @@ const ControlPanel = () => {
     }
 
     useEffect(() => {
+        if(!detalleUsuario.isAdmin){
+            navigate("/home")
+        }
         dispatch(users())
         dispatch(services())
         dispatch(getCats())
+        
     }, [clientSearchValue]);
 
     return(

@@ -1072,34 +1072,6 @@ const Users = [
       }]
   },
   {
-    "uid": "v84FmOA8tZVeWMwXR5Jclihnt5C2",
-    "email": "luisenriqueaguilar6@gmail.com",
-    "lastName": "",
-    "emailVerified": true,
-    "name": "Luis Aguilar",
-    "phone": "+529721160467",
-    "disabled": false,
-    "metadata": {
-      "lastSignInTime": "Wed, 17 Nov 2021 11:17:44 GMT",
-      "creationTime": "Wed, 17 Nov 2021 11:09:22 GMT"
-    },
-    "passwordHash": "FOMlX816tatJOLXwryl05mmy2Nd1tLF4Y_h7gFI8mYdMAZskgOKA_d5IG-iJtwTd-BBmhY0_-QGc2RCbzNeNEw==",
-    "passwordSalt": "tX1Zs1A_MvI2xg==",
-    "tokensValidAfterTime": "Wed, 17 Nov 2021 11:09:22 GMT",
-    "providerData": [
-      {
-        "uid": "+529721160467",
-        "providerId": "phone",
-        "phone": "+529721160467"
-      },
-      {
-        "uid": "luisenriqueaguilar6@gmail.com",
-        "name": "Luis Aguilar",
-        "email": "luisenriqueaguilar6@gmail.com",
-        "providerId": "password"
-      }]
-  },
-  {
     "uid": "vl9IIVwDSue0XSrYWkCLn31hCN02",
     "email": "movilpc.soporte@gmail.com",
     "lastName": "",

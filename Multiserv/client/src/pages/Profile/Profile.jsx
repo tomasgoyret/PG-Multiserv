@@ -251,7 +251,7 @@ const Profile = () => {
                         <div>
                             <div className="w-full">
                             <h2 className="source-sans text-xl font-semibold px-3 pb-1 pt-2">Foto de perfil</h2>
-                                <div className="w-1/2">
+                                <div className="w-1/2 mb-2">
                                     <input
                                         className="border border-gray-400 p-2 rounded-md font-medium" 
                                         type="file"
