@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Imagen from "../../../src/assets/images/img1.webp";
 import { FaUser, FaUserTie } from "react-icons/fa";
 import { MdHomeRepairService, MdCategory } from "react-icons/md";
+import { AiFillHome } from "react-icons/ai";
 import ImagenPerfil from "../../assets/Icons/profile.png";
 import {
   users,
@@ -370,9 +371,9 @@ const ControlPanel = () => {
   };
 
   useEffect(() => {
-    if (!detalleUsuario.isAdmin) {
-      navigate("/home");
-    }
+    // if (!detalleUsuario.isAdmin) {
+    //   navigate("/home");
+    // }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
@@ -436,6 +437,9 @@ const ControlPanel = () => {
         </div>
         {/* Fin seccion administrar categorias */}
       </div>
+
+      
+
       <div className="w-4/5 overflow-y-auto h-screen">
         {
           // Inicio de vista de clientes
@@ -456,13 +460,10 @@ const ControlPanel = () => {
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
-                    <div
-                      className="w-14 h-14 rounded-full bg-green-400"
-                      style={{
-                        backgroundImage: `url(${ImagenPerfil})`,
-                        backgroundSize: "cover",
-                      }}
-                    ></div>
+                      <button 
+                          onClick={() => navigate("/home")} 
+                          className="flex  text-gray-700 text-3xl font-semibold items-end ml-3 pr-2"  
+                      ><AiFillHome size='32' color='gray-700' /></button>
                   </div>
                 </div>
 
@@ -634,13 +635,10 @@ const ControlPanel = () => {
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
-                    <div
-                      className="w-14 h-14 rounded-full bg-green-400"
-                      style={{
-                        backgroundImage: `url(${ImagenPerfil})`,
-                        backgroundSize: "cover",
-                      }}
-                    ></div>
+                      <button 
+                          onClick={() => navigate("/home")} 
+                          className="flex  text-gray-700 text-3xl font-semibold items-end ml-3 pr-2"  
+                      ><AiFillHome size='32' color='gray-700' /></button>
                   </div>
                 </div>
 
@@ -826,13 +824,10 @@ const ControlPanel = () => {
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
-                    <div
-                      className="w-14 h-14 rounded-full bg-green-400"
-                      style={{
-                        backgroundImage: `url(${ImagenPerfil})`,
-                        backgroundSize: "cover",
-                      }}
-                    ></div>
+                      <button 
+                          onClick={() => navigate("/home")} 
+                          className="flex  text-gray-700 text-3xl font-semibold items-end ml-3 pr-2"  
+                      ><AiFillHome size='32' color='gray-700' /></button>
                   </div>
                 </div>
                 {/* Fin Buscador */}
@@ -940,13 +935,10 @@ const ControlPanel = () => {
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
-                    <div
-                      className="w-14 h-14 rounded-full bg-green-400"
-                      style={{
-                        backgroundImage: `url(${ImagenPerfil})`,
-                        backgroundSize: "cover",
-                      }}
-                    ></div>
+                    <button 
+                        onClick={() => navigate("/home")} 
+                        className="flex  text-gray-700 text-3xl font-semibold items-end ml-3 pr-2"  
+                    ><AiFillHome size='32' color='gray-700' /></button>
                   </div>
                 </div>
                 {/* Fin Buscador */}
