@@ -1,15 +1,13 @@
 import React from "react";
-import { useParams } from "react-router";
+import {useParams} from "react-router-dom";
 
 const EditarServicio = () => {
-  const {uid} = useParams();
-
+  const {id} = useParams();
   return (
             <div> EditarServicio 
             <h1>EditarServicio</h1>
-            <p>Servicio id : {uid}</p>
-
+            <p>Servicio id : {id}</p> 
             </div>);
 };
 
-export default EditarServicio;
+export default EditarServicio; 
