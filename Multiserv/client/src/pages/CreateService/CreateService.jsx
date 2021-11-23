@@ -165,7 +165,7 @@ const CreateService = () => {
         })
     }
 
-    const { uid } = useParams()
+    const { uidClient } = useParams()
 
     const addStep = () => {
         if (stepForm < 3) {

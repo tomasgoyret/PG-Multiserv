@@ -5,7 +5,7 @@ import { getListFavorites, deleteListFavorites } from "../../redux/actions/actio
 
 const ListFavorites = () => {  
   const navigate = useNavigate()
-  var { uid } = useParams();
+  var { uidClient } = useParams();
   const { servicios, misFavoritos } = useSelector(state => state)
   const dispatch = useDispatch()
   var favoritos = '';

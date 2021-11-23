@@ -45,11 +45,11 @@ function App() {
           element: <Home />
         },
         {
-          path: '/home/:uid/new-service',
+          path: '/home/:uidClient/new-service',
           element: <CreateService />
         },
         {
-          path: '/home/:uid/list-favorites',
+          path: '/home/:uidClient/list-favorites',
           element: <ListFavorites />
         },
         {
