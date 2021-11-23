@@ -191,7 +191,7 @@ const CreateService = () => {
                         description: service.description,
                         max: service.max,
                         min: service.min,
-                        uidClient: uid,
+                        uidClient: uidClient,
                         photos: service.img
                     }
                     try {

@@ -1,7 +1,11 @@
 import React from "react";
+import { useParams } from 'react-router-dom';
 
 const MisCitas = () => {
     const { uidClient } = useParams();
-    return <div>MisCitas</div>;
+    console.log(uidClient);
+    return (
+    <div>Mis Citas</div>
+    )
 }
 export default MisCitas;

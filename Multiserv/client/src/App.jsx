@@ -69,11 +69,11 @@ function App() {
           element: <MyServices />
         },
         {
-          path: '/home/:uidClient/appointments ',
+          path: '/home/:uidClient/appointments',
           element: <MisCitas />
         },
         {
-          path: '/home/:uidClient/Horarios ',
+          path: '/home/:uidClient/Horarios',
           element: <Horarios />
         }
       ]

@@ -12,11 +12,11 @@ const ListFavorites = () => {
   if(typeof misFavoritos !== 'string' && misFavoritos.length > 0 ){ favoritos = misFavoritos}
 
   useEffect(() => {
-    dispatch(getListFavorites(uid));
+    dispatch(getListFavorites(uidClient));
   }, []);
 
   const eliminarFav = (e) => {
-    dispatch(deleteListFavorites(e.target.name, uid))
+    dispatch(deleteListFavorites(e.target.name, uidClient))
   }
   const irAlLink = (e) => {
     navigate(`/home/detalleServicio/${e.target.name}`)
