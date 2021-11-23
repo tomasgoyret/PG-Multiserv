@@ -10,9 +10,13 @@ import BarElements from '../../Components/Molecules/BarElements/BarElements';
 /* Organismos */
 import Nav from '../../Components/Organisms/NavBar/Nav';
 import SignIn from '../SignIn/SignIn';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const LandingPage = () => {
+
+    useEffect(() => {
+        document.title = '¡Bienvenido a MultiServicios!'
+    }, [])
     const [modal, setModal] = useState(false)
 
     const handleModal = () => {

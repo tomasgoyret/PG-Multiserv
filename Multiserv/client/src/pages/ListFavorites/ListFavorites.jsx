@@ -13,6 +13,7 @@ const ListFavorites = () => {
 
   useEffect(() => {
     dispatch(getListFavorites(uidClient));
+    document.title = 'Mis favoritos'
   }, []);
 
   const eliminarFav = (e) => {

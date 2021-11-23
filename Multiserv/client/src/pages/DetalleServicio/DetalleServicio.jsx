@@ -44,7 +44,9 @@ const DetalleServicio = () => {
         foto = datosSesionFromLocalStorage.photoURL
     }
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-
+    useEffect(() => {
+        document.title = `Detalles de ${servicio[0].title}`
+    }, [])
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("datoSesion")

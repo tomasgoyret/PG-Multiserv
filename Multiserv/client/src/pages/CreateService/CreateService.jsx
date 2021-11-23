@@ -55,6 +55,7 @@ const CreateService = () => {
         }
     }
     useEffect(() => {
+        document.title = "Crear un servicio"
         if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
             navigate('/')
         }
