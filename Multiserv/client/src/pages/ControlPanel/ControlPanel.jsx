@@ -371,7 +371,7 @@ const ControlPanel = () => {
   };
 
   useEffect(() => {
-    if (!detalleUsuario.isAdmin) {
+    if (detalleUsuario.isAdmin) {
       navigate("/home");
     }
     dispatch(users());
@@ -436,6 +436,20 @@ const ControlPanel = () => {
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
+        {/* Inicio seccion administrar newsletter */}
+        <div className="w-full flex justify-start px-2 mt-5">
+          <h2 className="text-md font-semibold ">Administrar newsletter</h2>
+        </div>
+        <div className="w-full flex flex-col items-start   mt-2">
+          <button
+            className="w-full flex items-center justify-start py-2 my-1 hover:bg-gray-300 focus:bg-gray-500 focus:text-gray-50 px-4"
+            onClick={cambiarACategorias}
+          >
+            <MdCategory width="30px" height="30px" className="mr-2" />
+            <span>Newsletter</span>
+          </button>
+        </div>
+        {/* Fin seccion administrar newsletter */}
       </div>
 
       

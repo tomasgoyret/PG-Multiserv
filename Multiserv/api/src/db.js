@@ -105,8 +105,15 @@ Resenas.belongsTo(Usuarios);
 // Muchos a Muchos  ---> Favoritos y Categorias
 Usuarios.belongsToMany(Favoritos,{through: 'usuarios_favoritos'});
 Favoritos.belongsToMany(Usuarios,{through: 'usuarios_favoritos'});
+
 Servicios.belongsToMany(Categorias,{through: 'services_category'});
 Categorias.belongsToMany(Servicios,{through: 'services_category'});
+
+Usuarios.belongsToMany(Citas,{through: 'usuarios_citas'})
+Citas.belongsToMany(Usuarios,{through: 'usuarios_citas'});
+
+Servicios.belongsToMany(Citas,{through: 'services_citas'})
+Citas.belongsToMany(Servicios,{through: 'services_citas'});
 
 //Relación 1 a 1 Servicios ---> Horarios
 Servicios.hasOne(Horarios);
