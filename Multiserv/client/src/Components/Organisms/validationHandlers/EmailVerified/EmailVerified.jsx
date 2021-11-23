@@ -14,6 +14,7 @@ const EmailVerified = ({ validationCode }) => {
     const [showTimer, setShowTimer] = useState(false)
 
     useEffect(() => {
+        document.title = "Multiservicios | verificación de email"
         setInProcess(true)
         //return (() => status())
     }, [])

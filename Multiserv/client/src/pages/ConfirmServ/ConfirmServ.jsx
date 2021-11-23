@@ -21,6 +21,7 @@ const ConfirmServicio = () => {
     }
 
     useEffect(() => {
+        document.title = "¡Tu pago se realizó exitosamente!"
         actualizarPago()
       }, []);
 

@@ -7,6 +7,7 @@ const ListFavorites = ({ favoritos, getListFavorites, deleteListFavorites }) => 
     var { uid } = useParams();
 
   useEffect(() => {
+    document.title = 'Mis favoritos'
     getListFavorites(uid);
   }, []);
 

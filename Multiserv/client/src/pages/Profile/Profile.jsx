@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../../Components/Atoms/Input/Input";
 import InputSimple from "../../Components/Atoms/InputSimple/InputSimple";
 import { storage } from "../../Firebase";
@@ -24,13 +24,10 @@ const Profile = () => {
         email: email,
         photoURL:photoURL
     })
-
+    useEffect(() => {
+        document.title = "Mi perfil"
+    }, [])
     const [image, setImage] = useState('');
-
-  
-
-    
-
     // Eliminar usuario
     const eliminarUsuario = (uid) => {
         Swal.fire({
