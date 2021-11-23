@@ -12,6 +12,8 @@ const ListFavorites = () => {
   if(typeof misFavoritos !== 'string' && misFavoritos.length > 0 ){ favoritos = misFavoritos}
 
   useEffect(() => {
+    document.title = 'Mis favoritos'
+    getListFavorites(uid);
     dispatch(getListFavorites(uid));
   }, []);
 

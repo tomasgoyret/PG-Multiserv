@@ -21,6 +21,9 @@ const handleMail = (text) => {
   setMail(text)
 }
   useEffect(() => {
+    document.title = "Reestablece tu contraseña"
+  }, [])
+  useEffect(() => {
     const emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     if (emailValid.test(mail)) {

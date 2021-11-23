@@ -19,6 +19,7 @@ const ConfirmServicio = () => {
     });
   };
   useEffect(() => {
+    document.title = "¡Tu pago se realizó exitosamente!"
     actualizarPago();
   }, []);
 
@@ -63,3 +64,4 @@ const ConfirmServicio = () => {
 };
 
 export default ConfirmServicio;
+main
