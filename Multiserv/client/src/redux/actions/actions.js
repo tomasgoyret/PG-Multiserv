@@ -21,6 +21,8 @@ import {
     SERVICIOS_BUSCADOS,
     CATEGORIAS_BUSCADAS,
     REVIEWS,
+    MIS_SERVICIOS,
+    ELIMINAR_MISERVICIO,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -180,6 +182,33 @@ export const getReviews = (id) => {
         return dispatch({
             type: REVIEWS,
             payload: response.data
+        })
+    }
+}
+
+// Traer Mis Servicios
+export const getServicios = (uidClient) => {
+    return async function (dispatch) {
+    let service = `my-services/${uidClient}`;
+    const res = await axios(service);
+    const misServicios = res.data;
+    return dispatch({
+            type: MIS_SERVICIOS,
+            payload: misServicios
+        })
+    }
+}
+
+/* Eliminar de la Lista de mis Servicios por Id */
+export const deleteMyServices = ( id , uidClient ) => {
+    return async function (dispatch) {
+        const service = `${server}/delete-service/${id}`;
+        await axios.delete(service);
+        const res = await axios(`my-services/${uidClient}`);
+        const misServicios = res.data
+        return dispatch({
+            type: ELIMINAR_MISERVICIO,
+            payload: misServicios
         })
     }
 }

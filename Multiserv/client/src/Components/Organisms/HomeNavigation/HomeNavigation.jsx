@@ -57,8 +57,15 @@ const HomeNavigation = () => {
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/list-favorites`)
     }
+    
     function listenOnClick(){
         setVerPerfil(false)
+    }
+
+    const misServ = () => {
+        setVerPerfil(false)
+        const uid = datosSesionFromLocalStorage.uid
+        navigate(`/home/${uid}/my-services`)
     }
 
 
@@ -67,7 +74,7 @@ const HomeNavigation = () => {
     const modal = () => {
         return verPerfil ?
             (
-                <div className={s.UserProfile__OnClick} >
+                <div className={s.UserProfile__OnClick} onMouseLeave={listenOnClick}>
                     <div className="flex w-full border-b-2 py-5 pr-2">
                         <img className="mx-2" src={foto} alt="" />
                         <div className="flex flex-col justify-center truncate">
@@ -106,9 +113,15 @@ const HomeNavigation = () => {
                                     <span className="font-semibold" >Crear un servicio</span>
                                 </button>
                             </div>
+                            <div onClick={misServ} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all" >
+                                    <MdHomeRepairService className="mr-2" />
+                                    <span className="font-semibold" >Mis servicios</span>
+                                </button>
+                            </div>
                             { 
                             detalleUsuario.isAdmin &&
-                            <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                            <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >
                                 <LinkTo page="control-panel" render={
                                     <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                         <MdHomeRepairService className="mr-2" />

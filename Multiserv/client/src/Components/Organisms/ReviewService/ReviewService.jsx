@@ -16,7 +16,6 @@ const ReviewService = ({id}) => {
         dispatch(getReviews(current))
         dispatch(users())
     }, [])
-    console.log(usuarios.map(usuario => usuario.uidClient))
 
     return(
         <div className="w-full h-screen">
@@ -25,8 +24,8 @@ const ReviewService = ({id}) => {
             </div>
             <div className="w-full h-auto flex flex-col my-5 mx-10">
                 {
-                    reviews?.map(comentario => (
-                        <div className="flex flex-col w-1/2 h-auto ">
+                    reviews?.map(( comentario, i) => (
+                        <div className="flex flex-col w-1/2 h-auto " key={'keyFromReviews'+i}>
                             <div className="flex items-center"> 
                                 <div className="border-2 rounded-full h-10 w-10" >
                                     <img src='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg' className="w-full h-full rounded-full" alt='Bill Gates' />
