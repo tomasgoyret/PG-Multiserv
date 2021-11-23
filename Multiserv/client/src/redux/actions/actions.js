@@ -23,6 +23,7 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    EDITAR_MISERVICIO
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -199,7 +200,7 @@ export const getServicios = (uidClient) => {
     }
 }
 
-/* Eliminar de la Lista de mis Servicios por Id */
+/* Eliminar mi servicio de mis Servicios por Id */
 export const deleteMyServices = ( id , uidClient ) => {
     return async function (dispatch) {
         const service = `${server}/delete-service/${id}`;

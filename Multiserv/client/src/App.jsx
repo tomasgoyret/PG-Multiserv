@@ -18,8 +18,9 @@ import Profile from "./pages/Profile/Profile";
 import ListFavorites from "./pages/ListFavorites/ListFavorites";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 import MyServices from "./pages/MyServices/MyServices";
-import EditarServicio from "./pages/EditarServicio/EditarServicio.jsx";
-
+import EditarServicio from "./pages/EditarServicio/EditarServicio";
+import MisCitas from "./pages/MisCitas/MisCitas";
+import Horarios from "./pages/Horarios/Horarios";
 
 function App() {
   const routes = [
@@ -55,10 +56,6 @@ function App() {
           path: '/home/chat',
           element: <div><h1>chat</h1></div>
         },
-        // {
-        //   path: '/home/profile',
-        //   element: <div><h1>profile</h1></div>
-        // },
         {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
@@ -68,18 +65,22 @@ function App() {
           element: <DetalleServicio />
         },
         {
-          path: '/home/:id/my-services',
+          path: '/home/:uidClient/my-services',
           element: <MyServices />
+        },
+        {
+          path: '/home/:uidClient/appointments ',
+          element: <MisCitas />
+        },
+        {
+          path: '/home/:uidClient/Horarios ',
+          element: <Horarios />
         }
       ]
     },
     {
       path: '/passwordReset',
       element: <PasswordReset />
-    },
-    {
-      path: '/detalleServicio/:id',
-      element: <DetalleServicio />
     },
     {
       path: '/detalleProveedor/:id',
@@ -96,10 +97,6 @@ function App() {
     {
       path: '/profile',
       element: <Profile />
-    },
-    {
-      path: '/control-panel',
-      element: <ControlPanel />
     },
     {
       path: '/confirmServ',
