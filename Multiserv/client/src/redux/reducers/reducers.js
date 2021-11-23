@@ -178,12 +178,12 @@ function rootReducer(state = initalState, { type, payload }) {
         case MIS_SERVICIOS:
             return {
                 ...state,
-                misServicios: state.servicios.filter(servicio => servicio.usuarioUidClient === payload)
+                misServicios: payload
             }            
         case ELIMINAR_MISERVICIO:
             return {
                 ...state,
-                servicios: payload
+                misServicios: payload
             }
         default:
             return state;

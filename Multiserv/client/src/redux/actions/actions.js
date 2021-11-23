@@ -188,22 +188,27 @@ export const getReviews = (id) => {
 
 // Traer Mis Servicios
 export const getServicios = (uidClient) => {
-    return ({
+    return async function (dispatch) {
+    let service = `my-services/${uidClient}`;
+    const res = await axios(service);
+    const misServicios = res.data;
+    return dispatch({
             type: MIS_SERVICIOS,
-            payload: uidClient
+            payload: misServicios
         })
+    }
 }
 
 /* Eliminar de la Lista de mis Servicios por Id */
-export const deleteMyServices = (id) => {
+export const deleteMyServices = ( id , uidClient ) => {
     return async function (dispatch) {
-        let service = `${server}/delete-service/${id}`;
+        const service = `${server}/delete-service/${id}`;
         await axios.delete(service);
-        const res = await axios('services');
-        const servicios = res.data
+        const res = await axios(`my-services/${uidClient}`);
+        const misServicios = res.data
         return dispatch({
             type: ELIMINAR_MISERVICIO,
-            payload: servicios
+            payload: misServicios
         })
     }
 }
