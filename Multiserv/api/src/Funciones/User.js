@@ -961,7 +961,7 @@ const Users = [
       }]
   },
   {
-    "uid": "kMe67U3R59RqmpgG59IvKoZwTCH2",
+    "uid": "CuKKIedNCegIauEKX78sIYjKbC32",
     "email": "multiserv@gmail.com",
     "lastName": "",
     "emailVerified": true,
@@ -1068,34 +1068,6 @@ const Users = [
         "name": "Lin Bresson ",
         "email": "dyousterb@latimes.com",
         "photoURL": "http://dummyimage.com/704x600.png/ff4444/ffffff",
-        "providerId": "password"
-      }]
-  },
-  {
-    "uid": "v84FmOA8tZVeWMwXR5Jclihnt5C2",
-    "email": "luisenriqueaguilar6@gmail.com",
-    "lastName": "",
-    "emailVerified": true,
-    "name": "Luis Aguilar",
-    "phone": "+529721160467",
-    "disabled": false,
-    "metadata": {
-      "lastSignInTime": "Wed, 17 Nov 2021 11:17:44 GMT",
-      "creationTime": "Wed, 17 Nov 2021 11:09:22 GMT"
-    },
-    "passwordHash": "FOMlX816tatJOLXwryl05mmy2Nd1tLF4Y_h7gFI8mYdMAZskgOKA_d5IG-iJtwTd-BBmhY0_-QGc2RCbzNeNEw==",
-    "passwordSalt": "tX1Zs1A_MvI2xg==",
-    "tokensValidAfterTime": "Wed, 17 Nov 2021 11:09:22 GMT",
-    "providerData": [
-      {
-        "uid": "+529721160467",
-        "providerId": "phone",
-        "phone": "+529721160467"
-      },
-      {
-        "uid": "luisenriqueaguilar6@gmail.com",
-        "name": "Luis Aguilar",
-        "email": "luisenriqueaguilar6@gmail.com",
         "providerId": "password"
       }]
   },
@@ -2137,13 +2109,13 @@ const reviews = [
   "title": "arcu adipiscing",
   "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
   "rating": 5,
-  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
 }, {
   "id": 3,
   "title": "ultrices libero non mattis pulvinar",
   "details": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
   "rating": 3,
-  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
 }, {
   "id": 3,
   "title": "massa id lobortis convallis tortor",
@@ -2155,7 +2127,7 @@ const reviews = [
   "title": "curabitur at ipsum ac",
   "details": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
   "rating": 5,
-  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
 }, {
   "id": 17,
   "title": "primis in faucibus",
@@ -2167,13 +2139,13 @@ const reviews = [
   "title": "morbi vestibulum velit id pretium",
   "details": "In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
   "rating": 4,
-  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
 }, {
   "id": 17,
   "title": "et ultrices posuere cubilia",
   "details": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
   "rating": 3,
-  "uidClient": "v84FmOA8tZVeWMwXR5Jclihnt5C2"
+  "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
 }, {
   "id": 13,
   "title": "ut suscipit a",
@@ -2291,7 +2263,8 @@ let DataServices = async () => {
   try {
       for(let s of services) {
         let user = await Usuarios.update({provider: true},{where: { uidClient: s.uidUser }} );
-          const servicio = await Servicios.create( {
+        let userID = await Usuarios.findOne({where: { uidClient: s.uidUser }} )
+        const servicio = await Servicios.create( {
               title: s.title, 
               currency: s.currency,
               description: s.description, 
@@ -2299,7 +2272,7 @@ let DataServices = async () => {
               min: parseInt(s.min), 
               rating: parseInt(s.rating), 
               photos: s.photos,
-              //usuarioUidClient: s.uidClient
+              nameUser: userID.displayName,
               estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})

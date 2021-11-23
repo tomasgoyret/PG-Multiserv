@@ -24,20 +24,23 @@ const postFav = async (req, res) => {
             }
         });
         if (usuario.favoritos?.some(f => f.idService === idService)) {
-            res.send('Favorito ya agregado')
+            const fav = usuario.favoritos?.filter(f => f.idService === idService);
+            res.send({msg: 'Favorito ya agregado' , id:fav.id})
         }
 
         //Sino, creo el Favorito para Usuario
         else {
             const servicio = await Servicios.findOne({ where: { id: idService } });
             const title = servicio.title;
+            const photos = servicio.photos;
             const newFav = await Favoritos.create({
                 id: uuidv4(),
                 idService,
-                title
+                title,
+                photos
             });
             await newFav.addUsuarios(uidClient);
-            res.send(`Se agrego favorito al usuario uid:${uidClient} como Favorito id: ${newFav.id} `)
+            res.send({uidClient, id:newFav.id})
         }
     }
     catch (error) {

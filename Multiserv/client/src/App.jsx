@@ -17,6 +17,8 @@ import HomeNavigation from "./Components/Organisms/HomeNavigation/HomeNavigation
 import Profile from "./pages/Profile/Profile";
 import ListFavorites from "./pages/ListFavorites/ListFavorites";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
+import MyServices from "./pages/MyServices/MyServices";
+import EditarServicio from "./pages/EditarServicio/EditarServicio.jsx";
 
 
 function App() {
@@ -64,6 +66,10 @@ function App() {
         {
           path: '/home/detalleServicio/:id',
           element: <DetalleServicio />
+        },
+        {
+          path: '/home/:id/my-services',
+          element: <MyServices />
         }
       ]
     },
@@ -92,8 +98,20 @@ function App() {
       element: <Profile />
     },
     {
+      path: '/control-panel',
+      element: <ControlPanel />
+    },
+    {
       path: '/confirmServ',
       element: <ConfirmServicio />
+    },
+    {
+      path: '/control-panel',
+      element: <ControlPanel />
+    },
+    {
+      path: '/editar-servicio/:id',
+      element: <EditarServicio />
     },
   ]
   /*
