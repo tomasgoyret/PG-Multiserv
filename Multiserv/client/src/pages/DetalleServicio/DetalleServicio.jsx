@@ -15,6 +15,8 @@ import FB from '../../assets/images/Facebook.png';
 import TW from '../../assets/images/Twitter.png';
 import { useLocation } from 'react-router'
 import axios from 'axios'
+import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
+import { toast } from 'react-toastify';
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -29,6 +31,7 @@ const DetalleServicio = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
+    const [isFavorite, setIsFavorite] = useState(false)
     
     const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
@@ -82,11 +85,27 @@ const DetalleServicio = () => {
             uidClient: usuario.uidClient
             });
             idFav = res.data.id || res.data[0].id;
-            return alert('Agregado a Favoritos')
+            return toast.success('¡Se agregó a tus favoritos!', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            })
         }   
         else{
             await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${usuario.uidClient}`)
-            return alert('Eliminado de Favoritos')
+            return toast.error('Se eliminó de tus favoritos', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            })
         }
 
     }
@@ -191,9 +210,17 @@ const DetalleServicio = () => {
                                                 <button className='flex justify-center ml-2 font-semibold  w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
                                                     Pedir Turno
                                                 </button>
-                                                <button onClick={seteoFav} className="flex justify-center ml-2 font-semibold w-auto text-lg px-4 py-1 bg-yellow-600 text-gray-50 hover:bg-yellow-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300 "> 
-                                                    Añadir favorito
-                                                </button> 
+                                                    <div className="flex flex-row">
+                                                        <button
+                                                            onClick={seteoFav}
+                                                            className="text-3xl text-purple-900 active:outline-none p-2 transition-all ease-in-out duration-300 transform hover:scale-110">
+                                                            {isFavorite ?
+                                                                <BsSuitHeartFill />
+                                                                :
+                                                                <BsSuitHeart />
+                                                            }
+                                                        </button>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
