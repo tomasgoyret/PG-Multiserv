@@ -15,13 +15,14 @@ const ServiceCard = ({ service, className }) => {
         background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
     }
     const userProfile = {
-        backgroundImage: 'url("https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg")',
+        backgroundImage: `url(${service.profilePic})`,
         backgroundSize: 'cover',
         backgroundPosition: 'top center'
     }
     return (
         <div className={`${className} w-96 flex-shrink-0 m-4 filter drop-shadow-md transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-lg`}>
             <div className="rounded-t-lg w-96 h-60 bg-indigo-50 flex justify-center items-center">
+                {console.log(service)}
                 <Image
                     loadedHandler={() => {
                         setLoadingImg(false)
