@@ -131,7 +131,7 @@ const Home = () => {
                     </div>
                 ) : (
                         <div className="w-full flex flex-col justify-center items-center h-screen">
-                            <div style={{ zIndex: 500 }} className="w-fullx flex flex-row filter drop-shadow-md bg-white">
+                            <div style={{ zIndex: 500 }} className="w-full flex flex-row filter drop-shadow-md bg-white">
                             <Input
                                 theme="#0C4A6E"
                                 label="Buscar por nombre"
