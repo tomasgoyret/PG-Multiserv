@@ -851,7 +851,7 @@ const ControlPanel = () => {
                 {categoriSearchValue.length > 0
                   ? categoriasBuscadas?.map((categoria) => (
                       <div className="w-full flex border-2 items-center py-4 px-4 my-2">
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex flex-col w-4/5">
                           <h2 className="text-2xl font-semibold font-sans">
                             {categoria.name}
                           </h2>
@@ -859,7 +859,7 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-1/2 justify-end">
+                        <div className="flex w-1/5 justify-end">
                           <div className="flex w-80 items-center">
                             <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
@@ -869,26 +869,20 @@ const ControlPanel = () => {
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
-                        </div>
-                        <div
-                          className="flex items-end justify-center w-20 h-20 pb-1 fixed button-0 bg-green-500 hover:bg-green-700 right-4 bottom-4  rounded-full text-8xl text-gray-50 cursor-pointer"
-                          onClick={() => agregarCategoria()}
-                        >
-                          +
                         </div>
                       </div>
                     ))
                   : categoriSearchValue.length === 0 &&
                     categories?.map((categoria) => (
                       <div className="w-full flex border-2 items-center py-4 px-4 my-2">
-                        <div className="flex flex-col w-1/2">
+                        <div className="flex flex-col w-4/5">
                           <h2 className="text-2xl font-semibold font-sans">
                             {categoria.name}
                           </h2>
@@ -896,7 +890,7 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-1/2 justify-end">
+                        <div className="flex w-1/5 justify-end">
                           <div className="flex w-80 items-center">
                             <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
@@ -906,12 +900,12 @@ const ControlPanel = () => {
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                         <div
