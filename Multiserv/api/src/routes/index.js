@@ -18,6 +18,7 @@ const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
 const getMyServ = require("./getMyServ")
+const putUbicacion = require("./putUbicacion")
 
 
 
@@ -48,5 +49,9 @@ router.use("/eliminar-fav", deleteFavRouter)
 
 //Rutas reseñas
 router.use("/resena", resenaRouter)
+
+//Ruta para crear/editar ubicacion
+
+router.use("/ubicacion", putUbicacion)
 
 module.exports = router;
