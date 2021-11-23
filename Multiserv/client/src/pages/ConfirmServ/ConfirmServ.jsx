@@ -64,4 +64,3 @@ const ConfirmServicio = () => {
 };
 
 export default ConfirmServicio;
-main
