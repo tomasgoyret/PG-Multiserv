@@ -18,6 +18,7 @@ import Profile from "./pages/Profile/Profile";
 import ListFavorites from "./pages/ListFavorites/ListFavorites";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 import MyServices from "./pages/MyServices/MyServices";
+import EditarServicio from "./pages/EditarServicio/EditarServicio.jsx";
 
 
 function App() {
@@ -107,6 +108,10 @@ function App() {
     {
       path: '/control-panel',
       element: <ControlPanel />
+    },
+    {
+      path: '/editar-servicio/:id',
+      element: <EditarServicio />
     },
   ]
   /*

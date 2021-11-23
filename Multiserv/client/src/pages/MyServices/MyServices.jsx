@@ -15,7 +15,8 @@ const MyServices = () => {
     dispatch(deleteMyServices(e.target.name, uidClient));
   }
   const irAlLink = (e) => {
-    navigate(`/detalleServicio/${e.target.name}`)
+    console.log(e.target.value)
+    e.target.value === 'detalle' ? navigate(`/home/detalleServicio/${e.target.name}`) : navigate(`/editar-servicio/${e.target.name}`)
   }
 
   return (
@@ -32,10 +33,17 @@ const MyServices = () => {
             <img className='w-36 rounded' src={servicio.photos[0]} alt={servicio.title} />
           </div>
           <div className='ml-4 flex flex-col'>
-            <span className='text-xl font-semibold' >{servicio.title}</span>            
-            <h6 className='text-xl font-semibold' >{servicio.estadoDePago}</h6>
-            <button className='bg-red-500 rounded my-1 text-white font-bold' name={servicio.id} onClick={eliminarServ}>Eliminar</button>
-            <button onClick={irAlLink} name={servicio.id} className='bg-cyan-600 rounded my-1 text-white font-bold' >Ver</button>
+
+            <span className='text-xl font-semibold' >{servicio.title}</span>    
+
+            <h6 className='text-xxl font-italic ' >{servicio.estadoDePago}</h6>
+
+            <button className='hover:bg-red-300 hover:text-red-500 hover:shadow-md  bg-red-500 rounded my-1 text-white font-bold' name={servicio.id} onClick={eliminarServ}> Eliminar </button>
+
+            <button onClick={irAlLink} name={servicio.id} className='hover:bg-yellow-100 hover:text-yellow-400 hover:shadow-md  bg-yellow-300 rounded my-1 text-white font-bold' value='editar'> Editar </button>
+
+            <button onClick={irAlLink} name={servicio.id} value='detalle' className='hover:bg-cyan-100 hover:text-cyan-600 hover:shadow-md bg-cyan-600 rounded my-1 text-white font-bold' > Ver </button>
+
           </div>
         </div>
           );

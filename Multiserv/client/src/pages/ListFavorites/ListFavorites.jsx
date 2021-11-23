@@ -19,7 +19,7 @@ const ListFavorites = () => {
     dispatch(deleteListFavorites(e.target.name, uid))
   }
   const irAlLink = (e) => {
-    navigate(`/detalleServicio/${e.target.name}`)
+    navigate(`/home/detalleServicio/${e.target.name}`)
   }
   return (
     <div className="w-full h-screen block p-4 ">

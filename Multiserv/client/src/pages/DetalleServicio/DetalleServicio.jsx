@@ -29,14 +29,11 @@ const DetalleServicio = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
-    /* const url = `https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home/detalleServicio/${id}`; */
-    const url = `https://pg-multiserv-1tjesmtjz-tomasgoyret.vercel.app/home`;
+    
+    const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
-
-    console.log(id) // Esto es lo mismo
-    console.log(current) // Esto es lo mismo
 
     const servicio = servicios.filter(serv => serv.id === Number(id))
     const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
