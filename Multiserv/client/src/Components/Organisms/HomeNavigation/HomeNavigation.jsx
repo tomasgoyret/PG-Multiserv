@@ -57,8 +57,15 @@ const HomeNavigation = () => {
         const uid = datosSesionFromLocalStorage.uid
         navigate(`/home/${uid}/list-favorites`)
     }
+    
     function listenOnClick(){
         setVerPerfil(false)
+    }
+
+    const misServ = () => {
+        setVerPerfil(false)
+        const uid = datosSesionFromLocalStorage.uid
+        navigate(`/home/${uid}/my-services`)
     }
 
 
@@ -104,6 +111,12 @@ const HomeNavigation = () => {
                                 <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                     <MdHomeRepairService className="mr-2" />
                                     <span className="font-semibold" >Crear un servicio</span>
+                                </button>
+                            </div>
+                            <div onClick={misServ} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer">
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                    <MdHomeRepairService className="mr-2" />
+                                    <span className="font-semibold" >Mis servicios</span>
                                 </button>
                             </div>
                             { 
