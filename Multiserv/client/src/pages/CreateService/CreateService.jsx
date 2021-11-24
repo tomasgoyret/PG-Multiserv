@@ -193,7 +193,7 @@ const CreateService = () => {
                         max: service.max,
                         min: service.min,
                         uidClient: uidClient,
-                        photos: service.img
+                        photos: [service.img]
                     }
                     try {
                         let serv = await axios.post(`newservice`, nuevoServ)
