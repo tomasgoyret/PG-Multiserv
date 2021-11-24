@@ -2,11 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Parrafo from "../../Components/Atoms/Parrafo/Parrafo";
+import { FcApproval } from "react-icons/fc";
+import { useNavigate } from "react-router";
+
 
 const ConfirmServicio = () => {
   const text = "Redireccionando al Home en ... ";
   const [value, setValue] = useState(5);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const params = {
     estadoDePago: searchParams.get("status"),
@@ -23,13 +27,59 @@ const ConfirmServicio = () => {
     actualizarPago();
   }, []);
 
-  // value === 1 ? window.location.href = '/home' : setTimeout(function(){ setValue(value-1) }, 1000);
+  value === 1 ? window.location.href = '/home' : setTimeout(function(){ setValue(value-1) }, 1000);
   
   return (
-    <div className="flex w-full h-screen border-2 justify-center items-center">
-      <div className="w-4/5 h-4/5 border-2">
-
-      </div>
+    <div className="flex w-full h-screen justify-center items-center">
+      {
+        params.estadoDePago === "Aprobado" &&
+        <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
+          <div className="w-full h-1/5 bg-green-500"></div>
+          <div className="w-full h-3/5 flex flex-col items-center">
+            <h1 className="text-5xl font-bold my-6 mt-10">Pago Exitoso!</h1>
+            <span className="text-lg font-semibold mb-5">El pago se ha realizado de manera exitosa.</span>
+            <span>Seras redireccionado en: </span>
+            <span className="text-3xl my-5 font-bold">{value}</span>
+          </div>
+          <div className="w-full h-1/5 flex justify-center items-center">
+            <div className="w-2/5">
+              <button
+                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                onClick={() =>
+                  navigate("/home")
+                }
+              >
+                Regresar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+     
+      {
+        params.estadoDePago === "Rechazado" &&
+        <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
+          <div className="w-full h-1/5 bg-red-500"></div>
+          <div className="w-full h-3/5 flex flex-col items-center">
+            <h1 className="text-5xl font-bold my-6 mt-10">Pago Rechazado!</h1>
+            <span className="text-lg font-semibold mb-5">No se ha podido procesa el pago.</span>
+            <span>Seras redireccionado en: </span>
+            <span className="text-3xl my-5 font-bold">{value}</span>
+          </div>
+          <div className="w-full h-1/5 flex justify-center items-center">
+            <div className="w-2/5">
+              <button
+                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-700 hover:bg-red-800 text-gray-50"
+                onClick={() =>
+                  navigate("/home")
+                }
+              >
+                Regresar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
     </div>
     // <div className={params.estadoDePago === "Aprobado" ?'absolute bg-green-500 rounded-full  m-auto inset-1/3' : params.estadoDePago === "Rechazado"? 'absolute bg-red-500 rounded-full  m-auto inset-1/3' :'absolute bg-yellow-200 rounded-full  m-auto inset-1/3'}>
     //   <div className="items-center text-center ">
