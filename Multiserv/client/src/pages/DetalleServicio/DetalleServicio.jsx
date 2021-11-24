@@ -61,8 +61,10 @@ const DetalleServicio = () => {
         return nombres;
     }
     var name = "Inicia Sesión "
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
+    var uid = ""
+    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
         name = datosSesionFromLocalStorage.displayName
+        uid= datosSesionFromLocalStorage.uid
     }
     const contGrad = {
         background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
@@ -83,7 +85,7 @@ const DetalleServicio = () => {
         if(value === true) {
             const res = await axios.post('agregar-fav', {
             idService: current,
-            uidClient: usuario.uidClient
+            uidClient: uid
             });
             idFav = res.data.id || res.data[0].id;
             return toast.success('¡Se agregó a tus favoritos!', {
@@ -97,7 +99,7 @@ const DetalleServicio = () => {
             })
         }   
         else{
-            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${usuario.uidClient}`)
+            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${uid}`)
             return toast.error('Se eliminó de tus favoritos', {
                 position: "top-center",
                 autoClose: 3000,
