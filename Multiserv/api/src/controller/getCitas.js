@@ -1,22 +1,14 @@
-const { Citas, Usuarios } = require("../db.js");
+const { Citas, Usuarios, Servicios } = require("../db.js");
 
 const getCitas = async (req, res) => {
     const { uidClient } = req.params;
     try {
-        let citas = await Citas.findAll({
-            include: {
-                model: Usuarios,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                },
-                through: {
-                    attributes: []
-                },
-                where: { uidClient }
+        let citas = await Citas.findAll({where: { usuarioUidClient: uidClient },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt', ]
             }
         });
-        console.log(citas)
-         res.send(citas)
+        res.send(citas)
     } catch (error) {
         console.log(error)
     }

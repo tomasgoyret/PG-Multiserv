@@ -23,7 +23,7 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
-    EDITAR_MISERVICIO
+    MIS_CITAS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -210,6 +210,18 @@ export const deleteMyServices = ( id , uidClient ) => {
         return dispatch({
             type: ELIMINAR_MISERVICIO,
             payload: misServicios
+        })
+    }
+}
+
+/* Traer mis Citas por uidClient */
+export const getListCitas = ( uidClient ) => {
+    return async function (dispatch) {
+        const res = await axios(`citas/${uidClient}`);
+        const citas = res.data
+        return dispatch({
+            type: MIS_CITAS,
+            payload: citas
         })
     }
 }

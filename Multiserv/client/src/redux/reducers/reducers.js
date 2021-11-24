@@ -20,6 +20,7 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    MIS_CITAS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -41,6 +42,7 @@ const initalState = {
     detalleUsuario: {},
     reviews: [],
     misServicios: [],
+    misCitas: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -179,11 +181,16 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 misServicios: payload
-            }            
+            }
         case ELIMINAR_MISERVICIO:
             return {
                 ...state,
                 misServicios: payload
+            }
+        case MIS_CITAS:
+            return {
+                ...state,
+                misCitas: payload
             }
         default:
             return state;
