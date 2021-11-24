@@ -166,7 +166,7 @@ const CreateService = () => {
         })
     }
 
-    const { uid } = useParams()
+    const { uidClient } = useParams()
 
     const addStep = () => {
         if (stepForm < 3) {
@@ -192,7 +192,7 @@ const CreateService = () => {
                         description: service.description,
                         max: service.max,
                         min: service.min,
-                        uidClient: uid,
+                        uidClient: uidClient,
                         photos: service.img
                     }
                     try {

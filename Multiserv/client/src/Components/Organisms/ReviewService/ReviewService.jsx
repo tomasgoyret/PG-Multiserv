@@ -12,6 +12,13 @@ const ReviewService = ({id}) => {
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
 
+    const reviewsdata = reviews.map(review => ({
+        title: review.title,
+        details: review.details,
+        rating: review.rating,
+        user: usuarios.filter(usuario => usuario.uidClient === review.usuarioUidClient)
+    }));
+
     useEffect(() => {
         dispatch(getReviews(current))
         dispatch(users())
@@ -24,16 +31,21 @@ const ReviewService = ({id}) => {
             </div>
             <div className="w-full h-auto flex flex-col my-5 mx-10">
                 {
-                    reviews?.map(( comentario, i) => (
-                        <div className="flex flex-col w-1/2 h-auto " key={'keyFromReviews'+i}>
-                            <div className="flex items-center"> 
-                                <div className="border-2 rounded-full h-10 w-10" >
-                                    <img src='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg' className="w-full h-full rounded-full" alt='Bill Gates' />
+                    reviewsdata?.map(( comentario, i) => (
+                        <div className="flex flex-col w-3/5 h-auto my-3" key={'keyFromReviews'+i}>
+                                <div className="flex items-center"> 
+                                    <div className="border-2 rounded-full h-10 w-10" >
+                                        <img src={comentario.user.map(n => n.photoURL?n.photoURL:'https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg')} className="w-full h-full rounded-full" alt='Bill Gates' />
+                                    </div>
+                                    <h2 className="font-semibold text-1xl ml-2">{comentario.user.map(n => n.displayName)}</h2>
                                 </div>
-                                <h2 className="font-semibold text-1xl ml-2">Sebas</h2>
-                            </div>
-                            <div>
-                                <StarRating rating={comentario.rating}/> 
+                            <div className="flex mb-2">
+                                <div>
+                                    <StarRating rating={comentario.rating}/> 
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold ml-4">{comentario.title}</h4>
+                                </div>
                             </div>
                             <div className="w-full text-md text-gray-700">
                                 <span className="w-full">{comentario.details}</span>

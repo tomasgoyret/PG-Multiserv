@@ -20,6 +20,12 @@ const resenaRouter = require("./resenas")
 const getMyServ = require("./getMyServ")
 const putUbicacion = require("./putUbicacion")
 const getAllUbicacion = require("./getAllUbicacion")
+const getHorariosRouter = require("./getHorarios")
+const postHorariosRouter = require("./postHorarios")
+const putHorariosRouter = require("./putHorarios")
+const getCitasRouter = require("./getCitas")
+const postCitasRouter = require("./postCitas")
+const deleteCitasRouter = require("./deleteCitas")
 
 
 
@@ -55,5 +61,15 @@ router.use("/resena", resenaRouter)
 
 router.use("/ubicacion", putUbicacion)
 router.use("/ubicacion", getAllUbicacion)
+
+//Rutas de horarios
+router.use("/horarios", getHorariosRouter)
+router.use("/horarios", postHorariosRouter)
+router.use("/horarios", putHorariosRouter)
+
+//Rutas de Citas
+router.use("/citas", getCitasRouter)
+router.use("/citas", postCitasRouter)
+router.use("/citas", deleteCitasRouter)
 
 module.exports = router;
