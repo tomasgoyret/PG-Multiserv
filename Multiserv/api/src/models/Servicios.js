@@ -41,8 +41,13 @@ module.exports = (sequelize) => {
     photos: {
       type: DataTypes.ARRAY(DataTypes.STRING)
     },
-    // idAdress: {
-    //   type: DataTypes.STRING,
-    // },
+    location: {
+      type: DataTypes.ARRAY(DataTypes.FLOAT),
+      allowNull: true,
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   });
 };
