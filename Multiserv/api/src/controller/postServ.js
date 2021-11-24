@@ -8,8 +8,7 @@ const postServ = async (req, res, next) => {
         const newService = {
             title, currency, description, max, min, rating, photos,
             usuarioUidClient: uidClient,
-            nameUser: usuario.displayName,
-            profilePic: usuario.photoURL
+            nameUser: usuario.displayName
         }
         const service = await Servicios.create(newService);
         await usuario.addServicios(service)

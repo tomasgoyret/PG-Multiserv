@@ -12,9 +12,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    profilePic: {
-      type: DataTypes.STRING
-    },
     currency: {
       type: DataTypes.ENUM('USD', 'MXN', 'ARS', 'COP')
     },

@@ -4,21 +4,17 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("horarios", {
-    horarios: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+    start: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    dias: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-    },
-    aDomicilio: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    direccion: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    end: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    days: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
     },
   });
 };

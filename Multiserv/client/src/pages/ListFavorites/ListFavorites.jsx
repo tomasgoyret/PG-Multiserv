@@ -5,19 +5,20 @@ import { getListFavorites, deleteListFavorites } from "../../redux/actions/actio
 
 const ListFavorites = () => {  
   const navigate = useNavigate()
-  var { uidClient } = useParams();
+  var { uid } = useParams();
   const { servicios, misFavoritos } = useSelector(state => state)
   const dispatch = useDispatch()
   var favoritos = '';
   if(typeof misFavoritos !== 'string' && misFavoritos.length > 0 ){ favoritos = misFavoritos}
 
   useEffect(() => {
-    dispatch(getListFavorites(uidClient));
     document.title = 'Mis favoritos'
+    getListFavorites(uid);
+    dispatch(getListFavorites(uid));
   }, []);
 
   const eliminarFav = (e) => {
-    dispatch(deleteListFavorites(e.target.name, uidClient))
+    dispatch(deleteListFavorites(e.target.name, uid))
   }
   const irAlLink = (e) => {
     navigate(`/home/detalleServicio/${e.target.name}`)

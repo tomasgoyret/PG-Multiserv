@@ -9,17 +9,9 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
     },
-    dia: {
-        type: DataTypes.STRING,
+    date: {
+        type: DataTypes.DATE,
         allowNull: false,
     },
-    horario: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    nameUser: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
   });
 };
