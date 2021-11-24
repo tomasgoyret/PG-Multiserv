@@ -1,6 +1,6 @@
 const { Servicios} = require("../db.js");
 
-// get all ubicacion
+// get all ubicaciones
 
 const getAllUbicacion = async (req, res,next) => {
     try {
