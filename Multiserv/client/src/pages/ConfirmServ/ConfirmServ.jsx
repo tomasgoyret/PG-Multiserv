@@ -32,7 +32,7 @@ const ConfirmServicio = () => {
   return (
     <div className="flex w-full h-screen justify-center items-center">
       {
-        params.estadoDePago === "Aprobado" &&
+        params.estadoDePago === "approved" &&
         <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
           <div className="w-full h-1/5 bg-green-500"></div>
           <div className="w-full h-3/5 flex flex-col items-center">
@@ -57,7 +57,7 @@ const ConfirmServicio = () => {
       }
      
       {
-        params.estadoDePago === "Rechazado" &&
+        params.estadoDePago === "rejected" &&
         <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
           <div className="w-full h-1/5 bg-red-500"></div>
           <div className="w-full h-3/5 flex flex-col items-center">

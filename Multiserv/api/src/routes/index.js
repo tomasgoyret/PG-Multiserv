@@ -18,6 +18,8 @@ const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
 const getMyServ = require("./getMyServ")
+const putUbicacion = require("./putUbicacion")
+const getAllUbicacion = require("./getAllUbicacion")
 const getHorariosRouter = require("./getHorarios")
 const postHorariosRouter = require("./postHorarios")
 const putHorariosRouter = require("./putHorarios")
@@ -54,6 +56,11 @@ router.use("/eliminar-fav", deleteFavRouter)
 
 //Rutas reseñas
 router.use("/resena", resenaRouter)
+
+//Ruta para crear/editar ubicacion
+
+router.use("/ubicacion", putUbicacion)
+router.use("/ubicacion", getAllUbicacion)
 
 //Rutas de horarios
 router.use("/horarios", getHorariosRouter)
