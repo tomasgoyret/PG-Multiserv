@@ -222,8 +222,8 @@ const CreateService = () => {
             let link = await axios.post(`pay-service`, {id : `${uid}`})
             setLink(link.data)
             setLoadingPayment(false)
-            window.open(link.data)
-           // window.location.href = "/home"
+            //window.open(link.data)
+            window.location.href = link.data
             console.log(link.data)
         } catch (err) {
             Swal.fire({
