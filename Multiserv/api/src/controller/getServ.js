@@ -26,13 +26,13 @@ const getServ = async (req, res) => {
 
 // get user by id specific
 
-const getServId = async (req, res) => {
+const getServId = async (req, res,next) => {
     const {id} = req.params;
     try {
         const servicio = await Servicios.findAll({ where:{ id }, include: Categorias });      
         servicio.length < 1 ? res.send('No hay Servicios que coincidan') : res.send(servicio)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 };
 
