@@ -19,6 +19,7 @@ const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
 const getMyServ = require("./getMyServ")
 const putUbicacion = require("./putUbicacion")
+const getAllUbicacion = require("./getAllUbicacion")
 
 
 
@@ -53,5 +54,6 @@ router.use("/resena", resenaRouter)
 //Ruta para crear/editar ubicacion
 
 router.use("/ubicacion", putUbicacion)
+router.use("/ubicacion", getAllUbicacion)
 
 module.exports = router;
