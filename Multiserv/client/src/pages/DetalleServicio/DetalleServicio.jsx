@@ -40,6 +40,7 @@ const DetalleServicio = () => {
     const dispatch = useDispatch()
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
     const [isFavorite, setIsFavorite] = useState(false)
+    const [compartirModal, setCompartirModal] = useState(false)
     
     const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
@@ -139,6 +140,7 @@ const DetalleServicio = () => {
     return (
         <div>
             <div className="flex">
+                    
                 {modal}
                 {
                     loading ? (
@@ -203,24 +205,48 @@ const DetalleServicio = () => {
                                                 <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicio[0].description}`}</p>
                                             </div>
                                             <div className="flex mt-4">
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://api.whatsapp.com/send?text=${text}${url}`} target="_blank" >
-                                                    <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashTag}`} target="_blank" >
-                                                    <Image name="twitterShareServices" imagen={TW} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://www.facebook.com/sharer.php?u=${url}&t=${text}`} target="_blank" >
-                                                    <Image name="facebookShareServices" imagen={FB} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://www.linkedin.com/shareArticle?url=${url}`} target="_blank" >
-                                                    <Image name="linkedInShareServices" imagen={LD} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
+
+                                                {/* Modal de compartir */}
+                                                {
+                                                compartirModal &&
+                                                    <div className="w-96 h-48  z-10 absolute flex flex-col border border-gray-200 bg-white shadow-xl rounded-lg py-5" onMouseLeave={() => setCompartirModal(false)}>
+                                                        <div className="w-full flex justify-center h-2/6">
+                                                            <span className="text-3xl font-semibold font-sans">MultiServ</span>
+                                                        </div>
+                                                        <div className="w-full flex justify-center pb-5 h-1/6">
+                                                            <span className="text-md font-semibold text-gray-600">comparte en tus redes favoritas!</span>
+                                                        </div>
+                                                        <div className="w-full flex justify-center items-center h-3/6">
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://api.whatsapp.com/send?text=${text}${url}`} target="_blank" >
+                                                            <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashTag}`} target="_blank" >
+                                                                <Image name="twitterShareServices" imagen={TW} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://www.facebook.com/sharer.php?u=${url}&t=${text}`} target="_blank" >
+                                                                <Image name="facebookShareServices" imagen={FB} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://www.linkedin.com/shareArticle?url=${url}`} target="_blank" >
+                                                                <Image name="linkedInShareServices" imagen={LD} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                }  
+                                                <div>
+                                                    <button
+                                                        className="flex justify-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
+                                                        onClick={() => setCompartirModal(!compartirModal)}
+                                                    >
+                                                        Compartir
+                                                    </button>
+                                                </div>
                                                 {
                                                     datosSesionFromLocalStorage &&
                                                     <div className="flex">
-                                                        <button className='flex justify-center ml-2 font-semibold  w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
                                                             Pedir Turno
                                                         </button>
+
                                                         <button
                                                             onClick={seteoFav}
                                                             className="text-3xl text-purple-900 active:outline-none p-2 transition-all ease-in-out duration-300 transform hover:scale-110">
@@ -244,7 +270,8 @@ const DetalleServicio = () => {
                     )}
             </div>
 
-
+            {/* Modal Compartir */}
+                                              
         </div>
     )
 }

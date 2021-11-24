@@ -20,6 +20,7 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    EDITAR_MISERVICIO,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -189,6 +190,12 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 misServicios: payload
             }
+        case EDITAR_MISERVICIO:
+            return {
+                ...state,
+                detalleServicio: payload
+            }
+
         default:
             return state;
     }
