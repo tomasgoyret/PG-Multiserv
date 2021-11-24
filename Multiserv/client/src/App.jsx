@@ -1,4 +1,6 @@
 import { useRoutes } from "react-router";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
@@ -23,6 +25,7 @@ import MisCitas from "./pages/MisCitas/MisCitas";
 import Horarios from "./pages/Horarios/Horarios";
 
 function App() {
+  toast.configure()
   const routes = [
     {
       index: true,
@@ -154,6 +157,7 @@ function App() {
   return (
     <div className="custom-scrollbar">
       {routing}
+      <ToastContainer />
     </div>
   );
 }

@@ -31,15 +31,22 @@ const postResena= async (req, res)=> {
 }
 
 const getResenas = async (req, res) => {
+    try {
+        const resenas= await Resenas.findAll();
+        res.status(200).json(resenas);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
+
+
+const getResenasId = async (req, res) => {
     const {id} = req.params;
     try {
         const resenas= await Resenas.findAll();
-        if(id){
-            const filtered= resenas.filter(resena => parseInt(resena.dataValues.servicioId) === parseInt(id));
-            res.status(200).json(filtered);
-        }
-        else res.status(200).json(resenas);
-        
+        const filtered= resenas.filter(resena => parseInt(resena.dataValues.servicioId) === parseInt(id));
+        res.status(200).json(filtered);
     } catch (error) {
         res.status(400).json(error);
     }
@@ -75,5 +82,6 @@ module.exports= {
     postResena,
     getResenas,
     deleteResenas,
-    putResenas
+    putResenas,
+    getResenasId
 }
