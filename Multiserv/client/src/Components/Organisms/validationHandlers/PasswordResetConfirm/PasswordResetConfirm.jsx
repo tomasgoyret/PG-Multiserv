@@ -31,6 +31,7 @@ const PasswordResetConfirm = ({ validationCode }) => {
     }
 
     useEffect(() => {
+        document.title = "Multiservicios | Reestablece tu contraseña"
         handlePasswordReset(validationCode)
             .then((email) => {
                 setEmail(email)

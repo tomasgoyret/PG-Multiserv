@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../../Components/Atoms/Input/Input'
 import Button from '../../Components/Atoms/Button/Button'
 
@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router';
 import { createSearchParams } from 'react-router-dom';
 
 const Components = () => {
+    useEffect(() => {
+        document.title = "Muestra de componentes"
+    }, [])
     const navigate = useNavigate()
     const [miTexto, setMiTexto] = useState('')
 

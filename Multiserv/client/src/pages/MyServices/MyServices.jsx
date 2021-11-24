@@ -5,7 +5,8 @@ import { getServicios, deleteMyServices } from "../../redux/actions/actions";
 
 const MyServices = () => {
   const navigate = useNavigate();
-  const { uidClient } = useParams();
+
+  const  { uidClient } = useParams();
   const { misServicios } = useSelector((state) => state);
   const dispatch = useDispatch();
 

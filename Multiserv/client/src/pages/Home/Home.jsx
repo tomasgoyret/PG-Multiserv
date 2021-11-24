@@ -35,6 +35,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
+        document.title = "Explorar servicios"
         if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
             navigate('/email-verification')
         }
@@ -129,8 +130,8 @@ const Home = () => {
                         <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                     </div>
                 ) : (
-                    <div className="w-full flex flex-col h-screen">
-                        <div style={{ zIndex: 500 }} className="flex flex-row filter drop-shadow-md bg-white">
+                        <div className="w-full flex flex-col justify-center items-center h-screen">
+                            <div style={{ zIndex: 500 }} className="w-full flex flex-row filter drop-shadow-md bg-white">
                             <Input
                                 theme="#0C4A6E"
                                 label="Buscar por nombre"
@@ -160,7 +161,7 @@ const Home = () => {
                                 />
                             </div>
                         </div>
-                        <div style={{ scrollBehavior: 'smooth' }} className=" flex flex-row flex-wrap h-full overflow-y-auto">
+                            <div style={{ scrollBehavior: 'smooth' }} className="justify-center items-center flex flex-row flex-wrap h-full overflow-y-auto">
 
 
                             {servicios.map((service, index) => ( service.estadoDePago === 'Aprobado' ? 

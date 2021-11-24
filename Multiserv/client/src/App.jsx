@@ -1,4 +1,6 @@
 import { useRoutes } from "react-router";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
@@ -18,10 +20,12 @@ import Profile from "./pages/Profile/Profile";
 import ListFavorites from "./pages/ListFavorites/ListFavorites";
 import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 import MyServices from "./pages/MyServices/MyServices";
-import EditarServicio from "./pages/EditarServicio/EditarServicio.jsx";
-
+import EditarServicio from "./pages/EditarServicio/EditarServicio";
+import MisCitas from "./pages/MisCitas/MisCitas";
+import Horarios from "./pages/Horarios/Horarios";
 
 function App() {
+  toast.configure()
   const routes = [
     {
       index: true,
@@ -44,21 +48,17 @@ function App() {
           element: <Home />
         },
         {
-          path: '/home/:uid/new-service',
+          path: '/home/:uidClient/new-service',
           element: <CreateService />
         },
         {
-          path: '/home/:uid/list-favorites',
+          path: '/home/:uidClient/list-favorites',
           element: <ListFavorites />
         },
         {
           path: '/home/chat',
           element: <div><h1>chat</h1></div>
         },
-        // {
-        //   path: '/home/profile',
-        //   element: <div><h1>profile</h1></div>
-        // },
         {
           path: '/home/schedule',
           element: <div><h1>schedule</h1></div>
@@ -68,18 +68,22 @@ function App() {
           element: <DetalleServicio />
         },
         {
-          path: '/home/:id/my-services',
+          path: '/home/:uidClient/my-services',
           element: <MyServices />
+        },
+        {
+          path: '/home/:uidClient/appointments',
+          element: <MisCitas />
+        },
+        {
+          path: '/home/:uidClient/Horarios',
+          element: <Horarios />
         }
       ]
     },
     {
       path: '/passwordReset',
       element: <PasswordReset />
-    },
-    {
-      path: '/detalleServicio/:id',
-      element: <DetalleServicio />
     },
     {
       path: '/detalleProveedor/:id',
@@ -96,10 +100,6 @@ function App() {
     {
       path: '/profile',
       element: <Profile />
-    },
-    {
-      path: '/control-panel',
-      element: <ControlPanel />
     },
     {
       path: '/confirmServ',
@@ -157,6 +157,7 @@ function App() {
   return (
     <div className="custom-scrollbar">
       {routing}
+      <ToastContainer />
     </div>
   );
 }
