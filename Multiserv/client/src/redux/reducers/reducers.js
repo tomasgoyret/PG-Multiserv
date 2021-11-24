@@ -64,7 +64,11 @@ function rootReducer(state = initalState, { type, payload }) {
                 categories: payload
             }
         case FILTERCAT:
-            let filteredCat = state.aux.filter(serv => serv.categorias[0].title?.toLowerCase() === payload.toLowerCase())
+            let filteredCat = state.aux.filter(serv => {
+                if(serv.categorias[0] !== undefined){
+                    return serv.categorias[0].title?.toLowerCase() === payload.toLowerCase()
+                }
+            })
             return {
                 ...state,
                 servicios: filteredCat

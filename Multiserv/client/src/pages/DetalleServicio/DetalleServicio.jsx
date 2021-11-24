@@ -38,7 +38,7 @@ const DetalleServicio = () => {
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
 
-    const servicio = servicios.filter(serv => serv.id === Number(id))
+    let servicio = servicios.filter(serv => serv.id === Number(id))
     const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
@@ -49,6 +49,7 @@ const DetalleServicio = () => {
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
     useEffect(() => {
         document.title = `Detalles de ${servicio[0].title}`
+        //document.title = `Detalle del servicio`
     }, [])
     const logout = (e) => {
         e.preventDefault();
@@ -148,7 +149,7 @@ const DetalleServicio = () => {
                                 <div className="bg-white relative flex flex-col rounded-b-lg">
                                     <div className=" absolute -top-5  px-4 flex w-full justify-between">
                                         <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                                            <span className="text-white">{servicio[0].categorias[0].title} </span>
+                                            <span className="text-white">{servicio[0].categorias[0] === undefined ? "Sin definir" : servicio[0].categorias[0].title} </span>
                                         </div>
                                     </div>
                                     <Image
