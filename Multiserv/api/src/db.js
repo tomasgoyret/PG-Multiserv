@@ -84,18 +84,15 @@ const {
 Usuarios.hasOne(Direcciones);
 Usuarios.hasMany(Servicios);
 Usuarios.hasMany(Resenas);
-Usuarios.hasMany(Citas);
 
 // Servicios 
 Servicios.belongsTo(Usuarios);
 Servicios.hasOne(Direcciones);
 Servicios.hasMany(Resenas);
-Servicios.hasMany(Citas);
 
 // Direcciones
 Direcciones.belongsTo(Usuarios);
 Direcciones.belongsTo(Servicios);
-Direcciones.belongsTo(Citas);
 
 // Reviews
 Resenas.belongsTo(Servicios);
@@ -110,7 +107,7 @@ Servicios.belongsToMany(Categorias,{through: 'services_category'});
 Categorias.belongsToMany(Servicios,{through: 'services_category'});
 
 Usuarios.belongsToMany(Citas,{through: 'usuarios_citas'})
-Citas.belongsToMany(Usuarios,{through: 'usuarios_citas'});
+Citas.belongsTo(Usuarios);
 
 Servicios.belongsToMany(Citas,{through: 'services_citas'})
 Citas.belongsToMany(Servicios,{through: 'services_citas'});

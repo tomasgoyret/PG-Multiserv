@@ -20,6 +20,18 @@ module.exports = (sequelize) => {
     nameUser: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    serviceId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },    
+    nameProv: {
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   });
 };
