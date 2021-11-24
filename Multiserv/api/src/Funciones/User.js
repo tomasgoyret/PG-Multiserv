@@ -1300,7 +1300,6 @@ const services = [
 {
   
       "photos": [
-          "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Fsearch%3Fq%3D%2523herreria&psig=AOvVaw0JDfYtP9kQIhaL5vYH3mI2&ust=1636860757749000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLj0ipe0lPQCFQAAAAAdAAAAABAD",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0TzDEDs2pJmZdYzXng9DXzqpa98V2hLAO1w&usqp=CAU",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm3578I_BN2W_5mhPyRkIAXThZ2AdushPcx9ZRYY_KJG6P5B2wWZ8xM2Q4jQPEsYjU53w&usqp=CAU"
       ],
@@ -1482,7 +1481,7 @@ const services = [
       "min": 500,
       "currency": "MXN",
       "photos": [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ8CdpUsvGvMMAK6AOrvcnj0t4ydQKBRBUut56tNgS4j0uitOn_u3K1yp2MOBF8koyFsk&usqp=CAU"
+          "https://www.tecsaqro.com.mx/wp-content/uploads/2019/04/diferencia-electricista-tecnico-electricista.jpg"
       ],
       "max": 1500,
       "category": "Electricista",
@@ -1514,7 +1513,7 @@ const services = [
   
       "description": "Praesent sed urna vel ex dictum pulvinar. Integer fermentum, libero non ultricies posuere, nunc massa convallis nisl, id placerat tortor urna ut mauris. Cras id ante non neque mattis sagittis. Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit.",
       "photos": [
-          "https://www.patologiasconstruccion.net/wp-content/uploads/2021/02/como-arreglar-reparar-fisura-grieta-02.jpg"
+          "https://mx.habcdn.com/photos/business/medium/img-20180920-wa0031-440228.jpg"
       ],
       "title": "Reparación de muros",
       "currency": "MXN",
@@ -1545,7 +1544,7 @@ const services = [
       "min": 120,
       "currency": "USD",
       "photos": [
-          "https://5.imimg.com/data5/DB/AN/PE/SELLER-11258376/sofa-cleanning-services-500x500.jpg"
+          "https://www.viviendasaludable.es/wp-content/uploads/2019/02/casa-limpia-1.jpg"
       ],
       "title": "Maestro limpio",
       "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2",
@@ -2273,6 +2272,7 @@ let DataServices = async () => {
               rating: parseInt(s.rating), 
               photos: s.photos,
               nameUser: userID.displayName,
+              profilePic: userID.photoURL,
               estadoDePago: "Aprobado"
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
