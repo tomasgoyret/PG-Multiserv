@@ -17,15 +17,23 @@ import { useLocation } from 'react-router'
 import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
+import { services,users } from '../../redux/actions/actions'
 
 const DetalleServicio = () => {
     let { id } = useParams();
+
+    useEffect(() => {
+        dispatch(services())
+        dispatch(users())
+        //document.title = `Detalles de ${servicio[0].title}`
+    }, [])
+
     var idFav = '';
     var  value = false;
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
-    const loading = useSelector((state) => state.loadingServices)
+    let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
     const navigate = useNavigate();
@@ -39,18 +47,17 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, '')
 
     let servicio = servicios.filter(serv => serv.id === Number(id))
-    const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    console.log("Este es usuario",usuario)
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
         foto = datosSesionFromLocalStorage.photoURL
     }
+
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-    useEffect(() => {
-        document.title = `Detalles de ${servicio[0].title}`
-        //document.title = `Detalle del servicio`
-    }, [])
+
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("datoSesion")
@@ -171,14 +178,14 @@ const DetalleServicio = () => {
                                                 <div className='w-28 mr-4' >
                                                     <Image
                                                         imagen='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg'
-                                                        name={usuario.displayName}
+                                                        name={usuario && usuario.displayName}
                                                         imgClass='rounded-full my-4'
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario.displayName}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>Numero: {!usuario.phoneNumber ? 'No especificado' : usuario.phoneNumber}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario.email}</span>
+                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
+                                                    <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
+                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span>
                                                 </div>
                                             </div>
                                         </div>
