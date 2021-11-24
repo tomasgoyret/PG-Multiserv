@@ -171,7 +171,7 @@ const DetalleServicio = () => {
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
-                                                        imagen='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg'
+                                                        imagen={usuario.photoURL}
                                                         name={usuario.displayName}
                                                         imgClass='rounded-full my-4'
                                                     />
