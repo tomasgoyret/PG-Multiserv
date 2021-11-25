@@ -22,7 +22,7 @@ import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 import MyServices from "./pages/MyServices/MyServices";
 import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
-import Horarios from "./pages/Horarios/Horarios";
+import CrearHorarios from "./pages/CrearHorarios/CrearHorarios";
 import { MapServices } from "./pages/MapServices/MapServices";
 
 function App() {
@@ -81,8 +81,8 @@ function App() {
           element: <MisCitas />
         },
         {
-          path: '/home/:idService/Horarios',
-          element: <Horarios />
+          path: '/home/:idService/crear-horarios',
+          element: <CrearHorarios />
         },
         {
           path: '/home/servicios/:id/editar',

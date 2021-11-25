@@ -167,7 +167,7 @@ export const buscarClientes = (user) => {
     }
 }
 
-export const buscarProvdores = (user) => {
+export const buscarProvedores = (user) => {
     return {
         type: PROVEDORES_BUSCADOS,
         payload: user
