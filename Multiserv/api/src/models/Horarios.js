@@ -16,10 +16,6 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     location: {
       type: DataTypes.ARRAY(DataTypes.FLOAT),
       allowNull: true,
