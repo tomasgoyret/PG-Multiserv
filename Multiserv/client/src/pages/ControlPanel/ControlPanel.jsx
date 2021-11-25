@@ -142,7 +142,7 @@ const ControlPanel = () => {
   // cambiar admin
   const adminTrueClient = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -151,6 +151,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: true,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -168,7 +169,7 @@ const ControlPanel = () => {
 
   const adminTrueProvider = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -177,6 +178,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: true,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -194,7 +196,7 @@ const ControlPanel = () => {
 
   const adminFalseClient = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -203,6 +205,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: false,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -216,7 +219,7 @@ const ControlPanel = () => {
 
   const adminFalseProvider = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -225,11 +228,106 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: false,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
         // setLoading(false)
         Swal.fire("¡Actualizado!", `¡Permisos revocados!`, "success");
+        dispatch(users());
+        setProviderSearchValue("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const suspenderCliente = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : true
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario suspendido!`, "success");
+        dispatch(users());
+        setClientSearchValue("");
+      })
+      .catch((err) => console.log(err));
+    console.log(user)
+  };
+
+  const suspenderProvider = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : true
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario suspendido!`, "success");
+        dispatch(users());
+        setProviderSearchValue("");
+      })
+      .catch((err) => console.log(err));
+    console.log(user)
+  };
+
+  const quitarSuspenderCliente = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : false
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario restaurado!`, "success");
+        dispatch(users());
+        setClientSearchValue("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const quitarSuspenderProvider = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : false
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario restaurado!`, "success");
         dispatch(users());
         setProviderSearchValue("");
       })
@@ -520,9 +618,9 @@ const ControlPanel = () => {
                             <div className="flex items-center">
                               <div
                                 className={`w-4 h-4 rounded-full mr-2 ${
-                                  cliente.isAdmin
-                                    ? "bg-green-500"
-                                    : "bg-gray-500"
+                                  cliente.disabled
+                                  ? "bg-gray-500"
+                                  : "bg-green-500"
                                 }`}
                               ></div>
                               <h2 className="font-semibold text-sm">
@@ -530,7 +628,7 @@ const ControlPanel = () => {
                               </h2>
                             </div>
                             <span className="text-sm">
-                              {cliente.isAdmin ? "Activo" : "No Activo"}
+                              {cliente.disabled ? "No Activo" : "Activo"}
                             </span>
                           </div>
                           
@@ -573,14 +671,30 @@ const ControlPanel = () => {
                               </button>
                             )}
 
-                            <button
-                              className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
-                              onClick={() =>
-                                eliminarUsuarioClient(cliente.uidClient)
-                              }
-                            >
-                              Bloquear
-                            </button>
+                            {
+                              cliente.disabled ? 
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    quitarSuspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Activar
+                                </button>
+                              )
+                              :
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    suspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Suspender
+                                </button>
+                              )
+                            }     
                             <button
                               className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() =>
@@ -625,9 +739,9 @@ const ControlPanel = () => {
                             <div className="flex items-center">
                               <div
                                 className={`w-4 h-4 rounded-full mr-2 ${
-                                  cliente.isAdmin
-                                    ? "bg-green-500"
-                                    : "bg-gray-500"
+                                  cliente.disabled
+                                    ? "bg-gray-500"
+                                    : "bg-green-500"
                                 }`}
                               ></div>
                               <h2 className="font-semibold text-sm">
@@ -635,7 +749,7 @@ const ControlPanel = () => {
                               </h2>
                             </div>
                             <span className="text-sm">
-                              {cliente.isAdmin ? "Activo" : "No Activo"}
+                              {cliente.disabled ? "No Activo" : "Activo"}
                             </span>
                           </div>
                           
@@ -678,14 +792,30 @@ const ControlPanel = () => {
                               </button>
                             )}
 
-                            <button
-                              className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
-                              onClick={() =>
-                                eliminarUsuarioClient(cliente.uidClient)
-                              }
-                            >
-                              Bloquear
-                            </button>
+                            {
+                              cliente.disabled ? 
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    quitarSuspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Activar
+                                </button>
+                              )
+                              :
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    suspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Suspender
+                                </button>
+                              )
+                            }
                             <button
                               className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() =>
@@ -771,9 +901,9 @@ const ControlPanel = () => {
                               <div className="flex items-center">
                                 <div
                                   className={`w-4 h-4 rounded-full mr-2 ${
-                                    provider.isAdmin
-                                      ? "bg-green-500"
-                                      : "bg-gray-500"
+                                    provider.disabled
+                                      ? "bg-gray-500"
+                                      : "bg-green-500"
                                   }`}
                                 ></div>
                                 <h2 className="font-semibold text-sm">
@@ -781,7 +911,7 @@ const ControlPanel = () => {
                                 </h2>
                               </div>
                               <span className="text-sm">
-                                {provider.isAdmin ? "Activo" : "No Activo"}
+                                {provider.disabled ? "No Activo" : "Activo"}
                               </span>
                             </div>
                             
@@ -824,14 +954,30 @@ const ControlPanel = () => {
                                 </button>
                               )}
 
-                              <button
-                                className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
-                                onClick={() =>
-                                  eliminarUsuarioClient(provider.uidClient)
-                                }
-                              >
-                                Bloquear
-                              </button>
+                              {
+                                provider.disabled ? 
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      quitarSuspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Activar
+                                  </button>
+                                )
+                                :
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      suspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Suspender
+                                  </button>
+                                )
+                              }
                               <button
                                 className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                                 onClick={() =>
@@ -880,9 +1026,9 @@ const ControlPanel = () => {
                               <div className="flex items-center">
                                 <div
                                   className={`w-4 h-4 rounded-full mr-2 ${
-                                    provider.isAdmin
-                                      ? "bg-green-500"
-                                      : "bg-gray-500"
+                                    provider.disabled
+                                      ? "bg-gray-500"
+                                      : "bg-green-500"
                                   }`}
                                 ></div>
                                 <h2 className="font-semibold text-sm">
@@ -890,7 +1036,7 @@ const ControlPanel = () => {
                                 </h2>
                               </div>
                               <span className="text-sm">
-                                {provider.isAdmin ? "Activo" : "No Activo"}
+                                {provider.disabled ? "No Activo" : "Activo"}
                               </span>
                             </div>
                             
@@ -933,14 +1079,30 @@ const ControlPanel = () => {
                                 </button>
                               )}
 
-                              <button
-                                className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
-                                onClick={() =>
-                                  eliminarUsuarioClient(provider.uidClient)
-                                }
-                              >
-                                Bloquear
-                              </button>
+                              {
+                                provider.disabled ? 
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      quitarSuspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Activar
+                                  </button>
+                                )
+                                :
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      suspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Suspender
+                                  </button>
+                                )
+                              }
                               <button
                                 className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                                 onClick={() =>
