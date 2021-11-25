@@ -312,12 +312,11 @@ const Profile = () => {
                                             <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone}</span>
                                             <div className="flex flex-row mt-1">
                                                 <ListBox
-                                                    defaultValue={countryCode}
                                                     customBorder="#9CA3AF"
                                                     className="self-center"
                                                     width='6.4rem'
                                                     options={options}
-                                                    //value={datosPerfil.country}
+                                                    value={datosPerfil.country}
                                                     callBack={handleCountry}
                                                     text="..."
                                                     theme="#0C4A6E"
