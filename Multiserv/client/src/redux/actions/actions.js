@@ -23,7 +23,8 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
-    EDITAR_MISERVICIO
+    EDITAR_MISERVICIO,
+    MIS_CITAS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -153,7 +154,7 @@ export const buscarClientes = (user) => {
     }
 }
 
-export const buscarProvedores = (user) => {
+export const buscarProvdores = (user) => {
     return {
         type: PROVEDORES_BUSCADOS,
         payload: user
@@ -230,4 +231,26 @@ export const updateService = (id, datos) => {
         
 
     }
+}
+// Traer mis citas por uidClient
+export const getMisCitas = (uidClient) => {
+
+    return async function (dispatch) {
+
+        let citas = `citas/${uidClient}`;
+
+        const response = await axios(citas);
+
+        const cita = response.data
+
+        return dispatch({
+
+            type: MIS_CITAS,
+
+            payload: cita
+
+        })
+
+    }
+
 }
