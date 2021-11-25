@@ -172,7 +172,7 @@ const Profile = () => {
                 setLoading(false)
                 console.log(error.response)
                 let mensaje = ""
-                error.response.data.includes("the provided phone number already exists") ? mensaje = "El teléfono ingresado ya existe" : error.response.data.includes("TOO_SHORT") ? mensaje = "El numero ingresado es muy corto" : mensaje = "Hubo un problema con el numero ingresado, intenta con otro"
+                error.response.data.includes("the provided phone number already exists") ? mensaje = "El teléfono ingresado ya existe" : error.response.data.includes("TOO_SHORT") ? mensaje = "El numero ingresado es muy corto" : mensaje = "Hubo un problema con el numero ingresado, revisa el numero ingresado o intenta con otro"
                     Swal.fire({
                         title: 'Error!',
                         text: mensaje,
