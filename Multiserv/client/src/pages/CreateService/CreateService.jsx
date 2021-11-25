@@ -193,7 +193,7 @@ const CreateService = () => {
                         max: service.max,
                         min: service.min,
                         uidClient: uidClient,
-                        photos: service.img
+                        photos: [service.img]
                     }
                     try {
                         let serv = await axios.post(`newservice`, nuevoServ)
@@ -222,8 +222,8 @@ const CreateService = () => {
             let link = await axios.post(`pay-service`, {id : `${uid}`})
             setLink(link.data)
             setLoadingPayment(false)
-            window.open(link.data)
-           // window.location.href = "/home"
+            //window.open(link.data)
+            window.location.href = link.data
             console.log(link.data)
         } catch (err) {
             Swal.fire({
@@ -316,7 +316,7 @@ const CreateService = () => {
                                     theme="#164E63"
                                     label="Escribe una descripción atractiva:"
                                     flexed
-                                    placeholder="Ingresa tus apellidos"
+                                    placeholder="Ingresa una descripción atractiva para vender tu servicio"
                                     callBack={handleSetService('description')}
                                 />
                             </div>

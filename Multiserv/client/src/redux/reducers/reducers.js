@@ -20,6 +20,7 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    EDITAR_MISERVICIO,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -64,7 +65,11 @@ function rootReducer(state = initalState, { type, payload }) {
                 categories: payload
             }
         case FILTERCAT:
-            let filteredCat = state.aux.filter(serv => serv.categorias[0].title?.toLowerCase() === payload.toLowerCase())
+            let filteredCat = state.aux.filter(serv => {
+                if(serv.categorias[0] !== undefined){
+                    return serv.categorias[0].title?.toLowerCase() === payload.toLowerCase()
+                }
+            })
             return {
                 ...state,
                 servicios: filteredCat
@@ -185,6 +190,12 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 misServicios: payload
             }
+        case EDITAR_MISERVICIO:
+            return {
+                ...state,
+                detalleServicio: payload
+            }
+
         default:
             return state;
     }

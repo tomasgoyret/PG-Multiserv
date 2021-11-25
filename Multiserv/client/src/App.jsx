@@ -76,7 +76,7 @@ function App() {
           element: <MisCitas />
         },
         {
-          path: '/home/:uidClient/Horarios',
+          path: '/home/:idService/Horarios',
           element: <Horarios />
         },
         {

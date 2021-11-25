@@ -2,11 +2,11 @@ const { Servicios, Categorias, Usuarios } = require("../db.js");
 
 
 const postServ = async (req, res, next) => {
-    const { title, currency, category, description, max, min, uidClient, rating, photos, direccion } = req.body;
+    const { title, currency, category, description, max, min, uidClient, rating, photos, location , address } = req.body;
     try {
         const usuario = await Usuarios.findByPk(uidClient)        
         const newService = {
-            title, currency, description, max, min, rating, photos,
+            title, currency, description, max, min, rating, photos,location, address,
             usuarioUidClient: uidClient,
             nameUser: usuario.displayName,
             profilePic: usuario.photoURL

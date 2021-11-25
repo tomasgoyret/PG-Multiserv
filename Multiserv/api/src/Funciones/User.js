@@ -205,6 +205,7 @@ const Users = [
     "name": "Alejandra Espinoza Lezama",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GjQ9L88wJys19mswndj-_zKq8Ei3TbubBC86qtCpJc=s96-c",
     "disabled": false,
+    "isAdmin": true,
     "metadata": {
       "lastSignInTime": "Mon, 15 Nov 2021 01:57:03 GMT",
       "creationTime": "Mon, 15 Nov 2021 00:48:20 GMT"
@@ -1451,7 +1452,7 @@ const services = [
       "description": "Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit. Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. ",
       "title": "Electricista Mauris",
       "min": 200,
-      "currency|": "MXN",
+      "currency": "MXN",
       "max": 500,
       "category": "Electricista",
       "rating": "4",
@@ -2250,6 +2251,7 @@ const LlamadoUsers = async (usuarios) => {
       displayName: `${user.name} ${user.lastName}`,
       provider: false,
       disabled: false,
+      isAdmin: user.isAdmin || false
     }
     await Usuarios.create(nuevo);
   }

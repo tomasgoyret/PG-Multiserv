@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -17,39 +17,51 @@ import { useLocation } from 'react-router'
 import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
+import { services,users } from '../../redux/actions/actions'
 
 const DetalleServicio = () => {
     let { id } = useParams();
+
+    useEffect(() => {
+        dispatch(services())
+        dispatch(users())
+        //document.title = `Detalles de ${servicio[0].title}`
+    }, [])
+
     var idFav = '';
     var  value = false;
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
-    const loading = useSelector((state) => state.loadingServices)
+    let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
     const [isFavorite, setIsFavorite] = useState(false)
+    const [compartirModal, setCompartirModal] = useState(false)
     const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
-    
-    const servicio = servicios.filter(serv => serv.id === Number(id))
-    const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
-    console.log(servicio);
+    let servicio = servicios.filter(serv => serv.id === Number(id))
+    let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    console.log("Este es usuario",usuario)
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
         foto = datosSesionFromLocalStorage.photoURL
     }
+
+    if(usuario && usuario.phoneNumber){
+        if(usuario.phoneNumber[0]=== '+')
+        var numberWhastapp= usuario.phoneNumber.slice(1)
+    }
+
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-    useEffect(() => {
-        document.title = `Detalles de ${servicio[0].title}`
-    }, [])
+
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("datoSesion")
@@ -60,8 +72,10 @@ const DetalleServicio = () => {
         return nombres;
     }
     var name = "Inicia Sesión "
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
+    var uid = ""
+    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
         name = datosSesionFromLocalStorage.displayName
+        uid= datosSesionFromLocalStorage.uid
     }
     const contGrad = {
         background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
@@ -82,7 +96,7 @@ const DetalleServicio = () => {
         if(value === true) {
             const res = await axios.post('agregar-fav', {
             idService: current,
-            uidClient: usuario.uidClient
+            uidClient: uid
             });
             idFav = res.data.id || res.data[0].id;
             return toast.success('¡Se agregó a tus favoritos!', {
@@ -96,7 +110,7 @@ const DetalleServicio = () => {
             })
         }   
         else{
-            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${usuario.uidClient}`)
+            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${uid}`)
             return toast.error('Se eliminó de tus favoritos', {
                 position: "top-center",
                 autoClose: 3000,
@@ -131,6 +145,7 @@ const DetalleServicio = () => {
     return (
         <div>
             <div className="flex">
+                    
                 {modal}
                 {
                     loading ? (
@@ -148,7 +163,7 @@ const DetalleServicio = () => {
                                 <div className="bg-white relative flex flex-col rounded-b-lg">
                                     <div className=" absolute -top-5  px-4 flex w-full justify-between">
                                         <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                                            <span className="text-white">{servicio[0].categorias[0].title} </span>
+                                            <span className="text-white">{servicio[0].categorias[0] === undefined ? "Sin definir" : servicio[0].categorias[0].title} </span>
                                         </div>
                                     </div>
                                     <Image
@@ -169,15 +184,38 @@ const DetalleServicio = () => {
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
-                                                        imagen='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg'
-                                                        name={usuario.displayName}
+                                                        imagen={usuario && usuario.photoURL}
+                                                        name={usuario && usuario.displayName}
                                                         imgClass='rounded-full my-4'
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario.displayName}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>Numero: {!usuario.phoneNumber ? 'No especificado' : usuario.phoneNumber}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario.email}</span>
+                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
+                                                <div className='w-14 mr-4 flex flex-row space-x-2'>
+                                                {
+                                                  usuario && usuario.phoneNumber?  
+                                                  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
+                                                        href={`tel:${usuario.phoneNumber}`}
+                                                    ><AiTwotonePhone className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.email?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
+                                                        href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
+                                                        
+                                                    > <AiOutlineWhatsApp className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.phoneNumber?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                                                        href={`mailto:${usuario.email}`}
+                                                        
+                                                    > <AiOutlineMail className={`text-3xl`} />
+                                                    </a>: null}
+                                                    </div>
+                                                    {/* <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
+                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -195,22 +233,48 @@ const DetalleServicio = () => {
                                                 <  p className="text-gray-500 font-normal leading-tight tracking-wide">{`Descripcion :  ${servicio[0].description}`}</p>
                                             </div>
                                             <div className="flex mt-4">
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://api.whatsapp.com/send?text=${text}${url}`} target="_blank" >
-                                                    <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashTag}`} target="_blank" >
-                                                    <Image name="twitterShareServices" imagen={TW} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://www.facebook.com/sharer.php?u=${url}&t=${text}`} target="_blank" >
-                                                    <Image name="facebookShareServices" imagen={FB} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <a className='mr-2' rel="noopener noreferrer" href={`https://www.linkedin.com/shareArticle?url=${url}`} target="_blank" >
-                                                    <Image name="linkedInShareServices" imagen={LD} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
-                                                </a>
-                                                <button className='flex justify-center ml-2 font-semibold  w-auto text-lg px-4 py-1 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
-                                                    Pedir Turno
-                                                </button>
-                                                    <div className="flex flex-row">
+
+                                                {/* Modal de compartir */}
+                                                {
+                                                compartirModal &&
+                                                    <div className="w-96 h-48  z-10 absolute flex flex-col border border-gray-200 bg-white shadow-xl rounded-lg py-5" onMouseLeave={() => setCompartirModal(false)}>
+                                                        <div className="w-full flex justify-center h-2/6">
+                                                            <span className="text-3xl font-semibold font-sans">MultiServ</span>
+                                                        </div>
+                                                        <div className="w-full flex justify-center pb-5 h-1/6">
+                                                            <span className="text-md font-semibold text-gray-600">comparte en tus redes favoritas!</span>
+                                                        </div>
+                                                        <div className="w-full flex justify-center items-center h-3/6">
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://api.whatsapp.com/send?text=${text}${url}`} target="_blank" >
+                                                            <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashTag}`} target="_blank" >
+                                                                <Image name="twitterShareServices" imagen={TW} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://www.facebook.com/sharer.php?u=${url}&t=${text}`} target="_blank" >
+                                                                <Image name="facebookShareServices" imagen={FB} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                            <a className='mr-2' rel="noopener noreferrer" href={`https://www.linkedin.com/shareArticle?url=${url}`} target="_blank" >
+                                                                <Image name="linkedInShareServices" imagen={LD} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                }  
+                                                <div>
+                                                    <button
+                                                        className="flex justify-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
+                                                        onClick={() => setCompartirModal(!compartirModal)}
+                                                    >
+                                                        Compartir
+                                                    </button>
+                                                </div>
+                                                {
+                                                    datosSesionFromLocalStorage &&
+                                                    <div className="flex">
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
+                                                            Pedir Turno
+                                                        </button>
+
                                                         <button
                                                             onClick={seteoFav}
                                                             className="text-3xl text-purple-900 active:outline-none p-2 transition-all ease-in-out duration-300 transform hover:scale-110">
@@ -221,6 +285,7 @@ const DetalleServicio = () => {
                                                             }
                                                         </button>
                                                     </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -233,7 +298,8 @@ const DetalleServicio = () => {
                     )}
             </div>
 
-
+            {/* Modal Compartir */}
+                                              
         </div>
     )
 }
