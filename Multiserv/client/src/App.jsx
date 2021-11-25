@@ -23,6 +23,7 @@ import MyServices from "./pages/MyServices/MyServices";
 import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
 import Horarios from "./pages/Horarios/Horarios";
+import { MapServices } from "./pages/MapServices/MapServices";
 
 function App() {
   toast.configure()
@@ -46,6 +47,10 @@ function App() {
         {
           index: true,
           element: <Home />
+        },
+        {
+          path: '/home/mapservices',
+          element: <MapServices />
         },
         {
           path: '/home/:uidClient/new-service',
