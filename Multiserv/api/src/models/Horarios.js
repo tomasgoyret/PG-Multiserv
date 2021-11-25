@@ -15,14 +15,6 @@ module.exports = (sequelize) => {
     aDomicilio: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    },
-    location: {
-      type: DataTypes.ARRAY(DataTypes.FLOAT),
-      allowNull: true,
-    },
-    address: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
+    }
   });
 };
