@@ -17,7 +17,16 @@ const ConfirmServicio = () => {
     idServ: searchParams.get("external_reference"),
   };
 
+  let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+  let email = datosSesionFromLocalStorage.email
+  let displayName= datosSesionFromLocalStorage.displayName
+
   const actualizarPago = async () => {
+    await axios.post('mail',{
+      email:email, 
+      displayName:displayName,
+      estadoDePago:params.estadoDePago
+    })
     await axios.put(`edit-service/${params.idServ}`, {
       estadoDePago: params.estadoDePago,
     });
