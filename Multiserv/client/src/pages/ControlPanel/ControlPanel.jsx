@@ -80,13 +80,13 @@ const ControlPanel = () => {
   // Eliminar usuario
   const eliminarUsuarioClient = (uid) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas todo en tu usuario",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás todo en tu usuario",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar usuario!",
+      confirmButtonText: "¡Sí, eliminar usuario!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -94,8 +94,8 @@ const ControlPanel = () => {
         axios(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
-              "Eliminado!",
-              "El usuario se ha eliminado con exito!",
+              "¡Eliminado!",
+              "El usuario se ha eliminado con éxito!",
               "success"
             );
             dispatch(users());
@@ -110,13 +110,13 @@ const ControlPanel = () => {
 
   const eliminarUsuarioProvider = (uid) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas todo en tu usuario",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás todo en tu usuario",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar usuario!",
+      confirmButtonText: "¡Sí, eliminar usuario!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -124,8 +124,8 @@ const ControlPanel = () => {
         axios(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
-              "Eliminado!",
-              "El usuario se ha eliminado con exito!",
+              "¡Eliminado!",
+              "El usuario se ha eliminado con éxito!",
               "success"
             );
             dispatch(users());
@@ -155,7 +155,7 @@ const ControlPanel = () => {
         console.log(response);
         // setLoading(false)
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
           "success"
         );
@@ -181,7 +181,7 @@ const ControlPanel = () => {
         console.log(response);
         // setLoading(false)
         Swal.fire(
-          "Actualizado!",
+          "¡Actualizado!",
           `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
           "success"
         );
@@ -206,7 +206,7 @@ const ControlPanel = () => {
       .then((response) => {
         console.log(response);
         // setLoading(false)
-        Swal.fire("Actualizado!", `Permisos revocados!`, "success");
+        Swal.fire("¡Actualizado!", `¡Permisos revocados!`, "success");
         dispatch(users());
         setClientSearchValue("");
       })
@@ -228,7 +228,7 @@ const ControlPanel = () => {
       .then((response) => {
         console.log(response);
         // setLoading(false)
-        Swal.fire("Actualizado!", `Permisos revocados!`, "success");
+        Swal.fire("¡Actualizado!", `Permisos revocados!`, "success");
         dispatch(users());
         setProviderSearchValue("");
       })
@@ -244,6 +244,7 @@ const ControlPanel = () => {
       },
       showCancelButton: true,
       confirmButtonText: "Modificar",
+      cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !Swal.isLoading(),
     }).then(async (result) => {
@@ -256,7 +257,7 @@ const ControlPanel = () => {
           .then((response) => {
             Swal.fire(
               "Modificado!",
-              "Nombre de categoria cambiado con exito!",
+              "¡Nombre de categoría cambiado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -268,13 +269,13 @@ const ControlPanel = () => {
 
   const eliminarCategoria = (id) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas esta categoria",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás esta categoría y todos los servicios asociados a ella pasarán a Sin definir",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar categoria!",
+      confirmButtonText: "¡Sí, eliminar categoría!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -283,8 +284,8 @@ const ControlPanel = () => {
           .delete(`categorias/${id}`)
           .then((response) => {
             Swal.fire(
-              "Eliminado!",
-              "La categoria se ha eliminado con exito!",
+              "¡Eliminado!",
+              "¡La categoría se ha eliminado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -299,13 +300,13 @@ const ControlPanel = () => {
 
   const eliminarServicio = (id) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas este servicio",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás este servicio",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar servicio!",
+      confirmButtonText: "¡Sí, eliminar servicio!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -314,8 +315,8 @@ const ControlPanel = () => {
           .delete(`delete-service/${id}`)
           .then((response) => {
             Swal.fire(
-              "Eliminado!",
-              "El servicio se ha eliminado con exito!",
+              "¡Eliminado!",
+              "El servicio se ha eliminado con éxito!",
               "success"
             );
             dispatch(services());
@@ -331,7 +332,7 @@ const ControlPanel = () => {
   const mostrarDescripcion = (service) => {
     console.log(service);
     Swal.fire({
-      title: "Descripción!",
+      title: "Descripción",
       text: service.description,
       imageUrl: service.photos[0],
       imageWidth: 400,
@@ -342,13 +343,14 @@ const ControlPanel = () => {
 
   const agregarCategoria = () => {
     Swal.fire({
-      title: "¿Cual es el nombre de la nueva categoria?",
+      title: "¿Cuál es el nombre de la nueva categoría?",
       input: "text",
       inputAttributes: {
         autocapitalize: "off",
       },
       showCancelButton: true,
       confirmButtonText: "Agregar",
+      cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !Swal.isLoading(),
     }).then(async (result) => {
@@ -359,8 +361,8 @@ const ControlPanel = () => {
           })
           .then((response) => {
             Swal.fire(
-              "Categoria Agregada",
-              "La categoria se ha agregado con exito!",
+              "Categoría Agregada",
+              "¡La categoría se ha agregado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -402,7 +404,7 @@ const ControlPanel = () => {
             onClick={cambiarAProvedor}
           >
             <FaUserTie width="30px" height="30px" className="mr-2" />
-            <span className="focus:text-gray-50">Provedores</span>
+            <span className="focus:text-gray-50">Proveedores</span>
           </button>
         </div>
         {/* Fin seccion administrar usuarios */}
@@ -424,7 +426,7 @@ const ControlPanel = () => {
 
         {/* Inicio seccion administrar categorias */}
         <div className="w-full flex justify-start px-2 mt-5">
-          <h2 className="text-md font-semibold ">Administrar categorias</h2>
+          <h2 className="text-md font-semibold ">Administrar categorías</h2>
         </div>
         <div className="w-full flex flex-col items-start   mt-2">
           <button
@@ -432,7 +434,7 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>Categorias</span>
+            <span>Categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
@@ -470,7 +472,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorClientes}
                       name="lastName"
                       value={clientSearchValue}
-                      placeholder="Busca por nombre de provedor"
+                      placeholder="Busca por nombre de proveedor"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
@@ -531,14 +533,14 @@ const ControlPanel = () => {
                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminFalseClient({ ...cliente })}
                               >
-                                quitar admin
+                                Quitar admin
                               </button>
                             ) : (
                               <button
                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminTrueClient({ ...cliente })}
                               >
-                                volver admin
+                                Volver admin
                               </button>
                             )}
                             <button
@@ -600,14 +602,14 @@ const ControlPanel = () => {
                                   adminFalseClient({ ...cliente });
                                 }}
                               >
-                                quitar admin
+                                Quitar admin
                               </button>
                             ) : (
                               <button
                                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminTrueClient({ ...cliente })}
                               >
-                                volver admin
+                                Volver admin
                               </button>
                             )}
                             <button
@@ -645,7 +647,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorProvedores}
                       value={providerSearchValue}
                       name="lastName"
-                      placeholder="Busca por nombre de provedor"
+                      placeholder="Busca por nombre de proveedor"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
@@ -675,7 +677,7 @@ const ControlPanel = () => {
                             ></div>
                             <div className="flex flex-col w-1/2">
                               <h2 className="text-1xl font-bold font-sans">
-                                {provider.displayName}(Provedor)
+                                {provider.displayName}(Proveedor)
                               </h2>
                               <span className="text-gray-500 text-sm -mt-1">
                                 {provider.email}
@@ -710,7 +712,7 @@ const ControlPanel = () => {
                                       adminFalseProvider({ ...provider })
                                     }
                                   >
-                                    quitar admin
+                                    Quitar admin
                                   </button>
                                 ) : (
                                   <button
@@ -719,7 +721,7 @@ const ControlPanel = () => {
                                       adminTrueProvider({ ...provider })
                                     }
                                   >
-                                    volver admin
+                                    Volver admin
                                   </button>
                                 )}
                                 <button
@@ -750,7 +752,7 @@ const ControlPanel = () => {
                             ></div>
                             <div className="flex flex-col w-1/2">
                               <h2 className="text-1xl font-bold font-sans">
-                                {provider.displayName}(Provedor)
+                                {provider.displayName}(Proveedor)
                               </h2>
                               <span className="text-gray-500 text-sm -mt-1">
                                 {provider.email}
@@ -785,7 +787,7 @@ const ControlPanel = () => {
                                       adminFalseProvider({ ...provider })
                                     }
                                   >
-                                    quitar admin
+                                    Quitar admin
                                   </button>
                                 ) : (
                                   <button
@@ -794,7 +796,7 @@ const ControlPanel = () => {
                                       adminTrueProvider({ ...provider })
                                     }
                                   >
-                                    volver admin
+                                    Volver admin
                                   </button>
                                 )}
                                 <button
@@ -834,7 +836,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorCategorias}
                       value={categoriSearchValue}
                       name="lastName"
-                      placeholder="Busca por nombre de categoria"
+                      placeholder="Busca por nombre de categoría"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
