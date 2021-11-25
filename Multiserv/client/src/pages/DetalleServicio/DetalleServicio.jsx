@@ -241,7 +241,7 @@ const DetalleServicio = () => {
                                                 {/* Modal de compartir */}
                                                 {
                                                 compartirModal &&
-                                                    <div className="w-96 h-48  z-10 absolute flex flex-col border border-gray-200 bg-white shadow-xl rounded-lg py-5" onMouseLeave={() => setCompartirModal(false)}>
+                                                    <div className="w-96 h-48  z-10 absolute -top-5 flex flex-col border border-gray-200 bg-white shadow-xl rounded-lg py-5" onMouseLeave={() => setCompartirModal(false)}>
                                                         <div className="w-full flex justify-center h-2/6">
                                                             <span className="text-3xl font-semibold font-sans">MultiServ</span>
                                                         </div>

@@ -35,6 +35,7 @@ const ControlPanel = () => {
   const [providerSearchValue, setProviderSearchValue] = useState("");
   const [serviceSearchValue, setServiceSearchValue] = useState("");
   const [categoriSearchValue, setCategoriSearchValue] = useState("");
+  const [hoverCards, setHoverCards] = useState(false);
   const navigate = useNavigate();
 
   const handleChangeBuscadorClientes = (e) => {
@@ -141,7 +142,7 @@ const ControlPanel = () => {
   // cambiar admin
   const adminTrueClient = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -150,6 +151,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: true,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -167,7 +169,7 @@ const ControlPanel = () => {
 
   const adminTrueProvider = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -176,6 +178,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: true,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -193,7 +196,7 @@ const ControlPanel = () => {
 
   const adminFalseClient = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -202,6 +205,7 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: false,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
@@ -215,7 +219,7 @@ const ControlPanel = () => {
 
   const adminFalseProvider = (user) => {
     const { uidClient } = user;
-    const { displayName, photoURL, phone } = user;
+    const { displayName, photoURL, phone, disabled } = user;
     const [name, lastName] = displayName.trim().split(" ");
     axios
       .put(`editar-usuario/${uidClient}`, {
@@ -224,11 +228,106 @@ const ControlPanel = () => {
         photoURL: photoURL,
         phone: phone,
         isAdmin: false,
+        disabled: disabled
       })
       .then((response) => {
         console.log(response);
         // setLoading(false)
         Swal.fire("¡Actualizado!", `¡Permisos revocados!`, "success");
+        dispatch(users());
+        setProviderSearchValue("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const suspenderCliente = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : true
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario suspendido!`, "success");
+        dispatch(users());
+        setClientSearchValue("");
+      })
+      .catch((err) => console.log(err));
+    console.log(user)
+  };
+
+  const suspenderProvider = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : true
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario suspendido!`, "success");
+        dispatch(users());
+        setProviderSearchValue("");
+      })
+      .catch((err) => console.log(err));
+    console.log(user)
+  };
+
+  const quitarSuspenderCliente = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : false
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario restaurado!`, "success");
+        dispatch(users());
+        setClientSearchValue("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const quitarSuspenderProvider = (user) => {
+    const { uidClient } = user;
+    const { displayName, photoURL, phone, isAdmin } = user;
+    const [name, lastName] = displayName.trim().split(" ");
+    axios
+      .put(`editar-usuario/${uidClient}`, {
+        name: name,
+        lastName: lastName,
+        photoURL: photoURL,
+        phone: phone,
+        isAdmin: isAdmin,
+        disabled : false
+      })
+      .then((response) => {
+        console.log(response);
+        // setLoading(false)
+        Swal.fire("¡Actualizado!", `¡Usuario restaurado!`, "success");
         dispatch(users());
         setProviderSearchValue("");
       })
@@ -383,6 +482,7 @@ const ControlPanel = () => {
 
   return (
     <div className="w-full flex">
+      {/* NavBar lateral */}
       <div className="w-1/5 h-screen bg-gray-100 ">
         <div className="w-full flex justify-center py-2 ">
           <h2 className="text-xl font-semibold">MultiServ</h2>
@@ -454,8 +554,6 @@ const ControlPanel = () => {
         {/* Fin seccion administrar newsletter */}
       </div>
 
-      
-
       <div className="w-4/5 overflow-y-auto h-screen">
         {
           // Inicio de vista de clientes
@@ -487,30 +585,55 @@ const ControlPanel = () => {
               </div>
 
               {/* Inicio contenedor separado del buscador */}
-              <div className="mt-20 w-full">
+              <div className="mt-20 w-full ">
                 {clientSearchValue.length > 0
                   ? clientesBuscados?.map((cliente) => (
-                      <div className="w-full flex border-2 items-center py-2 px-2 my-2">
-                        <div
-                          className="h-20 w-24 rounded-full mr-4"
-                          style={{
-                            backgroundImage: `url(${cliente.photoURL})`,
-                            backgroundSize: "cover",
-                          }}
-                        ></div>
-                        <div className="flex flex-col w-1/2">
-                          <h2 className="text-1xl font-bold font-sans">
-                            {cliente.displayName}(Cliente)
-                          </h2>
-                          <span className="text-gray-500 text-sm -mt-1">
-                            {cliente.email}
-                          </span>
-                          <span className="text-gray-800 font-sans font-semibold text-sm ">
-                            ID: {cliente.uidClient}
-                          </span>
+                      <div className="w-full flex flex-col border-2 items-center px-2 my-2 mb-14 py-5 shadow-lg " >
+                        {/* Foto, nombre, email, id */}
+                        <div className="w-full flex flex-col justify-center items-center">
+                          <div
+                            className="h-20 w-20 rounded-full mb-2"
+                            style={{
+                              backgroundImage: `url(${cliente.photoURL})`,
+                              backgroundSize: "cover",
+                            }}
+                          ></div>
+                          <div className="flex flex-col w-full justify-center items-center">
+                            <h2 className="text-1xl font-bold font-sans">
+                              {cliente.displayName}(Cliente)
+                            </h2>
+                            <span className="text-gray-500 text-sm -mt-1">
+                              {cliente.email}
+                            </span>
+                            <span className="text-gray-800 font-sans font-semibold text-sm ">
+                              ID: {cliente.uidClient}
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex w-1/2 justify-between">
-                          <div className="flex flex-col w-20 justify-center items-center">
+                        
+                        {/* Estado de usuario y propiedad admin */}
+                        <div className="w-full flex justify-center my-5">
+                          {/* Inicio Estado del usuario */}
+                          <div className="flex flex-col w-20 justify-center items-center mx-10">
+                            <div className="flex items-center">
+                              <div
+                                className={`w-4 h-4 rounded-full mr-2 ${
+                                  cliente.disabled
+                                  ? "bg-gray-500"
+                                  : "bg-green-500"
+                                }`}
+                              ></div>
+                              <h2 className="font-semibold text-sm">
+                                Estado
+                              </h2>
+                            </div>
+                            <span className="text-sm">
+                              {cliente.disabled ? "No Activo" : "Activo"}
+                            </span>
+                          </div>
+                          
+                          {/* Inicio isAdmin */}
+                          <div className="flex flex-col w-20 justify-center items-center mx-10">
                             <div className="flex items-center">
                               <div
                                 className={`w-4 h-4 rounded-full mr-2 ${
@@ -519,7 +642,7 @@ const ControlPanel = () => {
                                     : "bg-gray-500"
                                 }`}
                               ></div>
-                              <h2 className="font-semibold text-lg">
+                              <h2 className="font-semibold text-sm">
                                 Administrador
                               </h2>
                             </div>
@@ -527,24 +650,53 @@ const ControlPanel = () => {
                               {cliente.isAdmin ? "Activo" : "No Activo"}
                             </span>
                           </div>
-                          <div className="flex w-80 items-center">
+                        </div>
+
+                        {/* Inicio botones */}
+                        <div className="flex w-full justify-center">
+                          <div className="flex w-4/6 items-center">
                             {cliente.isAdmin ? (
                               <button
-                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminFalseClient({ ...cliente })}
                               >
                                 Quitar admin
                               </button>
                             ) : (
                               <button
-                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50 "
                                 onClick={() => adminTrueClient({ ...cliente })}
                               >
                                 Volver admin
                               </button>
                             )}
+
+                            {
+                              cliente.disabled ? 
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    quitarSuspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Activar
+                                </button>
+                              )
+                              :
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    suspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Suspender
+                                </button>
+                              )
+                            }     
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                              className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() =>
                                 eliminarUsuarioClient(cliente.uidClient)
                               }
@@ -557,27 +709,52 @@ const ControlPanel = () => {
                     ))
                   : clientSearchValue.length === 0 &&
                     usuarios?.map((cliente) => (
-                      <div className="w-full flex border-2 items-center py-2 px-2 my-2">
-                        <div
-                          className="h-20 w-24 rounded-full mr-4"
-                          style={{
-                            backgroundImage: `url(${cliente.photoURL})`,
-                            backgroundSize: "cover",
-                          }}
-                        ></div>
-                        <div className="flex flex-col w-1/2">
-                          <h2 className="text-1xl font-bold font-sans">
-                            {cliente.displayName}(Cliente)
-                          </h2>
-                          <span className="text-gray-500 text-sm -mt-1">
-                            {cliente.email}
-                          </span>
-                          <span className="text-gray-800 font-sans font-semibold text-sm ">
-                            ID: {cliente.uidClient}
-                          </span>
+                      <div className="w-full flex flex-col border-2 items-center px-2 my-2 mb-14 py-5 shadow-lg " >
+                        {/* Foto, nombre, email, id */}
+                        <div className="w-full flex flex-col justify-center items-center">
+                          <div
+                            className="h-20 w-20 rounded-full mb-2"
+                            style={{
+                              backgroundImage: `url(${cliente.photoURL})`,
+                              backgroundSize: "cover",
+                            }}
+                          ></div>
+                          <div className="flex flex-col w-full justify-center items-center">
+                            <h2 className="text-1xl font-bold font-sans">
+                              {cliente.displayName}(Cliente)
+                            </h2>
+                            <span className="text-gray-500 text-sm -mt-1">
+                              {cliente.email}
+                            </span>
+                            <span className="text-gray-800 font-sans font-semibold text-sm ">
+                              ID: {cliente.uidClient}
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex w-1/2 justify-between">
-                          <div className="flex flex-col w-20 justify-center items-center">
+                        
+                        {/* Estado de usuario y propiedad admin */}
+                        <div className="w-full flex justify-center my-5">
+                          {/* Inicio Estado del usuario */}
+                          <div className="flex flex-col w-20 justify-center items-center mx-10">
+                            <div className="flex items-center">
+                              <div
+                                className={`w-4 h-4 rounded-full mr-2 ${
+                                  cliente.disabled
+                                    ? "bg-gray-500"
+                                    : "bg-green-500"
+                                }`}
+                              ></div>
+                              <h2 className="font-semibold text-sm">
+                                Estado
+                              </h2>
+                            </div>
+                            <span className="text-sm">
+                              {cliente.disabled ? "No Activo" : "Activo"}
+                            </span>
+                          </div>
+                          
+                          {/* Inicio isAdmin */}
+                          <div className="flex flex-col w-20 justify-center items-center mx-10">
                             <div className="flex items-center">
                               <div
                                 className={`w-4 h-4 rounded-full mr-2 ${
@@ -586,7 +763,7 @@ const ControlPanel = () => {
                                     : "bg-gray-500"
                                 }`}
                               ></div>
-                              <h2 className="font-semibold text-lg">
+                              <h2 className="font-semibold text-sm">
                                 Administrador
                               </h2>
                             </div>
@@ -594,26 +771,53 @@ const ControlPanel = () => {
                               {cliente.isAdmin ? "Activo" : "No Activo"}
                             </span>
                           </div>
-                          <div className="flex w-80 items-center">
+                        </div>
+
+                        {/* Inicio botones */}
+                        <div className="flex w-full justify-center">
+                          <div className="flex w-4/6 items-center">
                             {cliente.isAdmin ? (
                               <button
-                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                onClick={() => {
-                                  adminFalseClient({ ...cliente });
-                                }}
+                                className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                onClick={() => adminFalseClient({ ...cliente })}
                               >
                                 Quitar admin
                               </button>
                             ) : (
                               <button
-                                className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50 "
                                 onClick={() => adminTrueClient({ ...cliente })}
                               >
                                 Volver admin
                               </button>
                             )}
+
+                            {
+                              cliente.disabled ? 
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    quitarSuspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Activar
+                                </button>
+                              )
+                              :
+                              (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                  onClick={() =>
+                                    suspenderCliente({ ...cliente })
+                                  }
+                                >
+                                  Suspender
+                                </button>
+                              )
+                            }
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                              className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() =>
                                 eliminarUsuarioClient(cliente.uidClient)
                               }
@@ -667,17 +871,19 @@ const ControlPanel = () => {
                   ? provedoresBuscados?.map((provider) => {
                       if (provider.provider) {
                         return (
-                          <div className="w-full flex border-2 items-center py-2 px-2 my-2">
+                          <div className="w-full flex flex-col border-2 items-center px-2 my-2 mb-14 py-5 shadow-lg " >
+                          {/* Foto, nombre, email, id */}
+                          <div className="w-full flex flex-col justify-center items-center">
                             <div
-                              className="h-20 w-24 rounded-full mr-4"
+                              className="h-20 w-20 rounded-full mb-2"
                               style={{
                                 backgroundImage: `url(${provider.photoURL})`,
                                 backgroundSize: "cover",
                               }}
                             ></div>
-                            <div className="flex flex-col w-1/2">
+                            <div className="flex flex-col w-full justify-center items-center">
                               <h2 className="text-1xl font-bold font-sans">
-                                {provider.displayName}(Proveedor)
+                                {provider.displayName}(Provider)
                               </h2>
                               <span className="text-gray-500 text-sm -mt-1">
                                 {provider.email}
@@ -686,55 +892,103 @@ const ControlPanel = () => {
                                 ID: {provider.uidClient}
                               </span>
                             </div>
-                            <div className="flex w-1/2 justify-between">
-                              <div className="flex flex-col w-20 justify-center items-center">
-                                <div className="flex items-center">
-                                  <div
-                                    className={`w-4 h-4 rounded-full mr-2 ${
-                                      provider.isAdmin
-                                        ? "bg-green-500"
-                                        : "bg-gray-500"
-                                    }`}
-                                  ></div>
-                                  <h2 className="font-semibold text-lg">
-                                    Administrador
-                                  </h2>
-                                </div>
-                                <span className="text-sm">
-                                  {provider.isAdmin ? "Activo" : "No Activo"}
-                                </span>
+                          </div>
+                          
+                          {/* Estado de usuario y propiedad admin */}
+                          <div className="w-full flex justify-center my-5">
+                            {/* Inicio Estado del usuario */}
+                            <div className="flex flex-col w-20 justify-center items-center mx-10">
+                              <div className="flex items-center">
+                                <div
+                                  className={`w-4 h-4 rounded-full mr-2 ${
+                                    provider.disabled
+                                      ? "bg-gray-500"
+                                      : "bg-green-500"
+                                  }`}
+                                ></div>
+                                <h2 className="font-semibold text-sm">
+                                  Estado
+                                </h2>
                               </div>
-                              <div className="flex w-80 items-center">
-                                {provider.isAdmin ? (
-                                  <button
-                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                    onClick={() =>
-                                      adminFalseProvider({ ...provider })
-                                    }
-                                  >
-                                    Quitar admin
-                                  </button>
-                                ) : (
-                                  <button
-                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                    onClick={() =>
-                                      adminTrueProvider({ ...provider })
-                                    }
-                                  >
-                                    Volver admin
-                                  </button>
-                                )}
-                                <button
-                                  className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
-                                  onClick={() =>
-                                    eliminarUsuarioProvider(provider.uidClient)
-                                  }
-                                >
-                                  Eliminar
-                                </button>
+                              <span className="text-sm">
+                                {provider.disabled ? "No Activo" : "Activo"}
+                              </span>
+                            </div>
+                            
+                            {/* Inicio isAdmin */}
+                            <div className="flex flex-col w-20 justify-center items-center mx-10">
+                              <div className="flex items-center">
+                                <div
+                                  className={`w-4 h-4 rounded-full mr-2 ${
+                                    provider.isAdmin
+                                      ? "bg-green-500"
+                                      : "bg-gray-500"
+                                  }`}
+                                ></div>
+                                <h2 className="font-semibold text-sm">
+                                  Administrador
+                                </h2>
                               </div>
+                              <span className="text-sm">
+                                {provider.isAdmin ? "Activo" : "No Activo"}
+                              </span>
                             </div>
                           </div>
+
+                          {/* Inicio botones */}
+                          <div className="flex w-full justify-center">
+                            <div className="flex w-4/6 items-center">
+                              {provider.isAdmin ? (
+                                <button
+                                  className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                  onClick={() => adminFalseProvider({ ...provider })}
+                                >
+                                  quitar admin
+                                </button>
+                              ) : (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50 "
+                                  onClick={() => adminTrueProvider({ ...provider })}
+                                >
+                                  Volver admin
+                                </button>
+                              )}
+
+                              {
+                                provider.disabled ? 
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      quitarSuspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Activar
+                                  </button>
+                                )
+                                :
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      suspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Suspender
+                                  </button>
+                                )
+                              }
+                              <button
+                                className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                onClick={() =>
+                                  eliminarUsuarioProvider(provider.uidClient)
+                                }
+                              >
+                                Eliminar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                         );
                       }
                     })
@@ -742,17 +996,19 @@ const ControlPanel = () => {
                     usuarios?.map((provider) => {
                       if (provider.provider) {
                         return (
-                          <div className="w-full flex border-2 items-center py-2 px-2 my-2">
+                          <div className="w-full flex flex-col border-2 items-center px-2 my-2 mb-14 py-5 shadow-lg " >
+                          {/* Foto, nombre, email, id */}
+                          <div className="w-full flex flex-col justify-center items-center">
                             <div
-                              className="h-20 w-24 rounded-full mr-4"
+                              className="h-20 w-20 rounded-full mb-2"
                               style={{
                                 backgroundImage: `url(${provider.photoURL})`,
                                 backgroundSize: "cover",
                               }}
                             ></div>
-                            <div className="flex flex-col w-1/2">
+                            <div className="flex flex-col w-full justify-center items-center">
                               <h2 className="text-1xl font-bold font-sans">
-                                {provider.displayName}(Proveedor)
+                                {provider.displayName}(Provider)
                               </h2>
                               <span className="text-gray-500 text-sm -mt-1">
                                 {provider.email}
@@ -761,55 +1017,103 @@ const ControlPanel = () => {
                                 ID: {provider.uidClient}
                               </span>
                             </div>
-                            <div className="flex w-1/2 justify-between">
-                              <div className="flex flex-col w-20 justify-center items-center">
-                                <div className="flex items-center">
-                                  <div
-                                    className={`w-4 h-4 rounded-full mr-2 ${
-                                      provider.isAdmin
-                                        ? "bg-green-500"
-                                        : "bg-gray-500"
-                                    }`}
-                                  ></div>
-                                  <h2 className="font-semibold text-lg">
-                                    Administrador
-                                  </h2>
-                                </div>
-                                <span className="text-sm">
-                                  {provider.isAdmin ? "Activo" : "No Activo"}
-                                </span>
+                          </div>
+                          
+                          {/* Estado de usuario y propiedad admin */}
+                          <div className="w-full flex justify-center my-5">
+                            {/* Inicio Estado del usuario */}
+                            <div className="flex flex-col w-20 justify-center items-center mx-10">
+                              <div className="flex items-center">
+                                <div
+                                  className={`w-4 h-4 rounded-full mr-2 ${
+                                    provider.disabled
+                                      ? "bg-gray-500"
+                                      : "bg-green-500"
+                                  }`}
+                                ></div>
+                                <h2 className="font-semibold text-sm">
+                                  Estado
+                                </h2>
                               </div>
-                              <div className="flex w-80 items-center">
-                                {provider.isAdmin ? (
-                                  <button
-                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                    onClick={() =>
-                                      adminFalseProvider({ ...provider })
-                                    }
-                                  >
-                                    Quitar admin
-                                  </button>
-                                ) : (
-                                  <button
-                                    className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
-                                    onClick={() =>
-                                      adminTrueProvider({ ...provider })
-                                    }
-                                  >
-                                    Volver admin
-                                  </button>
-                                )}
-                                <button
-                                  className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
-                                  onClick={() =>
-                                    eliminarUsuarioProvider(provider.uidClient)
-                                  }
-                                >
-                                  Eliminar
-                                </button>
+                              <span className="text-sm">
+                                {provider.disabled ? "No Activo" : "Activo"}
+                              </span>
+                            </div>
+                            
+                            {/* Inicio isAdmin */}
+                            <div className="flex flex-col w-20 justify-center items-center mx-10">
+                              <div className="flex items-center">
+                                <div
+                                  className={`w-4 h-4 rounded-full mr-2 ${
+                                    provider.isAdmin
+                                      ? "bg-green-500"
+                                      : "bg-gray-500"
+                                  }`}
+                                ></div>
+                                <h2 className="font-semibold text-sm">
+                                  Administrador
+                                </h2>
                               </div>
+                              <span className="text-sm">
+                                {provider.isAdmin ? "Activo" : "No Activo"}
+                              </span>
                             </div>
                           </div>
+
+                          {/* Inicio botones */}
+                          <div className="flex w-full justify-center">
+                            <div className="flex w-4/6 items-center">
+                              {provider.isAdmin ? (
+                                <button
+                                  className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                                  onClick={() => adminFalseProvider({ ...provider })}
+                                >
+                                  quitar admin
+                                </button>
+                              ) : (
+                                <button
+                                  className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50 "
+                                  onClick={() => adminTrueProvider({ ...provider })}
+                                >
+                                  Volver admin
+                                </button>
+                              )}
+
+                              {
+                                provider.disabled ? 
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      quitarSuspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Activar
+                                  </button>
+                                )
+                                :
+                                (
+                                  <button
+                                    className="text-sm mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-purple-800 hover:bg-purple-900 text-gray-50 "
+                                    onClick={() =>
+                                      suspenderProvider({ ...provider })
+                                    }
+                                  >
+                                    Suspender
+                                  </button>
+                                )
+                              }
+                              <button
+                                className="mx-2 text-sm flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
+                                onClick={() =>
+                                  eliminarUsuarioProvider(provider.uidClient)
+                                }
+                              >
+                                Eliminar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                         );
                       }
                     })}
