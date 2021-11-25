@@ -41,14 +41,10 @@ const DetalleServicio = () => {
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
     const [isFavorite, setIsFavorite] = useState(false)
     const [compartirModal, setCompartirModal] = useState(false)
-    
     const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
-
- 
-
     let servicio = servicios.filter(serv => serv.id === Number(id))
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
     console.log("Este es usuario",usuario)

@@ -83,7 +83,11 @@ function App() {
         {
           path: '/home/:idService/Horarios',
           element: <Horarios />
-        }
+        },
+        {
+          path: '/home/servicios/:id/editar',
+          element: <EditarServicio />
+        },
       ]
     },
     {
@@ -113,10 +117,6 @@ function App() {
     {
       path: '/control-panel',
       element: <ControlPanel />
-    },
-    {
-      path: '/editar-servicio/:id',
-      element: <EditarServicio />
     },
   ]
   /*
@@ -160,7 +160,7 @@ function App() {
    */
   let routing = useRoutes(routes);
   return (
-    <div className="custom-scrollbar">
+    <div>
       {routing}
       <ToastContainer />
     </div>

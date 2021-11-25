@@ -26,6 +26,7 @@ const putHorariosRouter = require("./putHorarios")
 const getCitasRouter = require("./getCitas")
 const postCitasRouter = require("./postCitas")
 const deleteCitasRouter = require("./deleteCitas")
+const postMailPago= require("./postMailPago")
 
 
 
@@ -71,5 +72,8 @@ router.use("/horarios", putHorariosRouter)
 router.use("/citas", getCitasRouter)
 router.use("/citas", postCitasRouter)
 router.use("/citas", deleteCitasRouter)
+
+//Rutas de Envío de mails
+router.use("/mail",postMailPago)
 
 module.exports = router;
