@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -47,6 +47,8 @@ const DetalleServicio = () => {
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
 
+ 
+
     let servicio = servicios.filter(serv => serv.id === Number(id))
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
     console.log("Este es usuario",usuario)
@@ -55,6 +57,11 @@ const DetalleServicio = () => {
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
         foto = datosSesionFromLocalStorage.photoURL
+    }
+
+    if(usuario && usuario.phoneNumber){
+        if(usuario.phoneNumber[0]=== '+')
+        var numberWhastapp= usuario.phoneNumber.slice(1)
     }
 
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
@@ -181,15 +188,38 @@ const DetalleServicio = () => {
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
-                                                        imagen='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg'
+                                                        imagen={usuario && usuario.photoURL}
                                                         name={usuario && usuario.displayName}
                                                         imgClass='rounded-full my-4'
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
                                                     <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span>
+                                                <div className='w-14 mr-4 flex flex-row space-x-2'>
+                                                {
+                                                  usuario && usuario.phoneNumber?  
+                                                  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
+                                                        href={`tel:${usuario.phoneNumber}`}
+                                                    ><AiTwotonePhone className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.email?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
+                                                        href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
+                                                        
+                                                    > <AiOutlineWhatsApp className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.phoneNumber?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                                                        href={`mailto:${usuario.email}`}
+                                                        
+                                                    > <AiOutlineMail className={`text-3xl`} />
+                                                    </a>: null}
+                                                    </div>
+                                                    {/* <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
+                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span> */}
                                                 </div>
                                             </div>
                                         </div>
