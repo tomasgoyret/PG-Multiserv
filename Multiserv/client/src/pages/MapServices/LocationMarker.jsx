@@ -15,7 +15,7 @@ export const LocationMarker = () => {
 
     return position === null ? null : (
         <Marker position={position}>
-            <Popup>You are here</Popup>
+            <Popup>Aqui estas</Popup>
         </Marker>
     )
 }
