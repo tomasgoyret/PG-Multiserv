@@ -21,6 +21,7 @@ import {
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
     EDITAR_MISERVICIO,
+    MIS_CITAS,
     MAPSERVICES,
 } from "../actionTypes/actionTypes";
 
@@ -43,7 +44,8 @@ const initalState = {
     detalleUsuario: {},
     reviews: [],
     misServicios: [],
-    mapServices: []
+    misCitas: [],
+    mapServices: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -54,6 +56,11 @@ function rootReducer(state = initalState, { type, payload }) {
                 loadingServices: false,
                 servicios: payload,
                 aux: payload
+            }
+        case MIS_CITAS:
+            return{
+                ...state,
+                misCitas:payload
             }
         case BUSCAR:
             let newServ = state.aux.filter(serv => serv.title.toLowerCase().includes(payload.toLowerCase()))
