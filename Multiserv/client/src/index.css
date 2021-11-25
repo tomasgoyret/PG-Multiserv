@@ -13,6 +13,11 @@
     --scrollbarBG: #3b3b3b4d;
     --thumbBG: #d8d8d8;
 }
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  border-radius: 12px;
+}
 .custom-scrollbar::-webkit-scrollbar{
     width: 6px;
   }
