@@ -181,7 +181,7 @@ const DetalleServicio = () => {
                                     />
                                     <div className='flex flex-row pt-6 px-4 justify-around' >
                                         <div>
-                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
+                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
                                                         imagen={usuario && usuario.photoURL}
@@ -190,24 +190,24 @@ const DetalleServicio = () => {
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
+                                                    <span className='text-gray-800 font-bold text-xl font-sans' >{usuario && usuario.displayName}</span><br />
                                                 <div className='w-14 mr-4 flex flex-row space-x-2'>
-                                                {
-                                                  usuario && usuario.phoneNumber?  
-                                                  <a 
+                                                    {
+                                                    datosSesionFromLocalStorage && usuario && usuario.phoneNumber?  
+                                                    <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
                                                         href={`tel:${usuario.phoneNumber}`}
                                                     ><AiTwotonePhone className={`text-3xl`} />
                                                     </a>: null}
                                                     {                                                  
-                                                    usuario && usuario.email?  <a 
+                                                    datosSesionFromLocalStorage && usuario && usuario.email?  <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
                                                         href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
                                                         
                                                     > <AiOutlineWhatsApp className={`text-3xl`} />
                                                     </a>: null}
                                                     {                                                  
-                                                    usuario && usuario.phoneNumber?  <a 
+                                                    datosSesionFromLocalStorage && usuario && usuario.phoneNumber?  <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
                                                         href={`mailto:${usuario.email}`}
                                                         
