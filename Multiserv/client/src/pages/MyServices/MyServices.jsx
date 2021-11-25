@@ -16,7 +16,7 @@ const MyServices = () => {
   }
   const irAlLink = (e) => {
     console.log(e.target.value)
-    e.target.value === 'detalle' ? navigate(`/home/detalleServicio/${e.target.name}`) : navigate(`/editar-servicio/${e.target.name}`)
+    e.target.value === 'detalle' ? navigate(`/home/detalleServicio/${e.target.name}`) : navigate(`/home/servicios/${e.target.name}/editar`)
   }
 
   return (
