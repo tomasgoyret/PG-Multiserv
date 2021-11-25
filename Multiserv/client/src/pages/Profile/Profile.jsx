@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
 
 const Profile = () => {
-    const[editarPerfil, setEditarPerfil] = useState("información");
+    const[editarPerfil, setEditarPerfil] = useState("informacion");
     const [loading, setLoading] = useState(false)
     const [loading2, setLoading2] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
@@ -31,13 +31,13 @@ const Profile = () => {
     // Eliminar usuario
     const eliminarUsuario = (uid) => {
         Swal.fire({
-            title: '¿Estás seguro?',
+            title: 'Estas seguro?',
             text: "Al hacer esto perderas todo en tu usuario",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#32C1CD',
             cancelButtonColor: '#d33',
-            confirmButtonText: '¡Sí, Eliminar usuario!',
+            confirmButtonText: 'Si, Eliminar usuario!',
             cancelButtonText: "Cancelar"
           }).then((result) => {
               console.log(result)
@@ -45,8 +45,8 @@ const Profile = () => {
                 axios(`http://localhost:3005/eliminar-usuario/${uid}`)
                 .then(async response => {
                     await Swal.fire(
-                        '¡Eliminado!',
-                        '¡Tu usuario se ha eliminado con éxito! Volverás al inicio',
+                        'Eliminado!',
+                        'Tu usuario se ha eliminado con exito! volveras al inicio',
                         'success'
                     )
                     localStorage.removeItem("datoSesion")
@@ -66,7 +66,7 @@ const Profile = () => {
 
     // Handlers
     const cambiarAInformacionBasica = () => {
-        setEditarPerfil("información")
+        setEditarPerfil("informacion")
     }
 
     const cambiarAImagen = () => {
@@ -189,7 +189,7 @@ const Profile = () => {
 
                 <div className="border-2 h-auto w-3/4 rounded-md mr-2 px-5">
                     {
-                        editarPerfil === "información" &&
+                        editarPerfil === "informacion" &&
                         <div className="w-100 h-full flex flex-col justify-center">
                             <h2 className="source-sans text-xl font-semibold px-3 pb-1">Información basica</h2>
                             <div className="w-100 flex">

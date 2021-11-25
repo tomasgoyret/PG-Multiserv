@@ -316,7 +316,7 @@ const CreateService = () => {
                                     theme="#164E63"
                                     label="Escribe una descripción atractiva:"
                                     flexed
-                                    placeholder="Ingresa una descripción atractiva para tu servicio"
+                                    placeholder="Ingresa tus apellidos"
                                     callBack={handleSetService('description')}
                                 />
                             </div>
