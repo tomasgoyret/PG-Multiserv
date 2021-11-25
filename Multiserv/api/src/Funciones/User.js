@@ -1253,7 +1253,9 @@ const services = [
           ],
           "currency": "MXN",
           "max": 12000,
-          "rating": "4"
+          "rating": "4",
+          "location":[-24.841716, -65.491023],
+          "address": "P.º del Prado, Salta"
   },
   {
       "min": 300,
@@ -1268,7 +1270,9 @@ const services = [
           "https://media.istockphoto.com/photos/hairdresser-washing-hair-picture-id516981844?b=1&k=20&m=516981844&s=170667a&w=0&h=Gf3cVsTwMDj9mst0B7ukUGJuCusho9qTBcUFmRGPL0I="
       ],
       "currency": "MXN",
-      "title": "peluqueria Rosal"
+      "title": "peluqueria Rosal",
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
 },
 {
       "description": "Morbi tristique ipsum eleifend dui condimentum, sit amet facilisis est lacinia. Fusce commodo risus elementum sapien venenatis lobortis. Nam ac viverra ex, at ullamcorper augue. Phasellus at ultricies turpis, vel placerat diam. Nulla vel euismod metus. Aliquam porta semper erat, blandit ornare ipsum consequat id. Cras elementum dui quis quam pharetra efficitur. Integer dictum risus id justo sollicitudin sodales. Aenean eu justo quis tortor posuere finibus tristique a ipsum.  ",
@@ -1282,7 +1286,9 @@ const services = [
       "category": "Limpieza",
       "title": "Limpiezas Annie",
       "min": 300,
-      "priceRange": "$300 por día"
+      "priceRange": "$300 por día",
+      "location":[-24.840031, -65.489655],
+          "address": "Calle cerca de Tomás 123"
 },
 {
   
@@ -1296,7 +1302,9 @@ const services = [
       ],
       "currency": "MXN",
       "rating": "5",
-      "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2"
+      "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2",
+      "location":[-24.840835, -65.488281],
+          "address": "Ruta 51, km 1"
 },
 {
   
@@ -1311,7 +1319,9 @@ const services = [
       "rating": "3",
       "description": "Proin quis metus ut augue luctus ullamcorper sit amet eu felis. Donec ut tempor purus, a tincidunt eros. Phasellus sed arcu tortor. Nam a eros in ipsum ultricies vulputate.",
       "title": "Herreria a domicilio",
-      "max": 2000
+      "max": 2000,
+      "location":[-24.841231, -65.487115],
+          "address": "a la vuleta de lo de Tomás 156"
 },
 {
   
@@ -1326,7 +1336,9 @@ const services = [
       "rating": "3",
       "category": "Abogacía",
       "min": 300,
-      "currency": "MXN"
+      "currency": "MXN",
+      "location":[-24.842688, -65.488071],
+          "address": "Otra cerquita 568"
 },
 {
   
@@ -1340,7 +1352,9 @@ const services = [
       "currency": "MXN",
       "photos": [
           "https://insights.workwave.com/wp-content/uploads/2020/05/cleaning-with-spray-detergent-rubber-gloves-and-dish-cloth-on-work-picture-id1202033073.jpg"
-      ]
+      ],
+      "location":[5.340126, -72.383922],
+      "address": "Yopal, Casanare, Colombia"
 },
 {
   
@@ -1354,7 +1368,9 @@ const services = [
       "category": "Peluquería",
       "photos": [
           "https://imagenes.elpais.com/resizer/I2fwlYx1bWjoxyi1UUTYR4m18k0=/1200x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/EKFF4PCRBQSHUSRAGL6LOGGR2I.jpg"
-      ]
+      ],
+      "location":[5.339232, -72.384584],
+      "address": "Cerca de lo de Santi"
       },
 {
   
@@ -1369,7 +1385,9 @@ const services = [
       "min": 200,
       "description": " Aliquam consequat mollis leo, id auctor risus mollis sed. Morbi vehicula facilisis dictum. Sed dictum eleifend sapien vitae sollicitudin",
       "uidUser": "49KPmJcVR3SikQvSz1tzTSKvpAt1",
-      "max": 1500
+      "max": 1500,
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
 },
 {
   
@@ -1385,7 +1403,9 @@ const services = [
       "min": 50,
       "max": 300,
       "description": "Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit.",
-      "title": "Kitty haircuts"
+      "title": "Kitty haircuts",
+      "location":[5.339384, -72.385297],
+      "address": "Calle falsa 123"
 },
 {
   
@@ -1401,7 +1421,9 @@ const services = [
       "min": 3000,
       "rating": "4",
       "currency": "ARS",
-      "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2"
+      "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2",
+      "location":[5.339790, -72.385367],
+      "address": "Calle falsa 123"
 },
 {
   
@@ -1415,7 +1437,9 @@ const services = [
       "rating": "5",
       "photos": [
           "https://m.media-amazon.com/images/I/81R-2c6RTpL._AC_SX466_.jpg"
-      ]
+      ],
+      "location":[5.340087, -72.384940],
+      "address": "Calle falsa 123"
 },
 {
   
@@ -1430,7 +1454,9 @@ const services = [
       ],
       "max": 50,
       "min": 20,
-      "title": "Cleanning professionals"
+      "title": "Cleanning professionals",
+      "location":[5.339904, -72.384348],
+      "address": "Calle falsa 123"
       },
 {
   
@@ -1445,7 +1471,9 @@ const services = [
           "https://d8bwfgv5erevs.cloudfront.net/cdn/13/images/curso-profesional-acabado-carpinteria-mueble_l_primaria_1.jpg",
           "https://i.ytimg.com/vi/j5bz8tp5JQ0/maxresdefault.jpg"
       ],
-      "description": "Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. Ut consectetur massa enim, ac consectetur nibh pharetra in. Quisque arcu odio, lobortis non tristique non, pharetra a erat. Suspendisse dignissim tincidunt erat sed laoreet. Quisque mollis lectus tincidunt eleifend varius. Etiam pulvinar consectetur purus et pretium. Phasellus sed leo ligula. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  "
+      "description": "Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. Ut consectetur massa enim, ac consectetur nibh pharetra in. Quisque arcu odio, lobortis non tristique non, pharetra a erat. Suspendisse dignissim tincidunt erat sed laoreet. Quisque mollis lectus tincidunt eleifend varius. Etiam pulvinar consectetur purus et pretium. Phasellus sed leo ligula. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  ",
+      "location":[5.339417, -72.384605],
+      "address": "Calle falsa 123"
 },
 {
   
@@ -1459,7 +1487,9 @@ const services = [
       "photos": [
           "https://www.mndelgolfo.com/blog/wp-content/uploads/2017/09/herramientas-para-electricista.jpg"
       ],
-      "uidUser": "B9I519nVrHYPayK8wISGR8yBED12"
+      "uidUser": "B9I519nVrHYPayK8wISGR8yBED12",
+      "location":[5.339968, -72.384428],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1474,7 +1504,9 @@ const services = [
       "category": "Limpieza",
       "photos": [
           "https://m.media-amazon.com/images/I/514WyDwzEBL._AC_SL1000_.jpg"
-      ]
+      ],
+      "location":[5.340114, -72.383954],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1489,7 +1521,9 @@ const services = [
       "title": "Marea electra",
       "description": "Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit. Nullam condimentum porta eros, sed laoreet justo auctor luctus. Sed egestas vulputate tellus, eu tincidunt nunc vestibulum eu. Donec scelerisque enim a metus pharetra scelerisque. Donec ultricies ante tellus. Etiam at cursus lorem, a mollis enim. Curabitur ultricies iaculis elit nec tincidunt. Mauris commodo aliquet hendrerit. ",
       "rating": "2",
-      "uidUser": "1kh0flCWktUFAXiauKTP9adr5nX2"
+      "uidUser": "1kh0flCWktUFAXiauKTP9adr5nX2",
+      "location":[5.340007, -72.385743],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1507,7 +1541,9 @@ const services = [
       ],
       "max": 80,
       "description": "Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit.",
-      "uidUser": "kNSNWwN8Q4PGIj627FBQHQLkC203"
+      "uidUser": "kNSNWwN8Q4PGIj627FBQHQLkC203",
+      "location":[5.339991, -72.384944],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1522,7 +1558,9 @@ const services = [
       "rating": "4",
       "category": "Mantenimiento",
       "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2",
-      "max": 2000
+      "max": 2000,
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1537,7 +1575,9 @@ const services = [
           "https://5.imimg.com/data5/DB/AN/PE/SELLER-11258376/sofa-cleanning-services-500x500.jpg"
       ],
       "rating": "2",
-      "category": "Limpieza"
+      "category": "Limpieza",
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1552,7 +1592,9 @@ const services = [
       "max": "300",
       "rating": "4",
       "category": "Limpieza",
-      "description": "Integer fermentum, libero non ultricies posuere, nunc massa convallis nisl, id placerat tortor urna ut mauris. Cras id ante non neque mattis sagittis. Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. "
+      "description": "Integer fermentum, libero non ultricies posuere, nunc massa convallis nisl, id placerat tortor urna ut mauris. Cras id ante non neque mattis sagittis. Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. ",
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1567,7 +1609,9 @@ const services = [
       "photos": [
           "https://m.media-amazon.com/images/I/71cv4PBbzTL._AC_SX466_.jpg"
       ],
-      "category": "Carpintería"
+      "category": "Carpintería",
+      "location":[51.505, -0.09],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1582,7 +1626,9 @@ const services = [
       "photos": [
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ8CdpUsvGvMMAK6AOrvcnj0t4ydQKBRBUut56tNgS4j0uitOn_u3K1yp2MOBF8koyFsk&usqp=CAU"
       ],
-      "min": 3000
+      "min": 3000,
+      "location":[-24.844261, -65.488650],
+      "address": "Calle falsa 123"
   
 },
 {
@@ -1597,7 +1643,9 @@ const services = [
       "currency": "MXN",
       "title": "Mantenimiento interiores",
       "min": 20,
-      "max": 250
+      "max": 250,
+      "location":[-24.843141, -65.492158],
+      "address": "Calle falsa 123"
   
 },
 // {
@@ -2275,7 +2323,9 @@ let DataServices = async () => {
               photos: s.photos,
               nameUser: userID.displayName,
               profilePic: userID.photoURL,
-              estadoDePago: "Aprobado"
+              estadoDePago: "Aprobado",
+              location: s.location,
+              address: s.address
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
