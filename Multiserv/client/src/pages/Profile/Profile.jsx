@@ -31,13 +31,13 @@ const Profile = () => {
     // Eliminar usuario
     const eliminarUsuario = (uid) => {
         Swal.fire({
-            title: 'Estas seguro?',
-            text: "Al hacer esto perderas todo en tu usuario",
+            title: '¿Estás seguro?',
+            text: "Al hacer esto perderás todo en tu usuario (servicios, reseñas, citas)",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#32C1CD',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Eliminar usuario!',
+            confirmButtonText: '¡Sí, eliminar usuario!',
             cancelButtonText: "Cancelar"
           }).then((result) => {
               console.log(result)
@@ -45,15 +45,15 @@ const Profile = () => {
                 axios(`http://localhost:3005/eliminar-usuario/${uid}`)
                 .then(async response => {
                     await Swal.fire(
-                        'Eliminado!',
-                        'Tu usuario se ha eliminado con exito! volveras al inicio',
+                        '¡Eliminado!',
+                        '¡Tu usuario se ha eliminado con éxito! Volverás al inicio',
                         'success'
                     )
                     localStorage.removeItem("datoSesion")
                     navigate("/")
                 })
                 .catch(err => {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire('Cambios no guardados', '', 'info')
                 })
             }
           })
@@ -139,7 +139,7 @@ const Profile = () => {
                 
             }))
             Swal.fire(
-                'Actualizado!',
+                '¡Actualizado!',
                 'Tu información se ha actualizado con éxito.',
                 'success'
               )
