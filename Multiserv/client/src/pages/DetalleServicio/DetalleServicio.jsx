@@ -25,7 +25,11 @@ const DetalleServicio = () => {
     useEffect(() => {
         dispatch(services())
         dispatch(users())
-        //document.title = `Detalles de ${servicio[0].title}`
+        if(servicio[0] !== undefined){
+            return document.title = `Detalles de ${servicio[0].title}`}
+            else {
+                return document.title=`Detalle del servcio`
+            }
     }, [])
 
     var idFav = '';
