@@ -23,7 +23,8 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
-    EDITAR_MISERVICIO
+    EDITAR_MISERVICIO,
+    MAPSERVICES
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -49,6 +50,18 @@ export const users = () => {
         return dispatch({
             type: USUARIOS,
             payload: dataUsers
+        })
+    }
+}
+/* Traer servicios con location */
+export const mapServices = () => {
+    return async function(dispatch){
+        let map = `${server}/ubicacion`;
+        const response = await axios(map);
+        const dataServMap = response.data
+        return dispatch({
+            type: MAPSERVICES,
+            payload: dataServMap
         })
     }
 }
@@ -83,7 +96,7 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
     return async function (dispatch) {
-        let services =`${server}/usuarios/${id}`;
+        let services = `${server}/usuarios/${id}`;
         const response = await axios(services);
         return dispatch({
             type: USUARIOID,
@@ -190,10 +203,10 @@ export const getReviews = (id) => {
 // Traer Mis Servicios
 export const getServicios = (uidClient) => {
     return async function (dispatch) {
-    let service = `my-services/${uidClient}`;
-    const res = await axios(service);
-    const misServicios = res.data;
-    return dispatch({
+        let service = `my-services/${uidClient}`;
+        const res = await axios(service);
+        const misServicios = res.data;
+        return dispatch({
             type: MIS_SERVICIOS,
             payload: misServicios
         })
@@ -201,7 +214,7 @@ export const getServicios = (uidClient) => {
 }
 
 /* Eliminar mi servicio de mis Servicios por Id */
-export const deleteMyServices = ( id , uidClient ) => {
+export const deleteMyServices = (id, uidClient) => {
     return async function (dispatch) {
         const service = `${server}/delete-service/${id}`;
         await axios.delete(service);
@@ -224,10 +237,10 @@ export const updateService = (id, datos) => {
         const response = await axios(service);
         return dispatch({
             type: EDITAR_MISERVICIO,
-            payload: response.data 
+            payload: response.data
         })
 
-        
+
 
     }
 }
