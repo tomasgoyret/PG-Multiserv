@@ -472,9 +472,9 @@ const ControlPanel = () => {
   };
 
   useEffect(() => {
-    // if (detalleUsuario.isAdmin) {
-    //   navigate("/home");
-    // }
+    if (detalleUsuario.isAdmin) {
+      navigate("/home");
+    }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
@@ -1165,7 +1165,7 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-1/5 justify-end">
+                        <div className="flex w-2/5 justify-end">
                           <div className="flex w-80 items-center">
                             <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
@@ -1196,7 +1196,7 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-1/5 justify-end">
+                        <div className="flex w-2/5 justify-end">
                           <div className="flex w-80 items-center">
                             <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
