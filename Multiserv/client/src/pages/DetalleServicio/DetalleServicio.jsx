@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
 import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
+import { BsShareFill } from "react-icons/bs";
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -262,10 +263,10 @@ const DetalleServicio = () => {
                                                 }  
                                                 <div>
                                                     <button
-                                                        className="flex justify-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
+                                                        className="flex justify-center items-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
                                                         onClick={() => setCompartirModal(!compartirModal)}
                                                     >
-                                                        Compartir
+                                                        <BsShareFill className="mx-2"/> Compartir
                                                     </button>
                                                 </div>
                                                 {
