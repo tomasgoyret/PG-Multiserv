@@ -81,13 +81,13 @@ const ControlPanel = () => {
   // Eliminar usuario
   const eliminarUsuarioClient = (uid) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas todo en tu usuario",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás todo en tu usuario",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar usuario!",
+      confirmButtonText: "¡Sí, eliminar usuario!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -95,8 +95,8 @@ const ControlPanel = () => {
         axios(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
-              "Eliminado!",
-              "El usuario se ha eliminado con exito!",
+              "¡Eliminado!",
+              "El usuario se ha eliminado con éxito!",
               "success"
             );
             dispatch(users());
@@ -111,13 +111,13 @@ const ControlPanel = () => {
 
   const eliminarUsuarioProvider = (uid) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas todo en tu usuario",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás todo en tu usuario",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar usuario!",
+      confirmButtonText: "¡Sí, eliminar usuario!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -125,8 +125,8 @@ const ControlPanel = () => {
         axios(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
-              "Eliminado!",
-              "El usuario se ha eliminado con exito!",
+              "¡Eliminado!",
+              "El usuario se ha eliminado con éxito!",
               "success"
             );
             dispatch(users());
@@ -156,8 +156,8 @@ const ControlPanel = () => {
         console.log(response);
         // setLoading(false)
         Swal.fire(
-          "Actualizado!",
-          `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
+          "¡Actualizado!",
+          `¡Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
           "success"
         );
         dispatch(users());
@@ -182,8 +182,8 @@ const ControlPanel = () => {
         console.log(response);
         // setLoading(false)
         Swal.fire(
-          "Actualizado!",
-          `Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
+          "¡Actualizado!",
+          `¡Ahora ${response.data.usuarioActualizado.displayName} es administrador!`,
           "success"
         );
         dispatch(users());
@@ -207,7 +207,7 @@ const ControlPanel = () => {
       .then((response) => {
         console.log(response);
         // setLoading(false)
-        Swal.fire("Actualizado!", `Permisos revocados!`, "success");
+        Swal.fire("¡Actualizado!", `¡Permisos revocados!`, "success");
         dispatch(users());
         setClientSearchValue("");
       })
@@ -229,7 +229,7 @@ const ControlPanel = () => {
       .then((response) => {
         console.log(response);
         // setLoading(false)
-        Swal.fire("Actualizado!", `Permisos revocados!`, "success");
+        Swal.fire("¡Actualizado!", `¡Permisos revocados!`, "success");
         dispatch(users());
         setProviderSearchValue("");
       })
@@ -245,6 +245,7 @@ const ControlPanel = () => {
       },
       showCancelButton: true,
       confirmButtonText: "Modificar",
+      cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !Swal.isLoading(),
     }).then(async (result) => {
@@ -256,8 +257,8 @@ const ControlPanel = () => {
           })
           .then((response) => {
             Swal.fire(
-              "Modificado!",
-              "Nombre de categoria cambiado con exito!",
+              "¡Modificado!",
+              "¡Nombre de categoría cambiado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -269,13 +270,13 @@ const ControlPanel = () => {
 
   const eliminarCategoria = (id) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas esta categoria",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás esta categoría",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar categoria!",
+      confirmButtonText: "¡Sí, eliminar categoría!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -284,8 +285,8 @@ const ControlPanel = () => {
           .delete(`categorias/${id}`)
           .then((response) => {
             Swal.fire(
-              "Eliminado!",
-              "La categoria se ha eliminado con exito!",
+              "¡Eliminado!",
+              "¡La categoría se ha eliminado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -300,13 +301,13 @@ const ControlPanel = () => {
 
   const eliminarServicio = (id) => {
     Swal.fire({
-      title: "Estas seguro?",
-      text: "Al hacer esto perderas este servicio",
+      title: "¿Estás seguro?",
+      text: "Al hacer esto perderás este servicio",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#32C1CD",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar servicio!",
+      confirmButtonText: "¡Sí, eliminar servicio!",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       console.log(result);
@@ -315,8 +316,8 @@ const ControlPanel = () => {
           .delete(`delete-service/${id}`)
           .then((response) => {
             Swal.fire(
-              "Eliminado!",
-              "El servicio se ha eliminado con exito!",
+              "¡Eliminado!",
+              "¡El servicio se ha eliminado con éxito!",
               "success"
             );
             dispatch(services());
@@ -332,7 +333,7 @@ const ControlPanel = () => {
   const mostrarDescripcion = (service) => {
     console.log(service);
     Swal.fire({
-      title: "Descripción!",
+      title: "Descripción",
       text: service.description,
       imageUrl: service.photos[0],
       imageWidth: 400,
@@ -343,7 +344,7 @@ const ControlPanel = () => {
 
   const agregarCategoria = () => {
     Swal.fire({
-      title: "¿Cual es el nombre de la nueva categoria?",
+      title: "¿Cuál es el nombre de la nueva categoría?",
       input: "text",
       inputAttributes: {
         autocapitalize: "off",
@@ -351,6 +352,7 @@ const ControlPanel = () => {
       showCancelButton: true,
       confirmButtonText: "Agregar",
       showLoaderOnConfirm: true,
+      cancelButtonText: "Cancelar",
       allowOutsideClick: () => !Swal.isLoading(),
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -360,8 +362,8 @@ const ControlPanel = () => {
           })
           .then((response) => {
             Swal.fire(
-              "Categoria Agregada",
-              "La categoria se ha agregado con exito!",
+              "categoría Agregada",
+              "La categoría se ha agregado con éxito!",
               "success"
             );
             dispatch(getCats());
@@ -372,9 +374,9 @@ const ControlPanel = () => {
   };
 
   useEffect(() => {
-    if (detalleUsuario.isAdmin) {
-      navigate("/home");
-    }
+    // if (detalleUsuario.isAdmin) {
+    //   navigate("/home");
+    // }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
@@ -404,7 +406,7 @@ const ControlPanel = () => {
             onClick={cambiarAProvedor}
           >
             <FaUserTie width="30px" height="30px" className="mr-2" />
-            <span className="focus:text-gray-50">Provedores</span>
+            <span className="focus:text-gray-50">Proveedores</span>
           </button>
         </div>
         {/* Fin seccion administrar usuarios */}
@@ -426,7 +428,7 @@ const ControlPanel = () => {
 
         {/* Inicio seccion administrar categorias */}
         <div className="w-full flex justify-start px-2 mt-5">
-          <h2 className="text-md font-semibold ">Administrar categorias</h2>
+          <h2 className="text-md font-semibold ">Administrar categorías</h2>
         </div>
         <div className="w-full flex flex-col items-start   mt-2">
           <button
@@ -434,7 +436,7 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>Categorias</span>
+            <span>categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
@@ -470,7 +472,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorClientes}
                       name="lastName"
                       value={clientSearchValue}
-                      placeholder="Busca por nombre de provedor"
+                      placeholder="Busca por nombre de cliente"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
@@ -560,7 +562,7 @@ const ControlPanel = () => {
                                 className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminFalseClient({ ...cliente })}
                               >
-                                quitar admin
+                                Quitar admin
                               </button>
                             ) : (
                               <button
@@ -665,7 +667,7 @@ const ControlPanel = () => {
                                 className="mx-2 text-sm  flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                                 onClick={() => adminFalseClient({ ...cliente })}
                               >
-                                quitar admin
+                                Quitar admin
                               </button>
                             ) : (
                               <button
@@ -719,7 +721,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorProvedores}
                       value={providerSearchValue}
                       name="lastName"
-                      placeholder="Busca por nombre de provedor"
+                      placeholder="Busca por nombre de proveedor"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
@@ -976,7 +978,7 @@ const ControlPanel = () => {
                       onChange={handleChangeBuscadorCategorias}
                       value={categoriSearchValue}
                       name="lastName"
-                      placeholder="Busca por nombre de categoria"
+                      placeholder="Busca por nombre de categoría"
                     />
                   </div>
                   <div className="flex w-96 ml-4 justify-end items-center pr-2">
@@ -1011,12 +1013,12 @@ const ControlPanel = () => {
                             >
                               Editar
                             </button>
-                            {/* <button
+                            <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button> */}
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -1042,12 +1044,12 @@ const ControlPanel = () => {
                             >
                               Editar
                             </button>
-                            {/* <button
+                            <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button> */}
+                            </button>
                           </div>
                         </div>
                         <div

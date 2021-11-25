@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -17,15 +17,23 @@ import { useLocation } from 'react-router'
 import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
+import { services,users } from '../../redux/actions/actions'
 
 const DetalleServicio = () => {
     let { id } = useParams();
+
+    useEffect(() => {
+        dispatch(services())
+        dispatch(users())
+        //document.title = `Detalles de ${servicio[0].title}`
+    }, [])
+
     var idFav = '';
     var  value = false;
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
-    const loading = useSelector((state) => state.loadingServices)
+    let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
     const navigate = useNavigate();
@@ -39,18 +47,25 @@ const DetalleServicio = () => {
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
 
-    const servicio = servicios.filter(serv => serv.id === Number(id))
-    const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+ 
+
+    let servicio = servicios.filter(serv => serv.id === Number(id))
+    let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    console.log("Este es usuario",usuario)
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
     if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
         foto = datosSesionFromLocalStorage.photoURL
     }
+
+    if(usuario && usuario.phoneNumber){
+        if(usuario.phoneNumber[0]=== '+')
+        var numberWhastapp= usuario.phoneNumber.slice(1)
+    }
+
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
-    useEffect(() => {
-        document.title = `Detalles de ${servicio[0].title}`
-    }, [])
+
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("datoSesion")
@@ -61,8 +76,10 @@ const DetalleServicio = () => {
         return nombres;
     }
     var name = "Inicia Sesión "
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
+    var uid = ""
+    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
         name = datosSesionFromLocalStorage.displayName
+        uid= datosSesionFromLocalStorage.uid
     }
     const contGrad = {
         background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
@@ -83,7 +100,7 @@ const DetalleServicio = () => {
         if(value === true) {
             const res = await axios.post('agregar-fav', {
             idService: current,
-            uidClient: usuario.uidClient
+            uidClient: uid
             });
             idFav = res.data.id || res.data[0].id;
             return toast.success('¡Se agregó a tus favoritos!', {
@@ -97,7 +114,7 @@ const DetalleServicio = () => {
             })
         }   
         else{
-            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${usuario.uidClient}`)
+            await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${uid}`)
             return toast.error('Se eliminó de tus favoritos', {
                 position: "top-center",
                 autoClose: 3000,
@@ -150,7 +167,7 @@ const DetalleServicio = () => {
                                 <div className="bg-white relative flex flex-col rounded-b-lg">
                                     <div className=" absolute -top-5  px-4 flex w-full justify-between">
                                         <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
-                                            <span className="text-white">{servicio[0].categorias[0].title} </span>
+                                            <span className="text-white">{servicio[0].categorias[0] === undefined ? "Sin definir" : servicio[0].categorias[0].title} </span>
                                         </div>
                                     </div>
                                     <Image
@@ -171,15 +188,38 @@ const DetalleServicio = () => {
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
-                                                        imagen='https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg'
-                                                        name={usuario.displayName}
+                                                        imagen={usuario && usuario.photoURL}
+                                                        name={usuario && usuario.displayName}
                                                         imgClass='rounded-full my-4'
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario.displayName}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>Numero: {!usuario.phoneNumber ? 'No especificado' : usuario.phoneNumber}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario.email}</span>
+                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
+                                                <div className='w-14 mr-4 flex flex-row space-x-2'>
+                                                {
+                                                  usuario && usuario.phoneNumber?  
+                                                  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
+                                                        href={`tel:${usuario.phoneNumber}`}
+                                                    ><AiTwotonePhone className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.email?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
+                                                        href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
+                                                        
+                                                    > <AiOutlineWhatsApp className={`text-3xl`} />
+                                                    </a>: null}
+                                                    {                                                  
+                                                    usuario && usuario.phoneNumber?  <a 
+                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                                                        href={`mailto:${usuario.email}`}
+                                                        
+                                                    > <AiOutlineMail className={`text-3xl`} />
+                                                    </a>: null}
+                                                    </div>
+                                                    {/* <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
+                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span> */}
                                                 </div>
                                             </div>
                                         </div>

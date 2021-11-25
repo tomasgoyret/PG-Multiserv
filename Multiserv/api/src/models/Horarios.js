@@ -15,10 +15,6 @@ module.exports = (sequelize) => {
     aDomicilio: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    },
-    direccion: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    }
   });
 };

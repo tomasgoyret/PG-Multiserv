@@ -14,7 +14,6 @@ const putServ = async (req, res,next) => {
     if( estadoDePago==="in_process"){
         traduccion = "Pendiente"
     }
-    
     try {
         const serv = await Servicios.update({
             title,
@@ -26,7 +25,7 @@ const putServ = async (req, res,next) => {
             rating,
             photos,
             direccion,
-            estadoDePago: traduccion
+            estadoDePago: traduccion? traduccion : estadoDePago
         },{
             where: { id }
             } );

@@ -213,3 +213,21 @@ export const deleteMyServices = ( id , uidClient ) => {
         })
     }
 }
+
+//Editar uno de mis servicios (recibe el id del servicio 
+//y datos: title, currency, category, description, max, min, rating, photos, direccion, estadoDePago )
+export const updateService = (id, datos) => {
+    return async function (dispatch) {
+        const updtservice = `${server}/edit-service/${id}`;
+        await axios.put(updtservice, datos);
+        let service = `${server}/services/${id}`;
+        const response = await axios(service);
+        return dispatch({
+            type: EDITAR_MISERVICIO,
+            payload: response.data 
+        })
+
+        
+
+    }
+}
