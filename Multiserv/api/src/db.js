@@ -116,7 +116,7 @@ Servicios.belongsToMany(Citas,{through: 'services_citas'})
 Citas.belongsToMany(Servicios,{through: 'services_citas'});
 
 //Relación 1 a 1 Servicios ---> Horarios
-Servicios.hasOne(Horarios);
+Servicios.hasMany(Horarios);
 Horarios.belongsTo(Servicios);
 
 
