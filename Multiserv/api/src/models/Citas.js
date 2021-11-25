@@ -5,21 +5,21 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("citas", {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
     },
     dia: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     horario: {
-      type: DataTypes.ARRAY(DataTypes.JSON),
-      allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     nameUser: {
-      type: DataTypes.STRING,
-      allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false,
     }
   });
 };
