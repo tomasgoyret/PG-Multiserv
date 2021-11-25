@@ -23,6 +23,7 @@ import MyServices from "./pages/MyServices/MyServices";
 import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
 import Horarios from "./pages/Horarios/Horarios";
+import { MapServices } from "./pages/MapServices/MapServices";
 
 function App() {
   toast.configure()
@@ -46,6 +47,10 @@ function App() {
         {
           index: true,
           element: <Home />
+        },
+        {
+          path: '/home/mapservices',
+          element: <MapServices />
         },
         {
           path: '/home/:uidClient/new-service',
@@ -78,7 +83,11 @@ function App() {
         {
           path: '/home/:idService/Horarios',
           element: <Horarios />
-        }
+        },
+        {
+          path: '/home/servicios/:id/editar',
+          element: <EditarServicio />
+        },
       ]
     },
     {
@@ -108,10 +117,6 @@ function App() {
     {
       path: '/control-panel',
       element: <ControlPanel />
-    },
-    {
-      path: '/editar-servicio/:id',
-      element: <EditarServicio />
     },
   ]
   /*
@@ -155,7 +160,7 @@ function App() {
    */
   let routing = useRoutes(routes);
   return (
-    <div className="custom-scrollbar">
+    <div>
       {routing}
       <ToastContainer />
     </div>

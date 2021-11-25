@@ -22,6 +22,7 @@ import {
     ELIMINAR_MISERVICIO,
     EDITAR_MISERVICIO,
     MIS_CITAS,
+    MAPSERVICES,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -44,6 +45,7 @@ const initalState = {
     reviews: [],
     misServicios: [],
     misCitas: [],
+    mapServices: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -65,6 +67,12 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 servicios: newServ
+            }
+        case MAPSERVICES:
+            console.log(payload)
+            return {
+                ...state,
+                mapServices: payload
             }
         case GETCATS:
             return {

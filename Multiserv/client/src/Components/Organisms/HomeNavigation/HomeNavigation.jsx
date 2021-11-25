@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router';
 import { AiFillHome, AiFillCalendar } from "react-icons/ai";
+import { IoIosMap } from 'react-icons/io'
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import Img from '../../../assets/Icons/profile.png'
@@ -21,8 +22,8 @@ const HomeNavigation = () => {
     const [verPerfil, setVerPerfil] = useState(false)
     const handleClick = () => {
         setVerPerfil(!verPerfil)
-        }
-       
+    }
+
     const validarLogitudNombre = (nombre) => {
         let nombres = nombre.split(" ")
         return nombres;
@@ -43,7 +44,8 @@ const HomeNavigation = () => {
 
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
-        datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} /> : null,
+        <LinkTo linkClass='m-4 flex justify-center' page='home/mapservices' render={<IoIosMap size='28' color='white' />} />,
+        //datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} /> : null,
         datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='profile' render={<FaUserAlt size='28' color='white' />} /> : null,
         datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} /> : null
     ]
@@ -57,8 +59,8 @@ const HomeNavigation = () => {
         const uidClient = datosSesionFromLocalStorage.uid
         navigate(`/home/${uidClient}/list-favorites`)
     }
-    
-    function listenOnClick(){
+
+    function listenOnClick() {
         setVerPerfil(false)
     }
 
@@ -74,7 +76,7 @@ const HomeNavigation = () => {
     }
 
 
-    
+
 
     const modal = () => {
         return verPerfil ?
@@ -91,18 +93,18 @@ const HomeNavigation = () => {
                         email !== "" &&
                         <div className="flex flex-col w-full justify-center py-2"  >
                             <div className="w-full hover:bg-sky-900 hover:text-white py-2">
-                                <LinkTo page= "profile" render= {
-                                <div className="flex my-1 items-center pl-3"  >
-                                    <MdEdit className="mr-2" />
-                                    <span className="font-semibold">Editar Perfil</span>
-                                </div>} />
+                                <LinkTo page="profile" render={
+                                    <div className="flex my-1 items-center pl-3"  >
+                                        <MdEdit className="mr-2" />
+                                        <span className="font-semibold">Editar Perfil</span>
+                                    </div>} />
                             </div>
-                            <div className="w-full hover:bg-sky-900 hover:text-white py-2">
+                            {/* <div className="w-full hover:bg-sky-900 hover:text-white py-2">
                                 <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                     <MdNotifications className="mr-2" />
                                     <span className="font-semibold">Notificaciones</span>
                                 </button>
-                            </div>
+                            </div> */}
                             <div onClick={() => {
                                 listFav()
                                 handleClick()
@@ -130,26 +132,26 @@ const HomeNavigation = () => {
                                     <span className="font-semibold" >Mis citas</span>
                                 </button>
                             </div>
-                            { 
-                            detalleUsuario.isAdmin &&
-                            <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >
-                                <LinkTo page="control-panel" render={
-                                    <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
-                                        <MdHomeRepairService className="mr-2" />
-                                        <span className="font-semibold">Panel de administración</span>
-                                    </button>
-                                }
-                                />
-                            </div>
+                            {
+                                detalleUsuario.isAdmin &&
+                                <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >
+                                    <LinkTo page="control-panel" render={
+                                        <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                                            <MdHomeRepairService className="mr-2" />
+                                            <span className="font-semibold">Panel de administración</span>
+                                        </button>
+                                    }
+                                    />
+                                </div>
                             }
                         </div>
                     }
-                    {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center w-2/5 mt-3" onMouseOut={listenOnClick} ><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md" >Log out</button></div>) : ( <ButtonXartiago
+                    {datosSesionFromLocalStorage ? (<div className="flex items-center justify-center w-2/5 mt-3" onMouseOut={listenOnClick} ><button onClick={logout} className="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md" >Log out</button></div>) : (<ButtonXartiago
                         btn="Regresar"
                         page=""
                         clase="w-2/5 mt-3"
                         btnClass="font-semibold text-gray-50 flex w-full flex-nowrap bg-green-700 p-2 py-2 px-4 justify-center items-center rounded-md"
-                        onMouseOut={listenOnClick} /> )}
+                        onMouseOut={listenOnClick} />)}
                 </div>
             )
             :
