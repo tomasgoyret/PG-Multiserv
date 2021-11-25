@@ -4,26 +4,24 @@ import { useParams } from "react-router-dom";
 
 const Horarios = () => {
   const { idService } = useParams(); // id del Servicio
-  const [formHorarios, setFormHorarios] = useState({
-    direccion: "",
-    rango: "",
-    aDomicilio: false,
-    dias: [],
-    horarios: [],
-  });
+  var formHorarios = {};
   const [rango, setRango] = useState([]);
   const [errors, setErrors] = useState({
     dias: "",
     horas: "",
-    direccion: "",
+    address: "",
     aDomicilio: "",
   });
-  const [aDomicilio, setADomicilio] = useState(false);
-  const [dias, setDias] = useState([]);
-  const [horas, setHoras] = useState([]);
+  const [address, setAddress] = useState("");
+  const [aDomicilio, setADomicilio] = useState("");
+  const [dias, setDias] = useState("");
+  const [location, setLocation] = useState([]);
+  const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [claseDefault, setClaseDefault] = useState(
     "bg-green-200 rounded shadow-lg inset-0.5 m-1"
   );
+  var horas = [];
+  var array = [];
 
   const rangoCuarto = [
     "06:00",
@@ -102,11 +100,10 @@ const Horarios = () => {
       return hora;
     }
   });
-  var horarios = [];
   // Control de Checkbox de DIAS y rangos Horarios
   const handleOnChange = (e) => {
     if (e.target.name === "rangos") {
-      setHoras([]);
+      horas = [];
       if (e.target.value === "cuarto") {
         setRango(rangoCuarto);
       }
@@ -125,61 +122,55 @@ const Horarios = () => {
       if (e.target.checked === true) {
         if (!dias.includes(e.target.value)) {
           setDias([...dias, e.target.value]);
-          setFormHorarios({ ...formHorarios, dias });
         }
       } else {
         if (dias.includes(e.target.value)) {
           setDias(dias.filter((dia) => dia !== e.target.value));
-          setFormHorarios({ ...formHorarios, dias });
         }
-        
       }
     }
   };
 
   // Seleccion de horarios para el cliente
   const handleOnSelect = (e) => {
-    e.target.name = !e.target.name;
-    if (!horas.includes(e.target.value)) {
-      setHoras([...horas, e.target.value]);
+    if (
+      horariosDisponibles.filter((h) => {
+        return h.hora === e.target.value;
+      }).length === 0
+    ) {
+      setHorariosDisponibles([
+        ...horariosDisponibles,
+        { hora: e.target.value, reservado: false },
+      ]);
+      array = e.target.value;
       clasesBotones(true, e);
-      const horarios = horas.map((hora, i) => {
-        horas[i] = { hora, reservado: false };
-      });
-      setFormHorarios({ ...formHorarios, horarios });
     } else {
-      setHoras(horas.filter((hora) => hora !== e.target.value));
+      array = horariosDisponibles.filter((obj) => obj.hora !== e.target.value);
+      setHorariosDisponibles(array);
       clasesBotones(false, e);
-      horarios = horas.map((hora, i) => {
-        horas[i] = { hora, reservado: false };
-      });
-      setFormHorarios({ ...formHorarios, horarios });
     }
-    handleErrors(e);
+    handleErrors(e, array);
   };
 
-  //setFormHorarios({dias, horarios, isDomicilio: true, direccion: 'Lynch 2010'});
-  // Control de Direccion
-  const handleDireccion = (e) => {
+  // Control de address
+  const handleAddress = (e) => {
     handleErrors(e);
-    if (e.target.value.length !== 0 && aDomicilio === true) {
-      setFormHorarios({ ...formHorarios, direccion: e.target.value });
-    }
+    setAddress(e.target.value);
   };
 
   // Control de a domicilio
   const servicioADomicilio = (e) => {
-    setADomicilio(e.target.value);
-    if (e.target.value === true) {console.log('entro')
-      setFormHorarios({ ...formHorarios, aDomicilio: true });
+    if (e.target.value === true) {
+      setADomicilio(e.target.value);
+      handleErrors(e);
+    } else {
+      setAddress("");
+      setADomicilio(e.target.value);
+      handleErrors(e);
     }
-    if (e.target.value === false) {
-      setFormHorarios({ ...formHorarios, aDomicilio: false });
-    }
-    handleErrors(e);
   };
   // Errores
-  const handleErrors = (e) => {    
+  const handleErrors = (e, a) => {
     if (e.target.name === "rangos") {
       if (e.target.value === "") {
         setErrors({ ...errors, rango: "Seleccione un rango de horarios" });
@@ -194,13 +185,18 @@ const Horarios = () => {
         setErrors({ ...errors, aDomicilio: "" });
       }
     }
-    if (e.target.name === "direccion") {
+    if (e.target.name === "address") {
       if (e.target.value.length === 0 && aDomicilio === "true") {
-        console.log(e.target.value.length, "direccion");
-        console.log(aDomicilio, "true");
-        setErrors({ ...errors, direccion: "Ingrese una direccion" });
+        setErrors({ ...errors, address: "Ingrese una direccion" });
       } else {
-        setErrors({ ...errors, direccion: "" });
+        setErrors({ ...errors, address: "" });
+      }
+    }
+    if (e.target.name === "horas") {
+      if (a.length === 0) {
+        setErrors({ ...errors, horas: "Seleccione horario para las citas" });
+      } else {
+        setErrors({ ...errors, horas: "" });
       }
     }
   };
@@ -220,31 +216,60 @@ const Horarios = () => {
   // Submit de formulario para guardar horarios
   /* BACK END pide
     const { id } = req.params; 
-    const { direccion, aDomicilio, dias, horarios } = req.body;
+    const { address, aDomicilio, dias, horarios } = req.body;
   */
 
   const submitHorarios = async (e) => {
     e.preventDefault();
-    enviarHorarios(idService);
+    if (
+      errors.dias === "" &&
+      errors.horas === "" &&
+      errors.address === "" &&
+      errors.aDomicilio === "" &&
+      dias.length > 0 &&
+      horariosDisponibles.length > 0 &&
+      ((aDomicilio === "false" && address === "") ||
+        (aDomicilio === "true" && address.length > 0))
+      /*&& location.length > 0 */
+    ) {
+      formHorarios = {
+        aDomicilio,
+        address,
+        dias,
+        location,
+        horarios: horariosDisponibles,
+      };
+      enviarHorarios(idService, formHorarios);
+    } else {
+      alert("Complete todos los campos");
+    }
   };
 
-  const enviarHorarios = async (idService) => {
-    //const res = await axios.post(`horarios/${idService}`, formHorarios);
-    console.log(formHorarios);
-    /* setFormHorarios({
-      direccion: "",
-      aDomicilio: false,
-      dias: [],
-      horarios: [],
-    }); */
-    //alert(res.data)
-  };
+  const enviarHorarios = async (idService, body) => {
+console.log('s')
 
+    const res = await axios.post(`horarios/${idService}`, body);
+    const resetDomicilio = document.getElementById("aDomicilio");
+    const resetRangos = document.getElementById("rangos");
+    const inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].checked = false;
+    }
+    resetDomicilio.value = "";
+    resetRangos.value = "";
+    setDias([]);
+    setADomicilio('');
+    setHorariosDisponibles([]);
+    setAddress("");
+    setLocation([]);
+    setRango([])
+    alert(res.data);
+  };
   return (
     <div>
       <h1>Horarios</h1>
       <br />
-      <form onSubmit={(e) => submitHorarios(e)}>
+      <form id="formulario" onSubmit={(e) => submitHorarios(e)}>
         <div>
           <h1>Seleccione los dias hábiles para las citas</h1>
           <br />
@@ -300,12 +325,16 @@ const Horarios = () => {
           />{" "}
           <label htmlFor="Domingo"> Domingo </label>
         </div>
-        { dias.length < 1 && <p className="text-red-400">Debe seleccionar días disponibles para la cita</p>}
+        {dias.length < 1 && dias !== "" && (
+          <p className="text-red-400">
+            Debe seleccionar días disponibles para la cita
+          </p>
+        )}
         <br />
         <div>Seleccione intervalos de las citas</div>
         <br />
         <div>
-          <select name="rangos" onChange={handleOnChange}>
+          <select id="rangos" name="rangos" onChange={handleOnChange}>
             <option value="">Seleccion una opcion</option>
             <option value="cuarto">15 minutos</option>
             <option value="medio">30 minutos</option>
@@ -322,12 +351,13 @@ const Horarios = () => {
               {rangoCuarto.map((hora, i) =>
                 i + 1 < rangoCuarto.length ? (
                   <div key={"keyderangosCuartos" + i}>
-                    <button
+                    <input
+                      name="horas"
                       className={claseDefault}
                       type="button"
                       onClick={handleOnSelect}
                       value={`${hora} - ${rangoCuarto[i + 1]}`}
-                    >{`${hora} - ${rangoCuarto[i + 1]}`}</button>
+                    />
                   </div>
                 ) : (
                   ""
@@ -340,12 +370,13 @@ const Horarios = () => {
               {rangoMedio.map((hora, i) =>
                 i + 1 < rangoMedio.length ? (
                   <div key={"keyderangosMedios" + i}>
-                    <button
+                    <input
+                      name="horas"
                       className={claseDefault}
                       type="button"
                       onClick={handleOnSelect}
                       value={`${hora} - ${rangoMedio[i + 1]}`}
-                    >{`${hora} - ${rangoMedio[i + 1]}`}</button>
+                    />
                   </div>
                 ) : (
                   ""
@@ -358,12 +389,13 @@ const Horarios = () => {
               {rangoHora.map((hora, i) =>
                 i + 1 < rangoHora.length ? (
                   <div key={"keyderangosHoras" + i}>
-                    <button
+                    <input
+                      name="horas"
                       className={claseDefault}
                       type="button"
                       onClick={handleOnSelect}
                       value={`${hora} - ${rangoHora[i + 1]}`}
-                    >{`${hora} - ${rangoHora[i + 1]}`}</button>
+                    />
                   </div>
                 ) : (
                   ""
@@ -393,19 +425,22 @@ const Horarios = () => {
           {aDomicilio === "true" && (
             <div>
               <h1>Direccion</h1>
-              <label htmlFor="direccion">
-                Ingrese direccion del servicio :{" "}
-              </label>
+              <label htmlFor="address">Ingrese direccion del servicio : </label>
               <input
                 type="text"
-                name="direccion"
-                onChange={handleDireccion}
+                name="address"
+                onChange={handleAddress}
                 placeholder="ingrese direccion..."
               />
+              <div>
+                <br />
+                <h1>Location</h1>
+                <p>Tomas y Santi manejensen ajaja</p>
+              </div>
             </div>
           )}
         </div>
-        <p className="text-red-400"> {errors.direccion}</p>
+        <p className="text-red-400"> {errors.address}</p>
         <button type="submit" className="">
           enviar
         </button>
@@ -413,5 +448,5 @@ const Horarios = () => {
     </div>
   );
 };
-
+// pais ciudad calle numero
 export default Horarios;

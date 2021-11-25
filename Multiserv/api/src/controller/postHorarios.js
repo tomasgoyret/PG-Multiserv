@@ -2,9 +2,9 @@ const { Horarios, Servicios } = require("../db.js");
 
 const postHorarios = async (req, res) => {
     const { idService } = req.params; 
-    const { direccion, aDomicilio, dias, horarios } = req.body;
+    const { address, location, aDomicilio, dias, horarios } = req.body;
     try {
-        const newHorario = { direccion, aDomicilio, dias, horarios }
+        const newHorario = { address, location, aDomicilio, dias, horarios }
         const horario = await Horarios.create(newHorario);
         const servicio = await Servicios.findByPk(idService)
         await servicio.addHorarios(horario)
