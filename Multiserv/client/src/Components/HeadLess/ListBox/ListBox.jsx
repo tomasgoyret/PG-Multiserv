@@ -4,8 +4,8 @@ import { Listbox, Transition } from '@headlessui/react'
 import { HiOutlineSelector } from "react-icons/hi";
 import { FiCheck } from "react-icons/fi";
 
-export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc }) {
-    const [selected, setSelected] = useState(options[0].name)
+export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc, defaultValue }) {
+    const [selected, setSelected] = useState(defaultValue ? options.find((option) => option.name === defaultValue).name : options[0].name)
     const [iconSelected, setIconSelected] = useState(options[0].icon || '')
     /* (value) => {
         console.log(value)

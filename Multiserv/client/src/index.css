@@ -10,24 +10,56 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 :root{
-    --scrollbarBG: #3b3b3b4d;
-    --thumbBG: #d8d8d8;
+    --scrollbarBG: #3b3b3b27;
+    --thumbBG: #1616167a;
 }
-.custom-scrollbar::-webkit-scrollbar{
-    width: 6px;
-  }
-  .custom-scrollbar{
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--scrollbarBG);
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG) ;
-    border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
-  }
+
+  .custom-scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.custom-scrollbar::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+.scroll-bar::-webkit-scrollbar {
+  width: 1px;
+}
+/* Estilos barra (thumb) de scroll */
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+ /* Estilos track de scroll */
+.scroll-bar::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+.scroll-bar::-webkit-scrollbar-track:hover, 
+.scroll-bar::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+
   .inputfile {
     width: 0.1px;
     height: 0.1px;

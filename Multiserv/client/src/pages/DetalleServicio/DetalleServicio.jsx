@@ -32,14 +32,14 @@ const DetalleServicio = () => {
     const dispatch = useDispatch()
     const text = 'El servicio que estabas buscando! Entra y checkea para mas info ';
     const [isFavorite, setIsFavorite] = useState(false)
-    
     const url = `https://pg-multiserv.vercel.app/home/detalleServicio/${id}`;
     const hashTag = 'Servicios ';
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
-
+    
     const servicio = servicios.filter(serv => serv.id === Number(id))
     const usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    console.log(servicio);
 
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
