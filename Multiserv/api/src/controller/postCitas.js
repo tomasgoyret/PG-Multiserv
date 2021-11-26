@@ -6,7 +6,7 @@ const postCitas = async (req, res) => {
     try {
         const user = await Usuarios.findByPk(uidClient)
         const servicio = await Servicios.findByPk(id)
-        const cita = { dia, hora, nameUser:user.displayName, direccion, ciudad }
+        const cita = { dia, hora, nameUser:user.displayName, direccion, ciudad }        
         const citas = await Citas.create(cita);
         await user.addCitas(citas)
         await servicio.addCitas(citas)

@@ -8,7 +8,7 @@ import "react-multi-date-picker/styles/colors/green.css";
 import { storage } from "../../Firebase";
 import axios from "axios";
 
-const VerHorarios = () => {
+const AgendarCita = () => {
   const navigate = useNavigate();
   const datosSesionFromLocalStorage = JSON.parse(
     localStorage.getItem("datoSesion")
@@ -76,7 +76,8 @@ const VerHorarios = () => {
       hora: "",
       reservado: false,
     });
-    if (verHorarios.length > 0) {      
+    if (verHorarios.length > 0) {
+      
       setProp(Object.keys(array[array.length - 1]));
     }
   };
@@ -174,7 +175,7 @@ const VerHorarios = () => {
     e.preventDefault();
     if (detalleServicio[0]?.homeService === false) {
       if ( dia.length > 0 && hora.hora.length > 0 && direccion.length > 0 && ciudad.length > 0 ) {
-        let body = {
+        var body = {
           dia,
           hora,
           direccion,
@@ -192,7 +193,7 @@ const VerHorarios = () => {
         setValue(new Date());
       }
     }
-    if (detalleServicio[0]?.homeService === true) {
+    else if (detalleServicio[0]?.homeService === true) {
       if (dia.length > 0 && hora.hora.length > 0) {
         let body = {
           dia,
@@ -215,7 +216,7 @@ const VerHorarios = () => {
       alert("Complete los campos");
     }
   };
-  const agregarCita = async (idService, body) => {
+  const agregarCita = async (body, idService ) => {
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
     alert(response.data);
@@ -255,7 +256,7 @@ const VerHorarios = () => {
 
         <br />
         {/* Si no es a Domicilio el usuario tiene que colocar direccion de cita */}
-        {detalleServicio.homeService === false ? (
+        {detalleServicio[0]?.homeService === false ? (
           <div>
             <h3>Direccion de la cita</h3>
             <label htmlFor="ciudad"> Ingrese su ciudad: </label>
@@ -296,7 +297,7 @@ const VerHorarios = () => {
         )}
 
         {/*--------------  Previsualizacion Turno  -------------------*/
-        }
+       }
 
         <div className="bg-green-500">
           <h1>Turno para el Servicio: {detalleServicio[0]?.title}</h1>
@@ -323,4 +324,4 @@ const VerHorarios = () => {
   );
 };
 
-export default VerHorarios;
+export default AgendarCita;
