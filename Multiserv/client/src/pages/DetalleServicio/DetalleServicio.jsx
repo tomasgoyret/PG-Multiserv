@@ -158,7 +158,7 @@ const DetalleServicio = () => {
     }
 
     return (
-        <div>
+        <div className="w-full">
             <div className="flex flex-col">
                 {
                     modalReviews &&
@@ -176,13 +176,13 @@ const DetalleServicio = () => {
                         </div>
                     ) : (
                         <div className="w-full flex flex-col overflow-y-auto h-screen pb-10">
-                            <div className="px- pt-6 pb-4">
+                            <div className="pt-6 pb-4">
                                 <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                             </div>
 
-                            <div className="flex border-t border-gray-200 mx-4 my-4 pt-4">
-                                <div className="bg-white relative flex flex-col rounded-b-lg">
-                                    <div className=" absolute -top-5  px-4 flex w-full justify-between">
+                            <div className="flex border-t border-gray-200 my-4 pt-4 w-full">
+                                <div className="bg-white relative flex flex-col rounded-b-lg w-full">
+                                    <div className=" absolute -top-5 px-4 flex justify-between">
                                         <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
                                             <span className="text-white">{servicio[0].categorias[0] === undefined ? "Sin definir" : servicio[0].categorias[0].title} </span>
                                         </div>
@@ -198,9 +198,9 @@ const DetalleServicio = () => {
                                         }}
                                         name="photo1"
                                         imagen={servicio[0].photos[0]}
-                                        imgClass={`object-cover rounded-t-lg w-100 h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
+                                        imgClass={`object-cover rounded-t-lg w-full h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
                                     />
-                                    <div className='flex flex-row pt-6 px-4 justify-around' >
+                                    <div className='flex flex-row pt-6 px-4 justify-around w-full' >
                                         <div>
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md' >
                                                 <div className='w-28 mr-4' >
@@ -312,7 +312,7 @@ const DetalleServicio = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="">
+                            <div>
                                 <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} />
                             </div>
                         </div>
