@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Imagen from "../../../assets/images/img1.webp"
 import StarRating from "../../Atoms/StarRating/StarRating";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews, users, usuarioId } from "../../../redux/actions/actions";
 import { useLocation } from "react-router";
+import SendReview from "../SendReview/SendReview";
 
-const ReviewService = ({id}) => {
+const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosReviews}) => {
     const dispatch = useDispatch()
     const { reviews, usuarios } = useSelector(state => state)
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
+
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    
 
     const reviewsdata = reviews.map(review => ({
         title: review.title,
@@ -24,12 +28,23 @@ const ReviewService = ({id}) => {
         dispatch(users())
     }, [])
 
+
+
     return(
         <div className="w-full h-screen">
-            <div className="flex justify-center w-full">
+            <div className="w-full px-6 mt-10">
+                <hr />
+            </div>
+            <div className="flex justify-center w-full pt-5 pb-5 px-10">
                 <h2 className="text-3xl text-gray-800 py-5 font-bold">Reseñas</h2>
             </div>
-            <div className="w-full h-auto flex flex-col my-5 mx-10">
+            {
+                mostrarComentariosReviews && datosSesionFromLocalStorage &&
+                <div className="w-4/6 px-5 mt-5 mb-20">
+                    <SendReview />
+                </div>
+            }
+            <div className="w-full h-auto flex flex-col my-5 mx-10 pb-10">
                 {
                     reviewsdata?.map(( comentario, i) => (
                         <div className="flex flex-col w-3/5 h-auto my-3" key={'keyFromReviews'+i}>
@@ -53,7 +68,12 @@ const ReviewService = ({id}) => {
                         </div>
                     ))
                 }
+                {
+                    verMasReviews && 
+                    <span className="text-sm text-blue-500 hover:text-blue-700 cursor-pointer mt-4" onClick={handleModalReviews}>Ver mas reviews</span>
+                }
             </div>
+            
         </div>
     )
 }

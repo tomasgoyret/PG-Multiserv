@@ -5,7 +5,7 @@ import { BsSortAlphaDownAlt, BsSortAlphaUpAlt, BsSortDown, BsSortDownAlt } from 
 import { useEffect, useState } from 'react';
 /* React redux */
 import { useSelector, useDispatch } from 'react-redux'
-import { buscar, orderAlph, orderRating, services, resetOrder, filterCats, getCats, users, usuarioId } from '../../redux/actions/actions';
+import { buscar, orderAlph, orderRating, services, filterCats, getCats, users, usuarioId, mapServices } from '../../redux/actions/actions';
 import ServiceCard from '../../Components/Molecules/ServiceCard/ServiceCard';
 import { useNavigate } from 'react-router';
 import Input from '../../Components/Atoms/Input/Input';
@@ -36,12 +36,12 @@ const Home = () => {
 
     useEffect(() => {
         document.title = "Explorar servicios"
-        if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
+        if (datosSesionFromLocalStorage != null && !datosSesionFromLocalStorage.emailVerified) {
             navigate('/email-verification')
         }
         dispatch(services())
         dispatch(users())
-
+        dispatch(mapServices())
     }, [])
 
     useEffect(() => {

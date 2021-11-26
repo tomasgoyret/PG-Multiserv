@@ -30,22 +30,23 @@ const HomeNavigation = () => {
     }
     var name = " Invitado"
     var email = ""
+    console.log(datosSesionFromLocalStorage, "acá")
 
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
+    if (datosSesionFromLocalStorage != null) {
         name = datosSesionFromLocalStorage.displayName
         email = datosSesionFromLocalStorage.email
     }
     const resultadoNombre = validarLogitudNombre(name)
     var foto = Img
 
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
+    if (datosSesionFromLocalStorage != null) {
         foto = datosSesionFromLocalStorage.photoURL
     }
 
     const arr = [
         <LinkTo linkClass='m-4 flex justify-center' page='home' render={<AiFillHome size='28' color='white' />} />,
         <LinkTo linkClass='m-4 flex justify-center' page='home/mapservices' render={<IoIosMap size='28' color='white' />} />,
-        datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} /> : null,
+        //datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/chat' render={<BsFillChatDotsFill size='28' color='white' />} /> : null,
         datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='profile' render={<FaUserAlt size='28' color='white' />} /> : null,
         datosSesionFromLocalStorage ? <LinkTo linkClass='m-4 flex justify-center' page='home/schedule' render={<AiFillCalendar size='30' color='white' />} /> : null
     ]
@@ -99,12 +100,12 @@ const HomeNavigation = () => {
                                         <span className="font-semibold">Editar Perfil</span>
                                     </div>} />
                             </div>
-                            <div className="w-full hover:bg-sky-900 hover:text-white py-2">
+                            {/* <div className="w-full hover:bg-sky-900 hover:text-white py-2">
                                 <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
                                     <MdNotifications className="mr-2" />
                                     <span className="font-semibold">Notificaciones</span>
                                 </button>
-                            </div>
+                            </div> */}
                             <div onClick={() => {
                                 listFav()
                                 handleClick()

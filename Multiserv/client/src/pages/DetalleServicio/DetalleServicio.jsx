@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
-import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
+import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp } from "react-icons/ai"
+import { BsShareFill } from "react-icons/bs";
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -17,22 +18,33 @@ import { useLocation } from 'react-router'
 import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
-import { services,users } from '../../redux/actions/actions'
+import { services, users } from '../../redux/actions/actions'
+import ModalAllReviews from '../../Components/Organisms/ModalAllReviews/ModalAllReviews';
 
 const DetalleServicio = () => {
     let { id } = useParams();
-
+    var uid = ""
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     useEffect(() => {
         dispatch(services())
         dispatch(users())
-        //document.title = `Detalles de ${servicio[0].title}`
+        if (datosSesionFromLocalStorage !=null) {
+            name = datosSesionFromLocalStorage.displayName
+            uid = datosSesionFromLocalStorage.uid
+        }
+        if (servicio[0] !== undefined) {
+            document.title = `Detalles de ${servicio[0].title}`
+        }
+        document.title = `Detalle del servcio`
+
     }, [])
 
     var idFav = '';
-    var  value = false;
+    var value = false;
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
+    const [modalReviews, setModalReviews] = useState(false)
     let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
@@ -47,17 +59,16 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, '')
     let servicio = servicios.filter(serv => serv.id === Number(id))
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
-    console.log("Este es usuario",usuario)
+    console.log("Este es usuario", usuario)
 
-    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
+    if (datosSesionFromLocalStorage != null) {
         foto = datosSesionFromLocalStorage.photoURL
     }
 
-    if(usuario && usuario.phoneNumber){
-        if(usuario.phoneNumber[0]=== '+')
-        var numberWhastapp= usuario.phoneNumber.slice(1)
+    if (usuario && usuario.phoneNumber) {
+        if (usuario.phoneNumber[0] === '+')
+            var numberWhastapp = usuario.phoneNumber.slice(1)
     }
 
     // si necesitan datos de la sesión se encuentran en la variable datosSesionFromLocalStorage
@@ -73,48 +84,48 @@ const DetalleServicio = () => {
     }
     var name = "Inicia Sesión "
     var uid = ""
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
+    if (datosSesionFromLocalStorage != null) {
         name = datosSesionFromLocalStorage.displayName
-        uid= datosSesionFromLocalStorage.uid
+        uid = datosSesionFromLocalStorage.uid
     }
-    const contGrad = {
-        background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
-    }
-    const userProfile = {
+    // const contGrad = {
+    //     background: 'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)'
+    // }
+    // const userProfile = {
 
-        // backgroundImage: `url(${usuarioID.data.photoURL})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'top center'
-    }
+    //     // backgroundImage: `url(${usuarioID.data.photoURL})`,
+    //     backgroundSize: 'cover',
+    //     backgroundPosition: 'top center'
+    // }
     const seteoFav = () => {
         value = !value;
         agregarFav()
     }
-
+    console.log(uid)
     const agregarFav = async () => {
 
-        if(value === true) {
+        if (value === true) {
             const res = await axios.post('agregar-fav', {
-            idService: current,
-            uidClient: uid
+                idService: current,
+                uidClient: uid
             });
             idFav = res.data.id || res.data[0].id;
             return toast.success('¡Se agregó a tus favoritos!', {
                 position: "top-center",
                 autoClose: 3000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: false,
                 draggable: true,
                 progress: undefined,
             })
-        }   
-        else{
+        }
+        else {
             await axios.delete(`eliminar-fav?id=${idFav}&uidClient=${uid}`)
             return toast.error('Se eliminó de tus favoritos', {
                 position: "top-center",
                 autoClose: 3000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: false,
                 draggable: true,
@@ -142,10 +153,20 @@ const DetalleServicio = () => {
 
     //let idProveedor = servicioID[0].usuarioUidClient
 
+    const handleModalReviews = () => {
+        setModalReviews(!modalReviews);
+    }
+
     return (
-        <div>
-            <div className="flex">
-                    
+        <div className="w-full">
+            <div className="flex flex-col">
+                {
+                    modalReviews &&
+                    <div className="w-full h-screen z-10 absolute top-0 left-0" onClick={handleModalReviews}>
+                        <ModalAllReviews />
+                    </div>
+                }
+
                 {modal}
                 {
                     loading ? (
@@ -154,14 +175,14 @@ const DetalleServicio = () => {
                             <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                         </div>
                     ) : (
-                        <div className="w-full flex flex-col overflow-y-auto h-screen">
-                            <div className="px- pt-6 pb-4">
+                        <div className="w-full flex flex-col overflow-y-auto h-screen pb-10">
+                            <div className="pt-6 pb-4">
                                 <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                             </div>
 
-                            <div className="flex border-t border-gray-200 mx-4 my-4 pt-4">
-                                <div className="bg-white relative flex flex-col rounded-b-lg">
-                                    <div className=" absolute -top-5  px-4 flex w-full justify-between">
+                            <div className="flex border-t border-gray-200 my-4 pt-4 w-full">
+                                <div className="bg-white relative flex flex-col rounded-b-lg w-full">
+                                    <div className=" absolute -top-5 px-4 flex justify-between">
                                         <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
                                             <span className="text-white">{servicio[0].categorias[0] === undefined ? "Sin definir" : servicio[0].categorias[0].title} </span>
                                         </div>
@@ -177,11 +198,11 @@ const DetalleServicio = () => {
                                         }}
                                         name="photo1"
                                         imagen={servicio[0].photos[0]}
-                                        imgClass={`object-cover rounded-t-lg w-100 h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
+                                        imgClass={`object-cover rounded-t-lg w-full h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
                                     />
-                                    <div className='flex flex-row pt-6 px-4 justify-around' >
-                                        <div>
-                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
+                                    <div className='flex flex-row pt-6 px-4 w-full' >
+                                        <div className="flex ">
+                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
                                                         imagen={usuario && usuario.photoURL}
@@ -190,29 +211,29 @@ const DetalleServicio = () => {
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
-                                                <div className='w-14 mr-4 flex flex-row space-x-2'>
-                                                {
-                                                  usuario && usuario.phoneNumber?  
-                                                  <a 
-                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
-                                                        href={`tel:${usuario.phoneNumber}`}
-                                                    ><AiTwotonePhone className={`text-3xl`} />
-                                                    </a>: null}
-                                                    {                                                  
-                                                    usuario && usuario.email?  <a 
-                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
-                                                        href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
-                                                        
-                                                    > <AiOutlineWhatsApp className={`text-3xl`} />
-                                                    </a>: null}
-                                                    {                                                  
-                                                    usuario && usuario.phoneNumber?  <a 
-                                                        className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
-                                                        href={`mailto:${usuario.email}`}
-                                                        
-                                                    > <AiOutlineMail className={`text-3xl`} />
-                                                    </a>: null}
+                                                    <span className='text-gray-800 font-bold text-xl font-sans' >{usuario && usuario.displayName}</span><br />
+                                                    <div className='w-14 mr-4 flex flex-row space-x-2'>
+                                                        {
+                                                            datosSesionFromLocalStorage && usuario && usuario.phoneNumber ?
+                                                                <a
+                                                                    className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
+                                                                    href={`tel:${usuario.phoneNumber}`}
+                                                                ><AiTwotonePhone className={`text-3xl`} />
+                                                                </a> : null}
+                                                        {
+                                                            datosSesionFromLocalStorage && usuario && usuario.email ? <a
+                                                                className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
+                                                                href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
+
+                                                            > <AiOutlineWhatsApp className={`text-3xl`} />
+                                                            </a> : null}
+                                                        {
+                                                            datosSesionFromLocalStorage && usuario && usuario.phoneNumber ? <a
+                                                                className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                                                                href={`mailto:${usuario.email}`}
+
+                                                            > <AiOutlineMail className={`text-3xl`} />
+                                                            </a> : null}
                                                     </div>
                                                     {/* <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
                                                     <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span> */}
@@ -236,7 +257,7 @@ const DetalleServicio = () => {
 
                                                 {/* Modal de compartir */}
                                                 {
-                                                compartirModal &&
+                                                    compartirModal &&
                                                     <div className="w-96 h-48  z-10 absolute -top-5 flex flex-col border border-gray-200 bg-white shadow-xl rounded-lg py-5" onMouseLeave={() => setCompartirModal(false)}>
                                                         <div className="w-full flex justify-center h-2/6">
                                                             <span className="text-3xl font-semibold font-sans">MultiServ</span>
@@ -246,7 +267,7 @@ const DetalleServicio = () => {
                                                         </div>
                                                         <div className="w-full flex justify-center items-center h-3/6">
                                                             <a className='mr-2' rel="noopener noreferrer" href={`https://api.whatsapp.com/send?text=${text}${url}`} target="_blank" >
-                                                            <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
+                                                                <Image name="whatsappShareServices" imagen={WP} imgClass={`object-cover rounded-t-lg w-10 h-10 rounded-2xl ${loadingImg || failedImg ? 'hidden' : ''}`} />
                                                             </a>
                                                             <a className='mr-2' rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashTag}`} target="_blank" >
                                                                 <Image name="twitterShareServices" imagen={TW} imgClass={`object-cover rounded-t-lg w-10 h-10 ${loadingImg || failedImg ? 'hidden' : ''}`} />
@@ -259,13 +280,13 @@ const DetalleServicio = () => {
                                                             </a>
                                                         </div>
                                                     </div>
-                                                }  
+                                                }
                                                 <div>
                                                     <button
-                                                        className="flex justify-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
+                                                        className="flex justify-center items-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
                                                         onClick={() => setCompartirModal(!compartirModal)}
                                                     >
-                                                        Compartir
+                                                        <BsShareFill className="mx-2" /> Compartir
                                                     </button>
                                                 </div>
                                                 {
@@ -292,14 +313,15 @@ const DetalleServicio = () => {
                                 </div>
                             </div>
                             <div>
-                                <ReviewService />
+                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} />
                             </div>
                         </div>
                     )}
+
             </div>
 
             {/* Modal Compartir */}
-                                              
+
         </div>
     )
 }
