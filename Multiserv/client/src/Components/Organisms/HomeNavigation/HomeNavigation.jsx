@@ -30,15 +30,16 @@ const HomeNavigation = () => {
     }
     var name = " Invitado"
     var email = ""
+    console.log(datosSesionFromLocalStorage, "acá")
 
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName) {
+    if (datosSesionFromLocalStorage != null) {
         name = datosSesionFromLocalStorage.displayName
         email = datosSesionFromLocalStorage.email
     }
     const resultadoNombre = validarLogitudNombre(name)
     var foto = Img
 
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
+    if (datosSesionFromLocalStorage != null) {
         foto = datosSesionFromLocalStorage.photoURL
     }
 
