@@ -309,7 +309,7 @@ const Profile = () => {
                                 <div className="mb-4">
                                     <div className="pt-2 pl-4">
                                         <div className="flex flex-col relative w-full">
-                                            <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone}</span>
+                                            <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone ? usuarioPhone : "No tiene un teléfono registrado"}</span>
                                             <div className="flex flex-row mt-1">
                                                 <ListBox
                                                     customBorder="#9CA3AF"
