@@ -2325,7 +2325,8 @@ let DataServices = async () => {
               profilePic: userID.photoURL,
               estadoDePago: "Aprobado",
               location: s.location,
-              address: s.address
+              address: s.address,
+              homeService: false,
             })
             const usuario = await Usuarios. findOne( {where : {uidClient : s.uidUser }})
             await usuario.addServicios(servicio)
