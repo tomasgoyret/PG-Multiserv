@@ -23,6 +23,7 @@ import MyServices from "./pages/MyServices/MyServices";
 import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
 import CrearHorarios from "./pages/CrearHorarios/CrearHorarios";
+import VerHorarios from "./pages/VerHorarios/VerHorarios";
 import { MapServices } from "./pages/MapServices/MapServices";
 import SendReview from "./Components/Organisms/SendReview/SendReview";
 
@@ -88,6 +89,10 @@ function App() {
         {
           path: '/home/servicios/:id/editar',
           element: <EditarServicio />
+        },
+        {
+          path: '/home/:idService/ver-horarios',
+          element: <VerHorarios />
         },
       ]
     },

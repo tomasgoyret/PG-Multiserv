@@ -25,7 +25,8 @@ import {
     ELIMINAR_MISERVICIO,
     EDITAR_MISERVICIO,
     MIS_CITAS,
-    MAPSERVICES
+    MAPSERVICES,
+    VER_HORARIOS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -247,23 +248,26 @@ export const updateService = (id, datos) => {
 }
 // Traer mis citas por uidClient
 export const getMisCitas = (uidClient) => {
-
     return async function (dispatch) {
-
         let citas = `citas/${uidClient}`;
-
         const response = await axios(citas);
-
         const cita = response.data
-
         return dispatch({
-
             type: MIS_CITAS,
-
             payload: cita
-
         })
-
     }
+}
 
+/* Traer Horarios */
+export const getHorarios = (idService) => {
+    return async function (dispatch) {
+        let horarios = `horarios/${idService}`;
+        const response = await axios(horarios);
+        const dataServ = response.data
+        return dispatch({
+            type: VER_HORARIOS,
+            payload: dataServ
+        })
+    }
 }
