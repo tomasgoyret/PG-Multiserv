@@ -23,6 +23,7 @@ import {
     EDITAR_MISERVICIO,
     MIS_CITAS,
     MAPSERVICES,
+    VER_HORARIOS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -46,6 +47,7 @@ const initalState = {
     misServicios: [],
     misCitas: [],
     mapServices: [],
+    verHorarios: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -210,6 +212,11 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 detalleServicio: payload
             }
+            case VER_HORARIOS:
+                return{
+                    ...state,
+                    verHorarios:payload
+                }
 
         default:
             return state;

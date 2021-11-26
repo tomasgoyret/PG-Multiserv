@@ -15,7 +15,6 @@ const Horarios = () => {
   const [fechas, setFechas] = useState([]);
   const [valuePanel, setValuePanel] = useState("");
   const today = new Date();
-  var horas = [];
   var array = [];
 
   const rangoCuarto = [
@@ -102,7 +101,6 @@ const Horarios = () => {
   // Control de rangos Horarios
   const handleOnChange = (e) => {
     if (e.target.name === "rangos") {
-      horas = [];
       if (e.target.value === "cuarto") {
         setRango(rangoCuarto);
       }
@@ -170,7 +168,7 @@ const Horarios = () => {
   const handleChange = (value) => {
     let dias = []
     for (let i = 0; i < value.length; i++) {
-      dias.push(value[i].toDate().toString().slice(0, 16)) 
+      dias.push(value[i].format()) 
     }    
     setFechas(dias);
     handleErrors("fecha", value);
@@ -186,16 +184,15 @@ const Horarios = () => {
     if (errors.horas === "" && horariosDisponibles.length > 0 && value.length > 0) {
        */
     let dias = fechas ;
+    let body = dias.map((d)=>{ return {[d]: horariosDisponibles} })
     let formHorarios = {
-      dias,
-      horarios: horariosDisponibles,
+      fechas: body
     };
     enviarHorarios(idService, formHorarios);
     /* } else {
       alert("Complete todos los campos");
     } */
   };
-
   const enviarHorarios = async (idService, body) => {
     setSeteoRango("");
     setHorariosDisponibles([]);
@@ -204,9 +201,8 @@ const Horarios = () => {
     setValue([]);
     setValuePanel("");
     const res = await axios.post(`horarios/${idService}`, body);
-    alert(res.data);
+    alert(res.data); 
   };
-
   // Clases de botones
   const clasesBotones = (b, e) => {
     // clase de boton si esta seleccionado
@@ -218,7 +214,6 @@ const Horarios = () => {
       e.target.className = "bg-green-200 rounded shadow-lg inset-0.5 m-1";
     }
   };
-  var a = [];
   return (
     <div>
       <h1>Horarios para el servicio</h1>
@@ -229,8 +224,9 @@ const Horarios = () => {
           <br />
           <DatePicker
             className="green"
+            format="YYYY/MM/DD"
             minDate={new Date().setDate(today.getDate())}
-            maxDate={new Date().setDate(60)}
+            maxDate={new Date().setDate(30)}
             multiple
             value={value}
             onChange={handleChange}
