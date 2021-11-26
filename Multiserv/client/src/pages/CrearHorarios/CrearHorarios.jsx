@@ -211,6 +211,7 @@ const Horarios = () => {
     setValuePanel("");
     const res = await axios.post(`horarios/${idService}`, body);
     alert(res.data);
+    navigate("/home");
   };
   // Clases de botones
   const clasesBotones = (b, e) => {
