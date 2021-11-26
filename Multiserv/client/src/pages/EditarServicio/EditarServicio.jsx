@@ -554,7 +554,7 @@ const EditarServicio = () => {
                         callBack={(text) => {
                           setEditService({
                             ...editService,
-                            categorias: [text.name]
+                            category: text.name
                           })
                         }}
                         text="..."
