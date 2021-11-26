@@ -63,7 +63,31 @@ const sendEmail = async (email, subject, html) => {
       }
   };
 
+  const mailTurno = (name,dia,hora,direccion,ciudad,servicio)=>{
+    return `
+          <head>
+          </head>
+          <div id="email___content">
+              <h2>Hola ${name}</h2>
+              <p>Tu turno se agendó correctamente!</p>
+              <br>
+              <p>Detalle de tu turno:</p>
+              <br>
+              <p>Servicio contratado: ${servicio}</p>
+              <br>
+              <p>Día: ${dia}</p>
+              <br>
+              <p>Hora: ${hora}</p>
+              <br>
+              <p>Lugar: ${direccion} , ${ciudad}</p>
+              <br>
+
+              <a href="https://pg-multiserv.vercel.app/">Visite nuestra página!</a>
+          </div>`;
+  }
+
   module.exports = {
     sendEmail,
-    mailPago
+    mailPago,
+    mailTurno
   };
