@@ -6,7 +6,7 @@ const getAllUbicacion = async (req, res,next) => {
     try {
         const ubicaciones = await Servicios.findAll( {
             attributes: {
-                exclude: ['createdAt', 'updatedAt','nameUser','currency','description','max','min','estadoDePago','rating','photos',]
+                exclude: ['createdAt', 'updatedAt','nameUser','currency','description','max','min','estadoDePago','rating','photos','profilePic']
             }})
         ;
         res.send(ubicaciones)
