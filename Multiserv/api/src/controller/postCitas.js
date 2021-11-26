@@ -1,6 +1,7 @@
 const { Citas, Usuarios, Servicios } = require("../db.js");
+const { sendEmail, mailTurno } = require("../mails/mails.js");
 
-const postCitas = async (req, res) => {
+const postCitas = async (req, res,next) => {
     const { id } = req.params;
     const { dia, hora, uidClient, direccion, ciudad } = req.body;
     try {
@@ -10,9 +11,11 @@ const postCitas = async (req, res) => {
         const citas = await Citas.create(cita);
         await user.addCitas(citas)
         await servicio.addCitas(citas)
-        res.send('Cita creada correctamente')
+        const template = await mailTurno(user.displayName,dia,hora,direccion,ciudad,servicio.title)
+        await sendEmail(user.email,subject = "Confirmación de turno",template)
+        res.send(`Turno ok, dia ${dia}, hora ${hora}, servicio: ${servicio.title}`)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 
