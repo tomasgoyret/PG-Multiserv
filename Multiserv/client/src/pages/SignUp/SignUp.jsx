@@ -80,10 +80,12 @@ const SignUp = () => {
             .catch(error => {
                 setLoading(false)
                 console.log(error)
+                let mensaje = ""
+                error.response.data.includes("email address is already in use by another account") ? mensaje = "El email ingresado ya existe para otra cuenta" : error.response.data.includes("the provided phone number already exists") ? mensaje = "El teléfono ingresado ya existe" : error.response.data.includes("TOO_SHORT") ? mensaje = "El numero ingresado es muy corto" : mensaje = "Hubo un error, vuelve a intentarlo"
                 if (error.response) {
                     Swal.fire({
                         title: 'Error!',
-                        text: error.response.data.code === 'app/network-error' ? "No pudimos conectarnos a internet" : error.response.data.message,
+                        text: mensaje,
                         icon: 'error',
                         confirmButtonText: 'X'
                     })

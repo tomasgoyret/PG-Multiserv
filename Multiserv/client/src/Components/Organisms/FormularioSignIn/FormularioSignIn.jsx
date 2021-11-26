@@ -67,13 +67,15 @@ const FormularioSignIn = ({handleModal}) => {
                 setLoading(false)
                 var errorCode = error.code;
                 var errorMessage = error.message;
+                let mensaje = ''
+                errorMessage.includes("wrong-password") ? mensaje = "Contraseña Incorrecta" : errorMessage.includes("user-not-found") ? mensaje = "No se encontró el usuario" : mensaje = `Hubo un problema vuelve a intentart. Error: ${errorCode}`
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Los datos no son validos',
+                    text: mensaje,
                     icon: 'error',
                     confirmButtonText: 'X'
                   })
-                console.log(errorCode, errorMessage)
+                console.log(error,errorCode, errorMessage)
             });
     }
 

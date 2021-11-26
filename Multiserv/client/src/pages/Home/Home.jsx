@@ -36,7 +36,7 @@ const Home = () => {
 
     useEffect(() => {
         document.title = "Explorar servicios"
-        if (localStorage.length > 0 && !datosSesionFromLocalStorage.emailVerified) {
+        if (datosSesionFromLocalStorage != null && !datosSesionFromLocalStorage.emailVerified) {
             navigate('/email-verification')
         }
         dispatch(services())
