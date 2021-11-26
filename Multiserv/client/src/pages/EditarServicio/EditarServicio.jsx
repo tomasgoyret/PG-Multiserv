@@ -53,6 +53,7 @@ const EditarServicio = () => {
   const [allowLoadImg, setAllowLoadImg] = useState(true)
   const [loadedImg, setLoadedImg] = useState(false)
   const [subiendoPortada, setsubiendoPortada] = useState(false)
+  const [subiendoImagen, setsubiendoImagen] = useState(false)
 
   //traer datos del usuario
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
@@ -136,7 +137,7 @@ const EditarServicio = () => {
 
   /*STATE QUE GUARDA TEMPORALMENTE LOS INPUTS DE EDITAR SERVICIO ANTES DE ACTUALIZARLOS*/
   const [editService, setEditService] = useState(null)
-  console.log(editService)
+ 
 
   useEffect(() => {
     dispatch(getCats())
@@ -163,6 +164,15 @@ const EditarServicio = () => {
       setsubiendoPortada(false);
     }
   }, [subiendoPortada, editService])
+
+  useEffect(() => {
+    if(subiendoImagen){
+      //hacer el dispatch a la accion
+      console.log(editService)
+      dispatch(updateService(id, editService));
+      setsubiendoImagen(false);
+    }
+  }, [subiendoImagen, editService])
 
   useEffect(()=> {
     if (!loadingService && editService === null) {
@@ -334,6 +344,14 @@ const EditarServicio = () => {
         pauseOnHover: false,
         draggable: true,
       })
+      var newArray = editService.photos[0];
+      newArray.push(urlDownload);
+      console.log(newArray);
+      setEditService({
+        ...editService,
+        photos: newArray
+            })
+      setsubiendoImagen(true);
     } catch (err) {
       setAdditionalImg(additionalImg.map((img, i) => {
         if (i === index) {
