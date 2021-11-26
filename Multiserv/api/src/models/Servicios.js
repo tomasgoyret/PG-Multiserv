@@ -52,7 +52,6 @@ module.exports = (sequelize) => {
     homeService: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
     }
   });
 };
