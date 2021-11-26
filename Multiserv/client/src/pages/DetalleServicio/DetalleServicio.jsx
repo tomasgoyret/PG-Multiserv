@@ -151,7 +151,7 @@ const DetalleServicio = () => {
 
     return (
         <div>
-            <div className="flex">
+            <div className="flex flex-col">
                 {
                     modalReviews && 
                     <div className="w-full h-screen z-10 absolute top-0 left-0" onClick={handleModalReviews}>
@@ -167,7 +167,7 @@ const DetalleServicio = () => {
                             <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                         </div>
                     ) : (
-                        <div className="w-full flex flex-col overflow-y-auto h-screen">
+                        <div className="w-full flex flex-col overflow-y-auto h-screen pb-10">
                             <div className="px- pt-6 pb-4">
                                 <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                             </div>
@@ -304,13 +304,13 @@ const DetalleServicio = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <ReviewService />
-                                <span className="text-sm text-blue-500 cursor-pointer my-2" onClick={handleModalReviews} >Ver mas reviews</span>
+                            <div className="">
+                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true}/>
                             </div>
                         </div>
                     )}
-            </div>
+                    
+                </div>
 
             {/* Modal Compartir */}
                                               

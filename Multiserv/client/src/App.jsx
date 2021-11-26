@@ -24,7 +24,7 @@ import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
 import Horarios from "./pages/Horarios/Horarios";
 import { MapServices } from "./pages/MapServices/MapServices";
-import ModalAllReviews from "./Components/Organisms/ModalAllReviews/ModalAllReviews";
+import SendReview from "./Components/Organisms/SendReview/SendReview";
 
 function App() {
   toast.configure()
@@ -119,10 +119,7 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
-    {
-      path: '/modal-reviews',
-      element: <ModalAllReviews />
-    },
+    
   ]
   /*
   <div>
