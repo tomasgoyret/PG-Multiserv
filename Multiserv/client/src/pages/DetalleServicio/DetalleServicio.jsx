@@ -200,8 +200,8 @@ const DetalleServicio = () => {
                                         imagen={servicio[0].photos[0]}
                                         imgClass={`object-cover rounded-t-lg w-full h-80 ${loadingImg || failedImg ? 'hidden' : ''}`}
                                     />
-                                    <div className='flex flex-row pt-6 px-4 justify-around w-full' >
-                                        <div>
+                                    <div className='flex flex-row pt-6 px-4 w-full' >
+                                        <div className="flex ">
                                             <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md' >
                                                 <div className='w-28 mr-4' >
                                                     <Image

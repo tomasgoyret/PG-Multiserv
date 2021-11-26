@@ -12,6 +12,8 @@ const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosRev
     const { reviews, usuarios } = useSelector(state => state)
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
+
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     
 
     const reviewsdata = reviews.map(review => ({
@@ -37,7 +39,7 @@ const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosRev
                 <h2 className="text-3xl text-gray-800 py-5 font-bold">Reseñas</h2>
             </div>
             {
-                mostrarComentariosReviews &&
+                mostrarComentariosReviews && datosSesionFromLocalStorage &&
                 <div className="w-4/6 px-5 mt-5 mb-20">
                     <SendReview />
                 </div>
