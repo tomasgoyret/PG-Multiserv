@@ -4,7 +4,6 @@ const putServ = async (req, res,next) => {
     const { id } = req.params;
     let { title, currency,  category, description, max, min, rating, photos, direccion, estadoDePago, homeService} = req.body;
     let traduccion = ""
-    console.log(estadoDePago)
     if( estadoDePago==="approved"){
         traduccion = "Aprobado"
     }

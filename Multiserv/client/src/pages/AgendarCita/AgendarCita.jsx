@@ -192,7 +192,6 @@ const AgendarCita = () => {
         setDia("");
         setValue(new Date());
       }
-      console.log(body,'body')
     }
     else if (detalleServicio[0]?.homeService === true) {
       if (dia.length > 0 && hora.hora.length > 0) {
