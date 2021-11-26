@@ -91,3 +91,50 @@
     position: absolute;
     z-index: -1;
   }
+  .type_option{
+    margin: 0 20px;
+    position: relative;
+}
+.type_option > input{
+    margin-right: 10px;
+    visibility: hidden;
+}
+.custom_check{
+    position: absolute;
+    top: calc(50% - 6px);
+    left: 4px;
+    height: 12px;
+    width: 12px;
+    background-color: inherit;
+    border-radius: 2px;
+    border: #cecece solid 1px;
+}
+.custom_check::after{
+    content: '';
+    position: absolute;
+    display: none;
+}
+.type_option input:checked ~ .custom_check{
+    background-color: #164E63;
+    border: none;
+}
+.type_option input:checked ~ .custom_check::after{
+    display: block;
+}
+.type_option input:disabled ~ .typeText {
+    color: #dbdbdbb6;
+}
+.type_option input:disabled ~ .custom_check {
+    border: #dbdbdbb6 solid 1px;
+}
+.type_option .custom_check::after{
+    left: 4px;
+    bottom: 3px;
+    width: 6px;
+    height: 10px;
+    border: solid #F9FAFB;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

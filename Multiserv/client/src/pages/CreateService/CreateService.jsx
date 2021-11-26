@@ -27,11 +27,19 @@ const CreateService = () => {
     const [uploadImg, setuploadImg] = useState(false);
     const [imageOnCloud, setImageOnCloud] = useState(false)
     const [failedUpload, setFailedUpload] = useState(false)
+    const [address, setAddress] = useState('')
     const [loadingPayment, setLoadingPayment] = useState(false);
+    const [aDomicilio, setADomicilio] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
+    const handleAddres = (text) => {
+        setAddress(text)
+    }
+    const handleCheck = () => {
+        setADomicilio((aDomicilio) => !aDomicilio)
+    }
     const [service, setService] = useState({
         title: '',
         description: '',
@@ -42,9 +50,6 @@ const CreateService = () => {
         img:[]
     })
 
-    const [imageToLoad, setImageToLoad] = useState('');
-    const [loadedImg, setLoadedImg] = useState(false)
-    const [img, setImg] = useState(null)
     const [stepForm, setStepForm] = useState(0)
     const handleSetService = (cat) => {
         return (text) => {
@@ -121,43 +126,6 @@ const CreateService = () => {
         },
     ]
 
-    const handleImage = async (e) => {
-        //detectar el archivo
-        setImageToLoad(e.target.files[0]);
-        setImg(URL.createObjectURL(e.target.files[0]));  
-        setLoadedImg(true); 
-
-    }
-    const handleUpload= async () => {
-          // cargarlo a firebase storage
-          setuploadImg(true)
-
-        try {
-            const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
-            await uploadBytes(fileRef, imageToLoad);
-            //obtener url de descarga
-            const urlDownload = await getDownloadURL(fileRef);   
-            setImageOnCloud(true)
-            setFailedUpload(false)
-            setService({
-                ...service,
-                img: [urlDownload]
-            })   
-            setuploadImg(false);
-            setDisabledNext(false)
-            } catch(err){
-               console.log(err)
-            Swal.fire({
-                title: 'Error!',
-                text: 'Ocurrió un error. Vuelve a intentarlo',
-                icon: 'error',
-                confirmButtonText: 'X'
-            })
-            setImageOnCloud(false)
-            setFailedUpload(true)
-            }
-
-    }
     
     const handleCurrency = (obj) => {
         setService({
@@ -209,11 +177,7 @@ const CreateService = () => {
                 }
             }
     },[stepForm])
-    useEffect(() => {
-        if (stepForm === 2 && !loadedImg) {
-            setDisabledNext(true)
-        }
-    }, [disabledNext, stepForm, loadedImg])
+
     const [link, setLink] = useState("")
 
     const linkPago = async (uid) => {
@@ -252,7 +216,7 @@ const CreateService = () => {
                         </div>
                         <div id="step2" className="w-full flex justify-center" >
                             <div className={`px-4 -ml-3 rounded-full font-semibold text-white bg-cyan-900 ${stepForm >= 2 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
-                                <span>Imagen de portada</span>
+                                <span>Ubicación del servicio</span>
                             </div>
                         </div>
                         <div id="step3" className="w-full flex justify-center" >
@@ -407,71 +371,34 @@ const CreateService = () => {
                         </div>
                     </div>
                                                     
-                    <div id="step2" className={`${stepForm === 2 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
-                        {loadedImg ?
-                        <div className="flex flex-col">
-                                <div className="h-full overflow-y-hidden relative">
-                                    <div className="absolute top-0 right-0">
-                                        {!uploadImg && !imageOnCloud && <button
-                                            className="p-2"
-                                            onClick={() => {
-                                                setLoadedImg(false)
-                                                setImg(null)
-                                            }}
-                                        >
-                                            <FaTimes className="text-lg text-white" />
-                                        </button>}
-                                    </div>
-                                    <div className="absolute w-1/2 h-1/2 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
-                                        <div className="relative">
-                                            <div style={{ animation: uploadImg ? 'spin 5s linear infinite' : 'none' }} className={`border-2 ${uploadImg && 'border-dashed'} w-16 h-16 rounded-full`}>
-                                            </div>
-                                            <button
-                                                onClick={handleUpload}
-                                                disabled={uploadImg || imageOnCloud}
-                                                className={`flex justify-center items-center absolute w-16 h-16 m-auto top-0 left-0 rounded-full text-white text-3xl ${uploadImg || imageOnCloud && 'cursor-not-allowed'} `}>
-                                                {imageOnCloud ? <BsCloudCheckFill className="self-center" />
-                                                    : <BsCloudArrowUpFill className="self-center" />}
-                                                {failedUpload && <AiFillExclamationCircle />}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <Image
-                                        name="photo1"
-                                        imagen={img}
-                                        imgClass={`object-cover rounded-lg h-72`}
-                                    />
-                                </div>
+                    <div id="step2" className={`${stepForm === 2 ? 'flex flex-col mt-1 justify-start items-center' : 'hidden'} w-full`}>
+                        <div className="flex flex-row w-full justify-center">
 
-
-                                <div className="flex flex-row justify-center items-center">
-                                    <div
-                                        className={`inline-flex flex-nowrap py-0.5 px-4 mt-1 justify-center items-center rounded-md font-semibold ${!uploadImg && !failedUpload && 'bg-blue-900'} ${uploadImg && 'bg-green-800 '} ${failedUpload && 'bg-red-800 '} text-gray-50`}
-                                    >
-                                        {uploadImg && <> <ImSpinner9 className="mr-2 animate-spin" /> Cargando foto...</>}
-                                        {!uploadImg && !failedUpload && !imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Haz click en el botón para cargar imagen</>}
-                                        {imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Se cargó con éxito, haz click en siguiente</>}
-                                        {failedUpload && <> <IoMdInformationCircle className="mr-2" /> No se pudo cargar la imagen</>}
-                                    </div>
-                                </div>
+                            <div className="w-96 lg:w-1/2">
+                                <Input
+                                    flexed
+                                    placeholder="Busca una dirección..."
+                                    label="Buscar ubicación"
+                                    callBack={handleAddres}
+                                    theme="#0C4A6E"
+                                />
                             </div>
-                            :
-                            (
-                                <>
-                        <input
-                                        onChange={handleImage}
-                            type="file"
-                            name="foto5"
-                            id="foto5"
-                            accept="image/jpeg"
-                            className="inputfile" />
+                            <div className="inline-flex self-center">
+                                <label className="type_option self-center">
+                                    <input type="checkbox" name='check'
+                                        id='check'
+                                        onChange={handleCheck}
+                                        value={aDomicilio}
+                                        checked={aDomicilio}
+                                        disabled={false}
+                                    />
+                                    <span className="custom_check"></span>
+                                    <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Disponible para ir a domicilio</label>
+                                </label>
+                                </div>
+                        </div>
+                        <div className="w-full h-full rounded-md bg-purple-100"></div>
 
-                        <label htmlFor="foto5" className="hover:border-transparent hover:shadow-lg hover:bg-white focus:outline-none rounded-lg border-2 border-dashed text-indigo-300 border-indigo-200 hover:text-green-600 flex flex-col items-center justify-center p-4 mx-0 sm:mr-4 mb-2 sm:mb-0 transition-all duration-500 ease-in-out cursor-pointer w-full h-full">
-                            <FaPlus className="text-4xl" />
-                            <span className="google-sans font-semibold block">Haz click para agregar una foto</span>
-                        </label>
-                                </>
-                            )}
                     </div>
                     <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-start items-start' : 'hidden'} w-full`}>
                         <div className="w-1/2 flex flex-col justify-start items-start  pr-4 border-r border-gray-300">
@@ -504,7 +431,7 @@ const CreateService = () => {
                         </div>
                         <div className="w-1/2 pl-4 ">
                             <div className="flex flex-col h-full">
-                                <div className="mb-3 border-b border-gray-300 flex flex-row">
+                                {/* <div className="mb-3 border-b border-gray-300 flex flex-row">
                                     <span className='text-md font-semibold text-xl text-cyan-900'>Imagen de portada <HiOutlineArrowNarrowRight className="ml-3 inline-flex" /></span>
                                 </div>
                                 <div className="">
@@ -513,7 +440,7 @@ const CreateService = () => {
                                         imagen={img}
                                         imgClass={`object-cover rounded-lg h-64 `}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -528,7 +455,7 @@ const CreateService = () => {
                         disabled={stepForm === 1}
                     />
                     {stepForm !== 3 && <Button
-                        disabled={disabledNext || (stepForm === 2 && img === null)}
+                        disabled={undefined}
                         text="Siguiente"
                         customTextColor="#FFFFF"
                         theme="#155E75"
