@@ -135,7 +135,8 @@ const EditarServicio = () => {
   const servicio =servicioAntiguo[0]
 
   /*STATE QUE GUARDA TEMPORALMENTE LOS INPUTS DE EDITAR SERVICIO ANTES DE ACTUALIZARLOS*/
-  const [editService, setEditService] = useState(servicio)
+  const [editService, setEditService] = useState("")
+  console.log(editService)
 
   useEffect(() => {
     dispatch(getCats())
@@ -162,6 +163,12 @@ const EditarServicio = () => {
       setsubiendoPortada(false);
     }
   }, [subiendoPortada, editService])
+
+  useEffect(()=> {
+    if(!loadingService){
+      setEditService(servicio)
+    }
+  }, [loadingService, editService])
 
   const removeImg = (index) => {
     const arr = additionalImg.filter((img, i) => {
@@ -514,7 +521,7 @@ const EditarServicio = () => {
                     name="title"
                     id="titleEdit"
                     placeholder="Agrega un título..."
-                    value={editService.title}
+                    value={editService && editService.title}
                     onChange={handleEdit}
                     className="focus:outline-none  font-semibold text-xl text-gray-900 w-full border-b-2 border-gray-900 mt-4" />
                   <div className="mt-6 w-full">
@@ -525,7 +532,7 @@ const EditarServicio = () => {
                       type="text"
                       name="description"
                       id="descrEdit"
-                      value={editService.description}
+                      value={editService && editService.description}
                       onChange={handleEdit}
                       className="focus:outline-none  font-semibold text-xl text-gray-900 align-text-bottom border-2 rounded-md border-gray-900 mt-4 w-full h-96 py-2 px-6" />
                   </div>
@@ -539,7 +546,7 @@ const EditarServicio = () => {
                     <div className="my-2">
                       <h2 className="font-semibold text-xl text-gray-600 mb-2">Categoría:</h2>
                       <ListBox
-                        defaultValue={editService.categorias[0].title}
+                        defaultValue={editService && editService.categorias[0].title}
                         customBorder="#9CA3AF"
                         className="self-center"
                         width='15rem'
@@ -589,11 +596,11 @@ const EditarServicio = () => {
                         type="number"
                         name="min"
                         id="priceMin"
-                        value={editService.min}
+                        value={editService && editService.min}
                         onChange={handleEdit}
                         className="focus:outline-none w-28  font-semibold text-xl text-gray-900 border-b-2 border-gray-900"
                       />
-                      <span className="ml-2 underline text-lg text-gray-700 font-semibold">{editService.currency} </span>
+                      <span className="ml-2 underline text-lg text-gray-700 font-semibold">{editService && editService.currency} </span>
                     </div>
                   </div>
 
@@ -605,11 +612,11 @@ const EditarServicio = () => {
                         type="number"
                         name="max"
                         id="priceMax"
-                        value={editService.max}
+                        value={editService && editService.max}
                         onChange={handleEdit}
                         className="focus:outline-none w-28  font-semibold text-xl text-gray-900 border-b-2 border-gray-900"
                       />
-                      <span className="ml-2 underline text-lg text-gray-700 font-semibold">{editService.currency} </span>
+                      <span className="ml-2 underline text-lg text-gray-700 font-semibold">{editService && editService.currency} </span>
                     </div>
                   </div>
 
