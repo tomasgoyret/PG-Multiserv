@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const getCitas = require('../controller/getCitas');
+const {getCitas, getCitasId} = require('../controller/getCitas');
 
-router.get('/:uidClient', getCitas);
+router.get('/:uidClient', getCitasId);
+router.get('/', getCitas);
 
 module.exports = router;
