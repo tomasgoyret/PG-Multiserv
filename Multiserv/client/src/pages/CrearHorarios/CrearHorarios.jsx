@@ -180,18 +180,13 @@ const Horarios = () => {
     const { dias, horarios } = req.body; --> dias y horarios son []
   */
   const submitHorarios = async (e) => {
-    e.preventDefault(); /* 
-    if (errors.horas === "" && horariosDisponibles.length > 0 && value.length > 0) {
-       */
+    e.preventDefault();
     let dias = fechas ;
     let body = dias.map((d)=>{ return {[d]: horariosDisponibles} })
     let formHorarios = {
       fechas: body
     };
     enviarHorarios(idService, formHorarios);
-    /* } else {
-      alert("Complete todos los campos");
-    } */
   };
   const enviarHorarios = async (idService, body) => {
     setSeteoRango("");
@@ -308,13 +303,17 @@ const Horarios = () => {
         <p className="text-red-400">{errors.horas}</p>
         <br />
         Aqui
-        {(fechas.length !== 0 && horariosDisponibles.length !== 0) && (
+        {(fechas.length !== 0 && horariosDisponibles.length !== 0) ? (
           <div>
             <button type="submit" className="">
               enviar
             </button>
           </div>
-        )}
+        ): <div>
+        <button disabled={true} className="">
+          enviar
+        </button>
+      </div>}
       </form>
     </div>
   );
