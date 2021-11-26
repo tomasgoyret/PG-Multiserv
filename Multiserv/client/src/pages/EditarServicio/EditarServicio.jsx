@@ -168,8 +168,7 @@ const EditarServicio = () => {
   useEffect(() => {
     if(subiendoImagen){
       //hacer el dispatch a la accion
-      console.log(editService)
-      dispatch(updateService(id, editService));
+        dispatch(updateService(id, editService));
       setsubiendoImagen(false);
     }
   }, [subiendoImagen, editService])
@@ -320,8 +319,8 @@ const EditarServicio = () => {
       return img
     }))
     try {
-      const formato2= imageToLoad.name.slice((Math.max(0, (imageToLoad.name).lastIndexOf('.')) || Infinity)+ 1);
-      const fileRef = ref(storage, `/PhotosServices/${id}/imagen${index+1}.${formato2}`);
+      const formato= imageToLoad.name.slice((Math.max(0, (imageToLoad.name).lastIndexOf('.')) || Infinity)+ 1);
+      const fileRef = ref(storage, `/PhotosServices/${id}/imagen${index+1}.${formato}`);
       await uploadBytes(fileRef, imageToLoad);
       //obtener url de descarga
       const urlDownload = await getDownloadURL(fileRef);
@@ -344,12 +343,9 @@ const EditarServicio = () => {
         pauseOnHover: false,
         draggable: true,
       })
-      var newArray = editService.photos[0];
-      newArray.push(urlDownload);
-      console.log(newArray);
       setEditService({
         ...editService,
-        photos: newArray
+        photos: [...editService.photos, urlDownload]
             })
       setsubiendoImagen(true);
     } catch (err) {
