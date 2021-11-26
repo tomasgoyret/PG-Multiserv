@@ -24,10 +24,11 @@ import ModalAllReviews from '../../Components/Organisms/ModalAllReviews/ModalAll
 const DetalleServicio = () => {
     let { id } = useParams();
     var uid = ""
+    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     useEffect(() => {
         dispatch(services())
         dispatch(users())
-        if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
+        if (datosSesionFromLocalStorage !=null) {
             name = datosSesionFromLocalStorage.displayName
             uid = datosSesionFromLocalStorage.uid
         }
@@ -60,9 +61,8 @@ const DetalleServicio = () => {
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
     console.log("Este es usuario", usuario)
 
-    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     var foto = Img
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.photoURL) {
+    if (datosSesionFromLocalStorage != null) {
         foto = datosSesionFromLocalStorage.photoURL
     }
 
@@ -84,7 +84,7 @@ const DetalleServicio = () => {
     }
     var name = "Inicia Sesión "
     var uid = ""
-    if (localStorage.length > 0 && datosSesionFromLocalStorage.displayName && datosSesionFromLocalStorage.uid) {
+    if (datosSesionFromLocalStorage != null) {
         name = datosSesionFromLocalStorage.displayName
         uid = datosSesionFromLocalStorage.uid
     }
