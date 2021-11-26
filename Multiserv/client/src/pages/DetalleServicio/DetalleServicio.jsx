@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Img from '../../assets/Icons/profile.png'
 import Image from '../../Components/Atoms/Image/Image'
 import { AiOutlineLoading3Quarters, AiTwotonePhone, AiOutlineMail, AiOutlineWhatsApp} from "react-icons/ai"
+import { BsShareFill } from "react-icons/bs";
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import s from "../../Components/Organisms/UserProfile/UserProfile.module.css"
@@ -18,6 +19,7 @@ import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
 import { services,users } from '../../redux/actions/actions'
+import ModalAllReviews from '../../Components/Organisms/ModalAllReviews/ModalAllReviews';
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -37,6 +39,7 @@ const DetalleServicio = () => {
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
+    const [modalReviews, setModalReviews] = useState(false)
     let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
@@ -146,9 +149,19 @@ const DetalleServicio = () => {
 
     //let idProveedor = servicioID[0].usuarioUidClient
 
+    const handleModalReviews = () => {
+        setModalReviews(!modalReviews);
+    }
+
     return (
         <div>
-            <div className="flex">
+            <div className="flex flex-col">
+                {
+                    modalReviews && 
+                    <div className="w-full h-screen z-10 absolute top-0 left-0" onClick={handleModalReviews}>
+                        <ModalAllReviews />
+                    </div>
+                }
                     
                 {modal}
                 {
@@ -158,7 +171,7 @@ const DetalleServicio = () => {
                             <h1 className="text-xl font-semibold text-gray-800 mt-2">Buscando servicios disponibles en tu zona...</h1>
                         </div>
                     ) : (
-                        <div className="w-full flex flex-col overflow-y-auto h-screen">
+                        <div className="w-full flex flex-col overflow-y-auto h-screen pb-10">
                             <div className="px- pt-6 pb-4">
                                 <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">Detalles de Servicios</h1>
                             </div>
@@ -185,7 +198,7 @@ const DetalleServicio = () => {
                                     />
                                     <div className='flex flex-row pt-6 px-4 justify-around' >
                                         <div>
-                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-2xl border-gray-600' >
+                                            <div className='flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md' >
                                                 <div className='w-28 mr-4' >
                                                     <Image
                                                         imagen={usuario && usuario.photoURL}
@@ -194,24 +207,24 @@ const DetalleServicio = () => {
                                                     />
                                                 </div>
                                                 <div className='flex flex-col justify-center' >
-                                                    <span className='text-gray-800 font-bold text-lg' >{usuario && usuario.displayName}</span><br />
+                                                    <span className='text-gray-800 font-bold text-xl font-sans' >{usuario && usuario.displayName}</span><br />
                                                 <div className='w-14 mr-4 flex flex-row space-x-2'>
-                                                {
-                                                  usuario && usuario.phoneNumber?  
-                                                  <a 
+                                                    {
+                                                    datosSesionFromLocalStorage && usuario && usuario.phoneNumber?  
+                                                    <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
                                                         href={`tel:${usuario.phoneNumber}`}
                                                     ><AiTwotonePhone className={`text-3xl`} />
                                                     </a>: null}
                                                     {                                                  
-                                                    usuario && usuario.email?  <a 
+                                                    datosSesionFromLocalStorage && usuario && usuario.email?  <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
                                                         href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`} target="_blank"
                                                         
                                                     > <AiOutlineWhatsApp className={`text-3xl`} />
                                                     </a>: null}
                                                     {                                                  
-                                                    usuario && usuario.phoneNumber?  <a 
+                                                    datosSesionFromLocalStorage && usuario && usuario.phoneNumber?  <a 
                                                         className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
                                                         href={`mailto:${usuario.email}`}
                                                         
@@ -266,10 +279,10 @@ const DetalleServicio = () => {
                                                 }  
                                                 <div>
                                                     <button
-                                                        className="flex justify-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
+                                                        className="flex justify-center items-center mx-2 font-semibold  w-auto text-lg px-4 bg-blue-500 text-gray-50 hover:bg-blue-700 focus:bg-blue-700 rounded-md transition-all ease-in-out duration-300 py-2"
                                                         onClick={() => setCompartirModal(!compartirModal)}
                                                     >
-                                                        Compartir
+                                                        <BsShareFill className="mx-2"/> Compartir
                                                     </button>
                                                 </div>
                                                 {
@@ -295,12 +308,13 @@ const DetalleServicio = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <ReviewService />
+                            <div className="">
+                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true}/>
                             </div>
                         </div>
                     )}
-            </div>
+                    
+                </div>
 
             {/* Modal Compartir */}
                                               

@@ -24,6 +24,7 @@ import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
 import CrearHorarios from "./pages/CrearHorarios/CrearHorarios";
 import { MapServices } from "./pages/MapServices/MapServices";
+import SendReview from "./Components/Organisms/SendReview/SendReview";
 
 function App() {
   toast.configure()
@@ -118,6 +119,7 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
+    
   ]
   /*
   <div>
