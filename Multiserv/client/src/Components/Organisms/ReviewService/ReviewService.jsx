@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Imagen from "../../../assets/images/img1.webp"
 import StarRating from "../../Atoms/StarRating/StarRating";
 import axios from "axios";
@@ -11,6 +11,7 @@ const ReviewService = ({id}) => {
     const { reviews, usuarios } = useSelector(state => state)
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
+    
 
     const reviewsdata = reviews.map(review => ({
         title: review.title,
@@ -29,7 +30,7 @@ const ReviewService = ({id}) => {
             <div className="flex justify-center w-full">
                 <h2 className="text-3xl text-gray-800 py-5 font-bold">Reseñas</h2>
             </div>
-            <div className="w-full h-auto flex flex-col my-5 mx-10">
+            <div className="w-full h-auto flex flex-col my-5 mx-10 pb-10">
                 {
                     reviewsdata?.map(( comentario, i) => (
                         <div className="flex flex-col w-3/5 h-auto my-3" key={'keyFromReviews'+i}>

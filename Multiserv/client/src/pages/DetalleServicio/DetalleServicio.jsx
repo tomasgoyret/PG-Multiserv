@@ -19,6 +19,7 @@ import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
 import { services,users } from '../../redux/actions/actions'
+import ModalAllReviews from '../../Components/Organisms/ModalAllReviews/ModalAllReviews';
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -34,6 +35,7 @@ const DetalleServicio = () => {
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
+    const [modalReviews, setModalReviews] = useState(false)
     let loading = useSelector((state) => state.loadingServices)
     const servicios = useSelector((state) => state.servicios)
     const usuarios = useSelector((state) => state.usuarios)
@@ -143,9 +145,19 @@ const DetalleServicio = () => {
 
     //let idProveedor = servicioID[0].usuarioUidClient
 
+    const handleModalReviews = () => {
+        setModalReviews(!modalReviews);
+    }
+
     return (
         <div>
             <div className="flex">
+                {
+                    modalReviews && 
+                    <div className="w-full h-screen z-10 absolute top-0 left-0" onClick={handleModalReviews}>
+                        <ModalAllReviews />
+                    </div>
+                }
                     
                 {modal}
                 {
@@ -294,6 +306,7 @@ const DetalleServicio = () => {
                             </div>
                             <div>
                                 <ReviewService />
+                                <span className="text-sm text-blue-500 cursor-pointer my-2" onClick={handleModalReviews} >Ver mas reviews</span>
                             </div>
                         </div>
                     )}
