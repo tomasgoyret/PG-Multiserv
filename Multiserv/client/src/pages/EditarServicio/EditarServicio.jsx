@@ -135,7 +135,7 @@ const EditarServicio = () => {
   const servicio =servicioAntiguo[0]
 
   /*STATE QUE GUARDA TEMPORALMENTE LOS INPUTS DE EDITAR SERVICIO ANTES DE ACTUALIZARLOS*/
-  const [editService, setEditService] = useState("")
+  const [editService, setEditService] = useState(null)
   console.log(editService)
 
   useEffect(() => {
@@ -165,7 +165,7 @@ const EditarServicio = () => {
   }, [subiendoPortada, editService])
 
   useEffect(()=> {
-    if(!loadingService){
+    if (!loadingService && editService === null) {
       setEditService(servicio)
     }
   }, [loadingService, editService])
@@ -186,7 +186,7 @@ const EditarServicio = () => {
     /*ACTUALIZAR AQUÍ LOS DATOS DEL SERVICIO */
     //...
     // setServicio(editService)
-
+    dispatch(updateService(id, editService));
     setEditing(false)
   }
 

@@ -43,10 +43,10 @@
     ]
   },
   "browserslist": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "autoprefixer": "^9.8.8",
     "postcss": "^7.0.39",
