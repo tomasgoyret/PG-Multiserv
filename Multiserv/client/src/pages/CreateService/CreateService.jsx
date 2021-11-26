@@ -21,6 +21,7 @@ import { AiFillExclamationCircle } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
 
 const CreateService = () => {
+    /* espacio para mapa en la linea 405 */
     const [disabledNext, setDisabledNext] = useState(true)
     const categoriasDb = useSelector((state) => state.categories)
     const [loadingSave, setLoadingSave] = useState(false);
@@ -383,7 +384,10 @@ const CreateService = () => {
                                     theme="#0C4A6E"
                                 />
                             </div>
-                            <div className="inline-flex self-center">
+                            <div className="flex py-2 self-center place-self-center justify-center items-center h-full">
+                                <button className="px-2 bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md">
+                                    <span className="font-semibold text-white">Cargar ubicacion</span>
+                                </button >
                                 <label className="type_option self-center">
                                     <input type="checkbox" name='check'
                                         id='check'
@@ -397,7 +401,10 @@ const CreateService = () => {
                                 </label>
                                 </div>
                         </div>
-                        <div className="w-full h-full rounded-md bg-purple-100"></div>
+
+                        <div className="w-full h-full rounded-md bg-purple-100">
+                            <span>mapa aquí</span>
+                        </div>
 
                     </div>
                     <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-start items-start' : 'hidden'} w-full`}>
