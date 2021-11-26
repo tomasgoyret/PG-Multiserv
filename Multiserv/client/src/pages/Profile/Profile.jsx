@@ -21,7 +21,8 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [loading2, setLoading2] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    const { uid, email, displayName, photoURL } = datosSesionFromLocalStorage;
+    const { uid, email, displayName, photoURL, phoneNumber } = datosSesionFromLocalStorage;
+    const phoneNumberModificado = phoneNumber.slice(3,)
     const [nameUser, lastNameUser] = displayName.split(" ");
     const navigate = useNavigate();
     const [datosPerfil, setDatosPerfil] = useState({
@@ -29,7 +30,7 @@ const Profile = () => {
         lastName: lastNameUser,
         email: email,
         photoURL: photoURL,
-        phone: "",
+        phone: phoneNumberModificado,
     })
     const [countryCode, setCountryCode] = useState("")
 
@@ -157,16 +158,15 @@ const Profile = () => {
                 localStorage.setItem("datoSesion", JSON.stringify({
                     ...datosSesionFromLocalStorage,
                     displayName: response.data.usuarioActualizado.displayName,
-                    photoURL: response.data.usuarioActualizado.photoURL
-
+                    photoURL: response.data.usuarioActualizado.photoURL,
+                    phone: response.data.usuarioActualizado.phoneNumber
                 }))
                 Swal.fire(
                     '¡Actualizado!',
                     'Tu información se ha actualizado con éxito.',
                     'success'
                 )
-
-                navigate('/home');
+                // navigate('/home');
             })
             .catch(error => {
                 setLoading(false)
@@ -305,11 +305,12 @@ const Profile = () => {
                                         <span className="text-sm text-gray-400">{`${datosPerfil.lastName.length}/30`}</span>
                                     </div>
                                 </div>
+
                                 {/* Boton teléfono */}
-                                <div className="mb-4">
+                                <div className="mb-4 items-center flex">
                                     <div className="pt-2 pl-4">
                                         <div className="flex flex-col relative w-full">
-                                            <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone ? usuarioPhone : "No tiene un teléfono registrado"}</span>
+                                            <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone ? null : "No tiene un teléfono registrado"}</span>
                                             <div className="flex flex-row mt-1">
                                                 <ListBox
                                                     customBorder="#9CA3AF"
