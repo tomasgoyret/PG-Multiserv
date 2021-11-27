@@ -13,6 +13,7 @@ import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
+import { MapContainer, MapConsumer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { ImSpinner9 } from "react-icons/im";
 import { storage } from "../../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
@@ -28,19 +29,13 @@ const CreateService = () => {
     const [uploadImg, setuploadImg] = useState(false);
     const [imageOnCloud, setImageOnCloud] = useState(false)
     const [failedUpload, setFailedUpload] = useState(false)
+    const [position, setPosition] = useState(null)
     const [address, setAddress] = useState('')
     const [loadingPayment, setLoadingPayment] = useState(false);
     const [aDomicilio, setADomicilio] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-
-    const handleAddres = (text) => {
-        setAddress(text)
-    }
-    const handleCheck = () => {
-        setADomicilio((aDomicilio) => !aDomicilio)
-    }
     const [service, setService] = useState({
         title: '',
         description: '',
@@ -48,8 +43,32 @@ const CreateService = () => {
         min: '',
         max: '',
         currency: 'MXN',
-        img:[]
+        photos: [],
+        location: '',
+        address: ''
     })
+
+    const handleAddres = (text) => {
+        setAddress(text)
+    }
+    const onClickAddress = (e) => {
+        e.preventDefault();
+        axios(`https://api.geoapify.com/v1/geocode/search?text=${address}&limit=1&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
+            .then((response) => {
+                const pos = response.data.results[0];
+                setPosition([pos.lat, pos.lon]);
+                setService({
+                    ...service,
+                    location: [pos.lat, pos.lon],
+                    address: address
+                })
+            })
+            .catch((error) => error);
+    };
+    console.log(service)
+    const handleCheck = () => {
+        setADomicilio((aDomicilio) => !aDomicilio)
+    }
 
     const [stepForm, setStepForm] = useState(0)
     const handleSetService = (cat) => {
@@ -127,7 +146,7 @@ const CreateService = () => {
         },
     ]
 
-    
+
     const handleCurrency = (obj) => {
         setService({
             ...service,
@@ -150,41 +169,43 @@ const CreateService = () => {
 
     const [nuevServ, setnuevoServ] = useState(null)
 
-    useEffect(async ()=>{
-            if (stepForm === 3){
-                setLoadingSave(true)
-                if (!nuevServ) {
-                    let nuevoServ = {
-                        title: service.title,
-                        currency: service.currency,
-                        category: service.categorias,
-                        description: service.description,
-                        max: service.max,
-                        min: service.min,
-                        uidClient: uidClient,
-                        photos:service.img
-                    }
-                    try {
-                        let serv = await axios.post(`newservice`, nuevoServ)
-                        setLoadingSave(false)
-                        setnuevoServ(serv.data.servicio)
-                        console.log("se creó el servicio")
-                    } catch (err) {
-                        setLoadingSave(false)
-                        console.log(err)
-                    }
-                } else {
-                    setLoadingSave(false)
+    useEffect(async () => {
+        if (stepForm === 3) {
+            setLoadingSave(true)
+            if (!nuevServ) {
+                let nuevoServ = {
+                    title: service.title,
+                    currency: service.currency,
+                    category: service.categorias,
+                    description: service.description,
+                    max: service.max,
+                    min: service.min,
+                    uidClient: uidClient,
+                    photos: service.photos,
+                    location: service.location,
+                    address: service.address
                 }
+                try {
+                    let serv = await axios.post(`newservice`, nuevoServ)
+                    setLoadingSave(false)
+                    setnuevoServ(serv.data.servicio)
+                    console.log("se creó el servicio")
+                } catch (err) {
+                    setLoadingSave(false)
+                    console.log(err)
+                }
+            } else {
+                setLoadingSave(false)
             }
-    },[stepForm])
+        }
+    }, [stepForm])
 
     const [link, setLink] = useState("")
 
     const linkPago = async (uid) => {
         setLoadingPayment(true)
         try {
-            let link = await axios.post(`pay-service`, {id : `${uid}`})
+            let link = await axios.post(`pay-service`, { id: `${uid}` })
             setLink(link.data)
             setLoadingPayment(false)
             //window.open(link.data)
@@ -371,7 +392,7 @@ const CreateService = () => {
                             </div>
                         </div>
                     </div>
-                                                    
+
                     <div id="step2" className={`${stepForm === 2 ? 'flex flex-col mt-1 justify-start items-center' : 'hidden'} w-full`}>
                         <div className="flex flex-row w-full justify-center">
 
@@ -386,7 +407,7 @@ const CreateService = () => {
                             </div>
                             <div className="flex py-2 self-center place-self-center justify-center items-center h-full">
                                 <button className="px-2 bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md">
-                                    <span className="font-semibold text-white">Cargar ubicacion</span>
+                                    <span className="font-semibold text-white" onClick={onClickAddress} >Cargar ubicacion</span>
                                 </button >
                                 <label className="type_option self-center">
                                     <input type="checkbox" name='check'
@@ -399,11 +420,32 @@ const CreateService = () => {
                                     <span className="custom_check"></span>
                                     <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Disponible para ir a domicilio</label>
                                 </label>
-                                </div>
+                            </div>
                         </div>
-
-                        <div className="w-full h-full rounded-md bg-purple-100">
-                            <span>mapa aquí</span>
+                        {/* 51.50084939698666, -0.12458248633773235 */}
+                        <div className="w-full h-full">
+                            <MapContainer
+                                center={position === null ? [51.50084939698666, -0.12458248633773235] : position}
+                                zoom={20}
+                                scrollWheelZoom={true}
+                            >
+                                <MapConsumer>
+                                    {(map) => {
+                                        map.flyTo(position === null ? [51.50084939698666, -0.12458248633773235] : position);
+                                        map.zoom = 15;
+                                        return null;
+                                    }}
+                                </MapConsumer>
+                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                {
+                                    position !== null ? <Marker position={position}>
+                                        <Popup>
+                                            Aqui esta tu negocio<br />
+                                            {address}
+                                        </Popup>
+                                    </Marker> : <div></div>
+                                }
+                            </MapContainer>
                         </div>
 
                     </div>
@@ -474,7 +516,7 @@ const CreateService = () => {
                         text="Continuar en MercadoPago"
                         customTextColor="#FFFFF"
                         theme="#00a5ec"
-                        action={()=>{linkPago(nuevServ.id)}}
+                        action={() => { linkPago(nuevServ.id) }}
                     />}
 
                 </div>
