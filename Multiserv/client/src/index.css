@@ -91,6 +91,14 @@
     position: absolute;
     z-index: -1;
   }
+  
+  .promedio{
+    flex: 0 0 45%;
+  }
+
+  .porcentaje{
+    flex: 0 0 calc(55% -2rem);
+  }
   .type_option{
     margin: 0 20px;
     position: relative;

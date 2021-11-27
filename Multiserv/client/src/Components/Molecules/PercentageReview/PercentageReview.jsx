@@ -1,6 +1,6 @@
 import React from "react";
-import { Review } from "../../Hooks/useReviews";
-import ProgressRating from "./ProgressBar/ProgressBar";
+import { Review } from "../../../Hooks/useReviews";
+import ProgressRating from "../ProgressBar/ProgressBar";
 
 const PercentageReview = () => {
     const {porcentaje, title, rating} = Review();

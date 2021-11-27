@@ -311,7 +311,7 @@ const DetalleServicio = () => {
                                 </div>
                             </div>
                             <div>
-                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} />
+                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} limitarRenderizadoEnDetalleServicio={true}/>
                             </div>
                         </div>
                     )}

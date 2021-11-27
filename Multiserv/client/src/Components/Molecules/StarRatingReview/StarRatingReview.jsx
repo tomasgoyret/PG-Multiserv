@@ -10,8 +10,8 @@ const StarRatingReview = ({ rating, total }) => {
             {
                 rating ? 
                     (
-                        <div className="w-48 mr-4">
-                            <h2 className="font-semibold text-left text-6xl text-gray-700 fontRating mt-2">{rating.toFixed(1)}</h2>
+                        <div className="w-48 mr-4 flex flex-col items-end">
+                            <h2 className="font-semibold text-center text-6xl text-gray-700 fontRating mt-2">{rating.toFixed(1)}</h2>
                                 <ReactStars
                                     size={30}
                                     color1="#D1D5DB"
@@ -21,7 +21,7 @@ const StarRatingReview = ({ rating, total }) => {
                                     half={true}
                                     edit={false}
                                 />
-                            <p className="m-0 font-span">Promedio entre {total.length} reseñas</p>
+                            <p className="m-0 font-span text-sm font-semibold">Promedio entre {total.length} reseñas</p>
                         </div>
                     ) : 
                     (
