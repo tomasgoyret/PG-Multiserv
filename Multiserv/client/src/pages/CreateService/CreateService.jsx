@@ -45,7 +45,7 @@ const CreateService = () => {
         currency: 'MXN',
         photos: [],
         location: '',
-        address: ''
+        address: '', 
     })
 
     const handleAddres = (text) => {
@@ -182,8 +182,10 @@ const CreateService = () => {
                     uidClient: uidClient,
                     photos: service.photos,
                     location: service.location,
-                    address: service.address
+                    address: service.address, 
+                    homeService: aDomicilio
                 }
+                console.log(nuevoServ)
                 try {
                     let serv = await axios.post(`newservice`, nuevoServ)
                     setLoadingSave(false)
