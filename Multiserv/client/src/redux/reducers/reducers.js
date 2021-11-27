@@ -25,6 +25,7 @@ import {
     MAPSERVICES,
     VER_HORARIOS,
     ELIMINAR_CITAS,
+    RESERVAS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */

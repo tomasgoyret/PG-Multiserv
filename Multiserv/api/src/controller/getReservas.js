@@ -1,21 +1,12 @@
-const { Servicios, Citas } = require("../db.js");
+const { Citas } = require("../db.js");
 
 // get all services
 
 const getReservas = async (req, res) => {
     const { id } = req.params;
     try {
-        const Reservas = await Servicios.findAll({
-            where: { id: id },
-            include: {
-                model: Citas,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                },
-                through: {
-                    attributes: []
-                }
-            },
+        const Reservas = await Citas.findAll({
+            where: { servicioId: id },
             attributes: {
                 exclude: ['createdAt', 'updatedAt']
             }
