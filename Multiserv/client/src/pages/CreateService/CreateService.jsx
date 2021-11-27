@@ -210,7 +210,6 @@ const CreateService = () => {
             setLoadingPayment(false)
             //window.open(link.data)
             window.location.href = link.data
-            console.log(link.data)
         } catch (err) {
             Swal.fire({
                 title: 'Error!',

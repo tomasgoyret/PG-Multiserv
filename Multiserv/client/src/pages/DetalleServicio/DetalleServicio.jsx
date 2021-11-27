@@ -59,7 +59,6 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, '')
     let servicio = servicios.filter(serv => serv.id === Number(id))
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
-    console.log("Este es usuario", usuario)
 
     var foto = Img
     if (datosSesionFromLocalStorage != null) {
@@ -101,7 +100,6 @@ const DetalleServicio = () => {
         value = !value;
         agregarFav()
     }
-    console.log(uid)
     const agregarFav = async () => {
 
         if (value === true) {
@@ -292,7 +290,7 @@ const DetalleServicio = () => {
                                                 {
                                                     datosSesionFromLocalStorage &&
                                                     <div className="flex">
-                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' >
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={()=> {return navigate(`/home/${id}/ver-horarios`)}}>
                                                             Pedir Turno
                                                         </button>
 

@@ -30,7 +30,6 @@ const HomeNavigation = () => {
     }
     var name = " Invitado"
     var email = ""
-    console.log(datosSesionFromLocalStorage, "acá")
 
     if (datosSesionFromLocalStorage != null) {
         name = datosSesionFromLocalStorage.displayName
