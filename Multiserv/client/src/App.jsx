@@ -27,6 +27,7 @@ import AgendarCita from "./pages/AgendarCita/AgendarCita";
 import { MapServices } from "./pages/MapServices/MapServices";
 import PercentageReview from "./Components/Molecules/PercentageReview/PercentageReview";
 import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
+import Reservations from "./pages/Reservations/Reservations";
 
 function App() {
   toast.configure()
@@ -94,6 +95,10 @@ function App() {
         {
           path: '/home/:idService/ver-horarios',
           element: <AgendarCita />
+        },
+        {
+          path: '/home/:idService/reservations',
+          element: <Reservations />
         },
       ]
     },

@@ -37,7 +37,7 @@ const DetalleServicio = () => {
         }
         document.title = `Detalle del servcio`
 
-    }, [])
+    }, [])    
 
     var idFav = '';
     var value = false;
@@ -58,7 +58,7 @@ const DetalleServicio = () => {
     const location = useLocation()
     const current = location.pathname.replace(/\D/g, '')
     let servicio = servicios.filter(serv => serv.id === Number(id))
-    let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
+    let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0]?.usuarioUidClient)[0]
 
     var foto = Img
     if (datosSesionFromLocalStorage != null) {
@@ -288,7 +288,7 @@ const DetalleServicio = () => {
                                                     </button>
                                                 </div>
                                                 {
-                                                    datosSesionFromLocalStorage &&
+                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient !== uid )&&
                                                     <div className="flex">
                                                         <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={()=> {return navigate(`/home/${id}/ver-horarios`)}}>
                                                             Pedir Turno
@@ -302,6 +302,14 @@ const DetalleServicio = () => {
                                                                 :
                                                                 <BsSuitHeart />
                                                             }
+                                                        </button>
+                                                    </div>
+                                                }
+                                                {
+                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient === uid )&&
+                                                    <div className="flex">
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={()=> {return navigate(`/home/${id}/reservations`)}}>
+                                                            Ver turnos
                                                         </button>
                                                     </div>
                                                 }
