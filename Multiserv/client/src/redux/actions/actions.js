@@ -27,6 +27,7 @@ import {
     MIS_CITAS,
     MAPSERVICES,
     VER_HORARIOS,
+    ELIMINAR_CITAS,
 } from '../actionTypes/actionTypes';
 /* Server Backend */
 const server = '';
@@ -268,6 +269,20 @@ export const getHorarios = (idService) => {
         return dispatch({
             type: VER_HORARIOS,
             payload: dataServ
+        })
+    }
+}
+
+/* Eliminar de la misCitas por Id */
+export const cancelarCita = (id, uidClient) => {
+    return async function (dispatch) {
+        let url = `citas/${id}`;
+        await axios.delete(url);
+        const response = await axios(`citas/${uidClient}`);
+        const misCitas = response.data
+        return dispatch({
+            type: ELIMINAR_CITAS,
+            payload: misCitas
         })
     }
 }

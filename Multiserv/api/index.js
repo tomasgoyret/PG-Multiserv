@@ -19,7 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const app = require('./src/app');
 const { conn } = require('./src/db.js');
-const { LlamadoUsers, DataServices, Categoriasmockup, ResenasMockup, Users} = require('./src/Funciones/User');
+const { LlamadoUsers, DataServices, Categoriasmockup, ResenasMockup, Users, CrearHorarios} = require('./src/Funciones/User');
 require('dotenv').config();
 
 conn
@@ -28,7 +28,8 @@ conn
         await LlamadoUsers(Users);
         await Categoriasmockup();
         await DataServices();
-        await ResenasMockup();   
+        await ResenasMockup();
+        await CrearHorarios();    
         await app.listen(process.env.PORT || 3001, () => {
             console.log('Server on port '+ process.env.PORT || 3001)
         })
