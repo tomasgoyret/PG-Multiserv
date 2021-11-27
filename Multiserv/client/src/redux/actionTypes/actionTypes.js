@@ -24,3 +24,4 @@ export const MIS_CITAS = "MIS_CITAS"
 export const MAPSERVICES = 'TRAER_SERVICIOS_MAPA'
 export const VER_HORARIOS = 'VER_HORARIOS'
 export const ELIMINAR_CITAS = 'ELIMINAR_CITAS'
+export const RESERVAS = 'RESERVAS'

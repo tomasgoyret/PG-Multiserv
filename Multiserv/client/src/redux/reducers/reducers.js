@@ -49,6 +49,7 @@ const initalState = {
     misCitas: [],
     mapServices: [],
     verHorarios: [],
+    reservas:[],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -221,6 +222,11 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 misCitas: payload
+            }
+        case RESERVAS:
+            return {
+                ...state,
+                reservas: payload,
             }
 
         default:
