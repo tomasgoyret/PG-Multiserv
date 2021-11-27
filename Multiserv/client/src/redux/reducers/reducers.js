@@ -23,6 +23,8 @@ import {
     EDITAR_MISERVICIO,
     MIS_CITAS,
     MAPSERVICES,
+    VER_HORARIOS,
+    ELIMINAR_CITAS,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -46,6 +48,7 @@ const initalState = {
     misServicios: [],
     misCitas: [],
     mapServices: [],
+    verHorarios: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -58,9 +61,9 @@ function rootReducer(state = initalState, { type, payload }) {
                 aux: payload
             }
         case MIS_CITAS:
-            return{
+            return {
                 ...state,
-                misCitas:payload
+                misCitas: payload
             }
         case BUSCAR:
             let newServ = state.aux.filter(serv => serv.title.toLowerCase().includes(payload.toLowerCase()))
@@ -69,7 +72,6 @@ function rootReducer(state = initalState, { type, payload }) {
                 servicios: newServ
             }
         case MAPSERVICES:
-            console.log(payload)
             return {
                 ...state,
                 mapServices: payload
@@ -81,7 +83,7 @@ function rootReducer(state = initalState, { type, payload }) {
             }
         case FILTERCAT:
             let filteredCat = state.aux.filter(serv => {
-                if(serv.categorias[0] !== undefined){
+                if (serv.categorias[0] !== undefined) {
                     return serv.categorias[0].title?.toLowerCase() === payload.toLowerCase()
                 }
             })
@@ -199,7 +201,7 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 misServicios: payload
-            }            
+            }
         case ELIMINAR_MISERVICIO:
             return {
                 ...state,
@@ -209,6 +211,16 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 detalleServicio: payload
+            }
+        case VER_HORARIOS:
+            return {
+                ...state,
+                verHorarios: payload
+            }
+        case ELIMINAR_CITAS:
+            return {
+                ...state,
+                misCitas: payload
             }
 
         default:

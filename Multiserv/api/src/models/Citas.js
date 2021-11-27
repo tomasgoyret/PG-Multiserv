@@ -10,16 +10,28 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     dia: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    horario: {
-      type: DataTypes.ARRAY(DataTypes.JSON),
+    hora: {
+      type: DataTypes.JSON,
       allowNull: false,
+    },
+    direccion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    ciudad: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     nameUser: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };

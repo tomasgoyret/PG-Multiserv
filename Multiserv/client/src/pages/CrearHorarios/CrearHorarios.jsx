@@ -4,8 +4,19 @@ import { useParams } from "react-router-dom";
 import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "react-multi-date-picker/styles/colors/green.css";
+import { storage } from "../../Firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { servicesId } from "../../redux/actions/actions";
+import { Navigate, useNavigate } from "react-router";
 
 const Horarios = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const datosSesionFromLocalStorage = JSON.parse(
+    localStorage.getItem("datoSesion")
+  );
+  const { detalleServicio } = useSelector((state) => state);
+  const { uid } = datosSesionFromLocalStorage;
   const { idService } = useParams(); // id del Servicio
   const [rango, setRango] = useState([]);
   const [seteoRango, setSeteoRango] = useState("");
@@ -15,7 +26,6 @@ const Horarios = () => {
   const [fechas, setFechas] = useState([]);
   const [valuePanel, setValuePanel] = useState("");
   const today = new Date();
-  var horas = [];
   var array = [];
 
   const rangoCuarto = [
@@ -102,7 +112,6 @@ const Horarios = () => {
   // Control de rangos Horarios
   const handleOnChange = (e) => {
     if (e.target.name === "rangos") {
-      horas = [];
       if (e.target.value === "cuarto") {
         setRango(rangoCuarto);
       }
@@ -168,10 +177,10 @@ const Horarios = () => {
   };
 
   const handleChange = (value) => {
-    let dias = []
+    let dias = [];
     for (let i = 0; i < value.length; i++) {
-      dias.push(value[i].toDate().toString().slice(0, 16)) 
-    }    
+      dias.push(value[i].format());
+    }
     setFechas(dias);
     handleErrors("fecha", value);
   };
@@ -182,20 +191,17 @@ const Horarios = () => {
     const { dias, horarios } = req.body; --> dias y horarios son []
   */
   const submitHorarios = async (e) => {
-    e.preventDefault(); /* 
-    if (errors.horas === "" && horariosDisponibles.length > 0 && value.length > 0) {
-       */
-    let dias = fechas ;
+    e.preventDefault();
+    let dias = fechas;
+    let body = dias.map((d) => {
+      return { [d]: horariosDisponibles };
+    });
     let formHorarios = {
-      dias,
-      horarios: horariosDisponibles,
+      fechas: body,
+      uidClient: uid,
     };
     enviarHorarios(idService, formHorarios);
-    /* } else {
-      alert("Complete todos los campos");
-    } */
   };
-
   const enviarHorarios = async (idService, body) => {
     setSeteoRango("");
     setHorariosDisponibles([]);
@@ -205,8 +211,8 @@ const Horarios = () => {
     setValuePanel("");
     const res = await axios.post(`horarios/${idService}`, body);
     alert(res.data);
+    navigate("/home");
   };
-
   // Clases de botones
   const clasesBotones = (b, e) => {
     // clase de boton si esta seleccionado
@@ -218,8 +224,20 @@ const Horarios = () => {
       e.target.className = "bg-green-200 rounded shadow-lg inset-0.5 m-1";
     }
   };
-  var a = [];
-  return (
+
+  useEffect(() => {
+    dispatch(servicesId(idService));
+  }, []);
+
+/* useEffect(() => {
+ 
+},[ ]) */
+
+if(detalleServicio.length > 0 && uid !== detalleServicio[0].usuarioUidClient){
+navigate("/home");
+}
+  return (<>
+    { detalleServicio.length > 0 &&
     <div>
       <h1>Horarios para el servicio</h1>
       <br />
@@ -229,15 +247,16 @@ const Horarios = () => {
           <br />
           <DatePicker
             className="green"
+            format="YYYY/MM/DD"
             minDate={new Date().setDate(today.getDate())}
-            maxDate={new Date().setDate(60)}
+            maxDate={new Date().setDate(30)}
             multiple
             value={value}
             onChange={handleChange}
             plugins={[<DatePanel value={valuePanel} />]}
           />
         </div>
-        {errors.fecha !== "" && <p className="text-red-500">{errors.fecha}</p> }
+        {errors.fecha !== "" && <p className="text-red-500">{errors.fecha}</p>}
         <br />
         <div>
           <label htmlFor="rangos">Seleccione intervalos de las citas</label>
@@ -312,15 +331,21 @@ const Horarios = () => {
         <p className="text-red-400">{errors.horas}</p>
         <br />
         Aqui
-        {(fechas.length !== 0 && horariosDisponibles.length !== 0) && (
+        {fechas.length !== 0 && horariosDisponibles.length !== 0 ? (
           <div>
             <button type="submit" className="">
               enviar
             </button>
           </div>
+        ) : (
+          <div>
+            <button disabled={true} className="">
+              enviar
+            </button>
+          </div>
         )}
       </form>
-    </div>
+    </div> }</>
   );
 };
 // pais ciudad calle numero

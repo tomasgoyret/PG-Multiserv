@@ -1,18 +1,21 @@
-const { Citas, Usuarios } = require("../db.js");
+const { Citas, Usuarios, Servicios } = require("../db.js");
+const { sendEmail, mailTurno } = require("../mails/mails.js");
 
-const postCitas = async (req, res) => {
-    const { id } = req.params; 
-        const { dia, horario, uidClient } = req.body;
+const postCitas = async (req, res,next) => {
+    const { id } = req.params;
+    const { dia, hora, uidClient, direccion, ciudad } = req.body;
     try {
-        const user = await Usuarios.findByPk(uidClient) 
-        const cita = {dia, horario, nameUser: user.displayName}
+        const user = await Usuarios.findByPk(uidClient)
+        const servicio = await Servicios.findByPk(id)
+        const cita = { dia, hora, nameUser:user.displayName, direccion, ciudad, title: servicio.title }        
         const citas = await Citas.create(cita);
         await user.addCitas(citas)
-        await citas.addServicios({where:{id}})
-        console.log(citas)
-         res.send(`Cita creada correctamente con id: ${citas.id}`)
+        await servicio.addCitas(citas)
+        const template = await mailTurno(user.displayName,dia,hora,direccion,ciudad,servicio.title)
+        await sendEmail(user.email,subject = " Confirmación de turno ",template)
+        res.send(`Turno reservado para el dia : ${dia}, hora : ${hora.hora}, servicio : ${servicio.title}`)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 

@@ -199,7 +199,6 @@ const CreateService = () => {
                         let serv = await axios.post(`newservice`, nuevoServ)
                         setLoadingSave(false)
                         setnuevoServ(serv.data.servicio)
-                        console.log("se creó el servicio")
                     } catch (err) {
                         setLoadingSave(false)
                         console.log(err)
@@ -224,7 +223,6 @@ const CreateService = () => {
             setLoadingPayment(false)
             //window.open(link.data)
             window.location.href = link.data
-            console.log(link.data)
         } catch (err) {
             Swal.fire({
                 title: 'Error!',

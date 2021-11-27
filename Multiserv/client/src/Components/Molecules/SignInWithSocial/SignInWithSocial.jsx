@@ -12,7 +12,6 @@ const SignInWithSocial = ({ afterLogin }) => {
             .then((result) => {
                 /* const credential = GoogleAuthProvider.credentialFromResult(result) */
                 localStorage.setItem("datoSesion",JSON.stringify(result.user))
-                console.log(result.user);
                 var user ={
                     uid: result.user.uid,
                     mail: result.user.email,
