@@ -332,8 +332,8 @@ const EditarServicio = () => {
       return img
     }))
     try {
-      const formato= imageToLoad.name.slice((Math.max(0, (imageToLoad.name).lastIndexOf('.')) || Infinity)+ 1);
-      const fileRef = ref(storage, `/PhotosServices/${id}/imagen${index+1}.${formato}`);
+      // const formato= imageToLoad.name.slice((Math.max(0, (imageToLoad.name).lastIndexOf('.')) || Infinity)+ 1);
+      const fileRef = ref(storage, `/PhotosServices/${id}/${imageToLoad.name}`);
       await uploadBytes(fileRef, imageToLoad);
       //obtener url de descarga
       const urlDownload = await getDownloadURL(fileRef);
@@ -383,17 +383,15 @@ const EditarServicio = () => {
 
   const handleDeleteImage= async (foto, i) => {
           //Borrar la imagen anterior del array del servicio y de firebase    
+          editService.photos.splice(i, 1);
+          setEditService({
+            ...editService,
+            photos: [...editService.photos]
+                })
+          setsubiendoImagen(true);
           try {
             const imagenRef = ref(storage, foto);
             await deleteObject(imagenRef);
-            editService.photos.splice(i, 1);
-
-            setEditService({
-              ...editService,
-              photos: [...editService.photos]
-                  })
-            setsubiendoImagen(true);
-            
           } catch (error) {
             console.log(error)
           }
@@ -518,7 +516,7 @@ const EditarServicio = () => {
                               <FaTimes className="text-lg text-white" />
                             </button>
                           </div>
-                          <div css={{ backgroundColor: "#00000063" }} className="absolute w-full h-full rounded-md z-10 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
+                          {/* <div css={{ backgroundColor: "#00000063" }} className="absolute w-full h-full rounded-md z-10 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
                             <div className="relative">
                               <div style={{ animation: 'none' }} className={`border-2 w-16 h-16 rounded-full `}>
                               </div>
@@ -530,7 +528,7 @@ const EditarServicio = () => {
                                 <BsCloudArrowUpFill className="self-center" />
                               </button>
                             </div>
-                          </div>
+                          </div> */}
                           <img
                             key={i}
                             alt={`imagen de galeria`}
