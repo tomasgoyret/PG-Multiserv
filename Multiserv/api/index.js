@@ -23,7 +23,7 @@ const { LlamadoUsers, DataServices, Categoriasmockup, ResenasMockup, Users, Crea
 require('dotenv').config();
 
 conn
-    .sync({ force: true })
+    .sync({ force: true})
     .then(async () => {
         await LlamadoUsers(Users);
         await Categoriasmockup();

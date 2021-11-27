@@ -32,7 +32,7 @@ const ServiceCard = ({ service, className }) => {
                         setFailedImg(true)
                     }}
                     name="photo1"
-                    imagen={service.photos[0]}
+                    imagen={service.photos[0] !== null ? service.photos[0] : 'https://tecno-soluciones.net/wp-content/uploads/2019/08/36797a633bf2483c419df0c1368582ca-1.png'}
                     imgClass={`object-cover rounded-t-lg w-96 h-60 ${loadingImg || failedImg ? 'hidden' : ''}`}
                 />
                 <div className={`flex flex-col ${loadingImg || failedImg ? '' : 'hidden'}`}>
