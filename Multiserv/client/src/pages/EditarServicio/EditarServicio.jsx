@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { FaHeartBroken } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import { getCats, servicesId, updateService } from '../../redux/actions/actions';
@@ -37,7 +39,8 @@ const EditarServicio = () => {
   const categoriasDb = useSelector((state) => state.categories)
   const servicioAntiguo= useSelector((state) => state.detalleServicio)
   const loadingService = useSelector((state)=> state.loadingServicesDetalle)
-
+  const [loadingPortada, setLoadingPortada] = useState(true)
+  const [failedPortada, setFailedPortada] = useState(false)
   /*BOOLEANO QUE MUESTRA/OCULTA LOS INPUTS*/
   const [editing, setEditing] = useState(false)
 
@@ -147,10 +150,12 @@ const EditarServicio = () => {
     if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
       navigate('/')
     }
+
   }, [])
 
+
   useEffect(() => {
-    if (additionalImg.length >= 6) {
+    if ((additionalImg.length) + (servicio.photos.length - 1) >= 6) {
       setAllowLoadImg(false)
     } else {
       setAllowLoadImg(true)
@@ -325,12 +330,10 @@ const EditarServicio = () => {
       //obtener url de descarga
       const urlDownload = await getDownloadURL(fileRef);
 
-      setAdditionalImg(additionalImg.map((img, i) => {
-        if (i === index) {
-          img.url = urlDownload
-          img.status = 'uploaded'
+      setAdditionalImg(additionalImg.filter((img, i) => {
+        if (i !== index) {
+          return img
         }
-        return img
       }))
       toast.update(notification, {
         render: '¡Se cargó la imagen!',
@@ -380,17 +383,38 @@ const EditarServicio = () => {
     background: 'linear-gradient(0deg, rgba(0,0,0,0) 18%, rgba(0,0,0,0.13209033613445376) 37%, rgba(0,0,0,0.9051995798319328) 97%)'
 
   }
+
+
   return (
     <div className="w-full h-screen overflow-y-auto flex flex-col"> {loadingService? <div>Cargando...</div>:
       <div>{servicio.usuarioUidClient !== uid? <div>No eres propietario de ese servicio</div>:
       <div className="w-full h-screen overflow-y-auto flex flex-col">
         <div css={{ height: '30rem' }} className="w-full relative">
-          <img
+            <div css={{ height: '30rem' }} className={`hidden flex-col ${loadingPortada || failedPortada ? '' : 'hidden'} w-full justify-center items-center h-full`}>
+              <span className={`${!loadingPortada || servicio.photos[0] === undefined ? 'hidden' : ''} text-5xl text-indigo-900`} > Cargando... </span>
+              <AiOutlineLoading3Quarters className={`hidden text-5xl text-indigo-900 animate-spin`} />
+              <span className={`${(failedPortada || servicio.photos[0] === undefined) ? '' : 'hidden'} text-5xl text-indigo-900`} > Falló </span>
+            </div>
+
+            {<img
+              onLoad={() => {
+                if (servicio.photos[0] === undefined) {
+                  setLoadingPortada(false)
+                  setFailedPortada(true)
+                }
+                setLoadingPortada(false)
+                setFailedPortada(false)
+              }}
+              onError={() => {
+                setLoadingPortada(false)
+                setFailedPortada(true)
+              }}
             css={{ height: '30rem' }}
             alt="portada"
-            src={cover? cover.url : servicio.photos[0]}
-            className={`object-cover w-full`}
-          />
+              src={cover ? cover.url : servicio.photos[0] === undefined ? 'https://firebasestorage.googleapis.com/v0/b/multiserv-pghenry.appspot.com/o/PhotosServices%2Fdefault2.png?alt=media&token=fb6f93b9-7f4f-4494-a912-fda57dc71fe0' : servicio.photos[0]}
+              className={`object-cover w-full `}
+            />}
+
           <div css={gradientStyle} className="w-full h-48 absolute top-0">
             <div className="flex flex-row justify-between mx-8 mt-2">
               <Link to="/home" className="inline-flex px-4 py-0.5 bg-transparent rounded-full text-white transition-all ease-in-out duration-300 hover:bg-gray-900">
@@ -398,7 +422,8 @@ const EditarServicio = () => {
                 <span className="font-semibold">Regresar</span>
               </Link>
               <div className="self-center">
-                {loadedImg ?
+                  {
+                    loadedImg ?
                   <div className="inline-flex">
                     <button disabled={cover.status === 'uploading'} onClick={uploadPortada} className="cursor-pointer inline-flex px-4 py-0.5 bg-transparent rounded-full bg-green-100 text-green-900 transition-all ease-in-out duration-300 hover:bg-green-800 hover:text-white disabled:opacity-50">
                       {cover.status === 'uploading' ? <RiLoaderFill className="mr-3 self-center text-xl animate-spin" /> : <BsCloudArrowUpFill className="mr-3 self-center text-xl" />}
@@ -435,7 +460,11 @@ const EditarServicio = () => {
                 Imágenes adicionales
               </h2>
               <div className="flex w-full flex-row">
-                {allowLoadImg && <div className="mx-3 py-4">
+                  {!servicio.photos.length ? <div className="flex h-48 items-center justify-start">
+                    <span className="font-semibold text-gray-900 text-lg">Para cargar imágenes aquí, primero debes agregar una portada</span>
+                  </div>
+                    :
+                    allowLoadImg && <div className="mx-3 py-4">
                   <input
                     onChange={handleImages}
                     type="file"
@@ -448,8 +477,43 @@ const EditarServicio = () => {
                     <FaPlus className="text-4xl" />
                     <span className="google-sans font-semibold block">Haz click para agregar una foto</span>
                   </label>
-                </div>}
+                    </div>}
+                  {
+                    servicio.photos.length > 1 &&
+                    servicio.photos.map((foto, i) => {
+                      if (i > 0) {
+                        return (<div className="relative flex-shrink-0  mx-3 my-4 w-40 h-40" key={i}>
+                          <div className="absolute top-0 right-0 z-20">
+                            <button
+                              className="p-2"
+                              onClick={() => { console.log('algo') }}
+                            >
+                              <FaTimes className="text-lg text-white" />
+                            </button>
+                          </div>
+                          <div css={{ backgroundColor: "#00000063" }} className="absolute w-full h-full rounded-md z-10 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
+                            <div className="relative">
+                              <div style={{ animation: 'none' }} className={`border-2 w-16 h-16 rounded-full `}>
+                              </div>
+                              <button
+                                onClick={() => { console.log('subir imagen') }}
+                                disabled={false}
+                                className={`flex justify-center items-center absolute w-16 h-16 m-auto top-0 left-0 rounded-full text-white text-3xl} `}>
 
+                                <BsCloudArrowUpFill className="self-center" />
+                              </button>
+                            </div>
+                          </div>
+                          <img
+                            key={i}
+                            alt={`imagen de galeria`}
+                            src={foto}
+                            className="w-40 h-40 rounded-md object-cover"
+                          />
+                        </div>)
+                      }
+                    })
+                  }
                 {additionalImg.length ?
                   additionalImg.map((img, index) => {
                     return (<div className="relative flex-shrink-0  mx-3 my-4 w-40 h-40" key={index}>
@@ -673,9 +737,7 @@ const EditarServicio = () => {
 
               </div>
             </div>}
-        </div>
-      
-      
+          </div>
         </div>}
         </div>}
     </div>
