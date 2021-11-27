@@ -22,7 +22,8 @@ const Profile = () => {
     const [loading2, setLoading2] = useState(false)
     const datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
     const { uid, email, displayName, photoURL, phoneNumber } = datosSesionFromLocalStorage;
-    const phoneNumberModificado = phoneNumber.slice(3,)
+    const phoneCountry = phoneNumber ? phoneNumber.slice(0,3) : " ";
+    let phoneNumberModificado = phoneNumber ? phoneNumber.slice(3,) : " ";
     const [nameUser, lastNameUser] = displayName.split(" ");
     const navigate = useNavigate();
     const [datosPerfil, setDatosPerfil] = useState({
@@ -30,9 +31,9 @@ const Profile = () => {
         lastName: lastNameUser,
         email: email,
         photoURL: photoURL,
-        phone: phoneNumberModificado,
+        phoneNumber: phoneNumberModificado,
     })
-    const [countryCode, setCountryCode] = useState("")
+    const [countryCode, setCountryCode] = useState(phoneCountry.length === 3 ? phoneCountry : " ")
 
 
     const dispatch = useDispatch()
@@ -137,7 +138,7 @@ const Profile = () => {
             lastName: datosPerfil.lastName,
             uid: uid,
             photoURL: datosPerfil.photoURL,
-            phone: countryCode+datosPerfil.phone
+            phone: countryCode+datosPerfil.phoneNumber
         })
 
     }
@@ -159,7 +160,7 @@ const Profile = () => {
                     ...datosSesionFromLocalStorage,
                     displayName: response.data.usuarioActualizado.displayName,
                     photoURL: response.data.usuarioActualizado.photoURL,
-                    phone: response.data.usuarioActualizado.phoneNumber
+                    phoneNumber: response.data.usuarioActualizado.phoneNumber
                 }))
                 Swal.fire(
                     '¡Actualizado!',
@@ -225,6 +226,133 @@ const Profile = () => {
         },
     ]
 
+    const optionsMX = [
+        {
+            name: '+52',
+            icon: <ReactCountryFlag
+
+                countryCode="MX"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+54',
+            icon: <ReactCountryFlag
+
+                countryCode="AR"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+57',
+            icon: <ReactCountryFlag
+
+                countryCode="CO"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+    ]
+
+    const optionsARG = [
+        
+        {
+            name: '+54',
+            icon: <ReactCountryFlag
+
+                countryCode="AR"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+52',
+            icon: <ReactCountryFlag
+
+                countryCode="MX"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+57',
+            icon: <ReactCountryFlag
+
+                countryCode="CO"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+    ]
+
+    const optionsCOL = [
+        {
+            name: '+57',
+            icon: <ReactCountryFlag
+
+                countryCode="CO"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+52',
+            icon: <ReactCountryFlag
+
+                countryCode="MX"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        {
+            name: '+54',
+            icon: <ReactCountryFlag
+
+                countryCode="AR"
+                style={{
+                    width: '18px',
+                    height: '18px',
+                    alignSelf: 'center'
+                }}
+                svg
+            />
+        },
+        
+    ]
     const handleCountry = (obj) => {
         setCountryCode(obj.name)
     }
@@ -307,36 +435,76 @@ const Profile = () => {
                                 </div>
 
                                 {/* Boton teléfono */}
-                                <div className="mb-4 items-center flex">
-                                    <div className="pt-2 pl-4">
-                                        <div className="flex flex-col relative w-full">
-                                            <span className={`absolute -top-3 text-sm font-semibold text-gray-600 mr-4 select-none cursor-pointer`}>Teléfono registrado: {usuarioPhone ? null : "No tiene un teléfono registrado"}</span>
-                                            <div className="flex flex-row mt-1">
-                                                <ListBox
-                                                    customBorder="#9CA3AF"
-                                                    className="self-center"
-                                                    width='6.4rem'
-                                                    options={options}
-                                                    value={datosPerfil.country}
-                                                    callBack={handleCountry}
-                                                    text="..."
-                                                    theme="#0C4A6E"
-                                                    includeIconOnDesc
-                                                />
-                                                <div className="self-center">
-                                                    <input
-                                                        className="border border-gray-400 p-2 rounded-md font-medium"
-                                                        type="tel"
-                                                        id="phone"
-                                                        value={datosPerfil.phone}
-                                                        onChange={handleChanges}
-                                                        name="phone"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div className="w-1/2 my-2 px-4 flex flex-col">
+                                    <label htmlFor="lastName" className="text-sm mb-2 font-semibold text-gray-600 mr-4 select-none cursor-pointer">
+                                        Teléfono:
+                                    </label>
+                                    <div className="flex">
+                                        {
+                                            countryCode === " " || countryCode.length < 3 ?
+                                            <ListBox
+                                                customBorder="#9CA3AF"
+                                                className="self-center"
+                                                width='6.4rem'
+                                                options={options}
+                                                value={countryCode}
+                                                callBack={handleCountry}
+                                                text="..."
+                                                theme="#0C4A6E"
+                                                includeIconOnDesc
+                                            />
+                                            :
+                                            countryCode === "+57" &&
+                                            <ListBox
+                                                customBorder="#9CA3AF"
+                                                className="self-center"
+                                                width='6.4rem'
+                                                options={optionsCOL}
+                                                value={countryCode}
+                                                callBack={handleCountry}
+                                                text="..."
+                                                theme="#0C4A6E"
+                                                includeIconOnDesc
+                                            />
+                                            ||
+                                            countryCode === "+54" &&
+                                            <ListBox
+                                                customBorder="#9CA3AF"
+                                                className="self-center"
+                                                width='6.4rem'
+                                                options={optionsARG}
+                                                value={countryCode}
+                                                callBack={handleCountry}
+                                                text="..."
+                                                theme="#0C4A6E"
+                                                includeIconOnDesc
+                                            />
+                                            ||
+                                            countryCode === "+52" &&
+                                            <ListBox
+                                                customBorder="#9CA3AF"
+                                                className="self-center"
+                                                width='6.4rem'
+                                                options={optionsMX}
+                                                value={countryCode}
+                                                callBack={handleCountry}
+                                                text="..."
+                                                theme="#0C4A6E"
+                                                includeIconOnDesc
+                                            />
+                                        }
+                                    
+                                    <input
+                                        className="border border-gray-400 p-2 rounded-md font-medium ml-2"
+                                        type="text"
+                                        id="phoneNumber"
+                                        value={datosPerfil.phoneNumber}
+                                        onChange={handleChanges}
+                                        name="phoneNumber"
+                                    />
                                     </div>
                                 </div>
+
                             </div>
                             <h2 className="source-sans text-xl font-semibold px-3 pt-3 pb-1">Información de contacto</h2>
                             <div className="w-1/2 text-gray-500">
