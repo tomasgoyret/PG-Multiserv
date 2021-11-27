@@ -1,4 +1,4 @@
-const { Servicios } = require("../db.js");
+const { Servicios, Categorias } = require("../db.js");
 
 const putServ = async (req, res,next) => {
     const { id } = req.params;
@@ -17,7 +17,6 @@ const putServ = async (req, res,next) => {
         const serv = await Servicios.update({
             title,
             currency,
-            category,
             description,
             max,
             min,
@@ -29,6 +28,14 @@ const putServ = async (req, res,next) => {
         },{
             where: { id }
             } );
+
+        if(category){
+        const servicesUpdt = await Servicios.findByPk(id);
+        console.log(servicesUpdt)
+        servicesUpdt.removeCategorias([1]);
+        const categoria = await Categorias.findOne({ where: { title: category } })
+        await servicesUpdt.addCategorias(categoria)
+        }
         res.send({ msg: "Servicio actualizado correctamente", serv})
     }
     catch (error) {

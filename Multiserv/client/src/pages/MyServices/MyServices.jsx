@@ -16,7 +16,7 @@ const MyServices = () => {
   }
   const irAlLink = (e) => {
     console.log(e.target.value)
-    e.target.value === 'detalle' ? navigate(`/home/detalleServicio/${e.target.name}`) : navigate(`/editar-servicio/${e.target.name}`)
+    e.target.value === 'detalle' ? navigate(`/home/detalleServicio/${e.target.name}`) : navigate(`/home/servicios/${e.target.name}/editar`)
   }
 
   return (
@@ -30,7 +30,7 @@ const MyServices = () => {
         {misServicios.map((servicio) => {
           return (<div className='w-full shadow my-1 p-3 rounded-lg flex' key={servicio.id+'key'}>
           <div>
-            <img className='w-36 rounded' src={servicio.photos[0]} alt={servicio.title} />
+              <img className='w-36 rounded' src={!servicio.photos[0] ? "https://firebasestorage.googleapis.com/v0/b/multiserv-pghenry.appspot.com/o/PhotosServices%2Fdefault.png?alt=media&token=00c7022c-1af9-4bed-af5c-d3b55f9b51cc" : servicio.photos[0]} alt={servicio.title} />
           </div>
           <div className='ml-4 flex flex-col'>
 

@@ -18,6 +18,7 @@ const ConfirmServicio = () => {
   };
 
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+  let uid = datosSesionFromLocalStorage.uid
   let email = datosSesionFromLocalStorage.email
   let displayName= datosSesionFromLocalStorage.displayName
 
@@ -36,7 +37,7 @@ const ConfirmServicio = () => {
     actualizarPago();
   }, []);
 
-  value === 1 ? window.location.href = '/home' : setTimeout(function(){ setValue(value-1) }, 1000);
+  value === 1 ? window.location.href = `/home/servicios/${params.idServ}/editar` : setTimeout(function(){ setValue(value-1) }, 1000);
   
   return (
     <div className="flex w-full h-screen justify-center items-center">
@@ -45,9 +46,9 @@ const ConfirmServicio = () => {
         <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
           <div className="w-full h-1/5 bg-green-500"></div>
           <div className="w-full h-3/5 flex flex-col items-center">
-            <h1 className="text-5xl font-bold my-6 mt-10">Pago Exitoso!</h1>
-            <span className="text-lg font-semibold mb-5">El pago se ha realizado de manera exitosa.</span>
-            <span>Seras redireccionado en: </span>
+            <h1 className="text-5xl font-bold my-6 mt-10">¡Pago Exitoso!</h1>
+            <span className="text-lg font-semibold mb-5">El pago se realizó de manera exitosa.</span>
+            <span>Serás redireccionado en: </span>
             <span className="text-3xl my-5 font-bold">{value}</span>
           </div>
           <div className="w-full h-1/5 flex justify-center items-center">
@@ -55,7 +56,7 @@ const ConfirmServicio = () => {
               <button
                 className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
                 onClick={() =>
-                  navigate("/home")
+                  navigate(`/home/servicios/${params.idServ}/editar`)
                 }
               >
                 Regresar
@@ -70,8 +71,8 @@ const ConfirmServicio = () => {
         <div className="w-1/2 h-4/5 shadow-lg border border-gray-100">
           <div className="w-full h-1/5 bg-red-500"></div>
           <div className="w-full h-3/5 flex flex-col items-center">
-            <h1 className="text-5xl font-bold my-6 mt-10">Pago Rechazado!</h1>
-            <span className="text-lg font-semibold mb-5">No se ha podido procesa el pago.</span>
+            <h1 className="text-5xl font-bold my-6 mt-10">¡Pago Rechazado!</h1>
+            <span className="text-lg font-semibold mb-5">No se pudo procesar el pago.</span>
             <span>Seras redireccionado en: </span>
             <span className="text-3xl my-5 font-bold">{value}</span>
           </div>
