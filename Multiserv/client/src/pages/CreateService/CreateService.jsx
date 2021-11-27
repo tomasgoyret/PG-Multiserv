@@ -65,7 +65,6 @@ const CreateService = () => {
             })
             .catch((error) => error);
     };
-    console.log(service)
     const handleCheck = () => {
         setADomicilio((aDomicilio) => !aDomicilio)
     }
@@ -189,7 +188,6 @@ const CreateService = () => {
                     let serv = await axios.post(`newservice`, nuevoServ)
                     setLoadingSave(false)
                     setnuevoServ(serv.data.servicio)
-                    console.log("se creó el servicio")
                 } catch (err) {
                     setLoadingSave(false)
                     console.log(err)

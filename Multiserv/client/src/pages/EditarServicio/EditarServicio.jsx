@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { getCats, servicesId, updateService } from '../../redux/actions/actions';
 import ReactCountryFlag from "react-country-flag"
 import { storage } from "../../Firebase";
-import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "@firebase/storage";
 import { IoReturnUpBack } from "react-icons/io5";
 import { HiOutlinePhotograph, HiPencil } from "react-icons/hi";
 import { BsCloudArrowUpFill, BsCloudCheckFill } from "react-icons/bs";
@@ -155,12 +155,12 @@ const EditarServicio = () => {
 
 
   useEffect(() => {
-    if ((additionalImg.length) + (servicio.photos.length - 1) >= 6) {
+    if (!loadingService && (additionalImg.length) + (servicio.photos.length - 1) >= 6) {
       setAllowLoadImg(false)
     } else {
       setAllowLoadImg(true)
     }
-  }, [allowLoadImg, additionalImg])
+  }, [loadingService, allowLoadImg, additionalImg])
 
   useEffect(() => {
     if(subiendoPortada){
@@ -247,6 +247,13 @@ const EditarServicio = () => {
     let coverToLoad = cover.img
 
     try {
+//Borrar la portada anterior del array del servicio y de firebase
+       if (servicio && servicio.photos.length>0) {      
+        var portadaRef = ref(storage, editService.photos[0]);
+        await deleteObject(portadaRef)
+        editService.photos.shift();
+      }
+              //create new image upload
       const formato= coverToLoad.name.slice((Math.max(0, (coverToLoad.name).lastIndexOf('.')) || Infinity)+ 1);
       const fileRef = ref(storage, `/PhotosServices/${id}/portada.${formato}`);
       await uploadBytes(fileRef, coverToLoad);
@@ -277,6 +284,7 @@ const EditarServicio = () => {
       })
       setsubiendoPortada(true);
     } catch (error) {
+      console.log(error)
       setCover({
         ...cover,
         status: 'failed'
@@ -373,6 +381,25 @@ const EditarServicio = () => {
 
   }
 
+  const handleDeleteImage= async (foto, i) => {
+          //Borrar la imagen anterior del array del servicio y de firebase    
+          try {
+            const imagenRef = ref(storage, foto);
+            await deleteObject(imagenRef);
+            editService.photos.splice(i, 1);
+
+            setEditService({
+              ...editService,
+              photos: [...editService.photos]
+                  })
+            setsubiendoImagen(true);
+            
+          } catch (error) {
+            console.log(error)
+          }
+
+  }
+
   const resetImg = () => {
     setLoadedImg(false)
     setCover(null)
@@ -417,7 +444,7 @@ const EditarServicio = () => {
 
           <div css={gradientStyle} className="w-full h-48 absolute top-0">
             <div className="flex flex-row justify-between mx-8 mt-2">
-              <Link to="/home" className="inline-flex px-4 py-0.5 bg-transparent rounded-full text-white transition-all ease-in-out duration-300 hover:bg-gray-900">
+              <Link to={`/home/${uid}/my-services`} className="inline-flex px-4 py-0.5 bg-transparent rounded-full text-white transition-all ease-in-out duration-300 hover:bg-gray-900">
                 <IoReturnUpBack className="mr-3 self-center text-xl" />
                 <span className="font-semibold">Regresar</span>
               </Link>
@@ -486,7 +513,7 @@ const EditarServicio = () => {
                           <div className="absolute top-0 right-0 z-20">
                             <button
                               className="p-2"
-                              onClick={() => { console.log('algo') }}
+                              onClick={() => { handleDeleteImage(foto, i) }}
                             >
                               <FaTimes className="text-lg text-white" />
                             </button>

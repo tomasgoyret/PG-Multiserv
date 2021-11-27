@@ -33,7 +33,7 @@ const Profile = () => {
         photoURL: photoURL,
         phoneNumber: phoneNumberModificado,
     })
-    const [countryCode, setCountryCode] = useState(phoneCountry.length === 3 ? phoneCountry : " ")
+    const [countryCode, setCountryCode] = useState(phoneCountry.length === 3 ? phoneCountry : "+52")
 
 
     const dispatch = useDispatch()
