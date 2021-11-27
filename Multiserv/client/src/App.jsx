@@ -97,7 +97,7 @@ function App() {
           element: <AgendarCita />
         },
         {
-          path: '/home/:idService/reservations',
+          path: '/home/:uidClient/reservations',
           element: <Reservations />
         },
       ]

@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getReservas } from "../../redux/actions/actions";
+import { getReservas, getServicios } from "../../redux/actions/actions";
 
 const Reservations = () => {
-  const datosSesionFromLocalStorage = JSON.parse(
-    localStorage.getItem("datoSesion")
-  );
-  const { uid } = datosSesionFromLocalStorage;
-  const { id } = useParams();
+  const { uidClient } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [misReservas, setMisReservas] = useState([]);
-  const { reservas } = useSelector((state) => state);
+  const { reservas, misServicios } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getReservas(id));
+    dispatch(getServicios(uidClient));
   }, []);
-  useEffect(() => {
-    navigate("/home");
-  }, [reservas.usuarioUidClient !== uid]);
 
-  console.log(reservas.citas,'reservas');
-  console.log(uid, 'uidClient');
-  console.log(id, 'idService');
+  useEffect(() => {
+    for (let i = 0; i < misServicios.length; i++) {
+      dispatch(getReservas(misServicios[i].id));
+    }
+  }, [misServicios]);
+
+  console.log(reservas, "reservas");
+
+  console.log(reservas[0], "asd");
 
   return (
     <div>
       <h1>Reservations</h1>
+      <p className="">{reservas[0]?.id}</p>
     </div>
   );
 };
