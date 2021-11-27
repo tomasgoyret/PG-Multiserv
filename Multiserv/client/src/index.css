@@ -92,10 +92,10 @@
     z-index: -1;
   }
   
-  .progress {
-    background-color: #d8d8d8;
-    border-radius: 20px;
-    position: relative;
-    height: 10px;
-    width: 200px;
+  .promedio{
+    flex: 0 0 45%;
+  }
+
+  .porcentaje{
+    flex: 0 0 calc(55% -2rem);
   }
