@@ -7,13 +7,13 @@ const postCitas = async (req, res,next) => {
     try {
         const user = await Usuarios.findByPk(uidClient)
         const servicio = await Servicios.findByPk(id)
-        const cita = { dia, hora, nameUser:user.displayName, direccion, ciudad }        
+        const cita = { dia, hora, nameUser:user.displayName, direccion, ciudad, title: servicio.title }        
         const citas = await Citas.create(cita);
         await user.addCitas(citas)
         await servicio.addCitas(citas)
         const template = await mailTurno(user.displayName,dia,hora,direccion,ciudad,servicio.title)
-        await sendEmail(user.email,subject = "Confirmación de turno",template)
-        res.send(`Turno ok, dia ${dia}, hora ${hora}, servicio: ${servicio.title}`)
+        await sendEmail(user.email,subject = " Confirmación de turno ",template)
+        res.send(`Turno reservado para el dia : ${dia}, hora : ${hora.hora}, servicio : ${servicio.title}`)
     } catch (error) {
         next(error)
     }

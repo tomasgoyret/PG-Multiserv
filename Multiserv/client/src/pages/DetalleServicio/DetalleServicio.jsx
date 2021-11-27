@@ -59,7 +59,6 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, '')
     let servicio = servicios.filter(serv => serv.id === Number(id))
     let usuario = usuarios.filter(usuario => usuario.uidClient === servicio[0].usuarioUidClient)[0]
-    console.log("Este es usuario", usuario)
 
     var foto = Img
     if (datosSesionFromLocalStorage != null) {
@@ -101,7 +100,6 @@ const DetalleServicio = () => {
         value = !value;
         agregarFav()
     }
-    console.log(uid)
     const agregarFav = async () => {
 
         if (value === true) {
