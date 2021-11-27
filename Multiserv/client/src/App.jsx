@@ -25,7 +25,8 @@ import MisCitas from "./pages/MisCitas/MisCitas";
 import CrearHorarios from "./pages/CrearHorarios/CrearHorarios";
 import AgendarCita from "./pages/AgendarCita/AgendarCita";
 import { MapServices } from "./pages/MapServices/MapServices";
-import SendReview from "./Components/Organisms/SendReview/SendReview";
+import PercentageReview from "./Components/Molecules/PercentageReview/PercentageReview";
+import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
 
 function App() {
   toast.configure()
@@ -124,6 +125,7 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
+    
     
   ]
   /*
