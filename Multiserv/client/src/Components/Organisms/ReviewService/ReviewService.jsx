@@ -6,22 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReviews, users, usuarioId } from "../../../redux/actions/actions";
 import { useLocation } from "react-router";
 import SendReview from "../SendReview/SendReview";
+import {Review} from "../../../Hooks/useReviews"
+import StarRatingReview from "../../Molecules/StarRatingReview/StarRatingReview"
+import ProgressRating from "../../Molecules/ProgressBar/ProgressBar";
+import PercentageReview from "../../Molecules/PercentageReview";
 
 const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosReviews}) => {
+    const {reviewsdata, title, porcentaje, promedio, rating} = Review();
     const dispatch = useDispatch()
     const { reviews, usuarios } = useSelector(state => state)
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
-
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    
 
-    const reviewsdata = reviews.map(review => ({
-        title: review.title,
-        details: review.details,
-        rating: review.rating,
-        user: usuarios.filter(usuario => usuario.uidClient === review.usuarioUidClient)
-    }));
+
 
     useEffect(() => {
         dispatch(getReviews(current))
@@ -38,6 +36,13 @@ const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosRev
             <div className="flex justify-center w-full pt-5 pb-5 px-10">
                 <h2 className="text-3xl text-gray-800 py-5 font-bold">Reseñas</h2>
             </div>
+
+      
+            <div className="ml-10 flex justify-between w-max">
+                <StarRatingReview rating={promedio} total={rating}/>
+                <PercentageReview />
+            </div>
+
             {
                 mostrarComentariosReviews && datosSesionFromLocalStorage &&
                 <div className="w-4/6 px-5 mt-5 mb-20">
