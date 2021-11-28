@@ -181,7 +181,7 @@ const AgendarCita = () => {
         ciudad.length > 0
       ) {
         var body = {
-          dia,
+          dia:'2021',
           hora,
           direccion,
           ciudad,
@@ -223,7 +223,7 @@ const AgendarCita = () => {
   const agregarCita = async (body, idService) => {
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
-    console.log(response.data);
+    alert(response.data);
     navigate("/home");
   };
   return (
@@ -236,7 +236,7 @@ const AgendarCita = () => {
             onOpen={handleClickFecha}
             format="YYYY/MM/DD"
             className="green"
-            minDate={new Date().setDate(today.getDate())}
+            minDate={new Date().setDate(today.getDate())}/* today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1) */
             maxDate={prop[0]}
             value={value}
             onChange={handleChange}

@@ -28,7 +28,8 @@ import {
     MAPSERVICES,
     VER_HORARIOS,
     ELIMINAR_CITAS,
-    RESERVAS
+    RESERVAS,
+    STATUS_CITA,
 } from '../actionTypes/actionTypes';
 
 /* Traer servicios */
@@ -288,14 +289,29 @@ export const cancelarCita = (id, uidClient) => {
 
 
 /* Ver mis reservas por idServices */
-export const getReservas = (id) => {
+export const getReservas = (arrayIds) => {
     return async function (dispatch) {
-        let url = `reservas/${id}`;
-        const response = await axios(url);
+        const response = await axios.post('reservas', arrayIds);
         const reservas = response.data
         return dispatch({
             type: RESERVAS,
             payload: reservas
+        })
+    }
+}
+
+
+/* Cambiar status Cita para Reseña */
+export const statusCita = (id, uidClient) => {
+    return async function (dispatch) {
+        await axios.put(`citas/${id}`);
+        console.log(uidClient,'as')
+        let citas = `citas/${uidClient}`;
+        const response = await axios(citas);
+        const cita = response.data
+        return dispatch({
+            type: STATUS_CITA,
+            payload: cita
         })
     }
 }
