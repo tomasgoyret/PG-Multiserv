@@ -11,11 +11,17 @@ import BarElements from '../../Components/Molecules/BarElements/BarElements';
 import Nav from '../../Components/Organisms/NavBar/Nav';
 import SignIn from '../SignIn/SignIn';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LandingPage = () => {
 
+    const prenderNotificaciones = async () =>{
+        await axios.get('notificaciones')
+    }
+
     useEffect(() => {
         document.title = '¡Bienvenido a MultiServicios!'
+        prenderNotificaciones()
     }, [])
     const [modal, setModal] = useState(false)
 
