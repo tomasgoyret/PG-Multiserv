@@ -28,6 +28,7 @@ const postCitasRouter = require("./postCitas")
 const deleteCitasRouter = require("./deleteCitas")
 const postMailPago= require("./postMailPago")
 const getReservasRouter= require("./getReservas")
+const notificaciones = require("./mailsNotificaciones")
 
 
 
@@ -79,5 +80,6 @@ router.use("/reservas", getReservasRouter)
 
 //Rutas de Envío de mails
 router.use("/mail",postMailPago)
+router.use("/notificaciones", notificaciones)
 
 module.exports = router;
