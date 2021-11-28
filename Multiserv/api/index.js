@@ -29,7 +29,7 @@ conn
         await Categoriasmockup();
         await DataServices();
         await ResenasMockup();
-        await CrearHorarios();    
+        await CrearHorarios();   
         await app.listen(process.env.PORT || 3001, () => {
             console.log('Server on port '+ process.env.PORT || 3001)
         })
