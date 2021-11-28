@@ -31,7 +31,7 @@ const HomeNavigation = () => {
     var name = " Invitado"
     var email = ""
 
-    if (datosSesionFromLocalStorage != null) {
+    if (datosSesionFromLocalStorage != null ) {
         name = datosSesionFromLocalStorage.displayName
         email = datosSesionFromLocalStorage.email
     }
@@ -73,6 +73,11 @@ const HomeNavigation = () => {
         setVerPerfil(false)
         const uidClient = datosSesionFromLocalStorage.uid
         navigate(`/home/${uidClient}/appointments`)
+    }
+    const misReservas = () => {
+        setVerPerfil(false)
+        const uidClient = datosSesionFromLocalStorage.uid
+        navigate(`/home/${uidClient}/reservations`)
     }
 
 
@@ -132,6 +137,12 @@ const HomeNavigation = () => {
                                     <span className="font-semibold" >Mis citas</span>
                                 </button>
                             </div>
+                            { (datosSesionFromLocalStorage != null && datosSesionFromLocalStorage.provider === true) && <div onClick={misReservas} className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >
+                                <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all" >
+                                    <MdHomeRepairService className="mr-2" />
+                                    <span className="font-semibold" >Mis Reservas</span>
+                                </button>
+                            </div>}
                             {
                                 detalleUsuario.isAdmin &&
                                 <div className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer" >

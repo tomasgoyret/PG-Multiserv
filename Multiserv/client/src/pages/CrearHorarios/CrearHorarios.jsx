@@ -12,10 +12,10 @@ import { Navigate, useNavigate } from "react-router";
 const Horarios = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { detalleServicio } = useSelector((state) => state);
   const datosSesionFromLocalStorage = JSON.parse(
     localStorage.getItem("datoSesion")
   );
-  const { detalleServicio } = useSelector((state) => state);
   const { uid } = datosSesionFromLocalStorage;
   const { idService } = useParams(); // id del Servicio
   const [rango, setRango] = useState([]);

@@ -1,4 +1,4 @@
-const { Servicios, Categorias } = require("../db.js");
+const { Servicios, Categorias, Horarios } = require("../db.js");
 
 // get all services
 
@@ -29,7 +29,7 @@ const getServ = async (req, res) => {
 const getServId = async (req, res,next) => {
     const {id} = req.params;
     try {
-        const servicio = await Servicios.findAll({ where:{ id }, include: Categorias });      
+        const servicio = await Servicios.findAll({ where:{ id }, include: [Categorias, Horarios] });      
         servicio.length < 1 ? res.send('No hay Servicios que coincidan') : res.send(servicio)
     } catch (error) {
         next(error)

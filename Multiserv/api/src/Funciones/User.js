@@ -2269,9 +2269,6 @@ const reviews = [
   }
 ]
 
-const horarios = [
-]
-
 //CATEGORÍAS
 let Categoriasmockup = async () => {
   try {
@@ -2382,16 +2379,18 @@ let ResenasMockup = async () => {
 // HORARIOS
 let CrearHorarios = async () => {
   let array = [];
-let i = 0;
-while (i<24){
-array.push({fechas:[
-    {'2021/11/27':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: false},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: false},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: false},{hora:'12:0 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: false},{hora:'14:30 - 15:00', reservado: false}]
+let i = 1;
+while (i<25){
+array.push({
+  id:i,
+  fechas:[
+    {'2021/11/27':[{hora:'07:00 - 07:30', reservado: true},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: true},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: false},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: true},{hora:'12:00 - 12:30', reservado: true},{hora:'12:30 - 13:00', reservado:true},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: true},{hora:'14:00 - 14:30', reservado: false},{hora:'14:30 - 15:00', reservado: true}]
   },
-  {'2021/11/28':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: false},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: false},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: false},{hora:'12:0 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: false},{hora:'14:30 - 15:00', reservado: false}]
+  {'2021/11/28':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: true},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: true},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: true},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: true},{hora:'12:00 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: true},{hora:'14:30 - 15:00', reservado: false}]
 },
-{'2021/11/29':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: false},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: false},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: false},{hora:'12:0 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: false},{hora:'14:30 - 15:00', reservado: false}]
+{'2021/11/29':[{hora:'07:00 - 07:30', reservado: true},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: false},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: true},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: true},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: true},{hora:'12:00 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: true},{hora:'14:30 - 15:00', reservado: false}]
 },
-{'2021/11/30':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: false},{hora:'08:00 - 08:30', reservado: false},{hora:'08:30 - 09:00', reservado:false},{hora:'09:00 - 09:30', reservado: false},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: false},{hora:'11:30 - 12:00', reservado: false},{hora:'12:0 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:false},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: false},{hora:'14:00 - 14:30', reservado: false},{hora:'14:30 - 15:00', reservado: false}]
+{'2021/11/30':[{hora:'07:00 - 07:30', reservado: false},{hora:'07:30 - 08:00', reservado: true},{hora:'08:00 - 08:30', reservado: true},{hora:'08:30 - 09:00', reservado:true},{hora:'09:00 - 09:30', reservado: true},{hora:'09:30 - 10:00', reservado: false},{hora:'10:00 - 10:30', reservado: false},{hora:'10:30 - 11:00', reservado: false},{hora:'11:00 - 11:30', reservado: true},{hora:'11:30 - 12:00', reservado: true},{hora:'12:00 - 12:30', reservado: false},{hora:'12:30 - 13:00', reservado:true},{hora:'13:00 - 13:30', reservado: false},{hora:'13:30 - 14:00', reservado: true},{hora:'14:00 - 14:30', reservado: true},{hora:'14:30 - 15:00', reservado: true}]
 }]})
 i++}
 

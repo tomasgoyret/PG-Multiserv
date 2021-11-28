@@ -185,7 +185,6 @@ const CreateService = () => {
                     address: service.address, 
                     homeService: aDomicilio
                 }
-                console.log(nuevoServ)
                 try {
                     let serv = await axios.post(`newservice`, nuevoServ)
                     setLoadingSave(false)
@@ -515,7 +514,7 @@ const CreateService = () => {
                         text="Continuar en MercadoPago"
                         customTextColor="#FFFFF"
                         theme="#00a5ec"
-                        action={() => { linkPago(nuevServ.id) }}
+                        action={() => { linkPago(nuevServ?.id) }}
                     />}
 
                 </div>

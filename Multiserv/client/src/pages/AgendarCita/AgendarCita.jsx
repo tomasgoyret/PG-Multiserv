@@ -76,8 +76,8 @@ const AgendarCita = () => {
       hora: "",
       reservado: false,
     });
+    console.log(verHorarios, "verHorarios");
     if (verHorarios.length > 0) {
-      
       setProp(Object.keys(array[array.length - 1]));
     }
   };
@@ -173,14 +173,19 @@ const AgendarCita = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (detalleServicio[0]?.homeService === false) {
-      if ( dia.length > 0 && hora.hora.length > 0 && direccion.length > 0 && ciudad.length > 0 ) {
+    if (detalleServicio[0]?.homeService === true) {
+      if (
+        dia.length > 0 &&
+        hora.hora.length > 0 &&
+        direccion.length > 0 &&
+        ciudad.length > 0
+      ) {
         var body = {
           dia,
           hora,
           direccion,
           ciudad,
-          uidClient: uid
+          uidClient: uid,
         };
         agregarCita(body, idService);
         setCiudad("");
@@ -192,17 +197,16 @@ const AgendarCita = () => {
         setDia("");
         setValue(new Date());
       }
-    }
-    else if (detalleServicio[0]?.homeService === true) {
+    } else if (detalleServicio[0]?.homeService === false) {
       if (dia.length > 0 && hora.hora.length > 0) {
         let body = {
           dia,
           hora,
-          direccion:detalleServicio[0]?.address,
+          direccion: detalleServicio[0]?.address,
           ciudad,
           uidClient: uid,
         };
-        agregarCita(idService, body);
+        agregarCita(body, idService);
         setCiudad("");
         setDireccion("");
         setHora({
@@ -216,10 +220,10 @@ const AgendarCita = () => {
       alert("Complete los campos");
     }
   };
-  const agregarCita = async (body, idService ) => {
+  const agregarCita = async (body, idService) => {
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
-    alert(response.data);
+    console.log(response.data);
     navigate("/home");
   };
   return (
@@ -252,11 +256,11 @@ const AgendarCita = () => {
 
         {/* Horas que coinciden con fecha de almanaque */}
 
-        {dia.length > 0 ? coincidencia() : "No hay turno para esa fecha"}
+        {dia.length > 0 ? coincidencia() : <p>No hay turno para esa fecha</p>}
 
         <br />
         {/* Si no es a Domicilio el usuario tiene que colocar direccion de cita */}
-        {detalleServicio[0]?.homeService === false ? (
+         {detalleServicio[0]?.homeService === true ? (
           <div>
             <h3>Direccion de la cita</h3>
             <label htmlFor="ciudad"> Ingrese su ciudad: </label>
@@ -296,8 +300,7 @@ const AgendarCita = () => {
           ""
         )}
 
-        {/*--------------  Previsualizacion Turno  -------------------*/
-       }
+        {/*--------------  Previsualizacion Turno  -------------------*/}
 
         <div className="bg-green-500">
           <h1>Turno para el Servicio: {detalleServicio[0]?.title}</h1>
@@ -306,8 +309,8 @@ const AgendarCita = () => {
           <h3>Hora: {hora.hora}</h3>{" "}
           {detalleServicio[0]?.homeService === false ? (
             <div>
-              <h3>Ciudad: {ciudad}</h3>
-              <h3>Dirección: {direccion}</h3>
+              {detalleServicio[0]?.homeService === true && <h3>Ciudad: {ciudad}</h3>}
+              <h3>Dirección: {direccion || detalleServicio[0]?.address}</h3>
             </div>
           ) : (
             <div>
