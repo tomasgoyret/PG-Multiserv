@@ -3,15 +3,19 @@ const { Citas } = require("../db.js");
 // get all services
 
 const getReservas = async (req, res) => {
-    const { id } = req.params;
+    const { ids } = req.body;
     try {
-        const Reservas = await Citas.findAll({
-            where: { servicioId: id },
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            }
-        });
-        res.send(Reservas)
+        let reservasArray = [];
+        for (let i = 0; i < ids.length; i++) {
+            let Reservas = await Citas.findAll({
+                where: { servicioId: ids[i] },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            });
+            reservasArray.push(Reservas);
+        }
+        res.send(reservasArray)
     }
     catch (error) {
         console.log(error)

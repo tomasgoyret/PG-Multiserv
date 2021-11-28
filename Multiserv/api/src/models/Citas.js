@@ -33,5 +33,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-  });
+    status: {
+      type: DataTypes.ENUM('Pendiente', 'Concretada'),
+      defaultValue: 'Pendiente'
+    },
+    });
 };
