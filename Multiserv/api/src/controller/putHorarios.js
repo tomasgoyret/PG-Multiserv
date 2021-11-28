@@ -4,9 +4,7 @@ const putHorarios = async (req, res) => {
     const { id } = req.params; 
     const { fechas } = req.body;
     try {
-        const newHorario = fechas
-        const horario = await Horarios.findByPk(id);
-        await horario.update(newHorario)
+        await Horarios.update(fechas, {where: id})
          res.send(`Horario editado correctamente`)
     } catch (error) {
         console.log(error)

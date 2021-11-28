@@ -13,7 +13,18 @@ const MisCitas = () => {
   useEffect(() => {
     dispatch(getMisCitas(uidClient));
   }, []);
-
+  misCitas.sort((prev, post) => {
+    if (prev.dia !== post.dia) {
+      if (prev.dia < post.dia) return -1;
+      else if (prev.dia > post.dia) return 1;
+      else return 0;
+    }
+    if (prev.dia === post.dia) {
+      if (prev.hora.hora < post.hora.hora) return -1;
+      else if (prev.hora.hora > post.hora.hora) return 1;
+      else return 0;
+    }
+  });
   /*
 ciudad: "sad"
 dia: "2021/11/27"
@@ -41,7 +52,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       <h1>Mis Citas</h1>
 
       {/* Citas mapeadas por Servicio */}
-      
+
       {misCitas.length > 0 &&
         misCitas.map((cita, i) => {
           return (
@@ -78,7 +89,6 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       {/* No hay citas */}
 
       {misCitas.length === 0 && <h3>No tienes citas</h3>}
-
     </div>
   );
 };

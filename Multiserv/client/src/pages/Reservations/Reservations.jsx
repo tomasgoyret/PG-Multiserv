@@ -29,6 +29,11 @@ const Reservations = () => {
     <div>
       <h1>Reservations</h1>
       <p className="">{reservas[0]?.id}</p>
+
+
+
+
+      
     </div>
   );
 };

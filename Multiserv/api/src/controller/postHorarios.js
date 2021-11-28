@@ -6,7 +6,7 @@ const postHorarios = async (req, res) => {
     try {
         const servicio = await Servicios.findByPk(idService)
         if(servicio.usuarioUidClient === uidClient){
-        const horario = await Horarios.create({fechas:fechas});
+        const horario = await Horarios.create({fechas:fechas, id:idService});
         await servicio.addHorarios(horario)
          res.send(`agregado correctamente al servicio ${servicio.title}, con id: ${idService}`)
         }else{

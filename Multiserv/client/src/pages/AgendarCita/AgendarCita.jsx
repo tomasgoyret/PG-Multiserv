@@ -76,6 +76,7 @@ const AgendarCita = () => {
       hora: "",
       reservado: false,
     });
+    console.log(verHorarios, "verHorarios");
     if (verHorarios.length > 0) {
       setProp(Object.keys(array[array.length - 1]));
     }
@@ -222,7 +223,7 @@ const AgendarCita = () => {
   const agregarCita = async (body, idService) => {
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
-    alert(response.data);
+    console.log(response.data);
     navigate("/home");
   };
   return (
