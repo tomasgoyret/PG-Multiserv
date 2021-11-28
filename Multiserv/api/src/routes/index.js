@@ -17,6 +17,7 @@ const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
+const postResenaRouter = require("./postReview")
 const getMyServ = require("./getMyServ")
 const putUbicacion = require("./putUbicacion")
 const getAllUbicacion = require("./getAllUbicacion")
@@ -58,6 +59,7 @@ router.use("/eliminar-fav", deleteFavRouter)
 
 //Rutas reseñas
 router.use("/resena", resenaRouter)
+router.use("/agregar-resena", postResenaRouter)
 
 //Ruta para crear/editar ubicacion
 
