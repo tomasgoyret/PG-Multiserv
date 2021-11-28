@@ -236,7 +236,7 @@ const AgendarCita = () => {
             onOpen={handleClickFecha}
             format="YYYY/MM/DD"
             className="green"
-            minDate={ today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)} 
+            minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)} 
             maxDate={prop[0]}
             value={value}
             onChange={handleChange}
