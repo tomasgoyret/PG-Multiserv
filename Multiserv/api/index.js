@@ -24,7 +24,7 @@ require('dotenv').config();
 
 conn
     .sync({ force: true})
-    .then(async () => {
+    .then(async () => { 
         await LlamadoUsers(Users);
         await Categoriasmockup();
         await DataServices();
