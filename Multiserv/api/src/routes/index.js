@@ -17,6 +17,7 @@ const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
+const postResenaRouter = require("./postReview")
 const getMyServ = require("./getMyServ")
 const putUbicacion = require("./putUbicacion")
 const getAllUbicacion = require("./getAllUbicacion")
@@ -29,6 +30,7 @@ const deleteCitasRouter = require("./deleteCitas")
 const postMailPago= require("./postMailPago")
 const getReservasRouter= require("./getReservas")
 const putCitasRouter = require("./putCitas")
+const notificaciones = require("./mailsNotificaciones")
 
 
 
@@ -59,6 +61,7 @@ router.use("/eliminar-fav", deleteFavRouter)
 
 //Rutas reseñas
 router.use("/resena", resenaRouter)
+router.use("/agregar-resena", postResenaRouter)
 
 //Ruta para crear/editar ubicacion
 
@@ -81,5 +84,6 @@ router.use("/reservas", getReservasRouter)
 
 //Rutas de Envío de mails
 router.use("/mail",postMailPago)
+router.use("/notificaciones", notificaciones)
 
 module.exports = router;
