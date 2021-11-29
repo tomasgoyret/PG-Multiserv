@@ -4,6 +4,7 @@ const { Servicios, Categorias, Usuarios } = require("../db.js");
 const postServ = async (req, res, next) => {
     const { title, currency, category, description, max, min, uidClient, rating, photos, location , address, homeService } = req.body;
     try {
+        await Usuarios.update({provider:true},{where:{uidClient:uidClient}});
         const usuario = await Usuarios.findByPk(uidClient)  
         const newService = {
             title, currency, description, max, min, rating, photos, location, address, homeService,
