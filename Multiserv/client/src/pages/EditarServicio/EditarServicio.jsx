@@ -11,7 +11,7 @@ import { storage } from "../../Firebase";
 import { MapContainer, MapConsumer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "@firebase/storage";
 import { IoReturnUpBack } from "react-icons/io5";
-import { HiOutlinePhotograph, HiPencil } from "react-icons/hi";
+import { HiOutlinePhotograph, HiPencil, HiOutlineCalendar} from "react-icons/hi";
 import { BsCloudArrowUpFill, BsCloudCheckFill } from "react-icons/bs";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
@@ -198,8 +198,11 @@ const EditarServicio = () => {
     if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
       navigate('/')
     }
-
-
+      Swal.fire(
+        '¡Completa tu servicio!',
+        'Edita o agrega imágenes y horarios para completar los datos de tu servicio.',
+        'success'
+      )
 
   }, [])
 
@@ -748,12 +751,23 @@ const EditarServicio = () => {
                     </button>
                   </div>
                   :
+                  <div> 
                   <button
                     onClick={() => { setEditing(true) }}
-                    className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-blue-800 hover:bg-blue-900 text-white transition-all ease-in-out duration-300 mt-2">
+                    className="inline-flex flex-shrink-0 w-52 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-blue-800 hover:bg-blue-900 text-white transition-all ease-in-out duration-300 mt-2">
                     <HiPencil className="self-center text-lg mr-2" />
                     <span>Editar publicación</span>
-                  </button>}
+                  </button>
+                  <Link to={`/home/${id}/crear-horarios`} >
+                  <button
+                    className="inline-flex flex-shrink-0 w-52 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-yellow-500 hover:bg-yellow-600 text-white transition-all ease-in-out duration-300 mt-2">
+                    <HiOutlineCalendar className="self-center text-lg mr-2" />
+                    <span>Agregar horarios</span>
+                  </button>
+                  </Link>
+
+                  </div>
+                  }
               </div>
             </div>
           </div>
@@ -1010,10 +1024,16 @@ const EditarServicio = () => {
                       <span className="ml-2 underline text-lg text-gray-700 font-semibold">{editService && editService.currency} </span>
                     </div>
                   </div>
-
-
                 </div>
               </div>
+                      <div className="flex flex-row w-full justify-end">
+                      <button
+                        onClick={saveEdit}
+                        className="inline-flex flex-shrink-0 justify-center px-4 py-2 rounded-lg font-semibold text-lg place-self-center self-center bg-green-700 disabled:opacity-50 text-white transition-all ease-in-out duration-300 hover:bg-green-900 my-12">
+                        <BsCloudArrowUpFill className="mr-2 self-center text-xl" />
+                        <span className="font-semibold">Guardar cambios</span>
+                      </button>
+                    </div>
             </div>
             :
             <div id="content" className="flex flex-col">

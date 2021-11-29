@@ -49,7 +49,7 @@ const Profile = () => {
     //         return telefono = [usuarioPhone.slice(0,3),usuarioPhone.slice(3)]
     //     }
     // }
-    // separarNum()     
+    // separarNum()
 
     const [image, setImage] = useState('');
     // Eliminar usuario
@@ -66,7 +66,7 @@ const Profile = () => {
         }).then((result) => {
             console.log(result)
             if (result.isConfirmed) {
-                axios(`http://localhost:3005/eliminar-usuario/${uid}`)
+                axios.delete(`http://localhost:3005/eliminar-usuario/${uid}`)
                     .then(async response => {
                         await Swal.fire(
                             '¡Eliminado!',
@@ -269,7 +269,7 @@ const Profile = () => {
     ]
 
     const optionsARG = [
-        
+
         {
             name: '+54',
             icon: <ReactCountryFlag
@@ -351,7 +351,7 @@ const Profile = () => {
                 svg
             />
         },
-        
+
     ]
     const handleCountry = (obj) => {
         setCountryCode(obj.name)
@@ -493,7 +493,7 @@ const Profile = () => {
                                                 includeIconOnDesc
                                             />
                                         }
-                                    
+
                                     <input
                                         className="border border-gray-400 p-2 rounded-md font-medium ml-2"
                                         type="text"
