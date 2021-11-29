@@ -12,6 +12,7 @@ import {
   buscarProvedores,
   buscarServicios,
   buscarCategorias,
+  usuarioId
 } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -470,9 +471,13 @@ const ControlPanel = () => {
       }
     });
   };
+  
+  let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+  let admin = detalleUsuario.isAdmin
 
   useEffect(() => {
-    if (detalleUsuario.isAdmin) {
+    dispatch(usuarioId(datosSesionFromLocalStorage.uid))
+    if (admin === false) {
       navigate("/home");
     }
     dispatch(users());
