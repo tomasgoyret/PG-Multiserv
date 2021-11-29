@@ -49,8 +49,14 @@ const DetalleServicio = () => {
 
 
   useEffect(() => {  
-      setFav(misFavoritos?.filter((e) => {if (e.idService === id){return e}}))
-  },[misFavoritos?.length > 0])
+    if(misFavoritos.length !== 0){
+      for(let i = 0; i < misFavoritos.length; i++){
+        if(misFavoritos[i].id === id){
+          setFav(misFavoritos[i]);
+        }
+      }
+    }
+  },[misFavoritos?.length !== 0])
 
   const [loadingImg, setLoadingImg] = useState(true);
   const [failedImg, setFailedImg] = useState(false);
