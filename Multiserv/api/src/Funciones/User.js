@@ -878,34 +878,6 @@ const Users = [
       }]
   },
   {
-    "uid": "bNIPIC49wkcn2YfmyBKv0DXh50P2",
-    "email": "colo_goyret@hotmail.com",
-    "lastName": "",
-    "emailVerified": true,
-    "name": "Tomás Goyret",
-    "phone": "+543874847715",
-    "disabled": false,
-    "metadata": {
-      "lastSignInTime": "Tue, 16 Nov 2021 18:22:44 GMT",
-      "creationTime": "Sat, 13 Nov 2021 19:58:57 GMT"
-    },
-    "passwordHash": "KHcJCBJ0RIKc0T6qcTzGkqK8CTO6MYuIrvqrchGOFpG5mJYuhin7nx1Gyt1XTBhiO1XLwbdz0ZiLziPSWHupRA==",
-    "passwordSalt": "OibP9y_VaR1OsA==",
-    "tokensValidAfterTime": "Sat, 13 Nov 2021 19:58:57 GMT",
-    "providerData": [
-      {
-        "uid": "+543874847715",
-        "providerId": "phone",
-        "phone": "+543874847715"
-      },
-      {
-        "uid": "colo_goyret@hotmail.com",
-        "name": "Tomás Goyret",
-        "email": "colo_goyret@hotmail.com",
-        "providerId": "password"
-      }]
-  },
-  {
     "uid": "eK7xM4QxffNSO51JafCb1yiB9u02",
     "email": "uli.vargas123@gmail.com",
     "lastName": "",
