@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import axios from 'axios'
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { getCats, servicesId, updateService } from '../../redux/actions/actions';
 import ReactCountryFlag from "react-country-flag"
 import { storage } from "../../Firebase";
-import { MapContainer, MapConsumer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, MapConsumer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "@firebase/storage";
 import { IoReturnUpBack } from "react-icons/io5";
 import { HiOutlinePhotograph, HiPencil } from "react-icons/hi";
@@ -19,6 +19,12 @@ import { toast } from 'react-toastify';
 import { RiLoaderFill } from "react-icons/ri";
 import { MdLocationPin } from "react-icons/md";
 import { ImSpinner6, ImSpinner9 } from "react-icons/im";
+import { FaSearchLocation } from "react-icons/fa";
+import { popup } from "leaflet";
+import Swal from "sweetalert2";
+import { MdMyLocation } from "react-icons/md";
+import { BsStars, BsExclamationLg } from "react-icons/bs";
+
 
 const EditarServicio = () => {
   /*
@@ -36,6 +42,8 @@ const EditarServicio = () => {
     min: 20
   }
   */
+  const popUp = useRef(null);
+  const markerRef = useRef(null)
   const {id} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -48,9 +56,42 @@ const EditarServicio = () => {
   const [searchingAddress, setSearchingAddress] = useState({ status: 'not searching' })
   const [position, setPosition] = useState(null)
   const [address, setAddress] = useState('')
+  const [disableCancelSave, setDisableCancelSave] = useState(false)
+  const [draggable, setDraggable] = useState(false)
   /*BOOLEANO QUE MUESTRA/OCULTA LOS INPUTS*/
   const [editing, setEditing] = useState(false)
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current
+        if (marker != null) {
+          setPosition(marker.getLatLng())
+        }
+      },
+    }),
+    [],
+  )
 
+  useEffect(() => {
+    if (position !== null) {
+      //console.log(position);
+      searchLatLng(position.lat, position.lng)
+    }
+
+  }, [position])
+  useEffect(() => {
+    if (draggable) {
+      toast.success('Arrastra el marcador para modificar la dirección', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      })
+    }
+  }, [draggable])
   /*OBJETO QUE RECIBE LA IMAGEN DE PORTADA:
   {
     url: URL.createObjectURL(e.target.files[0]),
@@ -157,6 +198,8 @@ const EditarServicio = () => {
     if (!localStorage.length || !datosSesionFromLocalStorage.emailVerified) {
       navigate('/')
     }
+
+
 
   }, [])
 
@@ -290,7 +333,6 @@ const EditarServicio = () => {
       })
       setsubiendoPortada(true);
     } catch (error) {
-      console.log(error)
       setCover({
         ...cover,
         status: 'failed'
@@ -399,40 +441,119 @@ const EditarServicio = () => {
             const imagenRef = ref(storage, foto);
             await deleteObject(imagenRef);
           } catch (error) {
-            console.log(error)
+            //...
           }
 
   }
 
   const onClickAddress = () => {
+    setDisableCancelSave(true)
     setSearchingAddress({ status: 'searching' })
     axios(`https://api.geoapify.com/v1/geocode/search?text=${address}&limit=1&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
       .then((response) => {
         const pos = response.data.results[0];
-        setSearchingAddress({ status: 'done', result: [pos.lat, pos.lon] })
-
+        setSearchingAddress({ status: 'done', result: [pos.lat, pos.lon], details: pos.formatted })
+        setAddress(pos.formatted)
         setEditService({
           ...editService,
           location: [pos.lat, pos.lon],
-          address
+          address: pos.formatted
         })
+        setDisableCancelSave(false)
 
-        console.log(editService);
       })
       .catch((error) => {
-        console.log(error)
+        setDisableCancelSave(false)
         setSearchingAddress({ status: 'failed' })
       });
   };
+
+  const editLocation = () => {
+    setEditAddress(true)
+
+  }
+
+  const locateMe = () => {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+    const success = (pos) => {
+      let crd = pos.coords;
+      /* console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`); */
+      searchLatLng(crd.latitude, crd.longitude)
+    }
+
+    const errors = (err) => {
+      if (err.code == 1) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Activar la ubicación',
+          html: 'Para que podamos ayudarte a encontrar automáticamente tu ubicación, es necesario que nos des permiso para encontrarla. <br /><br />' + 'Si deseas volver a activarla, deberás hacerlo manualmente',
+        })
+      }
+    }
+
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (result.state === "granted") {
+          //If granted then you can directly call your function here
+          navigator.geolocation.getCurrentPosition(success);
+        } else if (result.state === "prompt") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if (result.state === "denied") {
+          //If denied then you have to show instructions to enable location
+          Swal.fire({
+            icon: 'warning',
+            title: 'Activar la ubicación',
+            html: 'Para que podamos ayudarte a encontrar automáticamente tu ubicación, es necesario que nos des permiso para encontrarla. <br /><br />' + 'Si deseas volver a activarla, deberás hacerlo manualmente',
+          })
+        }
+        result.onchange = function () {
+          //identificar cuando cambia el permiso
+        };
+      });
+
+    setDraggable(true)
+  }
+  const searchLatLng = (lat, lon) => {
+    setDisableCancelSave(true)
+    if (searchingAddress.status !== 'not searching') {
+      setSearchingAddress({ ...searchingAddress, status: 'relocating' })
+    }
+    setDraggable(true)
+    axios(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
+      .then((response) => {
+        const pos = response.data.results[0];
+        setSearchingAddress({ status: 'done', result: [pos.lat, pos.lon], details: pos.formatted })
+        setAddress(pos.formatted)
+        setEditService({
+          ...editService,
+          location: [pos.lat, pos.lon],
+          address: pos.formatted
+        })
+        setDisableCancelSave(false)
+      })
+      .catch((error) => {
+        setSearchingAddress({ status: 'failed' })
+        setDisableCancelSave(false)
+      });
+  }
   const updateAddress = () => {
 
     dispatch(updateService(id, editService));
-
+    setDraggable(false)
     setEditAddress(false)
     setAddress('');
     setSearchingAddress({ status: 'not searching' })
 
   }
+
   const resetImg = () => {
     setLoadedImg(false)
     setCover(null)
@@ -638,30 +759,52 @@ const EditarServicio = () => {
             <div id="map" className="flex flex-col w-full transition-all ease-in-out duration-300 border-b pb-4 mb-4 ">
               <div className="border-b mb-4 flex flex-row justify-between">
                 <span className="text-4xl text-cyan-900 font-semibold self-center">Ubicación</span>
-                {!editAddress ? <button onClick={() => { setEditAddress(true); }} className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center text-cyan-900 transition-all ease-in-out duration-300 hover:bg-cyan-800 hover:text-white my-2" >
+                {!editAddress ? <button onClick={editLocation} className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center text-cyan-900 transition-all ease-in-out duration-300 hover:bg-cyan-800 hover:text-white my-2" >
                   <HiPencil className="self-center text-lg mr-2" />
                   <span className="font-semibold">Editar ubicación</span>
                 </button>
                   :
                   <div className="flex flex-row">
                     <button
-                      disabled={searchingAddress.status === 'searching'}
-                      onClick={() => { setEditAddress(false); setAddress(''); setSearchingAddress({ status: 'not searching' }) }}
+                      disabled={disableCancelSave}
+                      onClick={() => { setEditAddress(false); setAddress(''); setSearchingAddress({ status: 'not searching' }); setDraggable(false) }}
                       className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-red-200 text-red-900 transition-all ease-in-out duration-300 hover:bg-red-800 hover:text-white my-2 disabled:opacity-50">
                       <FaTimes className="mr-2 self-center text-xl" />
                       <span className="font-semibold">Cancelar edición</span>
                     </button>
                     <button
-                      disabled={searchingAddress.status === 'searching' || !searchingAddress.result}
+                      disabled={disableCancelSave}
                       onClick={updateAddress}
                       className="inline-flex flex-shrink-0  justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-green-100 text-green-900 transition-all ease-in-out duration-300 hover:bg-green-800 hover:text-white my-2 ml-3 disabled:opacity-50">
                       <BsCloudArrowUpFill className="mr-2 self-center text-xl" />
-                      <span className="font-semibold">Guardar cambios</span>
+                      <span className="font-semibold">Guardar ubicación</span>
                     </button>
                   </div>}
               </div>
               <div className="my-4 flex-col">
-                {editAddress ? <div className="flex flex-row text-xl">
+                <div className="flex-col">
+
+                </div>
+                {editAddress ? <div className="flex flex-col">
+                  <div className="flex flex-row py-2 self-center  justify-start items-center h-full">
+                    <label className="type_option self-center text-xl">
+                      <input type="checkbox" name='check'
+                        id='check'
+                        onChange={() => {
+                          setEditService({
+                            ...editService,
+                            homeService: !editService.homeService
+                          })
+                        }}
+                        value={editService.homeService}
+                        checked={editService.homeService}
+                        disabled={false}
+                      />
+                      <span className="custom_check"></span>
+                      <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Disponible para ir a domicilio</label>
+                    </label>
+                  </div>
+                  <div className="flex flex-row text-xl">
                   <HiPencil style={{ WebkitTransform: 'scaleX(-1)', transform: 'scaleX(-1)' }} className="self-center mr-2 text-2xl text-blue-800" />
                   <input
                     onChange={(e) => { setAddress(e.target.value) }}
@@ -669,11 +812,14 @@ const EditarServicio = () => {
                     type="text"
                     name="editAddress"
                     id="editAddres"
-                    placeholder="Escribe tu dirección completa"
+                      placeholder="[CALLE Y NO. DE CASA], CIUDAD, ESTADO/PROVINCIA"
                     className=" border-b-2 border-transparent  px-4 py-1 outline-none border-gray-200 focus:border-cyan-900 transition-all ease-in-out duration-300 w-full"
                   />
+                    <button disabled={disableCancelSave} onClick={locateMe} className="inline-flex flex-row self-center px-2 py-0.5 ml-3 rounded-md bg-blue-700 text-white transition-all ease-in-out duration-300 hover:bg-blue-900 disabled:opacity-50">
+                      <MdMyLocation />
+                    </button>
                   <button
-                    disabled={address === '' || searchingAddress.status === 'searching'}
+                      disabled={address === '' || searchingAddress.status === 'searching' || searchingAddress.status === 'relocating'}
                     onClick={onClickAddress}
                     css={{
                       ':disabled&:hover': {
@@ -682,46 +828,73 @@ const EditarServicio = () => {
                       }
                     }}
                     className="inline-flex flex-shrink-0  justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-green-100 text-green-900 transition-all ease-in-out duration-300 hover:bg-green-800 hover:text-white my-2 ml-3 disabled:opacity-50 hover:disabled:bg-green-100 disabled:cursor-not-allowed">
-                    {searchingAddress.status === 'searching' ?
+                      {searchingAddress.status === 'searching' || searchingAddress.status === 'relocating' ?
                       <>
                         <ImSpinner6 className="mr-2 self-center text-lg animate-spin" />
                         <span className="font-semibold">Buscando...</span></>
                       :
-                      <><MdLocationPin className="mr-2 self-center text-xl" />
+                        <><FaSearchLocation className="mr-2 self-center text-xl" />
                         <span className="font-semibold">Buscar</span></>}
                   </button>
-                </div> : <div className="flex flex-row text-2xl">
+                  </div>
+                </div> : <div className="flex flex-col">
+                  <div className="flex flex-row text-2xl mb-3">
+                    {servicio.homeService ? <>
+                      <BsStars className="text-3xl mr-2 text-blue-900 self-center" />
+                      <span className="font-semibold text-gray-600 self-center">
+                        Ofreces servicio a domicilio
+                      </span>
+                    </> :
+                      <>
+                        <BsExclamationLg className="text-3xl mr-2 text-yellow-700 self-center" />
+                        <span className="font-semibold text-gray-600 self-center">
+                          Aún no ofreces servicio a domicilio
+                        </span>
+                      </>}
+                  </div>
+                  <div className="flex flex-row text-2xl mt-3">
                   <MdLocationPin className="text-3xl mr-2 text-red-900 self-center" />
                   <span className="font-semibold text-gray-600 self-center">
                     {servicio.address}
                   </span>
+                    </div>
                 </div>}
               </div>
-              {searchingAddress.status !== 'searching' ? <div className="w-full h-96 transition-all ease-in-out duration-300">
+              {searchingAddress.status !== 'searching' ? <div className="relative w-full h-96 transition-all ease-in-out duration-300">
+                {searchingAddress.status === 'relocating' && <div style={{ zIndex: '2000', backgroundColor: '#00000044' }} className="absolute top-0 left-0 w-full h-96 rounded-xl flex justify-center items-center">
+                  <span className="font-semibold text-xl text-white">Reubicando...</span>
+                </div>}
                 <MapContainer
-                  center={searchingAddress.status === 'done' ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location}
-                  zoom={20}
+                  center={(searchingAddress.status === 'done' || searchingAddress.status === 'relocating') ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location}
+                  zoom={17}
                   scrollWheelZoom={true}
                 >
                   <MapConsumer>
                     {(map) => {
-                      map.flyTo(searchingAddress.status === 'done' ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location);
-                      map.zoom = 22;
+                      map.flyTo((searchingAddress.status === 'done' || searchingAddress.status === 'relocating') ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location);
+                      map.zoom = 17;
                       return null;
                     }}
                   </MapConsumer>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                   {
-                    servicio.location !== null ? <Marker position={servicio.location}>
-                      <Popup>
-                        Aquí está tu negocio<br />
-                        {servicio.address}
-                      </Popup>
+                    servicio.location !== null || searchingAddress.status === 'done'
+                      ?
+                      <Marker
+                        draggable={draggable}
+                        eventHandlers={eventHandlers}
+                        ref={markerRef}
+                        position={searchingAddress.status === 'done' ? searchingAddress.result : servicio.location}>
+                        <Tooltip direction="top" permanent offset={[0, -8]}>
+                          {searchingAddress.status === 'done' ? 'Ubicación encontrada:' : 'Aquí está tu negocio:'}<br />
+                          <span className="font-semibold text-purple-900">{searchingAddress.status === 'done' ? searchingAddress.details : servicio.address}</span>
+                        </Tooltip>
                     </Marker> : <div></div>
                   }
                 </MapContainer>
               </div>
                 :
+
                 <div className="w-full h-96 bg-teal-50 rounded-xl flex justify-center items-center">
                   <ImSpinner9 className="mr-2 self-center text-xl animate-spin" />
                   <span className="font-semibold">Buscando...</span>
