@@ -2157,13 +2157,13 @@ const reviews = [
     "title": "arcu adipiscing",
     "details": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
     "rating": 5,
-    "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+    "uidClient": "AKbJM3iYJgMiyXVefx6oYDeDVWv2"
   }, {
     "id": 3,
     "title": "ultrices libero non mattis pulvinar",
     "details": "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
     "rating": 3,
-    "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+    "uidClient": "AKbJM3iYJgMiyXVefx6oYDeDVWv2"
   }, {
     "id": 3,
     "title": "massa id lobortis convallis tortor",
@@ -2193,7 +2193,7 @@ const reviews = [
     "title": "et ultrices posuere cubilia",
     "details": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
     "rating": 3,
-    "uidClient": "jyfyxnzngrhJfGeZz4FCClvgO8K2"
+    "uidClient": "AKbJM3iYJgMiyXVefx6oYDeDVWv2"
   }, {
     "id": 13,
     "title": "ut suscipit a",
