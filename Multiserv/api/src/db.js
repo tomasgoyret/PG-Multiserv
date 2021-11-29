@@ -83,6 +83,7 @@ const {
 // Usuarios 
 Usuarios.hasOne(Direcciones);
 Usuarios.hasMany(Servicios);
+Usuarios.hasMany(Resenas);
 Usuarios.hasMany(Citas);
 
 // Servicios 
