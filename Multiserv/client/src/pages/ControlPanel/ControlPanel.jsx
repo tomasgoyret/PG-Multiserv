@@ -12,6 +12,7 @@ import {
   buscarProvedores,
   buscarServicios,
   buscarCategorias,
+  usuarioId,
 } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -471,14 +472,20 @@ const ControlPanel = () => {
     });
   };
 
+  let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+  let admin = detalleUsuario.isAdmin
+
   useEffect(() => {
-    if (detalleUsuario.isAdmin) {
+    dispatch(usuarioId(datosSesionFromLocalStorage.uid))
+    if (admin === false) {
       navigate("/home");
     }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
   }, [clientSearchValue]);
+
+
 
   return (
     <div className="w-full flex">
@@ -534,12 +541,12 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>categorías</span>
+            <span>Categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
         {/* Inicio seccion administrar newsletter */}
-        <div className="w-full flex justify-start px-2 mt-5">
+        {/* <div className="w-full flex justify-start px-2 mt-5">
           <h2 className="text-md font-semibold ">Administrar newsletter</h2>
         </div>
         <div className="w-full flex flex-col items-start   mt-2">
@@ -550,7 +557,7 @@ const ControlPanel = () => {
             <MdCategory width="30px" height="30px" className="mr-2" />
             <span>Newsletter</span>
           </button>
-        </div>
+        </div> */}
         {/* Fin seccion administrar newsletter */}
       </div>
 
