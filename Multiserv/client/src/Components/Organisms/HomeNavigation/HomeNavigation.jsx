@@ -143,7 +143,7 @@ const HomeNavigation = () => {
               }}
               className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer"
             >
-              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full">
                 <MdFavorite className="mr-2" />
                 <span className="font-semibold">Lista Favoritos</span>
               </button>
@@ -152,7 +152,7 @@ const HomeNavigation = () => {
               onClick={newService}
               className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer"
             >
-              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full ">
                 <MdHomeRepairService className="mr-2" />
                 <span className="font-semibold">Crear un servicio</span>
               </button>
@@ -163,7 +163,7 @@ const HomeNavigation = () => {
                   onClick={misServ}
                   className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer"
                 >
-                  <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                  <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full ">
                     <MdHomeRepairService className="mr-2" />
                     <span className="font-semibold">Mis servicios</span>
                   </button>
@@ -173,7 +173,7 @@ const HomeNavigation = () => {
               onClick={misCitas}
               className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer"
             >
-              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+              <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full ">
                 <MdHomeRepairService className="mr-2" />
                 <span className="font-semibold">Mis citas</span>
               </button>
@@ -184,7 +184,7 @@ const HomeNavigation = () => {
                   onClick={misReservas}
                   className="w-full hover:bg-sky-900 hover:text-white py-2 cursor-pointer"
                 >
-                  <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                  <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full ">
                     <MdHomeRepairService className="mr-2" />
                     <span className="font-semibold">Mis Reservas</span>
                   </button>
@@ -195,7 +195,7 @@ const HomeNavigation = () => {
                 <LinkTo
                   page="control-panel"
                   render={
-                    <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full transition-all">
+                    <button className="inline-flex w-max auto my-1 items-center px-3 rounded-full ">
                       <MdHomeRepairService className="mr-2" />
                       <span className="font-semibold">
                         Panel de administración
