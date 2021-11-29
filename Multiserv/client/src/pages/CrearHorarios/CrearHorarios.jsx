@@ -8,6 +8,7 @@ import { storage } from "../../Firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { servicesId } from "../../redux/actions/actions";
 import { Navigate, useNavigate } from "react-router";
+import InputIcon from "react-multi-date-picker/components/input_icon";
 
 const Horarios = () => {
   const navigate = useNavigate();
@@ -246,6 +247,8 @@ navigate("/home");
           <h3>Seleccione los dias hábiles para las citas</h3>
           <br />
           <DatePicker
+            placeholder="Seleccione una fecha"
+            render={<InputIcon />}
             className="green"
             format="YYYY/MM/DD"
             minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)}

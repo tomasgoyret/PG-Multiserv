@@ -102,7 +102,7 @@ const Reservations = () => {
       </div>
 
       <br />
-      
+
       <div className="grid grid-flow-col auto-cols-max auto-rows-max mx-9 bg-cyan-200">
         {misReservas.length > 0 &&
           misReservas.map((a) => {
