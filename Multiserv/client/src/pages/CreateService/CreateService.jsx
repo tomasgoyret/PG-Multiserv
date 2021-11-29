@@ -91,18 +91,18 @@ const CreateService = () => {
     }, [])
 
     useEffect(() => {
-        const isFalsy = Object.values(service).some(value => {
-            if (!value) {
-                return true;
+        const properties = Object.keys(service)
+        for (let i = 0; i < properties.length; i++) {
+            if (properties[i] !== 'address' && properties[i] !== 'photos' && properties[i] !== 'location') {
+                if (service[properties[i]].length === 0) {
+                    setDisabledNext(true)
+                    break;
+                } else {
+                    setDisabledNext(false)
+                }
             }
-            return false;
-        });
-        if (isFalsy) {
-            setDisabledNext(true)
-        } else {
-            setDisabledNext(false)
         }
-    }, [service])
+    }, [service, stepForm, disabledNext])
     const monedas = [
         {
             name: 'MXN',
@@ -438,7 +438,7 @@ const CreateService = () => {
                                 {
                                     position !== null ? <Marker position={position}>
                                         <Popup>
-                                            Aqui esta tu negocio<br />
+                                            Aquí está tu negocio<br />
                                             {address}
                                         </Popup>
                                     </Marker> : <div></div>
@@ -502,11 +502,12 @@ const CreateService = () => {
                         disabled={stepForm === 1}
                     />
                     {stepForm !== 3 && <Button
-                        disabled={undefined}
+                        disabled={disabledNext}
                         text="Siguiente"
                         customTextColor="#FFFFF"
                         theme="#155E75"
                         action={addStep}
+
                     />}
                     {stepForm === 3 && <Button
                         icon={loadingPayment && <BiLoader className="self-center animate-spin mr-2" />}

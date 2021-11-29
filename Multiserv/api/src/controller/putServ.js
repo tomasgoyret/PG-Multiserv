@@ -2,7 +2,7 @@ const { Servicios, Categorias } = require("../db.js");
 
 const putServ = async (req, res,next) => {
     const { id } = req.params;
-    let { title, currency,  category, description, max, min, rating, photos, direccion, estadoDePago, homeService} = req.body;
+    let { title, currency,  category, description, max, min, rating, photos, direccion, estadoDePago, homeService, location, address} = req.body;
     let traduccion = ""
     if( estadoDePago==="approved"){
         traduccion = "Aprobado"
@@ -22,6 +22,8 @@ const putServ = async (req, res,next) => {
             min,
             rating,
             photos,
+            location,
+            address,
             direccion,
             homeService,
             estadoDePago: traduccion? traduccion : estadoDePago

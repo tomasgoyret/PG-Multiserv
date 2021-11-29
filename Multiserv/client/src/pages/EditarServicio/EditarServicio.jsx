@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { FaHeartBroken } from 'react-icons/fa'
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
 import { getCats, servicesId, updateService } from '../../redux/actions/actions';
 import ReactCountryFlag from "react-country-flag"
 import { storage } from "../../Firebase";
+import { MapContainer, MapConsumer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "@firebase/storage";
 import { IoReturnUpBack } from "react-icons/io5";
 import { HiOutlinePhotograph, HiPencil } from "react-icons/hi";
@@ -16,6 +17,8 @@ import { FaPlus, FaTimes } from "react-icons/fa";
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
 import { toast } from 'react-toastify';
 import { RiLoaderFill } from "react-icons/ri";
+import { MdLocationPin } from "react-icons/md";
+import { ImSpinner6, ImSpinner9 } from "react-icons/im";
 
 const EditarServicio = () => {
   /*
@@ -41,6 +44,10 @@ const EditarServicio = () => {
   const loadingService = useSelector((state)=> state.loadingServicesDetalle)
   const [loadingPortada, setLoadingPortada] = useState(true)
   const [failedPortada, setFailedPortada] = useState(false)
+  const [editAddress, setEditAddress] = useState(false)
+  const [searchingAddress, setSearchingAddress] = useState({ status: 'not searching' })
+  const [position, setPosition] = useState(null)
+  const [address, setAddress] = useState('')
   /*BOOLEANO QUE MUESTRA/OCULTA LOS INPUTS*/
   const [editing, setEditing] = useState(false)
 
@@ -152,7 +159,6 @@ const EditarServicio = () => {
     }
 
   }, [])
-
 
   useEffect(() => {
     if (!loadingService && (additionalImg.length) + (servicio.photos.length - 1) >= 6) {
@@ -398,6 +404,35 @@ const EditarServicio = () => {
 
   }
 
+  const onClickAddress = () => {
+    setSearchingAddress({ status: 'searching' })
+    axios(`https://api.geoapify.com/v1/geocode/search?text=${address}&limit=1&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
+      .then((response) => {
+        const pos = response.data.results[0];
+        setSearchingAddress({ status: 'done', result: [pos.lat, pos.lon] })
+
+        setEditService({
+          ...editService,
+          location: [pos.lat, pos.lon],
+          address
+        })
+
+        console.log(editService);
+      })
+      .catch((error) => {
+        console.log(error)
+        setSearchingAddress({ status: 'failed' })
+      });
+  };
+  const updateAddress = () => {
+
+    dispatch(updateService(id, editService));
+
+    setEditAddress(false)
+    setAddress('');
+    setSearchingAddress({ status: 'not searching' })
+
+  }
   const resetImg = () => {
     setLoadedImg(false)
     setCover(null)
@@ -479,7 +514,7 @@ const EditarServicio = () => {
           </div>
         </div>
         <div className="container mx-auto w-full  mt-8 px-8  lg:px-16 xl:px-32" >
-          <div id="photos-and-edit" className="flex flex-row justify-between  w-full border-b">
+            <div id="photos-and-edit" className="flex flex-row justify-between  w-full ">
             <div id="add-photos" className="flex flex-col w-full h-72 mb-2 overflow-x-auto">
               <h2 className="text-4xl font-semibold text-cyan-900 mb-4 self-start">
                 Imágenes adicionales
@@ -516,19 +551,6 @@ const EditarServicio = () => {
                               <FaTimes className="text-lg text-white" />
                             </button>
                           </div>
-                          {/* <div css={{ backgroundColor: "#00000063" }} className="absolute w-full h-full rounded-md z-10 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
-                            <div className="relative">
-                              <div style={{ animation: 'none' }} className={`border-2 w-16 h-16 rounded-full `}>
-                              </div>
-                              <button
-                                onClick={() => { console.log('subir imagen') }}
-                                disabled={false}
-                                className={`flex justify-center items-center absolute w-16 h-16 m-auto top-0 left-0 rounded-full text-white text-3xl} `}>
-
-                                <BsCloudArrowUpFill className="self-center" />
-                              </button>
-                            </div>
-                          </div> */}
                           <img
                             key={i}
                             alt={`imagen de galeria`}
@@ -613,6 +635,98 @@ const EditarServicio = () => {
               </div>
             </div>
           </div>
+            <div id="map" className="flex flex-col w-full transition-all ease-in-out duration-300 border-b pb-4 mb-4 ">
+              <div className="border-b mb-4 flex flex-row justify-between">
+                <span className="text-4xl text-cyan-900 font-semibold self-center">Ubicación</span>
+                {!editAddress ? <button onClick={() => { setEditAddress(true); }} className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center text-cyan-900 transition-all ease-in-out duration-300 hover:bg-cyan-800 hover:text-white my-2" >
+                  <HiPencil className="self-center text-lg mr-2" />
+                  <span className="font-semibold">Editar ubicación</span>
+                </button>
+                  :
+                  <div className="flex flex-row">
+                    <button
+                      disabled={searchingAddress.status === 'searching'}
+                      onClick={() => { setEditAddress(false); setAddress(''); setSearchingAddress({ status: 'not searching' }) }}
+                      className="inline-flex flex-shrink-0 justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-red-200 text-red-900 transition-all ease-in-out duration-300 hover:bg-red-800 hover:text-white my-2 disabled:opacity-50">
+                      <FaTimes className="mr-2 self-center text-xl" />
+                      <span className="font-semibold">Cancelar edición</span>
+                    </button>
+                    <button
+                      disabled={searchingAddress.status === 'searching' || !searchingAddress.result}
+                      onClick={updateAddress}
+                      className="inline-flex flex-shrink-0  justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-green-100 text-green-900 transition-all ease-in-out duration-300 hover:bg-green-800 hover:text-white my-2 ml-3 disabled:opacity-50">
+                      <BsCloudArrowUpFill className="mr-2 self-center text-xl" />
+                      <span className="font-semibold">Guardar cambios</span>
+                    </button>
+                  </div>}
+              </div>
+              <div className="my-4 flex-col">
+                {editAddress ? <div className="flex flex-row text-xl">
+                  <HiPencil style={{ WebkitTransform: 'scaleX(-1)', transform: 'scaleX(-1)' }} className="self-center mr-2 text-2xl text-blue-800" />
+                  <input
+                    onChange={(e) => { setAddress(e.target.value) }}
+                    value={address}
+                    type="text"
+                    name="editAddress"
+                    id="editAddres"
+                    placeholder="Escribe tu dirección completa"
+                    className=" border-b-2 border-transparent  px-4 py-1 outline-none border-gray-200 focus:border-cyan-900 transition-all ease-in-out duration-300 w-full"
+                  />
+                  <button
+                    disabled={address === '' || searchingAddress.status === 'searching'}
+                    onClick={onClickAddress}
+                    css={{
+                      ':disabled&:hover': {
+                        backgroundColor: 'rgba(209, 250, 229, 1)',
+                        color: 'rgba(6, 78, 59, 1)'
+                      }
+                    }}
+                    className="inline-flex flex-shrink-0  justify-center px-3 rounded-lg font-semibold text-lg place-self-center self-center bg-green-100 text-green-900 transition-all ease-in-out duration-300 hover:bg-green-800 hover:text-white my-2 ml-3 disabled:opacity-50 hover:disabled:bg-green-100 disabled:cursor-not-allowed">
+                    {searchingAddress.status === 'searching' ?
+                      <>
+                        <ImSpinner6 className="mr-2 self-center text-lg animate-spin" />
+                        <span className="font-semibold">Buscando...</span></>
+                      :
+                      <><MdLocationPin className="mr-2 self-center text-xl" />
+                        <span className="font-semibold">Buscar</span></>}
+                  </button>
+                </div> : <div className="flex flex-row text-2xl">
+                  <MdLocationPin className="text-3xl mr-2 text-red-900 self-center" />
+                  <span className="font-semibold text-gray-600 self-center">
+                    {servicio.address}
+                  </span>
+                </div>}
+              </div>
+              {searchingAddress.status !== 'searching' ? <div className="w-full h-96 transition-all ease-in-out duration-300">
+                <MapContainer
+                  center={searchingAddress.status === 'done' ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location}
+                  zoom={20}
+                  scrollWheelZoom={true}
+                >
+                  <MapConsumer>
+                    {(map) => {
+                      map.flyTo(searchingAddress.status === 'done' ? searchingAddress.result : servicio.location === null ? [51.50084939698666, -0.12458248633773235] : servicio.location);
+                      map.zoom = 22;
+                      return null;
+                    }}
+                  </MapConsumer>
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  {
+                    servicio.location !== null ? <Marker position={servicio.location}>
+                      <Popup>
+                        Aquí está tu negocio<br />
+                        {servicio.address}
+                      </Popup>
+                    </Marker> : <div></div>
+                  }
+                </MapContainer>
+              </div>
+                :
+                <div className="w-full h-96 bg-teal-50 rounded-xl flex justify-center items-center">
+                  <ImSpinner9 className="mr-2 self-center text-xl animate-spin" />
+                  <span className="font-semibold">Buscando...</span>
+                </div>}
+            </div>
           {editing ?
             <div id="edit-all" className="flex flex-col justify-center items-start mt-4">
 
