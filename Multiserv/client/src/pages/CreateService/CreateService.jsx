@@ -434,7 +434,9 @@ const CreateService = () => {
                                         return null;
                                     }}
                                 </MapConsumer>
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
                                 {
                                     position !== null ? <Marker position={position}>
                                         <Popup>
@@ -475,8 +477,23 @@ const CreateService = () => {
                                 </div>
                             </div>
                             {!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
-                                    : <div className='w-full h-96 bg-gray-500'>
-                                    </div>}
+                                : <div className='w-full h-96 bg-gray-500'>
+                                    <MapContainer
+                                        center={service.location}
+                                        zoom={19}
+                                        scrollWheelZoom={false}
+                                    >
+                                        <TileLayer
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <Marker position={service.location} >
+                                            <Popup>
+                                                {service.title}<br/>
+                                                {service.address}
+                                            </Popup>
+                                        </Marker>
+                                    </MapContainer>
+                                </div>}
                         </div>
                         <div className="w-1/2 pl-4 ">
                             <div className="flex flex-col h-full">
@@ -490,7 +507,7 @@ const CreateService = () => {
                                         imgClass={`object-cover rounded-lg h-64 `}
                                     />
                                 </div> */}
-                                
+
                             </div>
                         </div>
                     </div>
