@@ -252,7 +252,7 @@ const AgendarCita = () => {
               if (dias.includes(date.day)) props.disabled = true; 
               if (!diasDelServicio.includes(date.format())) props.disabled = true; 
               return props;
-            }}
+            }}asd
           />
         }
         {errors.dia.length > 1 && (
