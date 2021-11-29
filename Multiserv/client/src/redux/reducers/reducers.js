@@ -20,7 +20,13 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    EDITAR_MISERVICIO,
     MIS_CITAS,
+    MAPSERVICES,
+    VER_HORARIOS,
+    ELIMINAR_CITAS,
+    RESERVAS,
+    STATUS_CITA,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -43,6 +49,9 @@ const initalState = {
     reviews: [],
     misServicios: [],
     misCitas: [],
+    mapServices: [],
+    verHorarios: [],
+    reservas: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -54,11 +63,21 @@ function rootReducer(state = initalState, { type, payload }) {
                 servicios: payload,
                 aux: payload
             }
+        case MIS_CITAS:
+            return {
+                ...state,
+                misCitas: payload
+            }
         case BUSCAR:
             let newServ = state.aux.filter(serv => serv.title.toLowerCase().includes(payload.toLowerCase()))
             return {
                 ...state,
                 servicios: newServ
+            }
+        case MAPSERVICES:
+            return {
+                ...state,
+                mapServices: payload
             }
         case GETCATS:
             return {
@@ -66,7 +85,11 @@ function rootReducer(state = initalState, { type, payload }) {
                 categories: payload
             }
         case FILTERCAT:
-            let filteredCat = state.aux.filter(serv => serv.categorias[0].title?.toLowerCase() === payload.toLowerCase())
+            let filteredCat = state.aux.filter(serv => {
+                if (serv.categorias[0] !== undefined) {
+                    return serv.categorias[0].title?.toLowerCase() === payload.toLowerCase()
+                }
+            })
             return {
                 ...state,
                 servicios: filteredCat
@@ -187,7 +210,27 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 misServicios: payload
             }
-        case MIS_CITAS:
+        case EDITAR_MISERVICIO:
+            return {
+                ...state,
+                detalleServicio: payload
+            }
+        case VER_HORARIOS:
+            return {
+                ...state,
+                verHorarios: payload
+            }
+        case ELIMINAR_CITAS:
+            return {
+                ...state,
+                misCitas: payload
+            }
+        case RESERVAS:
+            return {
+                ...state,
+                reservas: payload,
+            }
+        case STATUS_CITA:
             return {
                 ...state,
                 misCitas: payload

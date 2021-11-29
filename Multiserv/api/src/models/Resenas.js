@@ -22,7 +22,8 @@ module.exports = (sequelize) => {
         allowNull: false,
     },
     details: {
-      type: DataTypes.STRING(1234)
+      type: DataTypes.STRING(1234),
+      allowNull: false
     }
   });
 };

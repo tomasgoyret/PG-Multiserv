@@ -32,7 +32,7 @@ const postUser = async (req, res,next) => {
         email: mail,
       },
       defaults: {
-        uidClient: newUser? newUser.uid : uid,
+        uidClient: newUser ? newUser.uid : uid,
         photoURL,
         phoneNumber: phone,
         isAdmin,

@@ -5,33 +5,37 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("citas", {
     id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     dia: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    horario: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    nameUser: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    serviceId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },    
-    nameProv: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
-  });
+    },
+    hora: {
+      type: DataTypes.JSON,
+      allowNull: false,
+    },
+    direccion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    ciudad: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    nameUser: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.ENUM('Pendiente', 'Concretada'),
+      defaultValue: 'Pendiente'
+    },
+    });
 };

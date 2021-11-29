@@ -23,15 +23,19 @@ import {
     REVIEWS,
     MIS_SERVICIOS,
     ELIMINAR_MISERVICIO,
+    EDITAR_MISERVICIO,
     MIS_CITAS,
+    MAPSERVICES,
+    VER_HORARIOS,
+    ELIMINAR_CITAS,
+    RESERVAS,
+    STATUS_CITA,
 } from '../actionTypes/actionTypes';
-/* Server Backend */
-const server = '';
 
 /* Traer servicios */
 export const services = () => {
     return async function (dispatch) {
-        let services = `${server}/services`;
+        let services = `/services`;
         const response = await axios(services);
         const dataServ = response.data
         return dispatch({
@@ -43,7 +47,7 @@ export const services = () => {
 /* Traer Usuarios */
 export const users = () => {
     return async function (dispatch) {
-        let users = `${server}/usuarios`;
+        let users = `usuarios`;
         const response = await axios(users);
         const dataUsers = response.data.map(user => user)
         return dispatch({
@@ -52,10 +56,22 @@ export const users = () => {
         })
     }
 }
+/* Traer servicios con location */
+export const mapServices = () => {
+    return async function(dispatch){
+        let map = `ubicacion`;
+        const response = await axios(map);
+        const dataServMap = response.data
+        return dispatch({
+            type: MAPSERVICES,
+            payload: dataServMap
+        })
+    }
+}
 /* Obtener las categorias  */
 export const getCats = () => {
     return async function (dispatch) {
-        let categories = `${server}/categorias`;
+        let categories = `categorias`;
         const response = await axios(categories);
         const dataCats = response.data.map(cat => {
             return { id: cat.id, name: cat.title, value: cat.title }
@@ -83,7 +99,7 @@ export const resetOrder = (action) => { return { type: RESETORDER } }
 //Traer detalle de USUARIO
 export const usuarioId = (id) => {
     return async function (dispatch) {
-        let services =`${server}/usuarios/${id}`;
+        let services = `usuarios/${id}`;
         const response = await axios(services);
         return dispatch({
             type: USUARIOID,
@@ -103,7 +119,7 @@ export const empatyusuarioId = (id) => {
 // Traer detalle de servicio /
 export const servicesId = (id) => {
     return async function (dispatch) {
-        let services = `${server}/services/${id}`;
+        let services = `services/${id}`;
         const response = await axios(services);
         return dispatch({
             type: SERVICIOID,
@@ -124,7 +140,7 @@ export const empatyServicesId = (id) => {
 /* Traer Lista de Favoritos por Id */
 export const getListFavorites = (uid) => {
     return async function (dispatch) {
-        let fav = `${server}/favoritos/${uid}`;
+        let fav = `favoritos/${uid}`;
         const response = await axios(fav);
         const listaFav = response.data
         return dispatch({
@@ -137,7 +153,7 @@ export const getListFavorites = (uid) => {
 /* Eliminar de la Lista de Favoritos por Id */
 export const deleteListFavorites = (id, uidClient) => {
     return async function (dispatch) {
-        let fav = `${server}/eliminar-fav/?id=${id}&uidClient=${uidClient}`;
+        let fav = `eliminar-fav/?id=${id}&uidClient=${uidClient}`;
         const response = await axios.delete(fav);
         const listaFav = response.data
         return dispatch({
@@ -178,7 +194,7 @@ export const buscarCategorias = (categoria) => {
 export const getReviews = (id) => {
     //console.log("entre al actions "+ id+".....")
     return async function (dispatch) {
-        let review = `${server}/resena/${id}`;
+        let review = `resena/${id}`;
         const response = await axios(review);
         return dispatch({
             type: REVIEWS,
@@ -190,10 +206,10 @@ export const getReviews = (id) => {
 // Traer Mis Servicios
 export const getServicios = (uidClient) => {
     return async function (dispatch) {
-    let service = `my-services/${uidClient}`;
-    const res = await axios(service);
-    const misServicios = res.data;
-    return dispatch({
+        let service = `my-services/${uidClient}`;
+        const res = await axios(service);
+        const misServicios = res.data;
+        return dispatch({
             type: MIS_SERVICIOS,
             payload: misServicios
         })
@@ -201,9 +217,9 @@ export const getServicios = (uidClient) => {
 }
 
 /* Eliminar mi servicio de mis Servicios por Id */
-export const deleteMyServices = ( id , uidClient ) => {
+export const deleteMyServices = (id, uidClient) => {
     return async function (dispatch) {
-        const service = `${server}/delete-service/${id}`;
+        const service = `delete-service/${id}`;
         await axios.delete(service);
         const res = await axios(`my-services/${uidClient}`);
         const misServicios = res.data
@@ -214,14 +230,94 @@ export const deleteMyServices = ( id , uidClient ) => {
     }
 }
 
-/* Traer mis Citas por uidClient */
-export const getListCitas = ( uidClient ) => {
+//Editar uno de mis servicios (recibe el id del servicio 
+//y datos: title, currency, category, description, max, min, rating, photos, direccion, estadoDePago )
+export const updateService = (id, datos) => {
     return async function (dispatch) {
-        const res = await axios(`citas/${uidClient}`);
-        const citas = res.data
+        const updtservice = `edit-service/${id}`;
+        await axios.put(updtservice, datos);
+        let service = `services/${id}`;
+        const response = await axios(service);
+        return dispatch({
+            type: EDITAR_MISERVICIO,
+            payload: response.data
+        })
+
+
+
+    }
+}
+// Traer mis citas por uidClient
+export const getMisCitas = (uidClient) => {
+    return async function (dispatch) {
+        let citas = `citas/${uidClient}`;
+        const response = await axios(citas);
+        const cita = response.data
         return dispatch({
             type: MIS_CITAS,
-            payload: citas
+            payload: cita
+        })
+    }
+}
+
+/* Traer Horarios */
+export const getHorarios = (idService) => {
+    return async function (dispatch) {
+        let horarios = `horarios/${idService}`;
+        const response = await axios(horarios);
+        const dataServ = response.data
+        return dispatch({
+            type: VER_HORARIOS,
+            payload: dataServ
+        })
+    }
+}
+
+/* Eliminar de la misCitas por Id */
+export const cancelarCita = (id, uidClient) => {
+    return async function (dispatch) {
+        let url = `citas/${id}`;
+        await axios.delete(url);
+        const response = await axios(`citas/${uidClient}`);
+        const misCitas = response.data
+        return dispatch({
+            type: ELIMINAR_CITAS,
+            payload: misCitas
+        })
+    }
+}
+
+
+/* Ver mis reservas por idServices */
+export const getReservas = (uidClient) => {
+    return async function (dispatch) {
+        let service = `my-services/${uidClient}`;
+        const misServicios = await axios(service);
+        let arrayIds = [];
+       for (let i = 0; i < misServicios.data.length; i++) {
+         arrayIds.push(misServicios.data[i].id);
+       }
+        const response = await axios.post('reservas', { ids: arrayIds });
+        const reservas = response.data
+        return dispatch({
+            type: RESERVAS,
+            payload: reservas
+        })
+    }
+}
+
+
+/* Cambiar status Cita para Reseña */
+export const statusCita = (id, uidClient) => {
+    return async function (dispatch) {
+        await axios.put(`citas/${id}`);
+        console.log(uidClient,'as')
+        let citas = `citas/${uidClient}`;
+        const response = await axios(citas);
+        const cita = response.data
+        return dispatch({
+            type: STATUS_CITA,
+            payload: cita
         })
     }
 }

@@ -1,13 +1,10 @@
-const { Horarios, Servicios } = require("../db.js");
+const { Horarios } = require("../db.js");
 
 const putHorarios = async (req, res) => {
     const { id } = req.params; 
-        const { direccion, aDomicilio, dias, horarios } = req.body;
+    const { fechas } = req.body;
     try {
-        const newHorario = { direccion, aDomicilio, dias, horarios }
-        const horario = await Horarios.findByPk(id);
-        await horario.update(newHorario)
-        console.log(horario)
+        await Horarios.update(fechas, {where: id})
          res.send(`Horario editado correctamente`)
     } catch (error) {
         console.log(error)

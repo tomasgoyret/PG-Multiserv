@@ -8,18 +8,18 @@ const CardInfomativaFormulario = () => {
         <div className="flex flex-col items-center justify-center h-full">
             <Encabezado2 
                 clases="text-white"
-                titulo="Bienvenidos"
+                titulo="Bienvenid@"
             />
             <Parrafo 
                 classDivParrafo="w-4/5 mt-2 mb-5"
                 classParrafo="text-gray-200" 
-                parrafo="Lorem Ipsum is simply dummy text of the printing and typesetting industry" 
+                parrafo="Inicia sesión y solicita o publica un servicio en tan sólo unos minutos" 
             />
             <div className="text-center flex flex-col mb-4">
                 <h2 className="font-semibold text-white">¿No tienes cuenta?</h2>
             </div>
             <ButtonXartiago
-                btn="Registrarte"
+                btn=" Regístrate"
                 page="signup"
                 btnClass="font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300"
             />

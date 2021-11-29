@@ -1,4 +1,6 @@
 import { useRoutes } from "react-router";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './pages/LandingPage/LandingPage'
 import SignUp from "./pages/SignUp/SignUp";
 import Components from "./pages/Components/Components";
@@ -20,9 +22,15 @@ import ConfirmServicio from "./pages/ConfirmServ/ConfirmServ";
 import MyServices from "./pages/MyServices/MyServices";
 import EditarServicio from "./pages/EditarServicio/EditarServicio";
 import MisCitas from "./pages/MisCitas/MisCitas";
-import Horarios from "./pages/Horarios/Horarios";
+import CrearHorarios from "./pages/CrearHorarios/CrearHorarios";
+import AgendarCita from "./pages/AgendarCita/AgendarCita";
+import { MapServices } from "./pages/MapServices/MapServices";
+import PercentageReview from "./Components/Molecules/PercentageReview/PercentageReview";
+import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
+import Reservations from "./pages/Reservations/Reservations";
 
 function App() {
+  toast.configure()
   const routes = [
     {
       index: true,
@@ -43,6 +51,10 @@ function App() {
         {
           index: true,
           element: <Home />
+        },
+        {
+          path: '/home/mapservices',
+          element: <MapServices />
         },
         {
           path: '/home/:uidClient/new-service',
@@ -73,9 +85,21 @@ function App() {
           element: <MisCitas />
         },
         {
-          path: '/home/:uidClient/Horarios',
-          element: <Horarios />
-        }
+          path: '/home/:idService/crear-horarios',
+          element: <CrearHorarios />
+        },
+        {
+          path: '/home/servicios/:id/editar',
+          element: <EditarServicio />
+        },
+        {
+          path: '/home/:idService/ver-horarios',
+          element: <AgendarCita />
+        },
+        {
+          path: '/home/:uidClient/reservations',
+          element: <Reservations />
+        },
       ]
     },
     {
@@ -106,10 +130,8 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
-    {
-      path: '/editar-servicio/:id',
-      element: <EditarServicio />
-    },
+    
+    
   ]
   /*
   <div>
@@ -152,8 +174,9 @@ function App() {
    */
   let routing = useRoutes(routes);
   return (
-    <div className="custom-scrollbar">
+    <div>
       {routing}
+      <ToastContainer />
     </div>
   );
 }

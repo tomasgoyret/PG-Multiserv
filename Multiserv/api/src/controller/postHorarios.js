@@ -1,15 +1,17 @@
 const { Horarios, Servicios } = require("../db.js");
 
 const postHorarios = async (req, res) => {
-    const { id } = req.params; 
-    const { direccion, aDomicilio, dias, horarios } = req.body;
+    const { idService } = req.params; 
+    const { fechas, uidClient } = req.body;
     try {
-        const newHorario = { direccion, aDomicilio, dias, horarios }
-        const horario = await Horarios.create(newHorario);
-        const servicio = await Servicios.findByPk(id)
+        const servicio = await Servicios.findByPk(idService)
+        if(servicio.usuarioUidClient === uidClient){
+        const horario = await Horarios.create({fechas:fechas, id:idService});
         await servicio.addHorarios(horario)
-        console.log(horario)
-         res.send(`Horario agregado correctamente al servicio ${servicio.title}, con id: ${id}`)
+         res.send(`agregado correctamente al servicio ${servicio.title}, con id: ${idService}`)
+        }else{
+            res.send("Usuario incorrecto para creacion de servicio")
+        }
     } catch (error) {
         console.log(error)
     }

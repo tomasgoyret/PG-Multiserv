@@ -17,13 +17,20 @@ const postFavRouter = require("./postFav.js");
 const deleteFavRouter = require("./deleteFav");
 const deleteCategoriasRouter = require("./deleteCategorias");
 const resenaRouter = require("./resenas")
+const postResenaRouter = require("./postReview")
 const getMyServ = require("./getMyServ")
+const putUbicacion = require("./putUbicacion")
+const getAllUbicacion = require("./getAllUbicacion")
 const getHorariosRouter = require("./getHorarios")
 const postHorariosRouter = require("./postHorarios")
 const putHorariosRouter = require("./putHorarios")
 const getCitasRouter = require("./getCitas")
 const postCitasRouter = require("./postCitas")
 const deleteCitasRouter = require("./deleteCitas")
+const postMailPago= require("./postMailPago")
+const getReservasRouter= require("./getReservas")
+const putCitasRouter = require("./putCitas")
+const notificaciones = require("./mailsNotificaciones")
 
 
 
@@ -54,6 +61,12 @@ router.use("/eliminar-fav", deleteFavRouter)
 
 //Rutas reseñas
 router.use("/resena", resenaRouter)
+router.use("/agregar-resena", postResenaRouter)
+
+//Ruta para crear/editar ubicacion
+
+router.use("/ubicacion", putUbicacion)
+router.use("/ubicacion", getAllUbicacion)
 
 //Rutas de horarios
 router.use("/horarios", getHorariosRouter)
@@ -63,6 +76,14 @@ router.use("/horarios", putHorariosRouter)
 //Rutas de Citas
 router.use("/citas", getCitasRouter)
 router.use("/citas", postCitasRouter)
+router.use("/citas", putCitasRouter)
 router.use("/citas", deleteCitasRouter)
+
+//Rutas de reservas
+router.use("/reservas", getReservasRouter)
+
+//Rutas de Envío de mails
+router.use("/mail",postMailPago)
+router.use("/notificaciones", notificaciones)
 
 module.exports = router;

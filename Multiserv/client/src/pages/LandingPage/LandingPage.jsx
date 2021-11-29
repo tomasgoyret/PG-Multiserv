@@ -11,11 +11,17 @@ import BarElements from '../../Components/Molecules/BarElements/BarElements';
 import Nav from '../../Components/Organisms/NavBar/Nav';
 import SignIn from '../SignIn/SignIn';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LandingPage = () => {
 
+    const prenderNotificaciones = async () =>{
+        await axios.get('notificaciones')
+    }
+
     useEffect(() => {
         document.title = '¡Bienvenido a MultiServicios!'
+        prenderNotificaciones()
     }, [])
     const [modal, setModal] = useState(false)
 
@@ -30,7 +36,7 @@ const LandingPage = () => {
         //     btnClass='rounded-2xl border-2 border-green-500 px-8 py-1 text-2xl font-bold text-gray-700 hover:bg-green-500 hover:text-white'
         // />
         <div className="px-7">
-            <button className="rounded-2xl border-2 border-green-500 px-8 py-1 text-2xl font-bold text-gray-700 hover:bg-green-500 hover:text-white" onClick={handleModal}>Iniciar Sesion</button>
+            <button className="rounded-2xl border-2 border-green-500 px-8 py-1 text-2xl font-bold text-gray-700 hover:bg-green-500 hover:text-white" onClick={handleModal}>Iniciar Sesión</button>
         </div>
     ]
     const buttonArr = [
@@ -56,7 +62,7 @@ const LandingPage = () => {
             />
             
             <div className='mx-28 mt-24 px-14 border-l-4 border-gray-500' >
-                <EncWImg clase='flex items-center justify-between' classTitulo='w-96 text-7xl text-gray-700' titulo='Busca, Encuentra, o Publica un Servicio' img={img} imgClass='max-w-1xl' />
+                <EncWImg clase='flex items-center justify-between' classTitulo='w-96 text-7xl text-gray-700' titulo='Busca, encuentra, o publica un servicio' img={img} imgClass='max-w-1xl' />
                 <BarElements clase='flex flex-col' arr={buttonArr} />
             </div>
         </div>

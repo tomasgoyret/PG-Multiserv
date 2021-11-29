@@ -3,6 +3,6 @@ const router = express.Router();
 const postHorarios = require('../controller/postHorarios');
 
 // id del servicio
-router.post("/:id", postHorarios);
+router.post("/:idService", postHorarios);
 
 module.exports = router;

@@ -13,6 +13,7 @@ import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
+import { MapContainer, MapConsumer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { ImSpinner9 } from "react-icons/im";
 import { storage } from "../../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
@@ -21,17 +22,20 @@ import { AiFillExclamationCircle } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
 
 const CreateService = () => {
+    /* espacio para mapa en la linea 405 */
     const [disabledNext, setDisabledNext] = useState(true)
     const categoriasDb = useSelector((state) => state.categories)
     const [loadingSave, setLoadingSave] = useState(false);
     const [uploadImg, setuploadImg] = useState(false);
     const [imageOnCloud, setImageOnCloud] = useState(false)
     const [failedUpload, setFailedUpload] = useState(false)
+    const [position, setPosition] = useState(null)
+    const [address, setAddress] = useState('')
     const [loadingPayment, setLoadingPayment] = useState(false);
+    const [aDomicilio, setADomicilio] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-
     const [service, setService] = useState({
         title: '',
         description: '',
@@ -39,12 +43,32 @@ const CreateService = () => {
         min: '',
         max: '',
         currency: 'MXN',
-        img:[]
+        photos: [],
+        location: '',
+        address: '', 
     })
 
-    const [imageToLoad, setImageToLoad] = useState('');
-    const [loadedImg, setLoadedImg] = useState(false)
-    const [img, setImg] = useState(null)
+    const handleAddres = (text) => {
+        setAddress(text)
+    }
+    const onClickAddress = (e) => {
+        e.preventDefault();
+        axios(`https://api.geoapify.com/v1/geocode/search?text=${address}&limit=1&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
+            .then((response) => {
+                const pos = response.data.results[0];
+                setPosition([pos.lat, pos.lon]);
+                setService({
+                    ...service,
+                    location: [pos.lat, pos.lon],
+                    address: address
+                })
+            })
+            .catch((error) => error);
+    };
+    const handleCheck = () => {
+        setADomicilio((aDomicilio) => !aDomicilio)
+    }
+
     const [stepForm, setStepForm] = useState(0)
     const handleSetService = (cat) => {
         return (text) => {
@@ -67,18 +91,18 @@ const CreateService = () => {
     }, [])
 
     useEffect(() => {
-        const isFalsy = Object.values(service).some(value => {
-            if (!value) {
-                return true;
+        const properties = Object.keys(service)
+        for (let i = 0; i < properties.length; i++) {
+            if (properties[i] !== 'address' && properties[i] !== 'photos' && properties[i] !== 'location') {
+                if (service[properties[i]].length === 0) {
+                    setDisabledNext(true)
+                    break;
+                } else {
+                    setDisabledNext(false)
+                }
             }
-            return false;
-        });
-        if (isFalsy) {
-            setDisabledNext(true)
-        } else {
-            setDisabledNext(false)
         }
-    }, [service])
+    }, [service, stepForm, disabledNext])
     const monedas = [
         {
             name: 'MXN',
@@ -121,44 +145,7 @@ const CreateService = () => {
         },
     ]
 
-    const handleImage = async (e) => {
-        //detectar el archivo
-        setImageToLoad(e.target.files[0]);
-        setImg(URL.createObjectURL(e.target.files[0]));  
-        setLoadedImg(true); 
 
-    }
-    const handleUpload= async () => {
-          // cargarlo a firebase storage
-          setuploadImg(true)
-
-        try {
-            const fileRef= ref(storage, `/PhotosServices/${imageToLoad.name}`);
-            await uploadBytes(fileRef, imageToLoad);
-            //obtener url de descarga
-            const urlDownload = await getDownloadURL(fileRef);   
-            setImageOnCloud(true)
-            setFailedUpload(false)
-            setService({
-                ...service,
-                img: [urlDownload]
-            })   
-            setuploadImg(false);
-            setDisabledNext(false)
-            } catch(err){
-               console.log(err)
-            Swal.fire({
-                title: 'Error!',
-                text: 'Ocurrió un error. Vuelve a intentarlo',
-                icon: 'error',
-                confirmButtonText: 'X'
-            })
-            setImageOnCloud(false)
-            setFailedUpload(true)
-            }
-
-    }
-    
     const handleCurrency = (obj) => {
         setService({
             ...service,
@@ -181,50 +168,47 @@ const CreateService = () => {
 
     const [nuevServ, setnuevoServ] = useState(null)
 
-    useEffect(async ()=>{
-            if (stepForm === 3){
-                setLoadingSave(true)
-                if (!nuevServ) {
-                    let nuevoServ = {
-                        title: service.title,
-                        currency: service.currency,
-                        category: service.categorias,
-                        description: service.description,
-                        max: service.max,
-                        min: service.min,
-                        uidClient: uidClient,
-                        photos: service.img
-                    }
-                    try {
-                        let serv = await axios.post(`newservice`, nuevoServ)
-                        setLoadingSave(false)
-                        setnuevoServ(serv.data.servicio)
-                        console.log("se creó el servicio")
-                    } catch (err) {
-                        setLoadingSave(false)
-                        console.log(err)
-                    }
-                } else {
-                    setLoadingSave(false)
+    useEffect(async () => {
+        if (stepForm === 3) {
+            setLoadingSave(true)
+            if (!nuevServ) {
+                let nuevoServ = {
+                    title: service.title,
+                    currency: service.currency,
+                    category: service.categorias,
+                    description: service.description,
+                    max: service.max,
+                    min: service.min,
+                    uidClient: uidClient,
+                    photos: service.photos,
+                    location: service.location,
+                    address: service.address, 
+                    homeService: aDomicilio
                 }
+                try {
+                    let serv = await axios.post(`newservice`, nuevoServ)
+                    setLoadingSave(false)
+                    setnuevoServ(serv.data.servicio)
+                } catch (err) {
+                    setLoadingSave(false)
+                    console.log(err)
+                }
+            } else {
+                setLoadingSave(false)
             }
-    },[stepForm])
-    useEffect(() => {
-        if (stepForm === 2 && !loadedImg) {
-            setDisabledNext(true)
         }
-    }, [disabledNext, stepForm, loadedImg])
+    }, [stepForm])
+
     const [link, setLink] = useState("")
 
     const linkPago = async (uid) => {
         setLoadingPayment(true)
         try {
-            let link = await axios.post(`pay-service`, {id : `${uid}`})
+            let link = await axios.post(`pay-service`, { id: `${uid}` })
             setLink(link.data)
             setLoadingPayment(false)
-            window.open(link.data)
-           // window.location.href = "/home"
-            console.log(link.data)
+            //window.open(link.data)
+            window.location.href = link.data
         } catch (err) {
             Swal.fire({
                 title: 'Error!',
@@ -252,7 +236,7 @@ const CreateService = () => {
                         </div>
                         <div id="step2" className="w-full flex justify-center" >
                             <div className={`px-4 -ml-3 rounded-full font-semibold text-white bg-cyan-900 ${stepForm >= 2 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
-                                <span>Imagen de portada</span>
+                                <span>Ubicación del servicio</span>
                             </div>
                         </div>
                         <div id="step3" className="w-full flex justify-center" >
@@ -316,7 +300,7 @@ const CreateService = () => {
                                     theme="#164E63"
                                     label="Escribe una descripción atractiva:"
                                     flexed
-                                    placeholder="Ingresa tus apellidos"
+                                    placeholder="Ingresa una descripción atractiva para vender tu servicio"
                                     callBack={handleSetService('description')}
                                 />
                             </div>
@@ -406,72 +390,62 @@ const CreateService = () => {
                             </div>
                         </div>
                     </div>
-                                                    
-                    <div id="step2" className={`${stepForm === 2 ? 'flex mt-3 justify-center items-center' : 'hidden'} w-full`}>
-                        {loadedImg ?
-                        <div className="flex flex-col">
-                                <div className="h-full overflow-y-hidden relative">
-                                    <div className="absolute top-0 right-0">
-                                        {!uploadImg && !imageOnCloud && <button
-                                            className="p-2"
-                                            onClick={() => {
-                                                setLoadedImg(false)
-                                                setImg(null)
-                                            }}
-                                        >
-                                            <FaTimes className="text-lg text-white" />
-                                        </button>}
-                                    </div>
-                                    <div className="absolute w-1/2 h-1/2 flex justify-center items-center m-auto top-0 left-0 bottom-0 right-0">
-                                        <div className="relative">
-                                            <div style={{ animation: uploadImg ? 'spin 5s linear infinite' : 'none' }} className={`border-2 ${uploadImg && 'border-dashed'} w-16 h-16 rounded-full`}>
-                                            </div>
-                                            <button
-                                                onClick={handleUpload}
-                                                disabled={uploadImg || imageOnCloud}
-                                                className={`flex justify-center items-center absolute w-16 h-16 m-auto top-0 left-0 rounded-full text-white text-3xl ${uploadImg || imageOnCloud && 'cursor-not-allowed'} `}>
-                                                {imageOnCloud ? <BsCloudCheckFill className="self-center" />
-                                                    : <BsCloudArrowUpFill className="self-center" />}
-                                                {failedUpload && <AiFillExclamationCircle />}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <Image
-                                        name="photo1"
-                                        imagen={img}
-                                        imgClass={`object-cover rounded-lg h-72`}
-                                    />
-                                </div>
 
+                    <div id="step2" className={`${stepForm === 2 ? 'flex flex-col mt-1 justify-start items-center' : 'hidden'} w-full`}>
+                        <div className="flex flex-row w-full justify-center">
 
-                                <div className="flex flex-row justify-center items-center">
-                                    <div
-                                        className={`inline-flex flex-nowrap py-0.5 px-4 mt-1 justify-center items-center rounded-md font-semibold ${!uploadImg && !failedUpload && 'bg-blue-900'} ${uploadImg && 'bg-green-800 '} ${failedUpload && 'bg-red-800 '} text-gray-50`}
-                                    >
-                                        {uploadImg && <> <ImSpinner9 className="mr-2 animate-spin" /> Cargando foto...</>}
-                                        {!uploadImg && !failedUpload && !imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Haz click en el botón para cargar imagen</>}
-                                        {imageOnCloud && <> <IoMdInformationCircle className="mr-2" /> Se cargó con éxito, haz click en siguiente</>}
-                                        {failedUpload && <> <IoMdInformationCircle className="mr-2" /> No se pudo cargar la imagen</>}
-                                    </div>
-                                </div>
+                            <div className="w-96 lg:w-1/2">
+                                <Input
+                                    flexed
+                                    placeholder="Busca una dirección..."
+                                    label="Buscar ubicación"
+                                    callBack={handleAddres}
+                                    theme="#0C4A6E"
+                                />
                             </div>
-                            :
-                            (
-                                <>
-                        <input
-                                        onChange={handleImage}
-                            type="file"
-                            name="foto5"
-                            id="foto5"
-                            accept="image/jpeg"
-                            className="inputfile" />
+                            <div className="flex py-2 self-center place-self-center justify-center items-center h-full">
+                                <button className="px-2 bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md">
+                                    <span className="font-semibold text-white" onClick={onClickAddress} >Cargar ubicacion</span>
+                                </button >
+                                <label className="type_option self-center">
+                                    <input type="checkbox" name='check'
+                                        id='check'
+                                        onChange={handleCheck}
+                                        value={aDomicilio}
+                                        checked={aDomicilio}
+                                        disabled={false}
+                                    />
+                                    <span className="custom_check"></span>
+                                    <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Disponible para ir a domicilio</label>
+                                </label>
+                            </div>
+                        </div>
+                        {/* 51.50084939698666, -0.12458248633773235 */}
+                        <div className="w-full h-full">
+                            <MapContainer
+                                center={position === null ? [51.50084939698666, -0.12458248633773235] : position}
+                                zoom={20}
+                                scrollWheelZoom={true}
+                            >
+                                <MapConsumer>
+                                    {(map) => {
+                                        map.flyTo(position === null ? [51.50084939698666, -0.12458248633773235] : position);
+                                        map.zoom = 15;
+                                        return null;
+                                    }}
+                                </MapConsumer>
+                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                {
+                                    position !== null ? <Marker position={position}>
+                                        <Popup>
+                                            Aquí está tu negocio<br />
+                                            {address}
+                                        </Popup>
+                                    </Marker> : <div></div>
+                                }
+                            </MapContainer>
+                        </div>
 
-                        <label htmlFor="foto5" className="hover:border-transparent hover:shadow-lg hover:bg-white focus:outline-none rounded-lg border-2 border-dashed text-indigo-300 border-indigo-200 hover:text-green-600 flex flex-col items-center justify-center p-4 mx-0 sm:mr-4 mb-2 sm:mb-0 transition-all duration-500 ease-in-out cursor-pointer w-full h-full">
-                            <FaPlus className="text-4xl" />
-                            <span className="google-sans font-semibold block">Haz click para agregar una foto</span>
-                        </label>
-                                </>
-                            )}
                     </div>
                     <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-start items-start' : 'hidden'} w-full`}>
                         <div className="w-1/2 flex flex-col justify-start items-start  pr-4 border-r border-gray-300">
@@ -504,7 +478,7 @@ const CreateService = () => {
                         </div>
                         <div className="w-1/2 pl-4 ">
                             <div className="flex flex-col h-full">
-                                <div className="mb-3 border-b border-gray-300 flex flex-row">
+                                {/* <div className="mb-3 border-b border-gray-300 flex flex-row">
                                     <span className='text-md font-semibold text-xl text-cyan-900'>Imagen de portada <HiOutlineArrowNarrowRight className="ml-3 inline-flex" /></span>
                                 </div>
                                 <div className="">
@@ -513,7 +487,7 @@ const CreateService = () => {
                                         imagen={img}
                                         imgClass={`object-cover rounded-lg h-64 `}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -528,11 +502,12 @@ const CreateService = () => {
                         disabled={stepForm === 1}
                     />
                     {stepForm !== 3 && <Button
-                        disabled={disabledNext || (stepForm === 2 && img === null)}
+                        disabled={disabledNext}
                         text="Siguiente"
                         customTextColor="#FFFFF"
                         theme="#155E75"
                         action={addStep}
+
                     />}
                     {stepForm === 3 && <Button
                         icon={loadingPayment && <BiLoader className="self-center animate-spin mr-2" />}
@@ -540,7 +515,7 @@ const CreateService = () => {
                         text="Continuar en MercadoPago"
                         customTextColor="#FFFFF"
                         theme="#00a5ec"
-                        action={()=>{linkPago(nuevServ.id)}}
+                        action={() => { linkPago(nuevServ?.id) }}
                     />}
 
                 </div>

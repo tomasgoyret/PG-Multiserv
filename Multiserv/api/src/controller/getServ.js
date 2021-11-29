@@ -1,4 +1,4 @@
-const { Servicios, Categorias, Citas } = require("../db.js");
+const { Servicios, Categorias, Horarios } = require("../db.js");
 
 // get all services
 
@@ -28,34 +28,13 @@ const getServ = async (req, res) => {
 
 // get user by id specific
 
-const getServId = async (req, res) => {
-    const { id } = req.params;
+const getServId = async (req, res,next) => {
+    const {id} = req.params;
     try {
-        const servicio = await Servicios.findAll({
-            where: { id },
-            include: [{
-                model: Categorias,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                },
-                through: {
-                    attributes: []
-                }},
-                {model: Citas,
-                attributes: {
-                    exclude: ['createdAt', 'services_cita', 'updatedAt']
-                },
-                through: {
-                    attributes: []
-                }
-            }],
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            }
-        });
+        const servicio = await Servicios.findAll({ where:{ id }, include: [Categorias, Horarios] });      
         servicio.length < 1 ? res.send('No hay Servicios que coincidan') : res.send(servicio)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 };
 
