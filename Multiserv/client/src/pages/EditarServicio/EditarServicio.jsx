@@ -81,10 +81,10 @@ const EditarServicio = () => {
   }, [position])
   useEffect(() => {
     if (draggable) {
-      toast.success('Arrastra el marcador para modificar la dirección', {
+      toast.success('Arrastra el marcador azul para modificar la dirección', {
         position: "top-center",
         autoClose: 5000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
@@ -469,6 +469,7 @@ const EditarServicio = () => {
   };
 
   const editLocation = () => {
+    setDraggable(true)
     setEditAddress(true)
 
   }
