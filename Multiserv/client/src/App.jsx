@@ -68,10 +68,10 @@ function App() {
           path: '/home/chat',
           element: <div><h1>chat</h1></div>
         },
-        {
-          path: '/home/schedule',
-          element: <div><h1>schedule</h1></div>
-        },
+        // {
+        //   path: '/home/schedule',
+        //   element: <div><h1>schedule</h1></div>
+        // },
         {
           path: '/home/detalleServicio/:id',
           element: <DetalleServicio />
