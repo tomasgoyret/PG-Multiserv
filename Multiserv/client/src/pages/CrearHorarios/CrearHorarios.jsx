@@ -248,7 +248,7 @@ navigate("/home");
           <DatePicker
             className="green"
             format="YYYY/MM/DD"
-            minDate={new Date().setDate(today.getDate())}
+            minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)}
             maxDate={new Date().setDate(30)}
             multiple
             value={value}

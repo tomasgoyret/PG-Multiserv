@@ -26,6 +26,7 @@ import {
     VER_HORARIOS,
     ELIMINAR_CITAS,
     RESERVAS,
+    STATUS_CITA,
 } from "../actionTypes/actionTypes";
 
 /* Estado global */
@@ -50,7 +51,7 @@ const initalState = {
     misCitas: [],
     mapServices: [],
     verHorarios: [],
-    reservas:[],
+    reservas: [],
 }
 
 function rootReducer(state = initalState, { type, payload }) {
@@ -228,6 +229,11 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 reservas: payload,
+            }
+        case STATUS_CITA:
+            return {
+                ...state,
+                misCitas: payload
             }
 
         default:
