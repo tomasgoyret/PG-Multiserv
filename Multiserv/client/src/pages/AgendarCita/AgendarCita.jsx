@@ -5,6 +5,7 @@ import { getHorarios, servicesId } from "../../redux/actions/actions";
 import { useParams } from "react-router-dom";
 import DatePicker from "react-multi-date-picker";
 import "react-multi-date-picker/styles/colors/green.css";
+import InputIcon from "react-multi-date-picker/components/input_icon";
 import { storage } from "../../Firebase";
 import axios from "axios";
 
@@ -43,6 +44,14 @@ const AgendarCita = () => {
     for (let i = 0; i < array?.length; i++) {
       dias.push(Object.keys(array[i])[0]);
     }
+    dias.sort((prev, post) => {
+      if (prev !== post) {
+        if (prev < post) return -1;
+        else if (prev > post) return 1;
+        else return 0;
+      }
+    });
+    console.log(dias);
     setDiasDelServicio(dias);
   };
 
@@ -76,9 +85,8 @@ const AgendarCita = () => {
       hora: "",
       reservado: false,
     });
-    console.log(verHorarios, "verHorarios");
     if (verHorarios.length > 0) {
-      setProp(Object.keys(array[array.length - 1]));
+      setProp(diasDelServicio[diasDelServicio.length - 1]);
     }
   };
 
@@ -93,7 +101,6 @@ const AgendarCita = () => {
       if (inputCalendar.length > 0) {
         let prop = Object.keys(inputCalendar[0])[0];
         let horas = inputCalendar[0][prop];
-
         return (
           //----------------- Horas disponibles -------------------//
 
@@ -181,7 +188,7 @@ const AgendarCita = () => {
         ciudad.length > 0
       ) {
         var body = {
-          dia:'2021',
+          dia: "2021",
           hora,
           direccion,
           ciudad,
@@ -236,14 +243,24 @@ const AgendarCita = () => {
             onOpen={handleClickFecha}
             format="YYYY/MM/DD"
             className="green"
-            minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)} 
-            maxDate={prop[0]}
+            minDate={
+              today.getFullYear() +
+              "/" +
+              (today.getMonth() + 1) +
+              "/" +
+              (today.getDate() + 1)
+            }
+            maxDate={prop}
             value={value}
             onChange={handleChange}
+            placeholder="Seleccione una fecha"
+            render={<InputIcon />}
             mapDays={({ date }) => {
               let props = {};
               let dias = diasOcupados?.map((e) => parseInt(e.slice(8, 10)));
               if (dias.includes(date.day)) props.disabled = true;
+              if (!diasDelServicio.includes(date.format()))
+                props.disabled = true;
               return props;
             }}
           />
@@ -260,7 +277,7 @@ const AgendarCita = () => {
 
         <br />
         {/* Si no es a Domicilio el usuario tiene que colocar direccion de cita */}
-         {detalleServicio[0]?.homeService === true ? (
+        {detalleServicio[0]?.homeService === true ? (
           <div>
             <h3>Direccion de la cita</h3>
             <label htmlFor="ciudad"> Ingrese su ciudad: </label>
@@ -309,7 +326,9 @@ const AgendarCita = () => {
           <h3>Hora: {hora.hora}</h3>{" "}
           {detalleServicio[0]?.homeService === false ? (
             <div>
-              {detalleServicio[0]?.homeService === true && <h3>Ciudad: {ciudad}</h3>}
+              {detalleServicio[0]?.homeService === true && (
+                <h3>Ciudad: {ciudad}</h3>
+              )}
               <h3>Dirección: {direccion || detalleServicio[0]?.address}</h3>
             </div>
           ) : (

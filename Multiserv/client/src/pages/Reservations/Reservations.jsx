@@ -14,20 +14,13 @@ const Reservations = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [misReservas, setMisReservas] = useState([]);
-  const [value, setValue] = useState([]);
-  const { misServicios, reservas } = useSelector((state) => state);
+  const [diasService, setDiasService] = useState([]);
+  const { reservas } = useSelector((state) => state);
   const today = new Date();
-  useEffect(() => {
-    dispatch(getServicios(uidClient));
-  }, []);
 
   useEffect(async () => {
-    let arrayIds = [];
-    for (let i = 0; i < misServicios.length; i++) {
-      arrayIds.push(misServicios[i].id);
-    }
-    dispatch(getReservas({ ids: arrayIds }));
-  }, [misServicios]);
+    dispatch(getReservas(uidClient));
+  }, []);
 
   /* 
   ciudad: ""
@@ -40,16 +33,6 @@ const Reservations = () => {
   title: "peluqueria Rosal"
   usuarioUidClient: "CuKKIedNCegIauEKX78sIYjKbC32"
  */
-  /* const diasService = reservas.map((e) => e.map((e) => e.dia));
-  let dias = [];
-  for (let i = 0; i < diasService.length; i++) {
-    diasService[i].map((e) => {
-      dias.push(e);
-    });
-  } 
-  dias.map((e) => {
-    return e.slice(8, 10);
-  }) */
 
   const handleSelect = (a) => {
     a.sort((prev, post) => {
@@ -64,19 +47,24 @@ const Reservations = () => {
         else return 0;
       }
     });
+
     setMisReservas(
       a.map((e, i) => {
         return (
-          <div key={"titleServiceDivs" + i + e.id}>
+          <div
+            className="bg-cyan-600 placeholder-black"
+            key={"titleServiceDivs" + i + e.id}
+          >
             <h3>Cita con: {e.nameUser}</h3>
             <h3>El dia: {e.dia}</h3>
             <h3>A las: {e.hora.hora}</h3>
             <h3>En: {e.direccion + " " + e.ciudad}</h3>
-          <br />
+            <br />
           </div>
         );
       })
     );
+    setDiasService(a.map((e) => e.dia));    
   };
 
   return (
@@ -85,27 +73,45 @@ const Reservations = () => {
 
       {reservas.length > 0 &&
         reservas.map((e, i) => {
-          return (
-            <div key={"titleService" + i}>
-              <h2>{e[0].title}</h2>
-              <button
-                id={e[0].id}
-                onClick={() => {
-                  handleSelect(e);
-                }}
-              >
-                {" "}
-                ver{" "}
-              </button>
-            </div>
-          );
+          if (e.length > 0) {
+            return (
+              <div key={"titleService" + i}>
+                <h2>{e[0]?.title}</h2>
+                <button
+                  id={e[0]?.id}
+                  onClick={() => {
+                    handleSelect(e);
+                  }}
+                >
+                  ver
+                </button>
+              </div>
+            );
+          }
         })}
-          <br />
-      {misReservas.length > 0 &&
-        misReservas.map((a) => {
-          return a;
-        })}
+
+      <br />
+      <div>
+        <Calendar
+        minDate={today.setDate()}
+          maxDate={new Date().setDate(60)}
+          readOnly
+          value={diasService}
+          className="green"
+        />
+      </div>
+
+      <br />
+
+      <div className="grid grid-flow-col auto-cols-max auto-rows-max mx-9 bg-cyan-200">
+        {misReservas.length > 0 &&
+          misReservas.map((a) => {
+            return a;
+          })}
+      </div>
+
     </div>
   );
 };
+
 export default Reservations;
