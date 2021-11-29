@@ -39,8 +39,6 @@ const ControlPanel = () => {
   const [hoverCards, setHoverCards] = useState(false);
   const navigate = useNavigate();
 
-  const [loadingUserData, setLoadingUserData] = useState(false);
-
   const handleChangeBuscadorClientes = (e) => {
     setClientSearchValue(e.target.value);
     dispatch(buscarClientes(e.target.value));
