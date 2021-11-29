@@ -45,7 +45,7 @@ const CreateService = () => {
         currency: 'MXN',
         photos: [],
         location: '',
-        address: '', 
+        address: '',
     })
 
     const handleAddres = (text) => {
@@ -182,7 +182,7 @@ const CreateService = () => {
                     uidClient: uidClient,
                     photos: service.photos,
                     location: service.location,
-                    address: service.address, 
+                    address: service.address,
                     homeService: aDomicilio
                 }
                 try {
@@ -474,7 +474,9 @@ const CreateService = () => {
                                     <span className='text-md text-gray-700 font-semibold'>${service.max} <span className="text-gray-400">({service.currency})</span> </span>
                                 </div>
                             </div>
-
+                            {!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
+                                    : <div className='w-full h-96 bg-gray-500'>
+                                    </div>}
                         </div>
                         <div className="w-1/2 pl-4 ">
                             <div className="flex flex-col h-full">
@@ -488,6 +490,7 @@ const CreateService = () => {
                                         imgClass={`object-cover rounded-lg h-64 `}
                                     />
                                 </div> */}
+                                
                             </div>
                         </div>
                     </div>
