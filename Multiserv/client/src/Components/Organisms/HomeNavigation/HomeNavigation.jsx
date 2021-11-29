@@ -71,7 +71,7 @@ const HomeNavigation = () => {
     datosSesionFromLocalStorage ? (
       <LinkTo
         linkClass="m-4 flex justify-center"
-        page="home/schedule"
+        page={`home/${datosSesionFromLocalStorage.uid}/appointments`}
         render={<AiFillCalendar size="30" color="white" />}
       />
     ) : null,
