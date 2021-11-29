@@ -477,7 +477,7 @@ const ControlPanel = () => {
 
   useEffect(() => {
     dispatch(usuarioId(datosSesionFromLocalStorage.uid))
-    if (admin === false) {
+    if (admin === false || !datosSesionFromLocalStorage) {
       navigate("/home");
     }
     dispatch(users());
