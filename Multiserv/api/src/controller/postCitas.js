@@ -32,7 +32,7 @@ const postCitas = async (req, res, next) => {
             where: { id }
         })
 
-        const template = await mailTurno(user.displayName, dia, hora, direccion, ciudad, servicio.title)
+        const template = await mailTurno(user.displayName, dia, hora.hora, direccion, ciudad, servicio.title)
 
         await sendEmail(user.email, subject = " Confirmación de turno ", template)
 

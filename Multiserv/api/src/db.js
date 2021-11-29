@@ -84,18 +84,15 @@ const {
 Usuarios.hasOne(Direcciones);
 Usuarios.hasMany(Servicios);
 Usuarios.hasMany(Resenas);
-Usuarios.hasMany(Citas);
 
 // Servicios 
 Servicios.belongsTo(Usuarios);
 Servicios.hasOne(Direcciones);
 Servicios.hasMany(Resenas);
-Servicios.hasMany(Citas);
 
 // Direcciones
 Direcciones.belongsTo(Usuarios);
 Direcciones.belongsTo(Servicios);
-Direcciones.belongsTo(Citas);
 
 // Reviews
 Resenas.belongsTo(Servicios);
