@@ -249,7 +249,7 @@ navigate("/home");
             className="green"
             format="YYYY/MM/DD"
             minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)}
-            maxDate={new Date().setDate(30)}
+            maxDate={new Date().setDate(60)}
             multiple
             value={value}
             onChange={handleChange}

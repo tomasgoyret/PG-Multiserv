@@ -43,6 +43,14 @@ const AgendarCita = () => {
     for (let i = 0; i < array?.length; i++) {
       dias.push(Object.keys(array[i])[0]);
     }
+    dias.sort((prev, post) => {
+      if (prev !== post) {
+        if (prev < post) return -1;
+        else if (prev > post) return 1;
+        else return 0;
+      }
+    })
+    console.log(dias);
     setDiasDelServicio(dias);
   };
 
@@ -76,9 +84,8 @@ const AgendarCita = () => {
       hora: "",
       reservado: false,
     });
-    console.log(verHorarios, "verHorarios");
     if (verHorarios.length > 0) {
-      setProp(Object.keys(array[array.length - 1]));
+      setProp(diasDelServicio[diasDelServicio.length-1]);
     }
   };
 
@@ -93,7 +100,6 @@ const AgendarCita = () => {
       if (inputCalendar.length > 0) {
         let prop = Object.keys(inputCalendar[0])[0];
         let horas = inputCalendar[0][prop];
-
         return (
           //----------------- Horas disponibles -------------------//
 
@@ -237,13 +243,14 @@ const AgendarCita = () => {
             format="YYYY/MM/DD"
             className="green"
             minDate={today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1)} 
-            maxDate={prop[0]}
+            maxDate={prop}
             value={value}
             onChange={handleChange}
             mapDays={({ date }) => {
               let props = {};
               let dias = diasOcupados?.map((e) => parseInt(e.slice(8, 10)));
-              if (dias.includes(date.day)) props.disabled = true;
+              if (dias.includes(date.day)) props.disabled = true; 
+              if (!diasDelServicio.includes(date.format())) props.disabled = true; 
               return props;
             }}
           />

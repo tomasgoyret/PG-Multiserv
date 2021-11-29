@@ -289,9 +289,15 @@ export const cancelarCita = (id, uidClient) => {
 
 
 /* Ver mis reservas por idServices */
-export const getReservas = (arrayIds) => {
+export const getReservas = (uidClient) => {
     return async function (dispatch) {
-        const response = await axios.post('reservas', arrayIds);
+        let service = `my-services/${uidClient}`;
+        const misServicios = await axios(service);
+        let arrayIds = [];
+       for (let i = 0; i < misServicios.data.length; i++) {
+         arrayIds.push(misServicios.data[i].id);
+       }
+        const response = await axios.post('reservas', { ids: arrayIds });
         const reservas = response.data
         return dispatch({
             type: RESERVAS,
