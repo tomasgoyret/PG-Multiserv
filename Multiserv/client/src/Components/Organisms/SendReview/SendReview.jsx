@@ -1,47 +1,23 @@
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-stars";
-import {useParams} from "react-router-dom"
-import axios from "axios"
+import { useSendReview } from "../../../Hooks/useSendReview"
+
+const initialState = {
+  title: "",
+  details: "",
+  rating: ""
+}
 
 
 const SendReview = () => {
-    const {id} = useParams();
-    let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
-    const [sendReview, setSendReview] = useState({
-        details: "",
-        rating: "",
-        title: "",
-    })
+  const {
+    handleChange,
+    handleSubmit,
+    ratingChange,
+    sendReview
+  } = useSendReview(initialState)
 
-    const createReview = async() => {
-        const response = await axios.post(`/agregar-resena/${id}`, {
-            details: sendReview.details,
-            rating: sendReview.rating,
-            title: sendReview.title,
-            uidClient: datosSesionFromLocalStorage.uid
-        })
-        console.log(response.data);
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        createReview()
-    }
-
-    const handleChange = (e) => {
-        setSendReview({
-            ...sendReview,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const ratingChange = (data) => {
-            setSendReview({
-                ...sendReview,
-                rating: data
-            })
-    }
 
     return(
         <div className="w-1/3 h-28 mb-60">
@@ -50,7 +26,7 @@ const SendReview = () => {
             </div>
             <div className="w-max h-4/6 px-5">
                <form action="" onSubmit={handleSubmit}>
-                <div className="flex justify-between">
+                <div className="flex justify-between mb-2">
                     <div>
                             <label htmlFor="title">Título de reseña</label>
                             <input className="block border-2 border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 py-2 px-2" type="text" name="title" onChange={handleChange} id="title" />
@@ -63,8 +39,8 @@ const SendReview = () => {
                     <div className="w-4/6">
                         <textarea onChange={handleChange} maxLength="300" id="" cols="73" rows="4" name="details" className="border-2 border-blue-300 w-max rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 py-2 px-2" />
                     </div>
-                    <div className="w-2/6 flex flex-col items-center">
-                        <button onSubmit={handleSubmit} className='flex mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-blue-600 text-gray-50 hover:bg-blue-800 active:bg-blue-700 rounded-md transition-all ease-in-out duration-300' >
+                    <div className="w-full flex flex-col items-end mt-2">
+                        <button  className='font-semibold text-lg px-4 py-2 bg-blue-600 text-gray-50 hover:bg-blue-800 active:bg-blue-700 rounded-md transition-all ease-in-out duration-300' >
                             Comentar
                         </button>
                     </div>
