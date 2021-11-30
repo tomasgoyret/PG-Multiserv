@@ -23,8 +23,9 @@ import { useLocation } from "react-router";
 import axios from "axios";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { services, users, getListFavorites } from "../../redux/actions/actions";
+import { services, users, getListFavorites, getHorarios,servicesId } from "../../redux/actions/actions";
 import ModalAllReviews from "../../Components/Organisms/ModalAllReviews/ModalAllReviews";
+import AgendarCita from '../AgendarCita/AgendarCita';
 
 const DetalleServicio = () => {
   let { id } = useParams();
