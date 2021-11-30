@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { getCats } from '../../redux/actions/actions';
 import Input from '../../Components/Atoms/Input/Input';
@@ -7,22 +7,21 @@ import ReactCountryFlag from "react-country-flag"
 import ListBox from '../../Components/HeadLess/ListBox/ListBox';
 import SimpleProgressBar from '../../Components/Atoms/SimpleProgressBar/SimpleProgressBar';
 import Button from '../../Components/Atoms/Button/Button';
-import { FaPlus, FaTimes } from "react-icons/fa";
-import Image from '../../Components/Atoms/Image/Image';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
-import { MapContainer, MapConsumer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
-import { ImSpinner9 } from "react-icons/im";
-import { storage } from "../../Firebase";
-import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
-import { BsCloudArrowUpFill, BsCloudCheckFill } from "react-icons/bs";
-import { AiFillExclamationCircle } from "react-icons/ai";
-import { IoMdInformationCircle } from "react-icons/io";
+import { MapContainer, MapConsumer, TileLayer, Marker, Tooltip } from 'react-leaflet'
+import { ImSpinner6 } from "react-icons/im";
+import { FaSearchLocation } from "react-icons/fa";
+import { BsStars, BsExclamationLg } from "react-icons/bs";
+
 
 const CreateService = () => {
     /* espacio para mapa en la linea 405 */
+    const markerRef = useRef(null)
+    const [draggable, setDraggable] = useState(false)
     const [disabledNext, setDisabledNext] = useState(true)
     const categoriasDb = useSelector((state) => state.categories)
     const [loadingSave, setLoadingSave] = useState(false);
@@ -30,9 +29,11 @@ const CreateService = () => {
     const [imageOnCloud, setImageOnCloud] = useState(false)
     const [failedUpload, setFailedUpload] = useState(false)
     const [position, setPosition] = useState(null)
+    const [relocationPos, setRelocationPos] = useState(null)
     const [address, setAddress] = useState('')
     const [loadingPayment, setLoadingPayment] = useState(false);
     const [aDomicilio, setADomicilio] = useState(false)
+    const [searchLocationStatus, setSearchLocationStatus] = useState({ status: 'not searching' })
     const navigate = useNavigate();
     const dispatch = useDispatch()
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
@@ -48,23 +49,96 @@ const CreateService = () => {
         address: '',
     })
 
-    const handleAddres = (text) => {
-        setAddress(text)
+    const handleAddres = (e) => {
+        setAddress(e.target.value)
     }
     const onClickAddress = (e) => {
+        setDraggable(false)
+        setDisabledNext(true)
+        setSearchLocationStatus({ status: 'searching' })
         e.preventDefault();
         axios(`https://api.geoapify.com/v1/geocode/search?text=${address}&limit=1&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
             .then((response) => {
+                setDraggable(true)
                 const pos = response.data.results[0];
                 setPosition([pos.lat, pos.lon]);
+                setSearchLocationStatus({ status: 'success' })
+                setAddress(pos.formatted)
                 setService({
                     ...service,
                     location: [pos.lat, pos.lon],
-                    address: address
+                    address: pos.formatted
                 })
+                setDisabledNext(false)
             })
-            .catch((error) => error);
+            .catch((error) => {
+                setDraggable(true)
+                setDisabledNext(false)
+                setSearchLocationStatus({ status: 'failed', result: error })
+            });
     };
+
+    const searchLatLng = (lat, lon) => {
+        if (searchLocationStatus.status !== 'not searching') {
+            setSearchLocationStatus({ status: 'searching' })
+        }
+        setDraggable(true)
+        axios(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=7418c78b799b47df808b6aae89a65898`)
+            .then((response) => {
+                const pos = response.data.results[0];
+                setRelocationPos([pos.lat, pos.lon]);
+                setAddress(pos.formatted)
+                setService({
+                    ...service,
+                    location: [pos.lat, pos.lon],
+                    address: pos.formatted
+                })
+                setDraggable(false)
+                setDisabledNext(false)
+                setRelocationPos(null)
+                setSearchLocationStatus({ status: 'success' })
+            })
+            .catch((error) => {
+                setDraggable(true)
+                setDisabledNext(false)
+                setRelocationPos(null)
+                setSearchLocationStatus({ status: 'failed', result: error })
+            });
+    }
+
+    const eventHandlers = useMemo(
+        () => ({
+            dragend() {
+                const marker = markerRef.current
+                if (marker != null) {
+                    setRelocationPos(marker.getLatLng())
+                }
+            },
+        }),
+        [],
+    )
+
+    useEffect(() => {
+        if (relocationPos !== null) {
+            //console.log(relocationPos);
+            searchLatLng(relocationPos.lat, relocationPos.lng)
+        }
+
+    }, [relocationPos])
+
+    useEffect(() => {
+        if (draggable) {
+            toast.success('Si lo deseas, arrastra el marcador azul para modificar la dirección', {
+                position: "top-center",
+                autoClose: 5500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            })
+        }
+    }, [draggable])
     const handleCheck = () => {
         setADomicilio((aDomicilio) => !aDomicilio)
     }
@@ -98,8 +172,19 @@ const CreateService = () => {
                     setDisabledNext(true)
                     break;
                 } else {
-                    setDisabledNext(false)
+                    if (Number(service.max) <= Number(service.min)) {
+                        setDisabledNext(true)
+                    } else {
+                        setDisabledNext(false)
+                    }
                 }
+            }
+        }
+        if (stepForm === 2) {
+            if (!service.address) {
+                setDisabledNext(true)
+            } else {
+                setDisabledNext(false)
             }
         }
     }, [service, stepForm, disabledNext])
@@ -123,11 +208,13 @@ const CreateService = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {
-                        position !== null ? <Marker position={position}>
-                            <Popup>
-                                Aquí está tu negocio<br />
-                                {address}
-                            </Popup>
+                        position !== null ? <Marker draggable={draggable}
+                            eventHandlers={eventHandlers}
+                            ref={markerRef} position={position}>
+                            <Tooltip direction="top" permanent offset={[-13, -10]}>
+                                Ubicación encontrada:<br />
+                                <span className="font-semibold text-purple-900">{address}</span>
+                            </Tooltip>
                         </Marker> : <div></div>
                     }
                 </MapContainer>
@@ -137,7 +224,7 @@ const CreateService = () => {
     const resumeMap = () => {
         if (stepForm === 3) {
             return (!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
-                : <div className='w-full h-96 bg-gray-500 rounded-xl'>
+                : <div className='w-full h-80 bg-gray-500 rounded-xl'>
                     <MapContainer
                         center={service.location}
                         zoom={19}
@@ -147,10 +234,10 @@ const CreateService = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={service.location} >
-                            <Popup>
-                                {service.title}<br />
-                                {service.address}
-                            </Popup>
+                            <Tooltip direction="top" permanent offset={[-13, -10]}>
+                                {service.title}:<br />
+                                <span className="font-semibold text-purple-900">{service.address}</span>
+                            </Tooltip>
                         </Marker>
                     </MapContainer>
                 </div>)
@@ -448,17 +535,33 @@ const CreateService = () => {
                         <div className="flex flex-row w-full justify-center">
 
                             <div className="w-96 lg:w-1/2">
-                                <Input
-                                    flexed
-                                    placeholder="Busca una dirección..."
-                                    label="Buscar ubicación"
-                                    callBack={handleAddres}
-                                    theme="#0C4A6E"
+                                <div className="flex flex-col mb-2">
+                                    <label htmlFor="editAddres" className={`text-sm mb-2' font-semibold text-gray-600 mr-4 select-none cursor-pointer transition-all ease-in-out duration-300 mb-1`}>
+                                        Busca una dirección
+                                    </label>
+                                    <input
+
+                                        onChange={(e) => { setAddress(e.target.value) }}
+                                        value={address}
+                                        type="text"
+                                        name="editAddress"
+                                        id="editAddres"
+                                        placeholder="[CALLE Y NO. DE CASA], CIUDAD, ESTADO/PROVINCIA"
+                                        className="border border-gray-400 px-2 py-2 overflow-x-auto rounded-md font-medium focus:outline-cyan"
                                 />
+                                </div>
                             </div>
                             <div className="flex py-2 self-center place-self-center justify-center items-center h-full">
-                                <button className="px-2 bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md">
-                                    <span className="font-semibold text-white" onClick={onClickAddress} >Cargar ubicacion</span>
+                                <button
+                                    onClick={onClickAddress}
+                                    className="px-2 bg-cyan-800 hover:bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-in-out duration-300 text-white">
+                                    {searchLocationStatus.status === 'searching' ?
+                                        <>
+                                            <ImSpinner6 className="mr-2 self-center animate-spin" />
+                                            <span className="font-semibold">Buscando...</span></>
+                                        :
+                                        <><FaSearchLocation className="mr-2 self-center" />
+                                            <span className="font-semibold">Buscar ubicación</span></>}
                                 </button >
                                 <label className="type_option self-center">
                                     <input type="checkbox" name='check'
@@ -505,6 +608,27 @@ const CreateService = () => {
                                     <span className='text-md text-gray-700 font-semibold'>${service.max} <span className="text-gray-400">({service.currency})</span> </span>
                                 </div>
                             </div>
+                            <div className="pb-2 mb-2 w-full border-b border-gray-100 flex flex-row">
+                                <div className={`flex flex-row my-0.5 rounded-md px-4 py-1 ${aDomicilio ? 'bg-blue-100 text-blue-900' : 'bg-rose-100 text-rose-900'}`}>
+                                    {aDomicilio ? <>
+                                        <BsStars className="text-lg mr-2 self-center" />
+                                        <span className='text-md font-semibold text-lg  mr-3'>Ofreces servicio a domicilio
+                                        </span>
+                                    </>
+                                        :
+                                        <>
+                                            <BsExclamationLg className="text-lg mr-2  self-center" />
+                                            <span className="font-semibold  self-center">
+                                                No ofreces servicio a domicilio
+                                            </span>
+                                        </>}
+                                </div>
+
+                            </div>
+
+                            <div className="mt-2 flex flex-row">
+                                <span className="font-semibold text-purple-900">- Una vez creada la publicación, puedes modificarla cuando quieras en <span className=" underline">mis servicios</span></span>
+                            </div>
 
                         </div>
                         <div className="w-1/2 pl-4 ">
@@ -522,7 +646,7 @@ const CreateService = () => {
                         customTextColor='#155E75'
                         theme="#E5E7EB"
                         action={decreaseStep}
-                        disabled={stepForm === 1}
+                        disabled={stepForm === 1 || stepForm === 3}
                     />
                     {stepForm !== 3 && <Button
                         disabled={disabledNext}
