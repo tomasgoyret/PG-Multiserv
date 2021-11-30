@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       defaultValue: 'Pendiente'
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: true
     },
     photos: {

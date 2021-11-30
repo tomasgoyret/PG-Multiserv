@@ -29,6 +29,7 @@ import PercentageReview from "./Components/Molecules/PercentageReview/Percentage
 import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
 import Reservations from "./pages/Reservations/Reservations";
 import NotFound404 from "./pages/NotFound404/NotFound404";
+import Nosotros from "./pages/Nosotros/Nosotros";
 
 function App() {
   toast.configure()
@@ -134,6 +135,10 @@ function App() {
     {
       path: '*',
       element: <NotFound404 />
+    },
+    {
+      path: '/about',
+      element: <Nosotros />
     },
   ]
   /*

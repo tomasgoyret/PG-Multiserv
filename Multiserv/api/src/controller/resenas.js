@@ -14,18 +14,25 @@ const getResenas = async (req, res) => {
 const getResenasId = async (req, res) => {
     const {id} = req.params;
     try {
-        const resenas= await Resenas.findAll();
-        const filtered= resenas.filter(resena => parseInt(resena.dataValues.servicioId) === parseInt(id));
+        const resenas = await Resenas.findAll();
+        const filtered = resenas.filter(resena => parseInt(resena.dataValues.servicioId) === parseInt(id));
+        
+        if(filtered.length > 0) {
+          const rating = filtered.map(r => r.rating);
+          const suma = rating.reduce((a, b) => a + b, 0);
+          const promedio = suma / rating.length;
+          const servicio = await Servicios.update({rating: promedio.toFixed(1)}, {where: {id}})
+        }
         res.status(200).json(filtered);
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json("No funciona");
     }
 }
 
 const deleteResenas = async (req, res) => {
         const id = req.params;
         const resena = await Resenas.destroy({where: id});
-        resena ? res.json({msg: "La reseña se borró correctamente"}) : 
+        resena ? res.json({msg: "La reseña se borró correctamente"}) :
         res.json({msg: 'La reseña que intenta eliminar no existe'});
 };
 
