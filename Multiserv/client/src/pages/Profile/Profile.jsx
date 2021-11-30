@@ -66,7 +66,7 @@ const Profile = () => {
         }).then((result) => {
             console.log(result)
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3005/eliminar-usuario/${uid}`)
+                axios.delete(`eliminar-usuario/${uid}`)
                     .then(async response => {
                         await Swal.fire(
                             '¡Eliminado!',
@@ -146,7 +146,7 @@ const Profile = () => {
     const actualizarDatosUsuario = (user) => {
         const { name, lastName, photoURL, uid, phone } = user;
         setLoading(true)
-        axios.put(`http://localhost:3005/editar-usuario/${uid}`, {
+        axios.put(`editar-usuario/${uid}`, {
             name,
             lastName,
             photoURL,
