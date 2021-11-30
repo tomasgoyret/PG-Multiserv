@@ -93,7 +93,7 @@ const ControlPanel = () => {
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        axios(`eliminar-usuario/${uid}`)
+        axios.delete(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
               "¡Eliminado!",
@@ -123,7 +123,7 @@ const ControlPanel = () => {
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        axios(`eliminar-usuario/${uid}`)
+        axios.delete(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
               "¡Eliminado!",
