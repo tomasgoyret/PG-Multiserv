@@ -36,8 +36,8 @@ const DetalleServicio = () => {
             document.title = `Detalles de ${servicio[0].title}`
         }
         document.title = `Detalle del servcio`
-
-    }, [])    
+        dispatch(services())
+    }, [])
 
     var idFav = '';
     var value = false;
