@@ -37,6 +37,8 @@ const DetalleServicio = () => {
   useEffect(() => {
     dispatch(services());
     dispatch(users());
+    dispatch(getHorarios(id));
+    dispatch(servicesId(id));
     if (datosSesionFromLocalStorage != null) {
       name = datosSesionFromLocalStorage.displayName;
       uid = datosSesionFromLocalStorage.uid;
@@ -63,6 +65,7 @@ const DetalleServicio = () => {
   const [failedImg, setFailedImg] = useState(false);
   const [verPerfil, setVerPerfil] = useState(false);
   const [modalReviews, setModalReviews] = useState(false);
+  const [turnero, setTurnero] = useState(false)
   let loading = useSelector((state) => state.loadingServices);
   const servicios = useSelector((state) => state.servicios);
   const usuarios = useSelector((state) => state.usuarios);
