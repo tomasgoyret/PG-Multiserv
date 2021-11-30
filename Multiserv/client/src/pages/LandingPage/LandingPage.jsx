@@ -15,13 +15,13 @@ import axios from 'axios';
 
 const LandingPage = () => {
 
-    const prenderNotificaciones = async () =>{
-        await axios.get('notificaciones')
-    }
+    // const prenderNotificaciones = async () =>{
+    //     await axios.get('notificaciones')
+    // }
 
     useEffect(() => {
         document.title = '¡Bienvenido a MultiServicios!'
-        prenderNotificaciones()
+        //prenderNotificaciones()
     }, [])
     const [modal, setModal] = useState(false)
 

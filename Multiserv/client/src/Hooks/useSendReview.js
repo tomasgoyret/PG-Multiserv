@@ -1,23 +1,40 @@
 import {useParams} from "react-router-dom"
+import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {getReviews} from "../redux/actions/actions"
 
 export const useSendReview = (initialState) => {
 
+  const dispatch = useDispatch();
   const {id} = useParams();
-  console.log(id);
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
   const [sendReview, setSendReview] = useState(initialState)
+  const {reviews, usuarios} = useSelector(state => state)
+  const findReview = reviews.find(review => review.usuarioUidClient === datosSesionFromLocalStorage.uid)
+  const findUser = usuarios.find(user => user.uidClient === datosSesionFromLocalStorage.uid)
+
 
   const createReview = async() => {
-      const response = await axios.post(`/agregar-resena/${id}`, {
-          details: sendReview.details,
-          rating: sendReview.rating,
-          title: sendReview.title,
-          uidClient: datosSesionFromLocalStorage.uid
-      })
-      console.log(response.data);
+      if(findUser.uidClient === datosSesionFromLocalStorage.uid) {
+        alert("No se puede crear una reseña en un servicio propio")
+      } else {
+        if(!findReview) {
+          const response = await axios.post(`/agregar-resena/${id}`, {
+              details: sendReview.details,
+              rating: sendReview.rating,
+              title: sendReview.title,
+              uidClient: datosSesionFromLocalStorage.uid
+          })
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err))
+          dispatch(getReviews(id))
+          alert("La reseña se creó correctamente")
+        }else {
+          alert("Solo se puede crear una reseña por servicio")
+        }
+      }
   }
 
   const handleSubmit = (e) => {
@@ -25,7 +42,6 @@ export const useSendReview = (initialState) => {
       createReview()
       e.target.reset()
       setSendReview({rating: ""})
-      alert("Tu reseña se creó correctamente")
   }
 
   const handleChange = (e) => {

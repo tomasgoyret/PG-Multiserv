@@ -12,6 +12,7 @@ import {
   buscarProvedores,
   buscarServicios,
   buscarCategorias,
+  usuarioId
 } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -470,15 +471,29 @@ const ControlPanel = () => {
       }
     });
   };
+  
+  let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+
+
+  
 
   useEffect(() => {
-    if (detalleUsuario.isAdmin) {
-      navigate("/home");
+    if(datosSesionFromLocalStorage) {
+      dispatch(usuarioId(datosSesionFromLocalStorage.uid))
     }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
-  }, [clientSearchValue]);
+  }, []);
+
+  useEffect(() => {
+    let admin = detalleUsuario.isAdmin
+    if (!admin) {
+      navigate("/home");
+    }
+  }, [detalleUsuario])
+
+
 
   return (
     <div className="w-full flex">

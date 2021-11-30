@@ -40,7 +40,7 @@ const postFav = async (req, res) => {
                 photos
             });
             await newFav.addUsuarios(uidClient);
-            res.send({uidClient, id:newFav.id})
+            res.send(newFav)
         }
     }
     catch (error) {
