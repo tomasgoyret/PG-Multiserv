@@ -28,6 +28,7 @@ import { MapServices } from "./pages/MapServices/MapServices";
 import PercentageReview from "./Components/Molecules/PercentageReview/PercentageReview";
 import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
 import Reservations from "./pages/Reservations/Reservations";
+import NotFound404 from "./pages/NotFound404/NotFound404";
 
 function App() {
   toast.configure()
@@ -130,8 +131,10 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
-    
-    
+    {
+      path: '*',
+      element: <NotFound404 />
+    },
   ]
   /*
   <div>

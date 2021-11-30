@@ -473,17 +473,27 @@ const ControlPanel = () => {
   };
   
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-  let admin = detalleUsuario.isAdmin
+
+
+  
 
   useEffect(() => {
-    dispatch(usuarioId(datosSesionFromLocalStorage.uid))
-    if (admin === false) {
-      navigate("/home");
+    if(datosSesionFromLocalStorage) {
+      dispatch(usuarioId(datosSesionFromLocalStorage.uid))
     }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
-  }, [clientSearchValue]);
+  }, []);
+
+  useEffect(() => {
+    let admin = detalleUsuario.isAdmin
+    if (!admin) {
+      navigate("/home");
+    }
+  }, [detalleUsuario])
+
+
 
   return (
     <div className="w-full flex">
