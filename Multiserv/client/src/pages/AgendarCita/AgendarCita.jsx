@@ -228,7 +228,7 @@ const AgendarCita = ({idService}) => {
     navigate("/home");
   };
   return (
-    <div className='m-4 px-2 border-t-2' >
+    <div className='m-4 px-2 border-t-2 border-b-2' >
       <h1 className=' font-bold text-xl' >Ver Horarios</h1>
       <h3 className='text-lg font-semibold' >Seleccione una fecha para el turno: </h3>
       <form onSubmit={onSubmit}>
@@ -332,7 +332,7 @@ const AgendarCita = ({idService}) => {
         </div>
           : ''}
 
-        <button type="submit" className="w-full bg-green-500 text-white font-bold p-1 rounded-lg">
+        <button type="submit" className="w-full mb-2 bg-green-500 text-white font-bold p-1 rounded-lg">
           Agendar cita
         </button>
       </form>
