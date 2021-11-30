@@ -65,7 +65,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     if (e.target.name === "cancelar") return cancelar(e.target.value);
     if (e.target.name === "concretada") {
       dispatch(statusCita(e.target.value, uidClient));
-       alert('ULISES --ej: Desea dejar reseña?');
+      //  alert('ULISES --ej: Desea dejar reseña?');
       
       {
         /* ------------ MODAL --------------- 
