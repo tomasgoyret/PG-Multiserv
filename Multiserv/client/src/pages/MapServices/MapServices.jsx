@@ -8,7 +8,7 @@ export const MapServices = () => {
     const dispatch = useDispatch()
     const serviciosMapa = useSelector(state => state.mapServices)
     useEffect(() => {
-        dispatch(mapServices)
+        dispatch(mapServices())
     }, [])
     return (
         <div className='m-2 w-full h-screen' >

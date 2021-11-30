@@ -549,7 +549,7 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>categorías</span>
+            <span>Categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
