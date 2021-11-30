@@ -13,7 +13,7 @@ import axios from 'axios';
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiLoader } from "react-icons/bi";
 import Swal from 'sweetalert2';
-import { MapContainer, MapConsumer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, MapConsumer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import { ImSpinner9 } from "react-icons/im";
 import { storage } from "../../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
@@ -103,6 +103,59 @@ const CreateService = () => {
             }
         }
     }, [service, stepForm, disabledNext])
+
+    const renderMap = () => {
+        if (stepForm === 2) {
+            return (<div className="w-full h-full">
+                <MapContainer
+                    center={position === null ? [51.50084939698666, -0.12458248633773235] : position}
+                    zoom={20}
+                    scrollWheelZoom={true}
+                >
+                    <MapConsumer>
+                        {(map) => {
+                            map.flyTo(position === null ? [51.50084939698666, -0.12458248633773235] : position);
+                            map.zoom = 15;
+                            return null;
+                        }}
+                    </MapConsumer>
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    {
+                        position !== null ? <Marker position={position}>
+                            <Popup>
+                                Aquí está tu negocio<br />
+                                {address}
+                            </Popup>
+                        </Marker> : <div></div>
+                    }
+                </MapContainer>
+            </div>)
+        }
+    }
+    const resumeMap = () => {
+        if (stepForm === 3) {
+            return (!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
+                : <div className='w-full h-96 bg-gray-500 rounded-xl'>
+                    <MapContainer
+                        center={service.location}
+                        zoom={19}
+                        scrollWheelZoom={false}
+                    >
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={service.location} >
+                            <Popup>
+                                {service.title}<br />
+                                {service.address}
+                            </Popup>
+                        </Marker>
+                    </MapContainer>
+                </div>)
+        }
+    }
     const monedas = [
         {
             name: 'MXN',
@@ -277,7 +330,7 @@ const CreateService = () => {
 
                     </div>
                 </div>
-                <div id='content' className="flex flex-row justify-center items-between mt-9 w-full h-full px-8">
+                <div id='content' className="flex flex-row justify-center items-between mt-9 w-full h-full  px-8">
 
                     <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex mt-3' : 'hidden'} w-full`}>
                         <div className="border-r mx-auto w-1/2 pr-6">
@@ -421,32 +474,8 @@ const CreateService = () => {
                             </div>
                         </div>
                         {/* 51.50084939698666, -0.12458248633773235 */}
-                        <div className="w-full h-full">
-                            <MapContainer
-                                center={position === null ? [51.50084939698666, -0.12458248633773235] : position}
-                                zoom={20}
-                                scrollWheelZoom={true}
-                            >
-                                <MapConsumer>
-                                    {(map) => {
-                                        map.flyTo(position === null ? [51.50084939698666, -0.12458248633773235] : position);
-                                        map.zoom = 15;
-                                        return null;
-                                    }}
-                                </MapConsumer>
-                                <TileLayer
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                                {
-                                    position !== null ? <Marker position={position}>
-                                        <Popup>
-                                            Aquí está tu negocio<br />
-                                            {address}
-                                        </Popup>
-                                    </Marker> : <div></div>
-                                }
-                            </MapContainer>
-                        </div>
+
+                        {renderMap()}
 
                     </div>
                     <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-start items-start' : 'hidden'} w-full`}>
@@ -476,37 +505,11 @@ const CreateService = () => {
                                     <span className='text-md text-gray-700 font-semibold'>${service.max} <span className="text-gray-400">({service.currency})</span> </span>
                                 </div>
                             </div>
-                            {!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
-                                : <div className='w-full h-96 bg-gray-500'>
-                                    <MapContainer
-                                        center={service.location}
-                                        zoom={19}
-                                        scrollWheelZoom={false}
-                                    >
-                                        <TileLayer
-                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                        />
-                                        <Marker position={service.location} >
-                                            <Popup>
-                                                {service.title}<br/>
-                                                {service.address}
-                                            </Popup>
-                                        </Marker>
-                                    </MapContainer>
-                                </div>}
+
                         </div>
                         <div className="w-1/2 pl-4 ">
                             <div className="flex flex-col h-full">
-                                {/* <div className="mb-3 border-b border-gray-300 flex flex-row">
-                                    <span className='text-md font-semibold text-xl text-cyan-900'>Imagen de portada <HiOutlineArrowNarrowRight className="ml-3 inline-flex" /></span>
-                                </div>
-                                <div className="">
-                                    <Image
-                                        name="photo1"
-                                        imagen={img}
-                                        imgClass={`object-cover rounded-lg h-64 `}
-                                    />
-                                </div> */}
+                                {resumeMap()}
 
                             </div>
                         </div>
