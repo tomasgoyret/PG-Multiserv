@@ -175,7 +175,7 @@ const Users = [
       }]
   },
   {
-    "uid": "6eSb268Y1FTMQGUSpL8Wmo7TXK83",
+    "uid": "Qu8eW4yZD5W1K7VkFoKgWCQfo1a2",
     "email": "bastianmurilloalzate@gmail.com",
     "lastName": "",
     "emailVerified": true,
