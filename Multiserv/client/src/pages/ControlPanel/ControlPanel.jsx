@@ -549,12 +549,12 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>categorías</span>
+            <span>Categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
         {/* Inicio seccion administrar newsletter */}
-        <div className="w-full flex justify-start px-2 mt-5">
+        {/* <div className="w-full flex justify-start px-2 mt-5">
           <h2 className="text-md font-semibold ">Administrar newsletter</h2>
         </div>
         <div className="w-full flex flex-col items-start   mt-2">
@@ -565,7 +565,7 @@ const ControlPanel = () => {
             <MdCategory width="30px" height="30px" className="mr-2" />
             <span>Newsletter</span>
           </button>
-        </div>
+        </div> */}
         {/* Fin seccion administrar newsletter */}
       </div>
 
