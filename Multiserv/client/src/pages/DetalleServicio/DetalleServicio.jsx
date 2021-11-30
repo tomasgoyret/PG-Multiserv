@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import { services, users, getListFavorites, getHorarios, servicesId } from "../../redux/actions/actions";
 import ModalAllReviews from "../../Components/Organisms/ModalAllReviews/ModalAllReviews";
 import AgendarCita from '../AgendarCita/AgendarCita';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -81,6 +82,7 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, "");
 
     let servicio = servicios.filter((serv) => serv.id === Number(id));
+    console.log(servicio)
 
     let usuario = usuarios.filter(
         (usuario) => usuario.uidClient === servicio[0]?.usuarioUidClient
@@ -425,10 +427,32 @@ const DetalleServicio = () => {
                                         </div>
                                     </div>
                                 </div>
-                            {
-                                turnero && <AgendarCita idService={id} /> /* Refactorizado por Abril */
-                            }
+                                {
+                                    turnero && <AgendarCita idService={id} /> /* Refactorizado por Abril */
+                                }
                             </div>
+                        </div>
+                        <div>
+                            {
+                                servicio[0].location && <div>
+                                    <h2 className='font-bold text-3xl ml-4' >Local</h2>
+                                    <div className='w-full h-96 my-4' >
+                                        <MapContainer
+                                            center={servicio[0].location}
+                                            zoom={15}
+                                            scrollWheelZoom={false}
+                                        >
+                                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                            <Marker position={servicio[0].location} >
+                                                <Popup>
+                                                    {servicio[0].title}<br/>
+                                                    {servicio[0].address}
+                                                </Popup>
+                                            </Marker>
+                                        </MapContainer>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         <div>
                             <ReviewService
