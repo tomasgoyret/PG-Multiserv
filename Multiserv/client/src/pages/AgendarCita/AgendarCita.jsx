@@ -181,7 +181,7 @@ const AgendarCita = ({idService}) => {
         ciudad.length > 0
       ) {
         var body = {
-          dia: "2021",
+          dia,
           hora,
           direccion,
           ciudad,
