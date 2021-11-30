@@ -95,10 +95,6 @@ function App() {
           element: <EditarServicio />
         },
         {
-          path: '/home/:idService/ver-horarios',
-          element: <AgendarCita />
-        },
-        {
           path: '/home/:uidClient/reservations',
           element: <Reservations />
         },
