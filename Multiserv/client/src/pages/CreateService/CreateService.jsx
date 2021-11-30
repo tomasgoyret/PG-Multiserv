@@ -362,7 +362,7 @@ const CreateService = () => {
     }
 
     return (
-        <div className="container flex justify-center items-center mx-auto w-full bg-gray-400 px-8 py-4">
+        <div className="container flex justify-center items-center mx-auto w-full max-h-screen overflow-y-auto bg-gray-400 px-8 py-4">
             <div
                 style={{ height: '100%', width: '100%' }}
                 className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
