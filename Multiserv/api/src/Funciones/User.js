@@ -1244,7 +1244,7 @@ const services = [
     ],
     "currency": "MXN",
     "title": "peluqueria Rosal",
-    "location": [51.505, -0.09],
+    "location": [-24.878398, -65.469290],
     "address": "Calle falsa 123"
   },
   {
@@ -1326,7 +1326,7 @@ const services = [
     "photos": [
       "https://insights.workwave.com/wp-content/uploads/2020/05/cleaning-with-spray-detergent-rubber-gloves-and-dish-cloth-on-work-picture-id1202033073.jpg"
     ],
-    "location": [5.340126, -72.383922],
+    "location": [-24.875512, -65.476653],
     "address": "Yopal, Casanare, Colombia"
   },
   {
@@ -1342,7 +1342,7 @@ const services = [
     "photos": [
       "https://imagenes.elpais.com/resizer/I2fwlYx1bWjoxyi1UUTYR4m18k0=/1200x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/EKFF4PCRBQSHUSRAGL6LOGGR2I.jpg"
     ],
-    "location": [5.339232, -72.384584],
+    "location": [-24.877348, -65.476498],
     "address": "Cerca de lo de Santi"
   },
   {
@@ -1359,7 +1359,7 @@ const services = [
     "description": " Aliquam consequat mollis leo, id auctor risus mollis sed. Morbi vehicula facilisis dictum. Sed dictum eleifend sapien vitae sollicitudin",
     "uidUser": "49KPmJcVR3SikQvSz1tzTSKvpAt1",
     "max": 1500,
-    "location": [51.505, -0.09],
+    "location": [-24.878014, -65.475764],
     "address": "Calle falsa 123"
   },
   {
@@ -1377,7 +1377,7 @@ const services = [
     "max": 300,
     "description": "Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit.",
     "title": "Kitty haircuts",
-    "location": [5.339384, -72.385297],
+    "location": [-24.878438, -65.469357],
     "address": "Calle falsa 123"
   },
   {
@@ -1395,7 +1395,7 @@ const services = [
     "rating": "4",
     "currency": "ARS",
     "uidUser": "8pYN2k171rdXmItOnlBM8oWfMto2",
-    "location": [5.339790, -72.385367],
+    "location": [-24.879528, -65.477076],
     "address": "Calle falsa 123"
   },
   {
