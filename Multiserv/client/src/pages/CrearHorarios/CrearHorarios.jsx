@@ -168,7 +168,7 @@ const Horarios = () => {
 
       if (e.target.name === "horas") {
         if (a.length === 0) {
-          setErrors({ ...errors, horas: "Seleccione horario para las citas" });
+          setErrors({ ...errors, horas: "Selecciona al menos un horario en el que prestarás tu servicio" });
         } else {
           setErrors({ ...errors, horas: "" });
         }
@@ -285,7 +285,7 @@ navigate("/home");
               <FcCalendar className="self-center mr-2 text-2xl" />
               <span className="font-semibold text-xl mr-4">¿En qué fechas brindarás tus servicios? </span>
             </div>
-            <div className="flex flex-row mt-2">
+            <div className="flex flex-row mt-2 pl-2">
           <DatePicker
                 placeholder="Seleccione una fecha"
                 style={{
@@ -314,6 +314,7 @@ navigate("/home");
               <span className="self-center">¿Cuánto durará cada sesión?</span>
             </label>
             <ListBox
+              customBorder="#9CA3AF"
               includeIconOnDesc
               options={options}
               callBack={handleOnChange}
