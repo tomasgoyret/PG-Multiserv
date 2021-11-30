@@ -21,7 +21,7 @@ const CardInfomativaFormulario = () => {
             <ButtonXartiago
                 btn=" Regístrate"
                 page="signup"
-                btnClass="font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300"
+                btnClass="flex justify-center font-semibold inline-flex w-32 text-lg px-4 py-2 bg-green-700 text-gray-50 hover:bg-green-800 active:bg-green-600 rounded-md transition-all ease-in-out duration-300"
             />
         </div>
     )
