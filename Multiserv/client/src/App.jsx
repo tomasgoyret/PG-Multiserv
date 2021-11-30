@@ -137,7 +137,7 @@ function App() {
       element: <NotFound404 />
     },
     {
-      path: '/nosotros',
+      path: '/about',
       element: <Nosotros />
     },
   ]
