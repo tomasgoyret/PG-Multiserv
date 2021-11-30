@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getMisCitas, cancelarCita,statusCita } from "../../redux/actions/actions";
+import { getMisCitas, cancelarCita, statusCita } from "../../redux/actions/actions";
 import axios from "axios";
 
 const MisCitas = () => {
@@ -65,8 +65,8 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     if (e.target.name === "cancelar") return cancelar(e.target.value);
     if (e.target.name === "concretada") {
       dispatch(statusCita(e.target.value, uidClient));
-       alert('ULISES --ej: Desea dejar reseña?');
-      
+      //  alert('ULISES --ej: Desea dejar reseña?');
+
       {
         /* ------------ MODAL --------------- 
       alert('Desea dejar una reseña?')      
@@ -81,77 +81,67 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
   };
 
   return (
-    <div>
-      <h1>Mis Citas</h1>
-
+    <div className='mx-2 my-4 w-full'>
+      <h1 className='text-4xl font-bold pb-2 border-b w-full mb-2' >Mis Citas</h1>
+      <h2 className='text-xl pl-2 font-semibold' > Proximas :</h2>
       {/* Citas mapeadas por Servicio */}
-      <h2> Proximas :</h2>
+      <div className='grid grid-cols-6 gap-3 m-2'>
+        {misCitas.length > 0 &&
+          misCitas.map((cita, i) => {
+            return (
+              <div key={"key-proximas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
+                <h3 className='text-xl text-center py-2 font-semibold' >{`${cita.title[0].toUpperCase()}${cita.title.slice(1)}`}</h3>
+                <h6 className='text-center' >{cita.dia}</h6>
+                <h6 className='text-center' >{cita.hora.hora}</h6>
+                <h6 className='text-center mb-2' >{cita.direccion}</h6>
+                <div className='flex justify-evenly' >
+                  <button
+                    name="cancelar"
+                    value={cita.id}
+                    onClick={handleClick}
+                    className="px-4 bg-rose-700 rounded-lg py-0.5 font-semibold text-white hover:bg-rose-900"
+                  >
+                    Cancelar
+                  </button>
 
-      {misCitas.length > 0 &&
-        misCitas.map((cita, i) => {
-          return (
-            <div key={"key-proximas" + "-" + i}>
-              <br />
-              <h3>Citas para el servicio: {cita.title}</h3>
-
-              <h6>Fecha: {cita.dia}</h6>
-
-              <h6>Hora: {cita.hora.hora}</h6>
-
-              <h6>Direccion: {cita.direccion}</h6>
-
-              <button
-                name="cancelar"
-                value={cita.id}
-                onClick={handleClick}
-                className="bg-red-900"
-              >
-                Cancelar
-              </button>
-
-              <button
-                name="ver"
-                value={cita.servicioId}
-                onClick={handleClick}
-                className="bg-cyan-900"
-              >
-                Ver
-              </button>
-            </div>
-          );
-        })}
-
+                  <button
+                    name="ver"
+                    value={cita.servicioId}
+                    onClick={handleClick}
+                    className="px-4 bg-cyan-700 rounded-lg py-0.5 font-semibold text-white hover:bg-cyan-900"
+                  >
+                    Ver
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+      </div>
       {/* No hay citas */}
 
       {misCitas.length === 0 && <h3>No hay citas proximas</h3>}
 
-      <div>
-        <h2> Caducadas :</h2>
+      <h2 className='text-xl pl-2 font-semibold' > Caducadas :</h2>
+      <div className='grid grid-cols-6 gap-3 m-2' >
         {citasVencidas.length > 0 ? (
           citasVencidas.map((cita, i) => {
-            let values = [cita.id,cita.usuarioUidClient]
+            let values = [cita.id, cita.usuarioUidClient]
             return (
-              <div key={"key-caducadas" + "-" + i}>
-                <br />
-                <h3>Citas para el servicio: {cita.title}</h3>
-
-                <h6>Fecha: {cita.dia}</h6>
-
-                <h6>Hora: {cita.hora.hora}</h6>
-
-                <h6>Direccion: {cita.direccion}</h6>
-
+              <div key={"key-caducadas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
+                <h3 className='text-xl text-center py-2 font-semibold' >Citas para el servicio: {cita.title}</h3>
+                <h6 className='text-center' >{cita.dia}</h6>
+                <h6 className='text-center' >{cita.hora.hora}</h6>
+                <h6 className='text-center mb-2' >{cita.direccion}</h6>
                 <h6>
                   Estado:{" "}
                   {cita.status === "Pendiente" ? "Cita caducada" : cita.status}
                 </h6>
-
                 {cita.status !== "Concretada" ? (
                   <button
                     name="concretada"
                     value={cita.id}
                     onClick={handleClick}
-                    className="bg-red-900"
+                    className="px-4 bg-rose-700 rounded-lg py-0.5 font-semibold text-white hover:bg-rose-900"
                   >
                     Concretada
                   </button>

@@ -16,11 +16,11 @@ var transporter = nodemailer.createTransport({
   },
 });
 
-let notificaciones = async () =>{
-  let hoy = new Date ()
+
+let notificaciones = async (req,res,next) =>{
+  let hoy =new Date ()
     try {
-      console.log(hoy)
-       cron.schedule('* 1 * * * ', async ()=>{ //debieramos dejarlo en tres astericos para quie envíe una vez al día // si le dejas 5 se envía cada minuto
+       cron.schedule('* */2 * * * ', async ()=>{ //debieramos dejarlo en tres astericos para quie envíe una vez al día // si le dejas 5 se envía cada minuto
           console.log("se prendio el cron,se revisa si hay turnos y se envía notificaciones cada 24 horas")
           let hoy = new Date ()
           console.log(hoy)
@@ -69,11 +69,10 @@ let notificaciones = async () =>{
             console.log("no hay citas")
           }
       })
-     console.log("se activaron notificaciones")
-    } catch (error){
-        next(error)
+     res.send("se activaron notificaciones")
+    } catch (error) {
+      next(error)
     }
-
 }
 
 module.exports={notificaciones};

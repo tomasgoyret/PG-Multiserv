@@ -203,7 +203,7 @@ const Users = [
       }]
   },
   {
-    "uid": "6eSb268Y1FTMQGUSpL8Wmo7TXK83",
+    "uid": "Qu8eW4yZD5W1K7VkFoKgWCQfo1a2",
     "email": "bastianmurilloalzate@gmail.com",
     "lastName": "",
     "emailVerified": true,
@@ -826,6 +826,7 @@ const Users = [
     "uid": "XDtH2itrYEgDBKnzyysj1CahVdw2",
     "email": "tomgtsola@gmail.com",
     "lastName": "",
+    "isAdmin": true,
     "emailVerified": true,
     "name": "Nicolas Solá",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GirGhjxU3ukVuSjqRT_jeKrJpRc1_v_b6fn8gp6gg=s96-c",
@@ -1354,8 +1355,8 @@ const services = [
     "photos": [
       "https://insights.workwave.com/wp-content/uploads/2020/05/cleaning-with-spray-detergent-rubber-gloves-and-dish-cloth-on-work-picture-id1202033073.jpg"
     ],
-    "location": [-24.878438, -65.469357],
-    "address": "Calle falsa 123"
+    "location": [-24.875512, -65.476653],
+    "address": "Yopal, Casanare, Colombia"
   },
   {
 
@@ -1370,8 +1371,8 @@ const services = [
     "photos": [
       "https://imagenes.elpais.com/resizer/I2fwlYx1bWjoxyi1UUTYR4m18k0=/1200x0/cloudfront-eu-central-1.images.arcpublishing.com/prisa/EKFF4PCRBQSHUSRAGL6LOGGR2I.jpg"
     ],
-    "location": [-24.879528, -65.477076],
-    "address": "Calle falsa 123"
+    "location": [-24.877348, -65.476498],
+    "address": "Cerca de lo de Santi"
   },
   {
 
@@ -1387,7 +1388,7 @@ const services = [
     "description": " Aliquam consequat mollis leo, id auctor risus mollis sed. Morbi vehicula facilisis dictum. Sed dictum eleifend sapien vitae sollicitudin",
     "uidUser": "vl9IIVwDSue0XSrYWkCLn31hCN02",
     "max": 1500,
-    "location": [5.340087, -72.384940],
+    "location": [-24.878014, -65.475764],
     "address": "Calle falsa 123"
   },
   {
@@ -1405,7 +1406,7 @@ const services = [
     "max": 300,
     "description": "Mauris facilisis nisi vitae massa porta egestas. Ut eros sem, hendrerit ac aliquam in, lacinia eget turpis. Quisque viverra, mi nec accumsan consequat, velit leo consectetur ligula, sit amet aliquam odio elit at augue. Nam massa est, imperdiet at laoreet non, blandit eu purus. Ut tellus orci, porttitor mattis turpis auctor, porttitor suscipit ante. Curabitur lacus justo, lacinia sit amet magna in, auctor malesuada lorem. In vulputate lobortis nisl et suscipit.",
     "title": "Kitty haircuts",
-    "location": [5.339904, -72.384348],
+    "location": [-24.878438, -65.469357],
     "address": "Calle falsa 123"
   },
   {
@@ -1422,7 +1423,8 @@ const services = [
     "min": 3000,
     "rating": "4",
     "currency": "ARS",
-    "uidUser": "ryVoXVOqdrbdLNZev1m8THjAhW63", "location": [5.339417, -72.384605],
+    "uidUser": "ryVoXVOqdrbdLNZev1m8THjAhW63",
+    "location": [5.339417, -72.384605],
     "address": "Calle falsa 123"
   },
   {

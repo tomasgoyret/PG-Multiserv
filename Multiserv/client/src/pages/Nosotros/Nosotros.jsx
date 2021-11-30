@@ -32,12 +32,12 @@ const Nosotros = () => {
                                     <span className="text-md font-semibold font-sans text-gray-500">{data.titulo}</span>
                                     <div className="w-full flex justify-center mx-2 py-4">
                                         <div className="mx-2 h-9 w-9 rounded-md overflow-hidden transition-all ease-in-out duration-300 transform  hover:translate-y-1 hover:scale-125 hover:shadow-lg">
-                                            <a href={data.redes[0].url}>
+                                            <a href={data.redes[0].url} target="_blank">
                                                 <img src={data.redes[0].icon} alt="" />
                                             </a>
                                         </div>
                                         <div className="mx-2 h-9 w-9 rounded-md overflow-hidden transition-all ease-in-out duration-300 transform  hover:translate-y-1 hover:scale-125 hover:shadow-lg">
-                                            <a href={data.redes[1].url}>
+                                            <a href={data.redes[1].url} target="_blank">
                                                 <img src={data.redes[1].icon} alt="" />
                                             </a>
                                         </div>
