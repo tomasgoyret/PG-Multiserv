@@ -1180,22 +1180,22 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-2/5 justify-end">
-                          <div className="flex w-80 items-center">
+                        <div className="lex w-2/5 justify-center ">
+                          <div className="flex w-full justify-end">
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                              className="mx-2 flex w-1/2 flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                               onClick={() =>
                                 editarNombreCategorias(categoria.id)
                               }
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </div>
@@ -1211,22 +1211,22 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-2/5 justify-end">
-                          <div className="flex w-80 items-center">
+                        <div className="flex w-2/5 justify-center ">
+                          <div className="flex w-full justify-end">
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                              className="mx-2 flex w-1/2 flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                               onClick={() =>
                                 editarNombreCategorias(categoria.id)
                               }
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                         <div
