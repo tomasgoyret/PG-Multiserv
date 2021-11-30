@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
 import { useState } from "react";
 import {getReviews, services} from "../redux/actions/actions"
+import Swal from 'sweetalert2'
 
 export const useSendReview = (initialState) => {
 
@@ -29,15 +30,15 @@ export const useSendReview = (initialState) => {
                 const res = response.data
                 dispatch(getReviews(id))
                 dispatch(services())
-                alert("La reseña se creó correctamente")
+                Swal.fire('La reseña se créo correctamente!', '', 'success')
               } else {
-                alert("Solo se puede crear una reseña por servicio")
+                Swal.fire('Ya tienes una reseña en este servicio!', '', 'error')
               }
             } else {
-              alert("Para crear la reseña, es necesario llenar todos los campos")
+              Swal.fire('Para crear la reseña, es necesario llenar todos los campos', '', 'warning')
             }
           } else {
-            alert("No es posible crear una reseña en un servicio propio")
+            Swal.fire('No es posible crear una reseña en un servicio propio', '', 'warning')
           }
   }
 

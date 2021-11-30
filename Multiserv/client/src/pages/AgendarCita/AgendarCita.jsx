@@ -8,6 +8,7 @@ import "react-multi-date-picker/styles/colors/green.css";
 import InputIcon from "react-multi-date-picker/components/input_icon";
 import { storage } from "../../Firebase";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 const AgendarCita = ({idService}) => {
   const navigate = useNavigate();
@@ -217,14 +218,14 @@ const AgendarCita = ({idService}) => {
         setValue(new Date());
       }
     } else {
-      alert("Complete los campos");
+      Swal.fire('Complete los campos', '', 'warning')
     }
   };
   const agregarCita = async (body, idService) => {
     console.log(idService)
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
-    alert(response.data);
+    Swal.fire(`${response.data}`, '', 'success')
     navigate("/home");
   };
   return (
