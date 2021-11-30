@@ -4,7 +4,6 @@ import { LocationMarker } from './LocationMarker'
 
 export const MapServices = () => {
     const { mapServices } = useSelector(state => state)
-    console.log(mapServices)
     return (
         <div className='m-2 w-full h-screen' >
             <MapContainer center={{ lat: 51.505, lng: -0.09 }} zoom={20} scrollWheelZoom={true}>

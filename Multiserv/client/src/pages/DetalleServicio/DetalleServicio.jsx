@@ -18,8 +18,9 @@ import { useLocation } from 'react-router'
 import axios from 'axios'
 import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
-import { services, users } from '../../redux/actions/actions'
+import { services, users, getHorarios, servicesId } from '../../redux/actions/actions'
 import ModalAllReviews from '../../Components/Organisms/ModalAllReviews/ModalAllReviews';
+import AgendarCita from '../AgendarCita/AgendarCita';
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -28,7 +29,9 @@ const DetalleServicio = () => {
     useEffect(() => {
         dispatch(services())
         dispatch(users())
-        if (datosSesionFromLocalStorage !=null) {
+        dispatch(getHorarios(id));
+        dispatch(servicesId(id));
+        if (datosSesionFromLocalStorage != null) {
             name = datosSesionFromLocalStorage.displayName
             uid = datosSesionFromLocalStorage.uid
         }
@@ -37,10 +40,11 @@ const DetalleServicio = () => {
         }
         document.title = `Detalle del servcio`
 
-    }, [])    
+    }, [])
 
     var idFav = '';
     var value = false;
+    const [turnero, setTurnero] = useState(false)
     const [loadingImg, setLoadingImg] = useState(true)
     const [failedImg, setFailedImg] = useState(false)
     const [verPerfil, setVerPerfil] = useState(false)
@@ -288,10 +292,10 @@ const DetalleServicio = () => {
                                                     </button>
                                                 </div>
                                                 {
-                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient !== uid )&&
+                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient !== uid) &&
                                                     <div className="flex">
-                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={()=> {return navigate(`/home/${id}/ver-horarios`)}}>
-                                                            Pedir Turno
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={() => !turnero ? setTurnero(true) : setTurnero(false)}>
+                                                            {!turnero ? 'Pedir Turno' : 'Cancelar'}
                                                         </button>
 
                                                         <button
@@ -306,9 +310,9 @@ const DetalleServicio = () => {
                                                     </div>
                                                 }
                                                 {
-                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient === uid )&&
+                                                    (datosSesionFromLocalStorage && servicio[0].usuarioUidClient === uid) &&
                                                     <div className="flex">
-                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={()=> {return navigate(`/home/${uid}/reservations`)}}>
+                                                        <button className='flex justify-center mx-2 font-semibold  w-auto text-lg px-4 py-2 bg-green-500 text-gray-50 hover:bg-green-700 active:bg-green-600 rounded-md transition-all ease-in-out duration-300' onClick={() => { return navigate(`/home/${uid}/reservations`) }}>
                                                             Ver turnos
                                                         </button>
                                                     </div>
@@ -316,14 +320,17 @@ const DetalleServicio = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    {
+                                    turnero && <AgendarCita idService={id} /> /* Refactorizado por Abril */
+                                }
                                 </div>
+                                
                             </div>
                             <div>
-                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} limitarRenderizadoEnDetalleServicio={true}/>
+                                <ReviewService handleModalReviews={handleModalReviews} verMasReviews={true} mostrarComentariosReviews={true} limitarRenderizadoEnDetalleServicio={true} />
                             </div>
                         </div>
                     )}
-
             </div>
 
             {/* Modal Compartir */}
