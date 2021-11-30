@@ -42,7 +42,7 @@ const postUser = async (req, res,next) => {
         disabled: false,
       }
     }) 
-    res.send({ msg: "Usuario Creado", user: newUser })
+    res.send(newUser)
 
   } catch (error) {
     next(error)
