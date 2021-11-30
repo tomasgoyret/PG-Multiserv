@@ -136,6 +136,7 @@ function App() {
       path: '/about',
       element: <Nosotros />
     },
+    
   ]
   /*
   <div>

@@ -25,6 +25,7 @@ import { useNavigate } from "react-router";
 import Input from "../../Components/Atoms/Input/Input";
 import ListBox from "../../Components/HeadLess/ListBox/ListBox";
 import { Link } from "react-router-dom";
+import Footer from "../../Components/Organisms/Footer/Footer";
 
 const Home = () => {
   const loading = useSelector((state) => state.loadingServices);
@@ -203,7 +204,9 @@ const Home = () => {
                 ""
               )
             )}
+            <Footer />
           </div>
+          
         </div>
       )}
     </>
