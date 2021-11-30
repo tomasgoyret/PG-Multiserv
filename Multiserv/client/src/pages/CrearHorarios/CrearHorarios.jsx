@@ -247,7 +247,7 @@ const Horarios = () => {
     }
     // clase de boton si no esta seleccionado
     else {
-      e.target.className = "cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold transition-all ease-in-out duration-300";
+      e.target.className = "cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold transition-all ease-in-out duration-300 hover:bg-cyan-700 hover:text-white";
     }
   };
 
@@ -337,7 +337,7 @@ navigate("/home");
                   <input
                     id="horas"
                     name="horas"
-                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold "
+                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold hover:bg-cyan-700 hover:text-white"
                     type="button"
                     onClick={handleOnSelect}
                     value={`${hora} - ${rangoCuarto[i + 1]}`}
@@ -355,7 +355,7 @@ navigate("/home");
                 <div key={"keyderangosMedios" + i}>
                   <input
                     name="horas"
-                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold "
+                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold hover:bg-cyan-700 hover:text-white"
                     type="button"
                     onClick={handleOnSelect}
                     value={`${hora} - ${rangoMedio[i + 1]}`}
@@ -373,7 +373,7 @@ navigate("/home");
                     <div key={"keyderangosHoras" + i} className="mx-2">
                   <input
                     name="horas"
-                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold "
+                        className="cursor-pointer px-2 py-1 m-1 rounded-md bg-teal-100 text-cyan-900 font-semibold hover:bg-cyan-700 hover:text-white"
                     type="button"
                     onClick={handleOnSelect}
                     value={`${hora} - ${rangoHora[i + 1]}`}
