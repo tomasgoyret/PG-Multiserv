@@ -798,6 +798,7 @@ const Users = [
     "uid": "XDtH2itrYEgDBKnzyysj1CahVdw2",
     "email": "tomasgoyretsola@gmail.com",
     "lastName": "",
+    "isAdmin": true,
     "emailVerified": true,
     "name": "Tomás Goyret Solá",
     "photoURL": "https://lh3.googleusercontent.com/a-/AOh14GirGhjxU3ukVuSjqRT_jeKrJpRc1_v_b6fn8gp6gg=s96-c",
