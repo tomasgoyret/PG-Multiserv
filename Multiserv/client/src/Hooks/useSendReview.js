@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {getReviews} from "../redux/actions/actions"
 
 export const useSendReview = (initialState) => {
@@ -11,30 +11,28 @@ export const useSendReview = (initialState) => {
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
 
   const [sendReview, setSendReview] = useState(initialState)
-  const {reviews, usuarios} = useSelector(state => state)
+  const {reviews, servicios} = useSelector(state => state)
   const findReview = reviews.find(review => review.usuarioUidClient === datosSesionFromLocalStorage.uid)
-  const findUser = usuarios.find(user => user.uidClient === datosSesionFromLocalStorage.uid)
-
+  const findService = servicios.find(service => service.usuarioUidClient === datosSesionFromLocalStorage.uid)
 
   const createReview = async() => {
-      if(findUser.uidClient === datosSesionFromLocalStorage.uid) {
-        alert("No se puede crear una reseña en un servicio propio")
-      } else {
-        if(!findReview) {
-          const response = await axios.post(`/agregar-resena/${id}`, {
-              details: sendReview.details,
-              rating: sendReview.rating,
-              title: sendReview.title,
-              uidClient: datosSesionFromLocalStorage.uid
-          })
-          .then(res => console.log(res.data))
-          .catch(err => console.log(err))
-          dispatch(getReviews(id))
-          alert("La reseña se creó correctamente")
-        }else {
-          alert("Solo se puede crear una reseña por servicio")
+        if(findService.id !== parseInt(id)) {
+          if(!findReview) {
+            const response = await axios.post(`/agregar-resena/${id}`, {
+                details: sendReview.details,
+                rating: sendReview.rating,
+                title: sendReview.title,
+                uidClient: datosSesionFromLocalStorage.uid
+            })
+            const res = response.data
+            dispatch(getReviews(id))
+            alert("La reseña se creó correctamente")
+          } else {
+            alert("Solo se puede crear una reseña por servicio")
+          }
+        } else {
+          alert("No se pueden crear reseñas en un servicio propio")
         }
-      }
   }
 
   const handleSubmit = (e) => {

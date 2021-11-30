@@ -1,14 +1,14 @@
 import React from "react";
-import { Review } from "../../../Hooks/useReviews";
+import { useReview } from "../../../Hooks/useReviews";
 import ProgressRating from "../ProgressBar/ProgressBar";
 
 const PercentageReview = () => {
-    const {porcentaje, title, rating} = Review();
+    const {porcentaje, title, rating} = useReview();
 
     return (
         <div className="block">
             {
-                porcentaje.map(p => (
+                porcentaje.map((p, i) => (
                     <div className="flex my-3 items-center w-auto h-5">
                         <p className="m-0 w-20">{title.next().value}</p>
                         <ProgressRating porcentaje={p} />
