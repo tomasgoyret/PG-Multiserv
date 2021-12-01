@@ -87,7 +87,6 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, "");
 
     let servicio = servicios.filter((serv) => serv.id === Number(id));
-    console.log(servicio)
 
     let usuario = usuarios.filter(
         (usuario) => usuario.uidClient === servicio[0]?.usuarioUidClient

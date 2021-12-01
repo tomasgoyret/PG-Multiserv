@@ -15,7 +15,6 @@ export const useSendReview = (initialState) => {
   const {reviews, servicios} = useSelector(state => state)
   const findReview = reviews.find(review => review.usuarioUidClient === datosSesionFromLocalStorage.uid)
   const findService = servicios.find(service => service.usuarioUidClient === datosSesionFromLocalStorage.uid)
-  console.log(findService);
 
   const createReview = async() => {
           if(!findService || findService?.id !== parseInt(id)) {

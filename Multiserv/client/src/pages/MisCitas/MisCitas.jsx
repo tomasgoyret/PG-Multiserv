@@ -65,14 +65,9 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     if (e.target.name === "cancelar") return cancelar(e.target.value);
     if (e.target.name === "concretada") {
       dispatch(statusCita(e.target.value, uidClient));
-      //  alert('ULISES --ej: Desea dejar reseña?');
-
-      {
-        /* ------------ MODAL --------------- 
-      alert('Desea dejar una reseña?')      
-      return navigate(`/home/detalleServicio/${e.servicioId}`)
-       ------------ MODAL --------------- */
-      }
+    }
+    if(e.target.name === "review") {
+      return navigate(`/home/detalleServicio/${e.target.value}`)
     }
   };
 
@@ -144,6 +139,16 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                     className="px-4 bg-rose-700 rounded-lg py-0.5 font-semibold text-white hover:bg-rose-900"
                   >
                     Concretada
+                  </button>
+                ) : ''}
+                {cita.status === "Concretada" ? (
+                  <button
+                    name="review"
+                    value={cita.servicioId}
+                    onClick={handleClick}
+                    className="px-4 bg-cyan-700 rounded-lg py-0.5 font-semibold text-white hover:bg-cyan-900"
+                  >
+                    Dejar una review
                   </button>
                 ) : ''}
               </div>
