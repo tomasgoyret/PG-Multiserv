@@ -84,33 +84,40 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       <div className='grid grid-cols-6 gap-3 m-2'>
         {misCitas.length > 0 &&
           misCitas.map((cita, i) => {
-            return (
-              <div key={"key-proximas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
-                <h3 className='text-xl text-center py-2 font-semibold' >{`${cita.title[0].toUpperCase()}${cita.title.slice(1)}`}</h3>
-                <h6 className='text-center' >{cita.dia}</h6>
-                <h6 className='text-center' >{cita.hora.hora}</h6>
-                <h6 className='text-center mb-2' >{cita.direccion}</h6>
-                <div className='flex justify-evenly' >
-                  <button
-                    name="cancelar"
-                    value={cita.id}
-                    onClick={handleClick}
-                    className="px-4 bg-rose-700 rounded-lg py-0.5 font-semibold text-white hover:bg-rose-900"
-                  >
-                    Cancelar
-                  </button>
 
-                  <button
-                    name="ver"
-                    value={cita.servicioId}
-                    onClick={handleClick}
-                    className="px-4 bg-cyan-700 rounded-lg py-0.5 font-semibold text-white hover:bg-cyan-900"
-                  >
-                    Ver
-                  </button>
+            console.log(cita.dia, "cita-dia")
+            let hoy = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.toString().slice(8,10)
+            console.log(hoy, "hoy")
+
+            if(cita.dia>hoy){
+              return (
+                <div key={"key-proximas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
+                  <h3 className='text-xl text-center py-2 font-semibold' >{`${cita.title[0].toUpperCase()}${cita.title.slice(1)}`}</h3>
+                  <h6 className='text-center' >{cita.dia}</h6>
+                  <h6 className='text-center' >{cita.hora.hora}</h6>
+                  <h6 className='text-center mb-2' >{cita.direccion}</h6>
+                  <div className='flex justify-evenly' >
+                    <button
+                      name="cancelar"
+                      value={cita.id}
+                      onClick={handleClick}
+                      className="px-4 bg-rose-700 rounded-lg py-0.5 font-semibold text-white hover:bg-rose-900"
+                    >
+                      Cancelar
+                    </button>
+  
+                    <button
+                      name="ver"
+                      value={cita.servicioId}
+                      onClick={handleClick}
+                      className="px-4 bg-cyan-700 rounded-lg py-0.5 font-semibold text-white hover:bg-cyan-900"
+                    >
+                      Ver
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
+              );
+            } 
           })}
       </div>
       {/* No hay citas */}
