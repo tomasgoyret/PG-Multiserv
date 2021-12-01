@@ -189,14 +189,7 @@ const AgendarCita = ({idService}) => {
           uidClient: uid,
         };
         agregarCita(body, idService);
-        setCiudad("");
-        setDireccion("");
-        setHora({
-          hora: "",
-          reservado: false,
-        });
-        setDia("");
-        setValue(new Date());
+       
       }
     } else if (detalleServicio[0]?.homeService === false) {
       if (dia.length > 0 && hora.hora.length > 0) {
@@ -207,22 +200,21 @@ const AgendarCita = ({idService}) => {
           ciudad,
           uidClient: uid,
         };
-        agregarCita(body, idService);
-        setCiudad("");
-        setDireccion("");
-        setHora({
-          hora: "",
-          reservado: false,
-        });
-        setDia("");
-        setValue(new Date());
+        agregarCita(body, idService);        
       }
     } else {
       Swal.fire('Complete los campos', '', 'warning')
     }
+    setCiudad("");
+    setDireccion("");
+    setHora({
+      hora: "",
+      reservado: false,
+    });
+    setDia("");
+    setValue(new Date());
   };
   const agregarCita = async (body, idService) => {
-    console.log(idService)
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
     Swal.fire(`${response.data}`, '', 'success')
