@@ -58,7 +58,7 @@ const SignUp = () => {
         if (loading) {
             axios.post('agregar-usuario', user)
                 .then(response => {
-                    const newUser = response.data.user
+                    const newUser = response.data
                     localStorage.setItem("datoSesion", JSON.stringify(newUser))
                     setLoading(false)
                     console.log(newUser);
