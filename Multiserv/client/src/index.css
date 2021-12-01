@@ -147,3 +147,16 @@
     transform: rotate(45deg);
 }
 
+.swiper-button-prev {
+  background-color: #F9FAFB!important;
+  padding: 3rem 1.5rem!important;
+  border-radius: 0.375rem!important;
+   
+}
+
+.swiper-button-next {
+  background-color: #F9FAFB!important;
+  padding: 3rem 1.5rem!important;
+  border-radius: 0.375rem!important;
+   
+}
