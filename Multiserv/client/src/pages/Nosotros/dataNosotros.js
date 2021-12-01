@@ -4,6 +4,7 @@ import bastian from "../../../src/assets/fotos/bastian.jpeg"
 import tomas from "../../../src/assets/fotos/tomas.jpeg"
 import ale from "../../../src/assets/fotos/ale.JPG"
 import abril from "../../../src/assets/fotos/abril.jpg"
+import bruno from "../../../src/assets/fotos/bruno.jpg"
 
 const dataNosotros = [
     {
@@ -126,19 +127,19 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: bruno,
         displayName: "Bruno",
         titulo: "Full Stack Developer",
         redes: [
             {
                 name: "github",
                 icon: github,
-                url: "https://github.com/bastianalzate"
+                url: "https://github.com/bruno8a10"
             },
             {
                 name: "linkedin",
                 icon: linkedin,
-                url: "https://www.linkedin.com/in/bastianalzate/"
+                url: "https://www.linkedin.com/in/bruno-ochoa-87666a1b6/"
             }
         ]
     },
