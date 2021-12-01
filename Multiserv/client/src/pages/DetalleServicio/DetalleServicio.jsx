@@ -87,7 +87,6 @@ const DetalleServicio = () => {
     const current = location.pathname.replace(/\D/g, "");
 
     let servicio = servicios.filter((serv) => serv.id === Number(id));
-    console.log(servicio)
 
     let usuario = usuarios.filter(
         (usuario) => usuario.uidClient === servicio[0]?.usuarioUidClient
@@ -141,7 +140,6 @@ const DetalleServicio = () => {
                 uidClient: uid,
             });
             setFav(res);
-            console.log(res)
             return toast.success("¡Se agregó a tus favoritos!", {
                 position: "top-center",
                 autoClose: 3000,
@@ -452,8 +450,6 @@ const DetalleServicio = () => {
                                         autoplay
                                         keyboard
                                         pagination={{ clickable: true }}
-                                        onSwiper={(swiper) => console.log(swiper)}
-                                        onSlideChange={() => console.log('slide change')}
                                     >
                                         <div className="px-4 lg:w-1/2 h-96">
                                             {servicio[0].photos.map((photo, index) => {
