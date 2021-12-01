@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getMisCitas, cancelarCita, statusCita } from "../../redux/actions/actions";
-import Swal from 'sweetalert2'
+import {
+  getMisCitas,
+  cancelarCita,
+  statusCita,
+} from "../../redux/actions/actions";
+import Swal from "sweetalert2";
 
 const MisCitas = () => {
   const { uidClient } = useParams();
@@ -31,20 +35,19 @@ const MisCitas = () => {
   });
 
   useEffect(() => {
-    setCitasVencidas(
-      misCitas?.filter((e, i) => {
-        let hora = today.getHours() + ":" + today.getMinutes();
-        let dia =
-          today.getFullYear() +
-          "/" +
-          (today.getMonth() + 1) +
-          "/" +
-          today.getDate();
-        if (e.dia < dia || (e.dia === dia && e.hora.hora.slice(0, 5) < hora)) {
-          return e;
-        }
-      })
-    );
+    let a = misCitas?.filter((e, i) => {
+      let hora = today.getHours() + ":" + today.getMinutes();
+      let dia =
+        today.getFullYear() +
+        "/" +
+        (today.getMonth() + 1) +
+        "/" +
+        today.toString().slice(8, 10);
+      if (e.dia < dia || (e.dia === dia && e.hora.hora.slice(0, 5) < hora)) {
+        return e;
+      }
+    });
+    setCitasVencidas(a);
   }, [misCitas]);
 
   /*
@@ -65,10 +68,14 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     if (e.target.name === "cancelar") return cancelar(e.target.value);
     if (e.target.name === "concretada") {
       dispatch(statusCita(e.target.value, uidClient));
-      Swal.fire('Si deseas dejar una reseña del servicio, presiona el botón de "Dejar una reseña"', '', 'success')
+      Swal.fire(
+        'Si deseas dejar una reseña del servicio, presiona el botón de "Dejar una reseña"',
+        "",
+        "success"
+      );
     }
-    if(e.target.name === "review") {
-      return navigate(`/home/detalleServicio/${e.target.value}`)
+    if (e.target.name === "review") {
+      return navigate(`/home/detalleServicio/${e.target.value}`);
     }
   };
 
@@ -77,24 +84,35 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
   };
 
   return (
-    <div className='mx-4 my-4 w-full h-screen overflow-y-scroll'>
-      <h1 className='text-4xl font-bold pb-2 border-b w-full mb-2' >Mis Citas</h1>
-      <h2 className='text-xl pl-2 font-semibold' > Proximas :</h2>
+    <div className="mx-4 my-4 w-full">
+      <h1 className="text-4xl font-bold pb-2 border-b w-full mb-2">
+        Mis Citas
+      </h1>
+      <h2 className="text-xl pl-2 font-semibold"> Proximas :</h2>
       {/* Citas mapeadas por Servicio */}
-      <div className='grid grid-cols-6 gap-3 m-2'>
+      <div className="grid grid-cols-6 gap-3 m-2">
         {misCitas.length > 0 &&
           misCitas.map((cita, i) => {
-            console.log(cita.dia, "cita-dia")
-            let hoy = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.toString().slice(8,10)
-            console.log(hoy, "hoy")
-            if(cita.dia>hoy){
+            let hoy =
+              today.getFullYear() +
+              "/" +
+              (today.getMonth() + 1) +
+              "/" +
+              today.toString().slice(8, 10);
+
+            if (cita.dia > hoy) {
               return (
-                <div key={"key-proximas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
-                  <h3 className='text-xl text-center py-2 font-semibold' >{`${cita.title[0].toUpperCase()}${cita.title.slice(1)}`}</h3>
-                  <h6 className='text-center' >{cita.dia}</h6>
-                  <h6 className='text-center' >{cita.hora.hora}</h6>
-                  <h6 className='text-center mb-2' >{cita.direccion}</h6>
-                  <div className='flex justify-evenly' >
+                <div
+                  key={"key-proximas" + "-" + i}
+                  className="shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50"
+                >
+                  <h3 className="text-xl text-center py-2 font-semibold">{`${cita.title[0].toUpperCase()}${cita.title.slice(
+                    1
+                  )}`}</h3>
+                  <h6 className="text-center">{cita.dia}</h6>
+                  <h6 className="text-center">{cita.hora.hora}</h6>
+                  <h6 className="text-center mb-2">{cita.direccion}</h6>
+                  <div className="flex justify-evenly">
                     <button
                       name="cancelar"
                       value={cita.id}
@@ -103,7 +121,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                     >
                       Cancelar
                     </button>
-  
+
                     <button
                       name="ver"
                       value={cita.servicioId}
@@ -115,24 +133,33 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                   </div>
                 </div>
               );
-            } 
+            }
           })}
       </div>
       {/* No hay citas */}
-      
-      {misCitas.length === 0 && <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md'><h3 className='text-center font-semibold'>No hay citas proximas</h3></div>}
+
+      {misCitas.length === 0 && (
+        <div className="w-full bg-gray-50 py-16 rounded-lg shadow-md">
+          <h3 className="text-center font-semibold">No hay citas proximas</h3>
+        </div>
+      )}
       <br />
-      <h2 className='text-xl pl-2 font-semibold' > Caducadas :</h2>
-      <div className='grid grid-cols-6 gap-3 m-2'>
+      <h2 className="text-xl pl-2 font-semibold"> Caducadas :</h2>
       {citasVencidas.length > 0 ? (
         citasVencidas.map((cita, i) => {
-          let values = [cita.id, cita.usuarioUidClient]
+          let values = [cita.id, cita.usuarioUidClient];
           return (
-              <div key={"key-caducadas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
-                <h3 className='text-xl text-center py-2 font-semibold' >{cita.title}</h3>
-                <h6 className='text-center' >{cita.dia}</h6>
-                <h6 className='text-center' >{cita.hora.hora}</h6>
-                <h6 className='text-center mb-2' >{cita.direccion}</h6>
+            <div className="grid grid-cols-6 gap-3 m-2">
+              <div
+                key={"key-caducadas" + "-" + i}
+                className="shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50"
+              >
+                <h3 className="text-xl text-center py-2 font-semibold">
+                  Citas para el servicio: {cita.title}
+                </h3>
+                <h6 className="text-center">{cita.dia}</h6>
+                <h6 className="text-center">{cita.hora.hora}</h6>
+                <h6 className="text-center mb-2">{cita.direccion}</h6>
                 <h6>
                   Estado:{" "}
                   {cita.status === "Pendiente" ? "Cita caducada" : cita.status}
@@ -146,7 +173,9 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                   >
                     Concretada
                   </button>
-                ) : ''}
+                ) : (
+                  ""
+                )}
                 {cita.status === "Concretada" ? (
                   <button
                     name="review"
@@ -156,15 +185,18 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                   >
                     Dejar una reseña
                   </button>
-                ) : ''}
+                ) : (
+                  ""
+                )}
               </div>
+            </div>
           );
         })
       ) : (
-        <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md my-2'>
-          <h3 className='text-center font-semibold'>No hay citas caducadas</h3>
+        <div className="w-full bg-gray-50 py-16 rounded-lg shadow-md my-2">
+          <h3 className="text-center font-semibold">No hay citas caducadas</h3>
         </div>
-      )} </div>
+      )}
     </div>
   );
 };
