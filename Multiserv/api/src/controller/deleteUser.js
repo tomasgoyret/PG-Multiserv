@@ -15,7 +15,7 @@ const deleteUser = async (req, res, next) => {
         usuario === 1 ? res.json({msg: "El usuario se borró correctamente"}) : res.json({msg: 'El usuario que intenta eliminar no existe'})
    
 
-        usuario === 1 && resena ? res.json({msg: "El usuario se borró correctamente"}) : res.json({msg: 'El usuario que intenta eliminar no existe'})
+        usuario === 1 ? res.json({msg: "El usuario se borró correctamente"}) : res.json({msg: 'El usuario que intenta eliminar no existe'})
 
     } catch (error) {
         next(error)
