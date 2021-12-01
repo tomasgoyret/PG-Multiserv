@@ -1,5 +1,5 @@
 const { Citas, Usuarios, Servicios, Horarios } = require("../db.js");
-const { sendEmail, mailTurno } = require("../mails/mails.js");
+const { sendEmail, mailTurno, mailTurnoProveedor } = require("../mails/mails.js");
 
 const postCitas = async (req, res, next) => {
     const { id } = req.params;
@@ -12,7 +12,6 @@ const postCitas = async (req, res, next) => {
         const citas = await Citas.create(cita);
         await user.addCitas(citas)
         await servicio.addCitas(citas)
-
         await Horarios.update({
             fechas: horario.fechas.map((e) => {
                 if (e[dia]) {
@@ -32,12 +31,12 @@ const postCitas = async (req, res, next) => {
             where: { id }
         })
 
-
-        const template = await mailTurno(user.displayName, dia, hora, direccion, ciudad, servicio.title)
-
+        const template = await mailTurno(user.displayName, dia, hora.hora, direccion, ciudad, servicio.title)
         await sendEmail(user.email, subject = " Confirmación de turno ", template)
-
-        res.send(`Turno reservado para el dia : ${dia}, hora : ${hora}, servicio : ${servicio.title}`)
+        const proveedor = await Usuarios.findByPk(servicio.usuarioUidClient)
+        const templateProveedor = await mailTurnoProveedor(proveedor.displayName,user.displayName,dia, hora.hora, direccion, ciudad, servicio.title)
+        await sendEmail(proveedor.email, subject = "Agendaron un turno contigo", templateProveedor)
+        res.send(`Turno reservado para el dia : ${dia}, hora : ${hora.hora}, servicio : ${servicio.title}`)
 
     } catch (error) {
         next(error)

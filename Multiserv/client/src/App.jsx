@@ -28,6 +28,8 @@ import { MapServices } from "./pages/MapServices/MapServices";
 import PercentageReview from "./Components/Molecules/PercentageReview/PercentageReview";
 import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
 import Reservations from "./pages/Reservations/Reservations";
+import NotFound404 from "./pages/NotFound404/NotFound404";
+import Nosotros from "./pages/Nosotros/Nosotros";
 
 function App() {
   toast.configure()
@@ -93,10 +95,6 @@ function App() {
           element: <EditarServicio />
         },
         {
-          path: '/home/:idService/ver-horarios',
-          element: <AgendarCita />
-        },
-        {
           path: '/home/:uidClient/reservations',
           element: <Reservations />
         },
@@ -130,7 +128,14 @@ function App() {
       path: '/control-panel',
       element: <ControlPanel />
     },
-    
+    {
+      path: '*',
+      element: <NotFound404 />
+    },
+    {
+      path: '/about',
+      element: <Nosotros />
+    },
     
   ]
   /*

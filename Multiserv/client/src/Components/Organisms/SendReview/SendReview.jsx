@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import ReactStars from "react-stars";
 import { useSendReview } from "../../../Hooks/useSendReview"
 

@@ -24,6 +24,11 @@ module.exports = {
       violet: colors.violet,
       rose: colors.rose
 
+    },
+    extend : {
+      outline: {
+        cyan: ['2px solid #164E63', '2px']
+      },
     }
   },
   variants: {
@@ -32,7 +37,7 @@ module.exports = {
       padding: ['hover', 'focus'],
       opacity: ['disabled'],
       cursor: ['hover', 'focus','disabled'],
-
+      margin: ['hover', 'focus'],
     },
   },
   plugins: [],

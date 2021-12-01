@@ -93,7 +93,7 @@ const ControlPanel = () => {
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        axios(`eliminar-usuario/${uid}`)
+        axios.delete(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
               "¡Eliminado!",
@@ -123,7 +123,7 @@ const ControlPanel = () => {
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        axios(`eliminar-usuario/${uid}`)
+        axios.delete(`eliminar-usuario/${uid}`)
           .then(async (response) => {
             Swal.fire(
               "¡Eliminado!",
@@ -473,17 +473,27 @@ const ControlPanel = () => {
   };
   
   let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-  let admin = detalleUsuario.isAdmin
+
+
+  
 
   useEffect(() => {
-    dispatch(usuarioId(datosSesionFromLocalStorage.uid))
-    if (admin === false) {
-      navigate("/home");
+    if(datosSesionFromLocalStorage) {
+      dispatch(usuarioId(datosSesionFromLocalStorage.uid))
     }
     dispatch(users());
     dispatch(services());
     dispatch(getCats());
-  }, [clientSearchValue]);
+  }, []);
+
+  useEffect(() => {
+    let admin = detalleUsuario.isAdmin
+    if (!admin) {
+      navigate("/home");
+    }
+  }, [detalleUsuario])
+
+
 
   return (
     <div className="w-full flex">
@@ -539,12 +549,12 @@ const ControlPanel = () => {
             onClick={cambiarACategorias}
           >
             <MdCategory width="30px" height="30px" className="mr-2" />
-            <span>categorías</span>
+            <span>Categorías</span>
           </button>
         </div>
         {/* Fin seccion administrar categorias */}
         {/* Inicio seccion administrar newsletter */}
-        <div className="w-full flex justify-start px-2 mt-5">
+        {/* <div className="w-full flex justify-start px-2 mt-5">
           <h2 className="text-md font-semibold ">Administrar newsletter</h2>
         </div>
         <div className="w-full flex flex-col items-start   mt-2">
@@ -555,7 +565,7 @@ const ControlPanel = () => {
             <MdCategory width="30px" height="30px" className="mr-2" />
             <span>Newsletter</span>
           </button>
-        </div>
+        </div> */}
         {/* Fin seccion administrar newsletter */}
       </div>
 
@@ -1170,22 +1180,22 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-2/5 justify-end">
-                          <div className="flex w-80 items-center">
+                        <div className="lex w-2/5 justify-center ">
+                          <div className="flex w-full justify-end">
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                              className="mx-2 flex w-1/2 flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                               onClick={() =>
                                 editarNombreCategorias(categoria.id)
                               }
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </div>
@@ -1201,22 +1211,22 @@ const ControlPanel = () => {
                             ID: {categoria.id}
                           </span>
                         </div>
-                        <div className="flex w-2/5 justify-end">
-                          <div className="flex w-80 items-center">
+                        <div className="flex w-2/5 justify-center ">
+                          <div className="flex w-full justify-end">
                             <button
-                              className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
+                              className="mx-2 flex w-1/2 flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-blue-800 hover:bg-blue-900 text-gray-50"
                               onClick={() =>
                                 editarNombreCategorias(categoria.id)
                               }
                             >
                               Editar
                             </button>
-                            <button
+                            {/* <button
                               className="mx-2 flex w-full flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-md font-semibold bg-red-800 hover:bg-red-900 text-gray-50"
                               onClick={() => eliminarCategoria(categoria.id)}
                             >
                               Eliminar
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                         <div

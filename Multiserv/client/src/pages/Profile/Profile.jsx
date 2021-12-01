@@ -103,6 +103,12 @@ const Profile = () => {
 
     const handleImageChanges = (e) => {
         setImage(e.target.files[0]);
+        var imagentemp= URL.createObjectURL(e.target.files[0]);
+        setDatosPerfil({
+            ...datosPerfil,
+            photoURL: imagentemp
+        })
+
     }
 
     const handleUpload = async () => {
@@ -367,6 +373,7 @@ const Profile = () => {
                     ><AiFillHome size='28' color='white' /></button>
                 </div>
                 {/* Imagen de perfil */}
+                
                 <div className="w-40 h-40 border-2 absolute top-24 rounded-full bg-gray-50" style={{ backgroundImage: `url(${datosPerfil.photoURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }}>
 
                 </div>
