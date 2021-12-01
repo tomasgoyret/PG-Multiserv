@@ -2378,7 +2378,6 @@ let ResenasMockup = async () => {
         i = 1;
       }
       const resena = await Resenas.create({
-        id: r[index].id,
         title: r[index].title,
         details: r[index].details,
         rating: r[index].rating,
