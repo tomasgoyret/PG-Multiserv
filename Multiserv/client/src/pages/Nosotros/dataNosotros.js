@@ -1,6 +1,7 @@
 import linkedin from "../../../src/assets/images/linkedin2.png"
 import github from "../../../src/assets/images/github.png"
 import bastian from "../../../src/assets/fotos/bastian.jpeg"
+import tomas from "../../../src/assets/fotos/tomas.jpeg"
 
 const dataNosotros = [
     {
@@ -38,7 +39,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: tomas,
         displayName: "Tomas",
         titulo: "Full Stack Developer",
         redes: [
