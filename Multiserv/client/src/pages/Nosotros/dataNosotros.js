@@ -2,6 +2,7 @@ import linkedin from "../../../src/assets/images/linkedin2.png"
 import github from "../../../src/assets/images/github.png"
 import bastian from "../../../src/assets/fotos/bastian.jpeg"
 import tomas from "../../../src/assets/fotos/tomas.jpeg"
+import ale from "../../../src/assets/fotos/ale.jpg"
 
 const dataNosotros = [
     {
@@ -22,7 +23,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: ale,
         displayName: "Ale",
         titulo: "Full Stack Developer",
         redes: [
