@@ -7,8 +7,9 @@ import SendReview from "../SendReview/SendReview";
 import { useReview } from "../../../Hooks/useReviews"
 import StarRatingReview from "../../Molecules/StarRatingReview/StarRatingReview"
 import PercentageReview from "../../Molecules/PercentageReview/PercentageReview";
+import Footer from "../Footer/Footer";
 
-const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosReviews, mostrarStarRating, mostrarPercentageReview, limitarRenderizadoEnDetalleServicio}) => {
+const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarComentariosReviews, mostrarStarRating, mostrarPercentageReview, limitarRenderizadoEnDetalleServicio}) => {
     const {reviewsdata, promedio, rating} = useReview();
     const dispatch = useDispatch()
     const location = useLocation()
@@ -48,7 +49,7 @@ const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosRev
                     <SendReview />
                 </div>
             }
-            <div className="w-full h-auto flex flex-col my-5 pb-10">
+            <div className="w-full h-auto flex flex-col my-5 ">
                 {
                     limitarRenderizadoEnDetalleServicio ?
                     reviewsData?.map(( comentario, i) => {
@@ -101,8 +102,13 @@ const ReviewService = ({handleModalReviews, verMasReviews, mostrarComentariosRev
 
                 {
                     verMasReviews &&
-                    <span className="text-sm text-blue-500 hover:text-blue-700 cursor-pointer mt-4 pl-10" onClick={handleModalReviews}>Ver mas reviews</span>
+                    <span className="text-sm text-blue-500 hover:text-blue-700 cursor-pointer mt-4 pl-10 mb-10" onClick={handleModalReviews}>Ver mas reviews</span>
                 }
+                {
+                    verFooter &&
+                    <Footer />
+                }
+                
             </div>
 
         </div>
