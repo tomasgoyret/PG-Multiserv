@@ -54,7 +54,7 @@ const Reservations = () => {
       a.map((e, i) => {
         return (
           <div
-            className="bg-cyan-300 h-32 border-2 border-cyan-500 px-3 py-3 flex flex-col mb-3"
+            className="bg-cyan-300 h-auto border-2 border-cyan-500 px-3 py-3 flex flex-col mb-3"
             key={"titleServiceDivs" + i + e.id}
           >
             <span className="font-semibold text-lg">Cita con: {e.nameUser}</span>
