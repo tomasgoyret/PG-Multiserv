@@ -159,7 +159,7 @@ const CreateService = () => {
         }
         dispatch(getCats())
         const delay = setTimeout(() => {
-            setStepForm(2)
+            setStepForm(1)
         }, 500)
         return () => clearTimeout(delay)
     }, [])
