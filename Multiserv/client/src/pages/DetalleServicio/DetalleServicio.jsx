@@ -451,7 +451,7 @@ const DetalleServicio = () => {
                                         keyboard
                                         pagination={{ clickable: true }}
                                     >
-                                        <div className="px-4 lg:w-1/2 h-96">
+                                        <div className="px-4 w-full h-96">
                                             {servicio[0].photos.map((photo, index) => {
                                                 if (index !== 0) {
                                                     return (
@@ -474,7 +474,7 @@ const DetalleServicio = () => {
                                         <div className="border-b focus-within px-6 pb-4 mb-2">
                                             <h1 className="text-4xl font-semibold text-sky-900">Ubicación</h1>
                                         </div>
-                                    <div className='w-1/2 h-96 my-4' >
+                                    <div className='w-full h-96 my-4' >
                                         <MapContainer
                                             center={servicio[0].location}
                                             zoom={15}
