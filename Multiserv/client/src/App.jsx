@@ -30,6 +30,7 @@ import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRating
 import Reservations from "./pages/Reservations/Reservations";
 import NotFound404 from "./pages/NotFound404/NotFound404";
 import Nosotros from "./pages/Nosotros/Nosotros";
+import { AcercaDe } from "./pages/AcercaDe/AcercaDe";
 
 function App() {
   toast.configure()
@@ -136,7 +137,10 @@ function App() {
       path: '/about',
       element: <Nosotros />
     },
-    
+    {
+      path: '/acercaDe',
+      element: <AcercaDe />
+    }
   ]
   /*
   <div>
