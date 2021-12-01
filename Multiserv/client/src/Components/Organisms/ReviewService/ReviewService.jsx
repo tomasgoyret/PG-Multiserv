@@ -16,7 +16,7 @@ const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarCom
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
-    const user = datosSesionFromLocalStorage.uid
+    const user = datosSesionFromLocalStorage && datosSesionFromLocalStorage.uid
     const { misCitas, reviews } = useSelector(state => state)
     const reviewsData = reviewsdata.reverse();
     const findCita = misCitas.find(cita => cita.servicioId === parseInt(id))
