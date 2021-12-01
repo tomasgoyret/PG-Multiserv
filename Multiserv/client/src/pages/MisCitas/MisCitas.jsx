@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getMisCitas, cancelarCita, statusCita } from "../../redux/actions/actions";
-import axios from "axios";
+import Swal from 'sweetalert2'
 
 const MisCitas = () => {
   const { uidClient } = useParams();
@@ -65,6 +65,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     if (e.target.name === "cancelar") return cancelar(e.target.value);
     if (e.target.name === "concretada") {
       dispatch(statusCita(e.target.value, uidClient));
+      Swal.fire('Si deseas dejar una reseña del servicio, presiona el botón de "Dejar una reseña"', '', 'success')
     }
     if(e.target.name === "review") {
       return navigate(`/home/detalleServicio/${e.target.value}`)
@@ -148,7 +149,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                     onClick={handleClick}
                     className="px-4 bg-cyan-700 rounded-lg py-0.5 font-semibold text-white hover:bg-cyan-900"
                   >
-                    Dejar una review
+                    Dejar una reseña
                   </button>
                 ) : ''}
               </div>
