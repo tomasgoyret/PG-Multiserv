@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import StarRating from "../../Atoms/StarRating/StarRating";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getReviews, users } from "../../../redux/actions/actions";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import SendReview from "../SendReview/SendReview";
 import { useReview } from "../../../Hooks/useReviews"
 import StarRatingReview from "../../Molecules/StarRatingReview/StarRatingReview"
@@ -10,12 +10,17 @@ import PercentageReview from "../../Molecules/PercentageReview/PercentageReview"
 import Footer from "../Footer/Footer";
 
 const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarComentariosReviews, mostrarStarRating, mostrarPercentageReview, limitarRenderizadoEnDetalleServicio}) => {
+    const { id } = useParams();
     const {reviewsdata, promedio, rating} = useReview();
     const dispatch = useDispatch()
     const location = useLocation()
     const current = location.pathname.replace(/\D/g,'')
     let datosSesionFromLocalStorage = JSON.parse(localStorage.getItem("datoSesion"))
+    const user = datosSesionFromLocalStorage.uid
+    const { misCitas, reviews } = useSelector(state => state)
     const reviewsData = reviewsdata.reverse();
+    const findCita = misCitas.find(cita => cita.servicioId === parseInt(id))
+    const findReview = reviews.find(review => review.usuarioUidClient === user)
 
 
     useEffect(() => {
@@ -44,7 +49,7 @@ const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarCom
             </div>
 
             {
-                mostrarComentariosReviews && datosSesionFromLocalStorage &&
+                findCita?.status === "Concretada" && findCita.usuarioUidClient === user && findReview === undefined &&
                 <div className="w-4/6 px-5 mt-5 mb-20">
                     <SendReview />
                 </div>
