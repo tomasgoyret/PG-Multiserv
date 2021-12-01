@@ -191,7 +191,7 @@ const CreateService = () => {
 
     const renderMap = () => {
         if (stepForm === 2) {
-            return (<div className="w-full h-full">
+            return (<div className="w-full h-96 lg:h-full">
                 <MapContainer
                     center={position === null ? [51.50084939698666, -0.12458248633773235] : position}
                     zoom={20}
@@ -224,7 +224,7 @@ const CreateService = () => {
     const resumeMap = () => {
         if (stepForm === 3) {
             return (!Array.isArray(service.location) ? <span>Trabajo a domicilio</span>
-                : <div className='w-full h-80 bg-gray-500 rounded-xl'>
+                : <div className='w-full h-64 lg:h-80 bg-gray-500 rounded-xl'>
                     <MapContainer
                         center={service.location}
                         zoom={19}
@@ -362,24 +362,24 @@ const CreateService = () => {
     }
 
     return (
-        <div className="container flex justify-center items-center mx-auto w-full max-h-screen overflow-y-auto bg-gray-400 px-2 lg:px-8 py-4">
+        <div className="container flex justify-center items-center mx-auto w-full h-auto lg:h-screen bg-gray-400 p-0 lg:px-8 lg:py-4">
             <div
-                style={{ height: '100%', width: '100%' }}
-                className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
+                className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center w-full h-screen overflow-y-auto lg:my-1">
                 <div id="status" className="w-full text-center">
                     <h1 className="text-2xl lg:text-4xl font-semibold text-cyan-900 mb-6 border-b border-gray-100">Crear un nuevo servicio</h1>
                     <div id="mobile-progress" className="flex lg:hidden flex-col w-full">
                         <div className="flex flex-row justify-between items-center">
                             <div className="rounded-full px-4 bg-teal-50 text-cyan-900">
                                 <span className="font-semibold">
+                                    {stepForm === 0 && 'Cargando...'}
                                     {stepForm === 1 && 'Detalles'}
                                     {stepForm === 2 && 'Ubicación'}
                                     {stepForm === 3 && 'Finalizar'}
                                 </span>
                             </div>
-                            <div className="rounded-full px-4 bg-teal-50 text-cyan-900">
+                            {stepForm !== 0 && <div className="rounded-full px-4 bg-teal-50 text-cyan-900">
                                 <span className="font-semibold">{`${stepForm} de 3`}</span>
-                            </div>
+                            </div>}
                         </div>
                         <div className="mt-2 w-full">
                             <SimpleProgressBar color="#164E63" status={`${stepForm === 3 ? 100 : stepForm * 33}%`} />
@@ -434,9 +434,9 @@ const CreateService = () => {
 
                     </div>
                 </div>
-                <div id='content' className="flex flex-col lg:flex-row justify-center items-between mt-9 w-full h-full  px-0 lg:px-8">
+                <div id='content' className="flex flex-col lg:flex-row justify-between lg:justify-center items-between mt-0 lg:mt-9 w-full h-full overflow-hidden  px-0 lg:px-8">
 
-                    <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex flex-col lg:flex-row mt-3' : 'hidden'} w-full`}>
+                    <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex flex-col lg:flex-row mt-3' : 'hidden'} w-full overflow-y-auto`}>
                         <div className="border-0 lg:border-r mx-auto w-full lg:w-1/2 p-0 lg:pr-6">
                             <div className="mb-4">
                                 <Input
@@ -463,21 +463,21 @@ const CreateService = () => {
                             </div>
                         </div>
 
-                        <div className="w-full lg:w-1/2 mx-auto p-0 lg:pl-6">
+                        <div className="w-full lg:w-1/2 mx-auto p-0 lg:pl-4 overscroll-y-hidden">
                             <div className="mb-4">
-                                <div className="flex flex-col lg:flex-row items-center lg:ml-3">
+                                <div className="flex flex-col sm:px-4 sm:flex-row sm:justify-around items-center lg:ml-3 ">
 
                                     <div className="">
                                         <span className="font-semibold text-gray-600 text-sm ">Seleccione una categoría:</span>
-                                        <div style={{ zIndex: '9999' }}>
+                                        <div>
                                             {
                                                 categoriasDb.length
                                                     ?
                                                     (
                                                         <ListBox
                                                             customBorder="#9CA3AF"
-                                                            className="self-center"
-                                                            width='15rem'
+                                                            className="w-60 lg:w-44 self-center"
+                                                            noAutoWidth
                                                             options={categoriasDb}
                                                             callBack={(text) => {
                                                                 setService({
@@ -492,7 +492,7 @@ const CreateService = () => {
                                                     ) :
 
                                                     (
-                                                        <div style={{ width: '15rem' }} className=" self-center mt-1 px-4 py-2 bg-gray-100 text-black font-semibold rounded-md border-gray-300">
+                                                        <div className="w-60 lg:w-32 self-center mt-1 px-4 py-2 bg-gray-100 text-black font-semibold rounded-md border-gray-300">
                                                             <span>Cargando...</span>
                                                         </div>
                                                     )}
@@ -506,7 +506,7 @@ const CreateService = () => {
                                             <div className="flex flex-row mt-3">
                                                 <ListBox
                                                     customBorder="#9CA3AF"
-                                                    className="w-60 lg:w-48"
+                                                    className="w-60 lg:w-32 self-center"
                                                     noAutoWidth
                                                     options={monedas}
                                                     callBack={handleCurrency}
@@ -519,7 +519,7 @@ const CreateService = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-4 flex w-full">
+                            <div className="mt-4 flex sm:flex-row sm:justify-around w-full">
                                 <div className="self-center">
                                     <Input
                                         type="number"
@@ -547,10 +547,10 @@ const CreateService = () => {
                         </div>
                     </div>
 
-                    <div id="step2" className={`${stepForm === 2 ? 'flex flex-col mt-1 justify-start items-center' : 'hidden'} w-full`}>
-                        <div className="flex flex-row w-full justify-center">
+                    <div id="step2" className={`${stepForm === 2 ? 'flex flex-col mt-1 justify-start items-center' : 'hidden'} w-full overflow-y-auto`}>
+                        <div className="flex flex-col lg:flex-row w-full justify-center">
 
-                            <div className="w-96 lg:w-1/2">
+                            <div className="w-full lg:w-1/2">
                                 <div className="flex flex-col mb-2">
                                     <label htmlFor="editAddres" className={`text-sm mb-2' font-semibold text-gray-600 mr-4 select-none cursor-pointer transition-all ease-in-out duration-300 mb-1`}>
                                         Busca una dirección
@@ -567,10 +567,10 @@ const CreateService = () => {
                                 />
                                 </div>
                             </div>
-                            <div className="flex py-2 self-center place-self-center justify-center items-center h-full">
+                            <div className="flex flex-col lg:flex-row lg:w-1/2 py-2 self-center place-self-center justify-center items-center w-full h-full">
                                 <button
                                     onClick={onClickAddress}
-                                    className="px-2 bg-cyan-800 hover:bg-cyan-900 inline-flex flex-shrink-0 ml-2 rounded-md disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-in-out duration-300 text-white">
+                                    className="lg:px-2 py-2 lg:py-0 bg-cyan-800 hover:bg-cyan-900 flex w-full lg:w-auto lg:inline-flex justify-center items-center flex-shrink-0 lg:ml-2 rounded-md disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-in-out duration-300 text-white text-lg lg:text-base mb-3 lg:mb-0">
                                     {searchLocationStatus.status === 'searching' ?
                                         <>
                                             <ImSpinner6 className="mr-2 self-center animate-spin" />
@@ -588,17 +588,18 @@ const CreateService = () => {
                                         disabled={false}
                                     />
                                     <span className="custom_check"></span>
-                                    <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Disponible para ir a domicilio</label>
+                                    <label htmlFor="check" className="typeText select-none cursor-pointer font-semibold text-gray-900">Servicio a domicilio</label>
                                 </label>
                             </div>
                         </div>
                         {/* 51.50084939698666, -0.12458248633773235 */}
-
                         {renderMap()}
+                        <div className="w-full h-hull">
+                        </div>
 
                     </div>
-                    <div id="step3" className={`${stepForm === 3 ? 'flex mt-3 justify-start items-start' : 'hidden'} w-full`}>
-                        <div className="w-1/2 flex flex-col justify-start items-start  pr-4 border-r border-gray-300">
+                    <div id="step3" className={`${stepForm === 3 ? 'flex flex-col-reverse lg:flex-row mt-3 h-screen overflow-y-auto justify-between lg:justify-start  items-start' : 'hidden'} w-full`}>
+                        <div className="w-full h-full mt-3 lg:mt-0 lg:h-auto lg:w-1/2 overflow-y-auto flex flex-col justify-start items-start  pr-4 lg:border-r border-gray-300">
                             <div className="mb-6 border-b border-gray-300 w-full flex flex-row">
                                 <span className='text-xl text-gray-700 font-semibold'>Datos del servicio <span><HiOutlineArrowNarrowRight className="ml-3 inline-flex" /></span></span>
                             </div>
@@ -647,7 +648,7 @@ const CreateService = () => {
                             </div>
 
                         </div>
-                        <div className="w-1/2 pl-4 ">
+                        <div className="w-full lg:w-1/2 lg:pl-4 h-64 lg:h-auto">
                             <div className="flex flex-col h-full">
                                 {resumeMap()}
 
@@ -655,7 +656,7 @@ const CreateService = () => {
                         </div>
                     </div>
                 </div>
-                <div id="buttons" className="flex w-full flex-row justify-between px-48 border-t border-gray-200 mt-4 pt-4">
+                <div id="buttons" className="flex w-full flex-row justify-between lg:px-48 border-t border-gray-200 mt-4 pt-4">
 
                     <Button
                         text="Atrás"
