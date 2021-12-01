@@ -474,7 +474,7 @@ const DetalleServicio = () => {
                                         <div className="border-b focus-within px-6 pb-4 mb-2">
                                             <h1 className="text-4xl font-semibold text-sky-900">Ubicación</h1>
                                         </div>
-                                    <div className='w-full h-96 my-4' >
+                                    <div className='w-1/2 h-96 my-4' >
                                         <MapContainer
                                             center={servicio[0].location}
                                             zoom={15}
@@ -494,7 +494,6 @@ const DetalleServicio = () => {
                         </div>
                         <div>
                             <ReviewService
-                                verFooter={true}
                                 handleModalReviews={handleModalReviews}
                                 verMasReviews={true}
                                 mostrarComentariosReviews={true}
