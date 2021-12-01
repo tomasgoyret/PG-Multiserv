@@ -142,7 +142,7 @@ const Home = () => {
     ...categorias,
   ];
   return (
-    <>
+    <div className="w-full h-screen">
       {loading ? (
         <div className="w-full flex flex-col h-screen justify-center items-center">
           <AiOutlineLoading3Quarters
@@ -153,7 +153,7 @@ const Home = () => {
           </h1>
         </div>
       ) : (
-        <div className="w-full flex flex-col justify-center items-center h-screen">
+        <div className="w-full flex flex-col justify-center items-center h-screen ">
           <div
             style={{ zIndex: 500 }}
             className="w-full flex flex-row filter drop-shadow-md bg-white"
@@ -204,12 +204,11 @@ const Home = () => {
                 ""
               )
             )}
-            <Footer />
           </div>
           
         </div>
       )}
-    </>
+    </div>
   );
 };
 

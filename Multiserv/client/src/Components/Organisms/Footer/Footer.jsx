@@ -12,7 +12,7 @@ const Footer = () => {
                 <LinkTo page="acerca" render={<span className="text-sm text-gray-300 mx-2  hover:font-semibold hover:text-red-50 ">Acerca de</span>} />
             </div>
             <div className="w-full justify-center h-2/6  flex items-center">
-                <div className="w-8 h-8  rounded-md overflow-hidden hover:bg-gray-200">
+                <div className="w-8 h-8  rounded-md overflow-hidden bg-gray-200 hover:bg-gray-50">
                     <a href="https://github.com/tomasgoyret/PG-Multiserv" target="_blank">
                         <img src={github} alt=""/>
                     </a>

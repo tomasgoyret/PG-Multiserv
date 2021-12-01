@@ -27,6 +27,7 @@ import { services, users, getListFavorites, getHorarios, servicesId } from "../.
 import ModalAllReviews from "../../Components/Organisms/ModalAllReviews/ModalAllReviews";
 import AgendarCita from '../AgendarCita/AgendarCita';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import Footer from "../../Components/Organisms/Footer/Footer";
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -456,6 +457,7 @@ const DetalleServicio = () => {
                         </div>
                         <div>
                             <ReviewService
+                                verFooter={true}
                                 handleModalReviews={handleModalReviews}
                                 verMasReviews={true}
                                 mostrarComentariosReviews={true}
@@ -463,10 +465,12 @@ const DetalleServicio = () => {
                             />
                         </div>
                     </div>
+                    
                 )}
+                
             </div>
 
-            {/* Modal Compartir */}
+            
         </div>
     );
 };
