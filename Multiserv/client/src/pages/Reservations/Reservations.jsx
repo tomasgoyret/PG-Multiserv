@@ -54,7 +54,7 @@ const Reservations = () => {
       a.map((e, i) => {
         return (
           <div
-            className="bg-cyan-300 h-32 border-2 border-cyan-500 px-3 py-3 flex flex-col mb-3"
+            className="bg-cyan-300 h-auto border-2 border-cyan-500 px-3 py-3 flex flex-col mb-3"
             key={"titleServiceDivs" + i + e.id}
           >
             <span className="font-semibold text-lg">Cita con: {e.nameUser}</span>
@@ -89,10 +89,17 @@ const Reservations = () => {
         modalServicios &&
         <div className="w-1/2 flex justify-center items-center">
           <div className="w-4/6 h-5/6 flex flex-col overflow-y-scroll">
-            {misReservas.length > 0 &&
+            {misReservas.length > 0 ?
               misReservas.map((a) => {
                 return a;
-              })}
+              })
+              :
+              <div className="w-full h-full">
+                <div className="w-full flex justify-center">
+                  <h1 className="source-sans text-2xl font-semibold text-cyan-800">Sin reservas actualmente!</h1>
+                </div>
+              </div>
+            }
           </div>
           <div className="h-5/6">
             <button
@@ -111,7 +118,7 @@ const Reservations = () => {
       </div>
       <div className="w-full flex flex-wrap px-3 justify-start">
       {
-      reservas.length > 0 &&
+      reservas.length > 0 ?
         reservas.map((e, i) => {
           if (e.length > 0) {
             return (
@@ -136,6 +143,22 @@ const Reservations = () => {
             );
           }
         })
+        :
+        <div className="w-64 h-32 py-3 mx-5 px-5 shadow-lg flex rounded-lg transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-xl hover:bg-gray-100 cursor-pointer">
+                
+                <div className="flex flex-col  w-full justify-center items-center">
+                  <div className="mb-2 flex flex-col items-center justify-center">
+                    <h2 className="text-md font-semibold text-gray-500">Servicio</h2>
+                    <h2 className="text-2xl font-semibold text-gray-900">No disponible</h2>
+                  </div>
+                  <button
+                    className="flex justify-center items-center mx-2 font-semibold  w-auto text-lg px-6 py-1 bg-green-500 text-gray-50 hover:bg-green-700 focus:bg-green-700 rounded-md transition-all ease-in-out duration-300 "
+                    onClick={() => setModalServicios(true)}
+                  >
+                    Info
+                  </button>
+                  </div>
+              </div>
       }
       </div>
 
