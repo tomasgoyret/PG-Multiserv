@@ -3,6 +3,7 @@ import github from "../../../src/assets/images/github.png"
 import bastian from "../../../src/assets/fotos/bastian.jpeg"
 import tomas from "../../../src/assets/fotos/tomas.jpeg"
 import ale from "../../../src/assets/fotos/ale.jpg"
+import abril from "../../../src/assets/fotos/abril.jpg"
 
 const dataNosotros = [
     {
@@ -91,7 +92,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: abril,
         displayName: "Abril",
         titulo: "Full Stack Developer",
         redes: [
