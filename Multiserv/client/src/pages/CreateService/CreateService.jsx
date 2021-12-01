@@ -159,7 +159,7 @@ const CreateService = () => {
         }
         dispatch(getCats())
         const delay = setTimeout(() => {
-            setStepForm(1)
+            setStepForm(2)
         }, 500)
         return () => clearTimeout(delay)
     }, [])
@@ -234,9 +234,11 @@ const CreateService = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={service.location} >
-                            <Tooltip direction="top" permanent offset={[-13, -10]}>
-                                {service.title}:<br />
-                                <span className="font-semibold text-purple-900">{service.address}</span>
+                            <Tooltip direction="top" permanent offset={[-13, -10]} className="w-64" >
+                                <div className="w-64">
+                                    {service.title}:<br />
+                                    <p style={{ whiteSpace: 'initial' }} className="font-semibold text-purple-900 break-words w-64">{service.address}</p>
+                                </div>
                             </Tooltip>
                         </Marker>
                     </MapContainer>
