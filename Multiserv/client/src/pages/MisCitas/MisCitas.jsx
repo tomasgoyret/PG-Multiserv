@@ -77,18 +77,16 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
   };
 
   return (
-    <div className='mx-4 my-4 w-full'>
+    <div className='mx-4 my-4 w-full h-screen overflow-y-scroll'>
       <h1 className='text-4xl font-bold pb-2 border-b w-full mb-2' >Mis Citas</h1>
       <h2 className='text-xl pl-2 font-semibold' > Proximas :</h2>
       {/* Citas mapeadas por Servicio */}
       <div className='grid grid-cols-6 gap-3 m-2'>
         {misCitas.length > 0 &&
           misCitas.map((cita, i) => {
-
             console.log(cita.dia, "cita-dia")
             let hoy = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.toString().slice(8,10)
             console.log(hoy, "hoy")
-
             if(cita.dia>hoy){
               return (
                 <div key={"key-proximas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
@@ -121,17 +119,17 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
           })}
       </div>
       {/* No hay citas */}
-
+      
       {misCitas.length === 0 && <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md'><h3 className='text-center font-semibold'>No hay citas proximas</h3></div>}
       <br />
       <h2 className='text-xl pl-2 font-semibold' > Caducadas :</h2>
+      <div className='grid grid-cols-6 gap-3 m-2'>
       {citasVencidas.length > 0 ? (
         citasVencidas.map((cita, i) => {
           let values = [cita.id, cita.usuarioUidClient]
           return (
-            <div className='grid grid-cols-6 gap-3 m-2' >
               <div key={"key-caducadas" + "-" + i} className='shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50'>
-                <h3 className='text-xl text-center py-2 font-semibold' >Citas para el servicio: {cita.title}</h3>
+                <h3 className='text-xl text-center py-2 font-semibold' >{cita.title}</h3>
                 <h6 className='text-center' >{cita.dia}</h6>
                 <h6 className='text-center' >{cita.hora.hora}</h6>
                 <h6 className='text-center mb-2' >{cita.direccion}</h6>
@@ -160,14 +158,13 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                   </button>
                 ) : ''}
               </div>
-            </div>
           );
         })
       ) : (
         <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md my-2'>
           <h3 className='text-center font-semibold'>No hay citas caducadas</h3>
         </div>
-      )}
+      )} </div>
     </div>
   );
 };
