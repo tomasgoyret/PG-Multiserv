@@ -5,14 +5,14 @@ import ButtonXartiago from "../../Atoms/ButtonXartiago/ButtonXartiago";
 
 const CardInfomativaFormulario = () => {
     return(
-        <div className="flex flex-col items-center justify-center h-full">
+        <div className="flex flex-col items-center justify-center h-full bg-gray-800 shadow-xl">
             <Encabezado2 
                 clases="text-white"
                 titulo="Bienvenid@"
             />
             <Parrafo 
-                classDivParrafo="w-4/5 mt-2 mb-5"
-                classParrafo="text-gray-200" 
+                classDivParrafo="w-4/5 mt-2 mb-5 flex justify-center text-center font-semibold text-sm"
+                classParrafo="text-gray-200 text-gray-200" 
                 parrafo="Inicia sesión y solicita o publica un servicio en tan sólo unos minutos" 
             />
             <div className="text-center flex flex-col mb-4">
