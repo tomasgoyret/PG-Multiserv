@@ -145,17 +145,17 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       )}
       <br />
       <h2 className="text-xl pl-2 font-semibold"> Caducadas :</h2>
+      <div className="grid grid-cols-6 gap-3 m-2">
       {citasVencidas.length > 0 ? (
         citasVencidas.map((cita, i) => {
           let values = [cita.id, cita.usuarioUidClient];
           return (
-            <div className="grid grid-cols-6 gap-3 m-2">
               <div
                 key={"key-caducadas" + "-" + i}
                 className="shadow-lg rounded-xl p-4 hover:shadow-xl hover:scale-50"
               >
                 <h3 className="text-xl text-center py-2 font-semibold">
-                  Citas para el servicio: {cita.title}
+                  {cita.title}
                 </h3>
                 <h6 className="text-center">{cita.dia}</h6>
                 <h6 className="text-center">{cita.hora.hora}</h6>
@@ -164,8 +164,9 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                   Estado:{" "}
                   {cita.status === "Pendiente" ? "Cita caducada" : cita.status}
                 </h6>
+                <div className="flex justify-evenly">
                 {cita.status !== "Concretada" ? (
-                  <button
+                  <button 
                     name="concretada"
                     value={cita.id}
                     onClick={handleClick}
@@ -188,15 +189,16 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                 ) : (
                   ""
                 )}
+                </div>
               </div>
-            </div>
+          
           );
         })
       ) : (
         <div className="w-full bg-gray-50 py-16 rounded-lg shadow-md my-2">
           <h3 className="text-center font-semibold">No hay citas caducadas</h3>
         </div>
-      )}
+      )}</div>
     </div>
   );
 };
