@@ -31,21 +31,18 @@ const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarCom
 
 
     return(
-        <div className="w-full h-screen">
-            {
-                mostrarStarRating && datosSesionFromLocalStorage && mostrarPercentageReview &&
-                <div className="flex justify-center w-max mx-auto px-10 pt-5 shadow-md py-5">
-                    <div className="porcentaje flex justify-end items-start pt-2">
-                        <StarRatingReview rating={promedio} total={rating}/>
-                    </div>
-                    <div className="promedio flex items-center justify-center">
-                        <PercentageReview />
-                    </div>
-                </div>
-            }
-
+        <div className="w-full h-screen z-50">
             <div className="flex justify-center w-full pt-5 pb-5 px-10">
                 <h2 className="text-3xl text-gray-800 py-5 font-bold">Reseñas</h2>
+            </div>
+        
+            <div className="flex justify-center w-max mx-auto px-10 pt-5 shadow-md py-5">
+                <div className="porcentaje flex justify-end items-start pt-2">
+                    <StarRatingReview rating={promedio} total={rating}/>
+                </div>
+                <div className="promedio flex items-center justify-center">
+                    <PercentageReview />
+                </div>
             </div>
 
             {
@@ -58,7 +55,7 @@ const ReviewService = ({verFooter, handleModalReviews, verMasReviews, mostrarCom
                 {
                     limitarRenderizadoEnDetalleServicio ?
                     reviewsData?.map(( comentario, i) => {
-                        if(i < 2){
+                        if(i < 3){
                             return (
                             <div className="flex flex-col w-3/5 h-auto my-3 pl-10" key={'keyFromReviews'+i}>
                                 <div className="flex items-center">
