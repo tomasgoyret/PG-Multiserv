@@ -28,6 +28,10 @@ import ModalAllReviews from "../../Components/Organisms/ModalAllReviews/ModalAll
 import AgendarCita from '../AgendarCita/AgendarCita';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Footer from "../../Components/Organisms/Footer/Footer";
+// import Swiper core and required modules
+import { Navigation, Pagination, Autoplay, A11y, Keyboard } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
+import 'swiper/swiper-bundle.css';
 
 const DetalleServicio = () => {
     let { id } = useParams();
@@ -186,7 +190,7 @@ const DetalleServicio = () => {
         setModalReviews(!modalReviews);
     };
     return (
-        <div className="w-full">
+        <div className="w-full overflow-y-auto h-screen">
             <div className="flex flex-col">
                 {modalReviews && (
                     <div
@@ -208,7 +212,7 @@ const DetalleServicio = () => {
                         </h1>
                     </div>
                 ) : (
-                    <div className="w-full flex flex-col overflow-y-auto h-screen pb-10">
+                        <div className="w-full flex flex-col pb-10">
                         <div className="pt-6 pb-4">
                             <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">
                                 Detalles de Servicios
@@ -432,11 +436,48 @@ const DetalleServicio = () => {
                                     turnero && <AgendarCita idService={id} /> /* Refactorizado por Abril */
                                 }
                             </div>
-                        </div>
+                            </div>
+
+                            <div className="my-8 flex flex-col w-full justify-center">
+                                <div className="border-b focus-within px-6 pb-4 mb-2">
+                                    <h1 className="text-4xl font-semibold text-sky-900">Galería</h1>
+                                </div>
+                                {servicio[0].photos.length > 1 && <div className="flex flex-row w-full">
+                                    <Swiper
+                                        // install Swiper modules
+                                        modules={[Navigation, Pagination, A11y, Autoplay, Keyboard]}
+                                        spaceBetween={50}
+                                        slidesPerView={1}
+                                        navigation
+                                        autoplay
+                                        keyboard
+                                        pagination={{ clickable: true }}
+                                        onSwiper={(swiper) => console.log(swiper)}
+                                        onSlideChange={() => console.log('slide change')}
+                                    >
+                                        <div className="px-4 lg:w-1/2 h-96">
+                                            {servicio[0].photos.map((photo, index) => {
+                                                if (index !== 0) {
+                                                    return (
+                                                        <SwiperSlide key={index}>
+                                                            <Image
+                                                                name={`photo-${index}`}
+                                                                imagen={photo}
+                                                                imgClass={`object-cover w-full h-96`} />
+                                                        </SwiperSlide>
+                                                    )
+                                                }
+                                            })}
+                                        </div>
+                                    </Swiper>
+                                </div>}
+                            </div>
                         <div>
                             {
                                 servicio[0].location && <div>
-                                    <h2 className='font-bold text-3xl ml-4' >Local</h2>
+                                        <div className="border-b focus-within px-6 pb-4 mb-2">
+                                            <h1 className="text-4xl font-semibold text-sky-900">Ubicación</h1>
+                                        </div>
                                     <div className='w-full h-96 my-4' >
                                         <MapContainer
                                             center={servicio[0].location}
