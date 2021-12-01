@@ -25,6 +25,7 @@ import { useNavigate } from "react-router";
 import Input from "../../Components/Atoms/Input/Input";
 import ListBox from "../../Components/HeadLess/ListBox/ListBox";
 import { Link } from "react-router-dom";
+import Footer from "../../Components/Organisms/Footer/Footer";
 
 const Home = () => {
   const loading = useSelector((state) => state.loadingServices);
@@ -141,7 +142,7 @@ const Home = () => {
     ...categorias,
   ];
   return (
-    <>
+    <div className="w-full h-screen">
       {loading ? (
         <div className="w-full flex flex-col h-screen justify-center items-center">
           <AiOutlineLoading3Quarters
@@ -152,7 +153,7 @@ const Home = () => {
           </h1>
         </div>
       ) : (
-        <div className="w-full flex flex-col justify-center items-center h-screen">
+        <div className="w-full flex flex-col justify-center items-center h-screen ">
           <div
             style={{ zIndex: 500 }}
             className="w-full flex flex-row filter drop-shadow-md bg-white"
@@ -204,9 +205,10 @@ const Home = () => {
               )
             )}
           </div>
+          
         </div>
       )}
-    </>
+    </div>
   );
 };
 

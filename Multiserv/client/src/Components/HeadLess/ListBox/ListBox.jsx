@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { HiOutlineSelector } from "react-icons/hi";
 import { FiCheck } from "react-icons/fi";
 
-export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc, defaultValue }) {
+export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc, defaultValue, noAutoWidth }) {
+    const btn = useRef(null)
+    const [btnWidth, setbtnWidth] = useState(null)
     const [selected, setSelected] = useState(defaultValue ? options.find((option) => option.name === defaultValue).name : options[0].name)
     const [iconSelected, setIconSelected] = useState(options[0].icon || '')
     /* (value) => {
@@ -21,8 +23,20 @@ export default function ListBox({ options, callBack, text, theme, className, wid
             outlineColor: theme
         }
     }
+    const resizeBtn = () => {
+        const width = btn.current.clientWidth
+        setbtnWidth(width)
+    }
+    useEffect(() => {
+        if (btn !== null) {
+            resizeBtn()
+        }
+    }, [btn])
+    useEffect(() => {
+        window.addEventListener('resize', resizeBtn)
+    }, [])
     return (
-        <div style={{ width: `${width ? width : '18rem'}` }} className={`${className} ${!width && 'mx-2'}`}>
+        <div style={noAutoWidth ? { zIndex: 3000 } : { width: `${width ? width : '18rem'}`, zIndex: 3000 }} className={`${className} ${!width && 'mx-2'}`}>
             <Listbox value={selected} onChange={(value) => {
                 const obj = options.find(option => option.name === value)
                 callBack(obj)
@@ -33,7 +47,7 @@ export default function ListBox({ options, callBack, text, theme, className, wid
                 setSelected(value)
             }}>
                 <div className="relative mt-1">
-                    <Listbox.Button css={buttonStyle} className={`cursor-pointer font-semibold w-full ${width ? 'py-2.5' : 'py-2'} pl-3 pr-10 text-left ${customBorder ? 'border' : 'shadow-md'} bg-white rounded-lg 
+                    <Listbox.Button ref={btn} css={buttonStyle} className={` cursor-pointer font-semibold w-full py-2.5 pl-3 pr-10 text-left ${customBorder ? 'border' : 'shadow-md'} bg-white rounded-lg
                      focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
                         <span className="truncate">{includeIconOnDesc ? (
                             <span className="flex">
@@ -54,7 +68,7 @@ export default function ListBox({ options, callBack, text, theme, className, wid
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Listbox.Options as="div" style={{ zIndex: 1000 }} className="absolute text-left z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Listbox.Options as="div" style={{ width: btnWidth, zIndex: 4000 }} className="absolute top-9 text-left z-50 py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             {options.map((option, index) => (
                                 <Listbox.Option
                                     key={index}

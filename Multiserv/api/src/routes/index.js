@@ -84,6 +84,6 @@ router.use("/reservas", getReservasRouter)
 
 //Rutas de Envío de mails
 router.use("/mail",postMailPago)
-//router.use("/notificaciones", notificaciones)
+router.use("/notificaciones", notificaciones)
 
 module.exports = router;

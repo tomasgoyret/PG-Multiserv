@@ -1,6 +1,9 @@
 import linkedin from "../../../src/assets/images/linkedin2.png"
 import github from "../../../src/assets/images/github.png"
 import bastian from "../../../src/assets/fotos/bastian.jpeg"
+import tomas from "../../../src/assets/fotos/tomas.jpeg"
+import ale from "../../../src/assets/fotos/ale.JPG"
+import abril from "../../../src/assets/fotos/abril.jpg"
 
 const dataNosotros = [
     {
@@ -21,7 +24,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: ale,
         displayName: "Ale",
         titulo: "Full Stack Developer",
         redes: [
@@ -38,7 +41,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: tomas,
         displayName: "Tomas",
         titulo: "Full Stack Developer",
         redes: [
@@ -89,7 +92,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: abril,
         displayName: "Abril",
         titulo: "Full Stack Developer",
         redes: [
