@@ -77,7 +77,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
   };
 
   return (
-    <div className='mx-4 my-4 w-full'>
+    <div className='mx-4 my-4 w-full h-screen overflow-y-scroll'>
       <h1 className='text-4xl font-bold pb-2 border-b w-full mb-2' >Mis Citas</h1>
       <h2 className='text-xl pl-2 font-semibold' > Proximas :</h2>
       {/* Citas mapeadas por Servicio */}
@@ -122,7 +122,8 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       </div>
       {/* No hay citas */}
 
-      {misCitas.length === 0 && <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md'><h3 className='text-center font-semibold'>No hay citas proximas</h3></div>}
+      {misCitas.length === 0 && 
+      <div className='w-full bg-gray-50 py-16 rounded-lg shadow-md'><h3 className='text-center font-semibold'>No hay citas proximas</h3></div>}
       <br />
       <h2 className='text-xl pl-2 font-semibold' > Caducadas :</h2>
       {citasVencidas.length > 0 ? (
