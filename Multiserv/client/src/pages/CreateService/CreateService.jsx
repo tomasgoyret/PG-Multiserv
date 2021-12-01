@@ -362,11 +362,7 @@ const CreateService = () => {
     }
 
     return (
-<<<<<<< HEAD
-        <div className="container flex justify-center items-center mx-auto w-full bg-gray-400 px-2 lg:px-8 py-4">
-=======
-        <div className="container flex justify-center items-center mx-auto w-full max-h-screen overflow-y-auto bg-gray-400 px-8 py-4">
->>>>>>> 6adf63fcad3b537ebc16d938b52b8bd3abe47010
+        <div className="container flex justify-center items-center mx-auto w-full max-h-screen overflow-y-auto bg-gray-400 px-2 lg:px-8 py-4">
             <div
                 style={{ height: '100%', width: '100%' }}
                 className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
@@ -438,11 +434,7 @@ const CreateService = () => {
 
                     </div>
                 </div>
-<<<<<<< HEAD
                 <div id='content' className="flex flex-col lg:flex-row justify-center items-between mt-9 w-full h-full  px-0 lg:px-8">
-=======
-                <div id='content' className="flex flex-row justify-center items-between mt-9 w-full h-full  px-8">
->>>>>>> 6adf63fcad3b537ebc16d938b52b8bd3abe47010
 
                     <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex flex-col lg:flex-row mt-3' : 'hidden'} w-full`}>
                         <div className="border-0 lg:border-r mx-auto w-full lg:w-1/2 p-0 lg:pr-6">
