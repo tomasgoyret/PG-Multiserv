@@ -24,7 +24,7 @@ const Nosotros = () => {
                             return(
                                 <div className="w-96 h-64 flex flex-col items-center shadow-xl justify-center rounded-lg my-5 transition-all ease-in-out duration-300 transform hover:translate-x-1 hover:translate-y-1 hover:scale-105 hover:drop-shadow-xl hover:bg-gray-100 ">
                                     <div className="w-20 h-20 rounded-full overflow-hidden  mb-2 shadow-md"
-                                        style={{backgroundImage: `url(${data.imagen})`, backgroundSize: "cover", backgroundPosition: "center"}}
+                                        style={{backgroundImage: `url(${data.imagen ? data.imagen : "https://indiehoy.com/wp-content/uploads/2018/09/nicolas-cage-meme-1200x900.jpg"})`, backgroundSize: "cover", backgroundPosition: "center"}}
                                     >
                                         
                                     </div>
