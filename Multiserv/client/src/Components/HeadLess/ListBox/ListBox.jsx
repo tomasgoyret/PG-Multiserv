@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { HiOutlineSelector } from "react-icons/hi";
 import { FiCheck } from "react-icons/fi";
 
-export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc, defaultValue }) {
+export default function ListBox({ options, callBack, text, theme, className, width, customBorder, includeIconOnDesc, defaultValue, noAutoWidth }) {
     const [selected, setSelected] = useState(defaultValue ? options.find((option) => option.name === defaultValue).name : options[0].name)
     const [iconSelected, setIconSelected] = useState(options[0].icon || '')
     /* (value) => {
@@ -22,7 +22,7 @@ export default function ListBox({ options, callBack, text, theme, className, wid
         }
     }
     return (
-        <div style={{ width: `${width ? width : '18rem'}` }} className={`${className} ${!width && 'mx-2'}`}>
+        <div style={noAutoWidth ? undefined : { width: `${width ? width : '18rem'}` }} className={`${className} ${!width && 'mx-2'}`}>
             <Listbox value={selected} onChange={(value) => {
                 const obj = options.find(option => option.name === value)
                 callBack(obj)
@@ -33,7 +33,7 @@ export default function ListBox({ options, callBack, text, theme, className, wid
                 setSelected(value)
             }}>
                 <div className="relative mt-1">
-                    <Listbox.Button css={buttonStyle} className={`cursor-pointer font-semibold w-full ${width ? 'py-2.5' : 'py-2'} pl-3 pr-10 text-left ${customBorder ? 'border' : 'shadow-md'} bg-white rounded-lg 
+                    <Listbox.Button css={buttonStyle} className={`cursor-pointer font-semibold w-full py-2.5 pl-3 pr-10 text-left ${customBorder ? 'border' : 'shadow-md'} bg-white rounded-lg
                      focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
                         <span className="truncate">{includeIconOnDesc ? (
                             <span className="flex">

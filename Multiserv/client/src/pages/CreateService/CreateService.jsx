@@ -222,13 +222,30 @@ const CreateService = () => {
     }
 
     return (
-        <div className="container flex justify-center items-center mx-auto w-full bg-gray-400 px-8 py-4">
+        <div className="container flex justify-center items-center mx-auto w-full bg-gray-400 px-2 lg:px-8 py-4">
             <div
                 style={{ height: '100%', width: '100%' }}
                 className="rounded-md bg-white py-4 px-6 flex flex-col justify-between items-center overflow-y-auto custom-scrollbar">
                 <div id="status" className="w-full text-center">
-                    <h1 className="text-4xl font-semibold text-cyan-900 mb-6 border-b border-gray-100">Crear un nuevo servicio</h1>
-                    <div id="progress-description" className="flex flex-row mb-2">
+                    <h1 className="text-2xl lg:text-4xl font-semibold text-cyan-900 mb-6 border-b border-gray-100">Crear un nuevo servicio</h1>
+                    <div id="mobile-progress" className="flex lg:hidden flex-col w-full">
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="rounded-full px-4 bg-teal-50 text-cyan-900">
+                                <span className="font-semibold">
+                                    {stepForm === 1 && 'Detalles'}
+                                    {stepForm === 2 && 'Ubicación'}
+                                    {stepForm === 3 && 'Finalizar'}
+                                </span>
+                            </div>
+                            <div className="rounded-full px-4 bg-teal-50 text-cyan-900">
+                                <span className="font-semibold">{`${stepForm} de 3`}</span>
+                            </div>
+                        </div>
+                        <div className="mt-2 w-full">
+                            <SimpleProgressBar color="#164E63" status={`${stepForm === 3 ? 100 : stepForm * 33}%`} />
+                        </div>
+                    </div>
+                    <div id="progress-description" className="hidden lg:flex lg:flex-row mb-2">
                         <div id="step1" className="w-full flex justify-center" >
                             <div className={`px-4 rounded-full font-semibold text-white bg-cyan-900 ${stepForm >= 1 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'}`}>
                                 <span>Información del servicio</span>
@@ -246,7 +263,7 @@ const CreateService = () => {
                             </div>
                         </div>
                     </div>
-                    <div id='progress' className="w-full flex flex-row transition-all ease-out duration-300 ">
+                    <div id='progress' className="w-full hidden lg:flex flex-row transition-all ease-out duration-300 ">
                         <div className="z-40 relative flex w-full h-max">
                             <div className={`z-10 absolute right-0 left-0 m-auto flex justify-center items-center w-8 h-8 rounded-full ${stepForm >= 1 ? 'bg-cyan-900 text-white' : 'bg-purple-200 text-cyan-900'} transition-all ease-in-out duration-200`}>
                                 <span className="text-center font-semibold self-center">1</span>
@@ -277,10 +294,10 @@ const CreateService = () => {
 
                     </div>
                 </div>
-                <div id='content' className="flex flex-row justify-center items-between mt-9 w-full h-full px-8">
+                <div id='content' className="flex flex-col lg:flex-row justify-center items-between mt-9 w-full h-full  px-0 lg:px-8">
 
-                    <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex mt-3' : 'hidden'} w-full`}>
-                        <div className="border-r mx-auto w-1/2 pr-6">
+                    <div id="step1" className={`${stepForm === 0 || stepForm === 1 ? 'flex flex-col lg:flex-row mt-3' : 'hidden'} w-full`}>
+                        <div className="border-0 lg:border-r mx-auto w-full lg:w-1/2 p-0 lg:pr-6">
                             <div className="mb-4">
                                 <Input
                                     type="text"
@@ -306,54 +323,11 @@ const CreateService = () => {
                             </div>
                         </div>
 
-                        <div className="w-1/2 mx-auto pl-6">
-                            <div className="mb-4 flex w-full">
-                                <div className="self-center">
-                                    <Input
-                                        type="number"
-                                        id="min"
-                                        theme="#164E63"
-                                        label="Precio mínimo:"
-                                        placeholder="Precio"
-                                        flexed
-                                        callBack={handleSetService('min')}
-                                    />
-                                </div>
-                                <div className="self-center">
-                                    <Input
-                                        type="number"
-                                        id="max"
-                                        theme="#164E63"
-                                        label="Precio máximo:"
-                                        placeholder="Precio"
-                                        flexed
-                                        callBack={handleSetService('max')}
-                                    />
-                                </div>
+                        <div className="w-full lg:w-1/2 mx-auto p-0 lg:pl-6">
+                            <div className="mb-4">
+                                <div className="flex flex-col lg:flex-row items-center lg:ml-3">
 
-                            </div>
-                            <div className="mt-4">
-                                <div className="flex mx-4">
-                                    <div className="self-center pt-3">
-                                        <div className="relative mr-4">
-                                            <span className={`absolute -top-5 text-sm font-semibold text-gray-600 select-none cursor-pointer`}>Moneda local:</span>
-
-                                            <div className="flex flex-row mt-3">
-                                                <ListBox
-                                                    customBorder="#9CA3AF"
-                                                    className="self-center"
-                                                    width='10rem'
-                                                    options={monedas}
-                                                    callBack={handleCurrency}
-                                                    text="..."
-                                                    theme="#0C4A6E"
-                                                    includeIconOnDesc
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="mx-4">
+                                    <div className="">
                                         <span className="font-semibold text-gray-600 text-sm ">Seleccione una categoría:</span>
                                         <div style={{ zIndex: '9999' }}>
                                             {
@@ -385,8 +359,50 @@ const CreateService = () => {
 
                                         </div>
                                     </div>
+                                    <div className="self-center pt-3">
+                                        <div className="relative items-center lg:ml-4">
+                                            <span className={`absolute -top-5 text-sm font-semibold text-gray-600 select-none cursor-pointer pl-3 lg:pl-0`}>Moneda local:</span>
 
+                                            <div className="flex flex-row mt-3">
+                                                <ListBox
+                                                    customBorder="#9CA3AF"
+                                                    className="w-60 lg:w-48"
+                                                    noAutoWidth
+                                                    options={monedas}
+                                                    callBack={handleCurrency}
+                                                    text="..."
+                                                    theme="#0C4A6E"
+                                                    includeIconOnDesc
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="mt-4 flex w-full">
+                                <div className="self-center">
+                                    <Input
+                                        type="number"
+                                        id="min"
+                                        theme="#164E63"
+                                        label="Precio mínimo:"
+                                        placeholder="Precio"
+                                        flexed
+                                        callBack={handleSetService('min')}
+                                    />
+                                </div>
+                                <div className="self-center">
+                                    <Input
+                                        type="number"
+                                        id="max"
+                                        theme="#164E63"
+                                        label="Precio máximo:"
+                                        placeholder="Precio"
+                                        flexed
+                                        callBack={handleSetService('max')}
+                                    />
+                                </div>
+
                             </div>
                         </div>
                     </div>
