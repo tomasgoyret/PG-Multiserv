@@ -2415,6 +2415,11 @@ let CrearHorarios = async () => {
       id: i,
       fechas: [
         {
+          '2021/12/01': [{ hora: '07:00 - 07:30', reservado: true }, { hora: '07:30 - 08:00', reservado: false }, { hora: '08:00 - 08:30', reservado: true }, { hora: '08:30 - 09:00', reservado: false }, { hora: '09:00 - 09:30', reservado: false }, { hora: '09:30 - 10:00', reservado: false }, { hora: '10:00 - 10:30', reservado: false }, { hora: '10:30 - 11:00', reservado: false }, { hora: '11:00 - 11:30', reservado: false }, { hora: '11:30 - 12:00', reservado: true }, { hora: '12:00 - 12:30', reservado: true }, { hora: '12:30 - 13:00', reservado: true }, { hora: '13:00 - 13:30', reservado: false }, { hora: '13:30 - 14:00', reservado: true }, { hora: '14:00 - 14:30', reservado: false }, { hora: '14:30 - 15:00', reservado: true }]
+        },
+        {
+          '2021/11/30': [{ hora: '07:00 - 07:30', reservado: false }, { hora: '07:30 - 08:00', reservado: false }, { hora: '08:00 - 08:30', reservado: true }, { hora: '08:30 - 09:00', reservado: false }, { hora: '09:00 - 09:30', reservado: true }, { hora: '09:30 - 10:00', reservado: false }, { hora: '10:00 - 10:30', reservado: true }, { hora: '10:30 - 11:00', reservado: false }, { hora: '11:00 - 11:30', reservado: false }, { hora: '11:30 - 12:00', reservado: true }, { hora: '12:00 - 12:30', reservado: false }, { hora: '12:30 - 13:00', reservado: false }, { hora: '13:00 - 13:30', reservado: false }, { hora: '13:30 - 14:00', reservado: false }, { hora: '14:00 - 14:30', reservado: true }, { hora: '14:30 - 15:00', reservado: true }]
+        }, {
           '2021/12/03': [{ hora: '07:00 - 07:30', reservado: true }, { hora: '07:30 - 08:00', reservado: false }, { hora: '08:00 - 08:30', reservado: true }, { hora: '08:30 - 09:00', reservado: false }, { hora: '09:00 - 09:30', reservado: false }, { hora: '09:30 - 10:00', reservado: false }, { hora: '10:00 - 10:30', reservado: false }, { hora: '10:30 - 11:00', reservado: false }, { hora: '11:00 - 11:30', reservado: false }, { hora: '11:30 - 12:00', reservado: true }, { hora: '12:00 - 12:30', reservado: true }, { hora: '12:30 - 13:00', reservado: true }, { hora: '13:00 - 13:30', reservado: false }, { hora: '13:30 - 14:00', reservado: true }, { hora: '14:00 - 14:30', reservado: false }, { hora: '14:30 - 15:00', reservado: true }]
         },
         {
@@ -2515,6 +2520,8 @@ const CitasMockup = async () => {
       let u = await Usuarios.findOne({ where: { uidClient: arrayR[i].usuarioUidClient } })
       let s = await Servicios.findOne({ where: { id: arrayR[i].servicioId } })
       let CitasM = [
+        { nameUser: u.displayName, dia: '2021/11/30', hora: { hora: '11:30 - 12:00', reservado: true }, uidClient: arrayR[i].usuarioUidClient, direccion: s.address, ciudad: '' },
+        { nameUser: u.displayName, dia: '2021/12/01', hora: { hora: '11:30 - 12:00', reservado: true }, uidClient: arrayR[i].usuarioUidClient, direccion: s.address, ciudad: '' },
         { nameUser: u.displayName, dia: '2021/12/05', hora: { hora: '11:30 - 12:00', reservado: true }, uidClient: arrayR[i].usuarioUidClient, direccion: s.address, ciudad: '' },
         { nameUser: u.displayName, dia: '2021/12/15', hora: { hora: '11:30 - 12:00', reservado: true }, uidClient: arrayR[i].usuarioUidClient, direccion: s.address, ciudad: '' },
         { nameUser: u.displayName, dia: '2021/12/09', hora: { hora: '11:30 - 12:00', reservado: true }, uidClient: arrayR[i].usuarioUidClient, direccion: s.address, ciudad: '' },
