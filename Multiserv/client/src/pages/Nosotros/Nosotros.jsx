@@ -1,4 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
+import tomas from "../../../src/assets/fotos/tomas.jpeg"
 import dataNosotros from "./dataNosotros";
 import { useNavigate } from "react-router";
 import { AiFillHome } from "react-icons/ai";
@@ -46,6 +48,33 @@ const Nosotros = () => {
                             )
                         })
                     }
+                </div>
+                <div className="py-4 w-full flex justify-center bg-gray-50">
+                    <figure
+                        css={{
+                            width: '600px',
+                            '@media (max-width: 640px)': {
+                                width: '100%'
+                            }
+                        }}
+                        className="md:flex bg-white rounded-xl p-8 md:p-0 shadow-xl border border-gray-100">
+                        <img src={tomas} className="w-32 h-32 md:w-48 md:h-auto rounded-full md:rounded-none md:rounded-l-xl mx-auto object-cover" width="384" height="512" />
+                        <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
+                            <blockquote>
+                                <p className="text-lg font-semibold">
+                                    "...pues para la primer demo solamente tenemos un h1 que dice <span className="italic">Bienvenido a MultiServ</span>"
+                                </p>
+                            </blockquote>
+                            <figcaption class="font-medium">
+                                <div class="text-cyan-600">
+                                    Tomás Goyret
+                                </div>
+                                <div class="text-gray-500">
+                                    Full-Stack Developer
+                                </div>
+                            </figcaption>
+                        </div>
+                    </figure>
                 </div>
             </div>
         </div>
