@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
 import {
   BsSortAlphaDownAlt,
@@ -5,7 +6,8 @@ import {
   BsSortDown,
   BsSortDownAlt,
 } from "react-icons/bs";
-
+import { GiHamburgerMenu } from "react-icons/gi";
+import { GrClose } from "react-icons/gr";
 import { useEffect, useState } from "react";
 /* React redux */
 import { useSelector, useDispatch } from "react-redux";
@@ -29,6 +31,8 @@ import Footer from "../../Components/Organisms/Footer/Footer";
 
 const Home = () => {
   const loading = useSelector((state) => state.loadingServices);
+  const [expandedFilter, setExpandedFilter] = useState(false)
+  const [notOverflow, setNotOverflow] = useState(false)
   const servicios = useSelector((state) => state.servicios);
   const usuarios = useSelector((state) => state.usuarios);
   const categorias = useSelector((state) => state.categories);
@@ -142,7 +146,7 @@ const Home = () => {
     ...categorias,
   ];
   return (
-    <div className="w-full h-screen">
+    <div className=" w-screen h-screen">
       {loading ? (
         <div className="w-full flex flex-col h-screen justify-center items-center">
           <AiOutlineLoading3Quarters
@@ -153,37 +157,63 @@ const Home = () => {
           </h1>
         </div>
       ) : (
-        <div className="w-full flex flex-col justify-center items-center h-screen ">
+          <div className="flex flex-col justify-center items-center h-screen overflow-y-auto">
           <div
-            style={{ zIndex: 500 }}
-            className="w-full flex flex-row filter drop-shadow-md bg-white"
-          >
-            <Input
-              theme="#0C4A6E"
-              label="Buscar por nombre"
-              placeholder="Buscar..."
-              type="text"
-              id="buscar"
-              callBack={handleBuscador}
-            />
-            <div className="self-center flex flex-row">
-              <span className="text-gray-600 self-center font-medium">
+              css={{
+                zIndex: 500,
+                '@media (max-width: 640px)': {
+                  height: `${expandedFilter ? '40rem' : '4rem'}`,
+                  overflow: `${expandedFilter ? 'visible' : 'hidden'}`,
+                },
+                '@media (max-width: 768px)': {
+                  height: `${expandedFilter ? '26rem' : '4rem'}`,
+                  overflow: `${expandedFilter ? 'visible' : 'hidden'}`,
+                }
+              }}
+              id="fiterBar"
+              className={`w-full flex flex-col lg:flex-row lg:justify-center items-center filter drop-shadow-md bg-white pb-4 lg:pb-0 transition-all ease-in-out duration-150`}
+            >
+              <div className="flex flex-row w-full justify-between lg:hidden px-4 py-3 border-b border-gray-200">
+                <span className="font-semibold text-gray-800 self-center">Filtrar servicios:</span>
+                <button
+                  onClick={() => { setExpandedFilter((expanded) => !expanded) }}
+                  className="p-2 self-center">
+                  {expandedFilter ? <GrClose className="text-xl" /> : <GiHamburgerMenu className="text-xl" />}
+                </button>
+              </div>
+              <div className="w-full">
+                <Input
+                  flexed
+                  theme="#0C4A6E"
+                  label="Buscar por nombre"
+                  placeholder="Buscar..."
+                  type="text"
+                  id="buscar"
+                  callBack={handleBuscador}
+                />
+              </div>
+              <div className="px-4 lg:px-2 lg:p-0 lg:self-center flex flex-col w-full">
+                <span className="text-gray-600 lg:p-0 text-sm font-medium">
                 Ordenar por:{" "}
               </span>
               <ListBox
-                className="border-gray-400"
+                  width="100%"
+                  customBorder="#9CA3AF"
+                  className="border-gray-400 w-full lg:w-56"
                 options={options}
                 callBack={handleListValue}
                 text="Selecciona una opción..."
                 theme="#0C4A6E"
-              />
-            </div>
-            <div className="self-center flex flex-row">
-              <span className="text-gray-600 self-center font-medium">
+                />
+              </div>
+              <div className="px-4 lg:px-2 lg:p-0 lg:pl-4 lg:self-center flex flex-col w-full">
+                <span className="text-gray-600 lg:pl-0 text-sm font-medium">
                 Filtrar por:{" "}
               </span>
               <ListBox
-                className="border-gray-400"
+                  customBorder="#9CA3AF"
+                  width="100%"
+                  className="border-gray-400 w-full lg:w-56"
                 options={optionsFilter}
                 callBack={handleListValue2}
                 text="Selecciona una opción..."
@@ -191,13 +221,14 @@ const Home = () => {
               />
             </div>
           </div>
+            {/* flex-row aqui, l-235 */}
           <div
             style={{ scrollBehavior: "smooth" }}
-            className="justify-center items-center flex flex-row flex-wrap h-full overflow-y-auto"
+              className="justify-center items-center flex flex-row  flex-wrap h-full overflow-y-auto"
           >
             {servicios.map((service, index) =>
               service.estadoDePago === "Aprobado" ? (
-                <Link to={`/home/detalleServicio/${service.id}`}>
+                <Link key={index} to={`/home/detalleServicio/${service.id}`}>
                   <ServiceCard key={index} service={service} />
                 </Link>
               ) : (
