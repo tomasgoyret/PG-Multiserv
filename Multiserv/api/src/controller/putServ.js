@@ -32,9 +32,9 @@ const putServ = async (req, res,next) => {
             } );
 
         if(category){
-        const servicesUpdt = await Servicios.findByPk(id);
-        console.log(servicesUpdt)
-        servicesUpdt.removeCategorias([1]);
+        const servicesUpdt = await Servicios.findByPk(id, {include: {model: Categorias}});
+        let idCate = servicesUpdt.categorias[0].id
+        await servicesUpdt.removeCategorias(idCate);
         const categoria = await Categorias.findOne({ where: { title: category } })
         await servicesUpdt.addCategorias(categoria)
         }

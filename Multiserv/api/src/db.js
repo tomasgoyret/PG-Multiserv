@@ -95,7 +95,6 @@ Servicios.hasMany(Citas);
 // Direcciones
 Direcciones.belongsTo(Usuarios);
 Direcciones.belongsTo(Servicios);
-Direcciones.belongsTo(Citas);
 
 // Reviews
 Resenas.belongsTo(Servicios);
@@ -112,7 +111,6 @@ Categorias.belongsToMany(Servicios,{through: 'services_category'});
 Usuarios.hasMany(Citas)
 Citas.belongsToMany(Usuarios,{through: 'usuarios_citas'});
 
-Servicios.belongsToMany(Citas,{through: 'services_citas'})
 Citas.belongsToMany(Servicios,{through: 'services_citas'});
 
 //Relación 1 a 1 Servicios ---> Horarios

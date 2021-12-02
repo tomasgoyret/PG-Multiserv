@@ -84,7 +84,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
   };
 
   return (
-    <div className="mx-4 my-4 w-full">
+    <div className="mx-4 my-4 w-full h-screen overflow-y-scroll ">
       <h1 className="text-4xl font-bold pb-2 border-b w-full mb-2">
         Mis Citas
       </h1>
@@ -160,7 +160,7 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
                 <h6 className="text-center">{cita.dia}</h6>
                 <h6 className="text-center">{cita.hora.hora}</h6>
                 <h6 className="text-center mb-2">{cita.direccion}</h6>
-                <h6>
+                <h6 className="text-center mb-2">
                   Estado:{" "}
                   {cita.status === "Pendiente" ? "Cita caducada" : cita.status}
                 </h6>
@@ -202,4 +202,5 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
     </div>
   );
 };
+
 export default MisCitas;

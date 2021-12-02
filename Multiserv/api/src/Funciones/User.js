@@ -27,6 +27,9 @@ const Cate = [
   {
     "title": "Plomería"
   },
+  {
+    "title": "Otros"
+  },
 ]
 const Users = [
   {

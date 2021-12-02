@@ -4,7 +4,9 @@ import bastian from "../../../src/assets/fotos/bastian.jpeg"
 import tomas from "../../../src/assets/fotos/tomas.jpeg"
 import ale from "../../../src/assets/fotos/ale.JPG"
 import abril from "../../../src/assets/fotos/abril.jpg"
+import uli from "../../assets/fotos/uli.jpg"
 import bruno from "../../../src/assets/fotos/bruno.jpg"
+import luis from "../../../src/assets/fotos/luis.jpg"
 
 const dataNosotros = [
     {
@@ -59,19 +61,19 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: uli,
         displayName: "Uli",
         titulo: "Full Stack Developer",
         redes: [
             {
                 name: "github",
                 icon: github,
-                url: "https://github.com/bastianalzate"
+                url: "https://github.com/UliVargas"
             },
             {
                 name: "linkedin",
                 icon: linkedin,
-                url: "https://www.linkedin.com/in/bastianalzate/"
+                url: "https://www.linkedin.com/in/ulisesvaf"
             }
         ]
     },
@@ -110,7 +112,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: luis,
         displayName: "Luis",
         titulo: "Full Stack Developer",
         redes: [
