@@ -90,7 +90,8 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       </h1>
       <h2 className="text-xl pl-2 font-semibold"> Proximas :</h2>
       {/* Citas mapeadas por Servicio */}
-      <div className="grid grid-cols-6 gap-3 m-2">
+      <div className="justify-center items-center flex flex-row flex-wrap h-full overflow-y-auto"
+          >
         {misCitas.length > 0 &&
           misCitas.map((cita, i) => {
             let hoy =
@@ -145,7 +146,8 @@ usuarioUidClient: "3FP9DkuqIgSkw78sedTF7tz0gCe2"
       )}
       <br />
       <h2 className="text-xl pl-2 font-semibold"> Caducadas :</h2>
-      <div className="grid grid-cols-6 gap-3 m-2">
+      <div className="justify-center items-center flex flex-row flex-wrap h-full overflow-y-auto"
+          >
       {citasVencidas.length > 0 ? (
         citasVencidas.map((cita, i) => {
           let values = [cita.id, cita.usuarioUidClient];
