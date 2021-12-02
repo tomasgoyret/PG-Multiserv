@@ -211,15 +211,15 @@ const DetalleServicio = () => {
                     </div>
                 ) : (
                         <div className="w-full flex flex-col pb-10">
-                        <div className="pt-6 pb-4">
+                            <div className="pt-6 pb-4 border-b border-gray-200">
                             <h1 className="source-sans text-center text-3xl font-semibold text-cyan-800">
-                                Detalles de Servicios
+                                    Detalle del servicios
                             </h1>
                         </div>
 
-                        <div className="flex border-t border-gray-200 my-4 pt-4 w-full">
+                            <div className="flex my-6 pt-4 w-full">
                             <div className="bg-white relative flex flex-col rounded-b-lg w-full">
-                                <div className=" absolute -top-5 px-4 flex justify-between">
+                                    <div className=" absolute -top-5 px-4 flex justify-between">
                                     <div className="px-4 py-1 font-semibold bg-cyan-900 rounded-full">
                                         <span className="text-white">
                                             {servicio[0].categorias[0] === undefined
@@ -242,9 +242,9 @@ const DetalleServicio = () => {
                                     imgClass={`object-cover rounded-t-lg w-full h-80 ${loadingImg || failedImg ? "hidden" : ""
                                         }`}
                                 />
-                                <div className="flex flex-row pt-6 px-4 w-full">
+                                    <div className="flex flex-col lg:flex-row pt-6 px-4 w-full">
                                     <div className="flex ">
-                                        <div className="flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md items-center">
+                                            <div className="flex w-full lg:w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md items-center">
                                             <div className="w-28 mr-4">
                                                 <Image
                                                     imagen={usuario && usuario.photoURL}
@@ -253,54 +253,52 @@ const DetalleServicio = () => {
                                                 />
                                             </div>
                                             <div className="flex flex-col justify-center">
-                                                <span className="text-gray-800 font-bold text-xl font-sans">
+                                                    <span className="text-gray-800 font-bold text-2xl font-sans mb-2">
                                                     {usuario && usuario.displayName}
-                                                </span>
-                                                <br />
+                                                    </span>
                                                 <div className="w-14 mr-4 flex flex-row space-x-2">
                                                     {datosSesionFromLocalStorage &&
                                                         usuario &&
                                                         usuario.phoneNumber ? (
                                                         <a
-                                                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
+                                                                    className="flex flex-nowrap py-1 px-4 justify-center items-center rounded-full font-semibold bg-cyan-700 hover:bg-cyan-800 text-gray-50"
                                                             href={`tel:${usuario.phoneNumber}`}
                                                         >
-                                                            <AiTwotonePhone className={`text-3xl`} />
+                                                                    <AiTwotonePhone className="text-xl" />
                                                         </a>
                                                     ) : null}
                                                     {datosSesionFromLocalStorage &&
                                                         usuario &&
                                                         usuario.phoneNumber ? (
                                                         <a
-                                                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
+                                                                    className="flex flex-nowrap py-1 px-4 justify-center items-center rounded-full font-semibold bg-green-400 hover:bg-green-500 text-gray-50"
                                                             href={` https://wa.me/${numberWhastapp}?text=Me%20interesa%20el%20servicio%20${servicio[0].title}`}
                                                             target="_blank"
                                                         >
                                                             {" "}
-                                                            <AiOutlineWhatsApp className={`text-3xl`} />
+                                                                    <AiOutlineWhatsApp className="text-xl" />
                                                         </a>
                                                     ) : null}
                                                     {datosSesionFromLocalStorage &&
                                                         usuario &&
                                                         usuario.email ? (
                                                         <a
-                                                            className="flex flex-nowrap p-2 py-2 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
+                                                                    className="flex flex-nowrap py-1 px-4 justify-center items-center rounded-full font-semibold bg-green-700 hover:bg-green-800 text-gray-50"
                                                             href={`mailto:${usuario.email}`}
                                                         >
                                                             {" "}
-                                                            <AiOutlineMail className={`text-3xl`} />
+                                                                    <AiOutlineMail className="text-xl" />
                                                         </a>
                                                     ) : null}
                                                 </div>
-                                                {/* <span className='text-gray-800 text-sm font-semibold'>Numero: {usuario && usuario.phoneNumber ? usuario.phoneNumber : 'No especificado'}</span><br />
-                                                    <span className='text-gray-800 text-sm font-semibold'>E-mail: {usuario && usuario.email}</span> */}
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="relative">
+                                        <div className="relative mt-4">
                                         <div className="mb-2">
                                             <div className="flex justify-between">
-                                                <span className="self-center text-xl font-semibold text-gray-800 w-3/6">
+                                                    <span className="self-center text-2xl font-semibold text-gray-800 w-3/6">
                                                     {servicio[0].title}
                                                 </span>
                                                 <div className="self-center inline-flex">

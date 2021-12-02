@@ -24,19 +24,28 @@ export default function ListBox({ options, callBack, text, theme, className, wid
         }
     }
     const resizeBtn = () => {
-        const width = btn.current.clientWidth
-        setbtnWidth(width)
+        try {
+            if (btn !== null) {
+                const width = btn.current.clientWidth
+                setbtnWidth(width)
+            }
+        } catch (error) {
+            return error
+        }
     }
     useEffect(() => {
         if (btn !== null) {
             resizeBtn()
         }
-    }, [btn])
+        return () => {
+            setbtnWidth(null)
+        }
+    }, [btn, btnWidth])
     useEffect(() => {
         window.addEventListener('resize', resizeBtn)
     }, [])
     return (
-        <div style={noAutoWidth ? { zIndex: 3000 } : { width: `${width ? width : '18rem'}`, zIndex: 3000 }} className={`${className} ${!width && 'mx-2'}`}>
+        <div style={noAutoWidth ? undefined : { width: `${width ? width : '18rem'}` }} className={`${className} ${!width && 'mx-2'}`}>
             <Listbox value={selected} onChange={(value) => {
                 const obj = options.find(option => option.name === value)
                 callBack(obj)
@@ -68,7 +77,7 @@ export default function ListBox({ options, callBack, text, theme, className, wid
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Listbox.Options as="div" style={{ width: btnWidth, zIndex: 4000 }} className="absolute top-9 text-left z-50 py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Listbox.Options as="div" style={{ width: btnWidth, zIndex: '9999' }} className="absolute top-11 text-left py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             {options.map((option, index) => (
                                 <Listbox.Option
                                     key={index}

@@ -7,6 +7,7 @@ const Input = ({ type, id, placeholder, theme, callBack, label, autocomplete, fl
 
     const flexedStyle = {
         display: 'flex',
+        width: '100%',
         flexDirection: 'column',
 
         justifyContent: 'flex-start',
