@@ -6,6 +6,7 @@ import ale from "../../../src/assets/fotos/ale.JPG"
 import abril from "../../../src/assets/fotos/abril.jpg"
 import uli from "../../assets/fotos/uli.jpg"
 import bruno from "../../../src/assets/fotos/bruno.jpg"
+import luis from "../../../src/assets/fotos/luis.jpg"
 
 const dataNosotros = [
     {
@@ -111,7 +112,7 @@ const dataNosotros = [
         ]
     },
     {
-        imagen: "",
+        imagen: luis,
         displayName: "Luis",
         titulo: "Full Stack Developer",
         redes: [
