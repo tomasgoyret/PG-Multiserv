@@ -247,7 +247,7 @@ const DetalleServicio = () => {
                                         <div className="flex w-96 h-auto border px-4 py-1 mr-5 rounded-lg border-gray-300 shadow-md items-center">
                                             <div className="w-28 mr-4">
                                                 <Image
-                                                    imagen={usuario && usuario.photoURL}
+                                                    imagen={usuario.photoURL ? usuario.photoURL : "https://indiehoy.com/wp-content/uploads/2018/09/nicolas-cage-meme-1200x900.jpg" }
                                                     name={usuario && usuario.displayName}
                                                     imgClass="rounded-full my-4"
                                                 />
