@@ -5,7 +5,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router';
-import { getCats, servicesId, updateService } from '../../redux/actions/actions';
+import { getCats, servicesId, updateService, empatyServicesId } from '../../redux/actions/actions';
 import ReactCountryFlag from "react-country-flag"
 import { storage } from "../../Firebase";
 import { MapContainer, MapConsumer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
@@ -203,6 +203,9 @@ const EditarServicio = () => {
         'Edita o agrega imágenes y horarios para completar los datos de tu servicio.',
         'success'
       )
+    return () =>{
+     dispatch(empatyServicesId());
+    }
 
   }, [])
 

@@ -66,7 +66,7 @@ const Profile = () => {
         }).then((result) => {
             console.log(result)
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3005/eliminar-usuario/${uid}`)
+                axios.delete(`eliminar-usuario/${uid}`)
                     .then(async response => {
                         await Swal.fire(
                             '¡Eliminado!',
@@ -152,7 +152,7 @@ const Profile = () => {
     const actualizarDatosUsuario = (user) => {
         const { name, lastName, photoURL, uid, phone } = user;
         setLoading(true)
-        axios.put(`http://localhost:3005/editar-usuario/${uid}`, {
+        axios.put(`editar-usuario/${uid}`, {
             name,
             lastName,
             photoURL,
@@ -177,7 +177,7 @@ const Profile = () => {
             })
             .catch(error => {
                 setLoading(false)
-                console.log(error.response)
+                //console.log(error.response)
                 let mensaje = ""
                 error.response.data.includes("the provided phone number already exists") ? mensaje = "El teléfono ingresado ya existe" : error.response.data.includes("TOO_SHORT") ? mensaje = "El numero ingresado es muy corto" : mensaje = "Hubo un problema con el numero ingresado, revisa el numero ingresado o intenta con otro"
                     Swal.fire({
