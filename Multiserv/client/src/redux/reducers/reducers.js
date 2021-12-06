@@ -163,6 +163,7 @@ function rootReducer(state = initalState, { type, payload }) {
             return {
                 ...state,
                 loadingServices: false,
+                loadingServicesDetalle: true,
                 detalleServicio: {},
             }
         case SERVICIOID:

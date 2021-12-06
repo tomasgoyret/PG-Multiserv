@@ -1,5 +1,5 @@
 /* Imagenes e Iconos */
-import Logo from '../../assets/Icons/personalMark.png';
+import Logo from '../../assets/Icons/logo01high.png';
 import img from '../../assets/images/img1.webp';
 /* Atomos */
 import ButtonXartiago from '../../Components/Atoms/ButtonXartiago/ButtonXartiago';
@@ -54,15 +54,15 @@ const LandingPage = () => {
                 <SignIn handleModal={handleModal}/>
             }
             <Nav
-                clase='flex px-5 py-8 justify-between'
+                clase='flex px-4 py-6 justify-between'
                 claseArr='flex items-center'
                 imagen={Logo} imgName='Multiserv'
-                imgClass='w-20 ml-20 flex items-center'
+                imgClass='w-40 ml-32 flex items-center'
                 arr={navArr}
             />
             
-            <div className='mx-28 mt-24 px-14 border-l-4 border-gray-500' >
-                <EncWImg clase='flex items-center justify-between' classTitulo='w-96 text-7xl text-gray-700' titulo='Busca, encuentra, o publica un servicio' img={img} imgClass='max-w-1xl' />
+            <div className='mx-16 mt-4 px-12 border-l-4 border-gray-500' >
+                <EncWImg clase='flex items-center justify-between ' classTitulo='w-80 text-6xl text-gray-700' titulo='Busca, encuentra, o publica un servicio' img={img} imgClass='max-w-1xl' />
                 <BarElements clase='flex flex-col' arr={buttonArr} />
             </div>
         </div>

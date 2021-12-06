@@ -119,12 +119,12 @@ const dataNosotros = [
             {
                 name: "github",
                 icon: github,
-                url: "https://github.com/bastianalzate"
+                url: "https://github.com/LuisEA97"
             },
             {
                 name: "linkedin",
                 icon: linkedin,
-                url: "https://www.linkedin.com/in/bastianalzate/"
+                url: "https://www.linkedin.com/in/luis-aguilar-dev"
             }
         ]
     },
