@@ -30,7 +30,7 @@ const LandingPage = () => {
     }
 
     const navArr = [
-        <LinkTo linkClass='px-7 text-2xl font-bold text-gray-700' page='about' render='Acerca de' />,
+        <LinkTo linkClass='px-7 text-2xl font-bold text-gray-700' page='acercaDe' render='Acerca de' />,
         <LinkTo linkClass='px-7 text-2xl font-bold text-gray-700' page='about' render='Nosotros' />,
         // <ButtonXartiago clase='px-7' btn='Iniciar Sesion'
         //     btnClass='rounded-2xl border-2 border-green-500 px-8 py-1 text-2xl font-bold text-gray-700 hover:bg-green-500 hover:text-white'

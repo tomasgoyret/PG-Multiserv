@@ -8,16 +8,15 @@ import "react-multi-date-picker/styles/colors/green.css";
 import InputIcon from "react-multi-date-picker/components/input_icon";
 import { storage } from "../../Firebase";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
-const AgendarCita = () => {
+const AgendarCita = ({idService}) => {
   const navigate = useNavigate();
   const datosSesionFromLocalStorage = JSON.parse(
     localStorage.getItem("datoSesion")
   );
   const { uid } = datosSesionFromLocalStorage;
   let today = new Date();
-  const dispatch = useDispatch();
-  const { idService } = useParams();
   const { verHorarios, detalleServicio } = useSelector((state) => state);
   const [value, setValue] = useState(new Date());
   const [prop, setProp] = useState([]);
@@ -66,11 +65,6 @@ const AgendarCita = () => {
     setDiasOcupados(dias);
   };
 
-  useEffect(() => {
-    dispatch(getHorarios(idService));
-    dispatch(servicesId(idService));
-  }, []);
-
   const handleChange = (value) => {
     setDia(value?.format());
     setFecha(value?.format());
@@ -104,7 +98,7 @@ const AgendarCita = () => {
         return (
           //----------------- Horas disponibles -------------------//
 
-          <div>
+          <div className='flex flex-wrap justify-center align-middle'>
             {horas.map((e, i) =>
               e.reservado === false ? (
                 <div key={"kj78234g43" + i}>
@@ -113,14 +107,14 @@ const AgendarCita = () => {
                     name="hora"
                     value={e.hora}
                     onClick={handleClick}
-                    className="bg-teal-500"
+                    className="px-4 py-2 rounded-lg m-1 bg-sky-400 hover:bg-blue-500"
                   >
                     {e.hora}
                   </button>
                 </div>
               ) : (
                 <div key={"kj78234g43" + i}>
-                  <button type="button" value={false} className="bg-gray-400">
+                  <button type="button" value={false} className="px-4 py-2 rounded-lg m-1 bg-red-500">
                     {e.hora}
                   </button>
                 </div>
@@ -188,7 +182,7 @@ const AgendarCita = () => {
         ciudad.length > 0
       ) {
         var body = {
-          dia: "2021",
+          dia,
           hora,
           direccion,
           ciudad,
@@ -224,25 +218,26 @@ const AgendarCita = () => {
         setValue(new Date());
       }
     } else {
-      alert("Complete los campos");
+      Swal.fire('Complete los campos', '', 'warning')
     }
   };
   const agregarCita = async (body, idService) => {
+    console.log(idService)
     const cita = `citas/${idService}`;
     const response = await axios.post(cita, body);
-    alert(response.data);
+    Swal.fire(`${response.data}`, '', 'success')
     navigate("/home");
   };
   return (
-    <div>
-      <h1>Ver Horarios</h1>
-      <h3>Seleccione una fecha para el turno: </h3>
+    <div className='m-4 px-2 border-t-2 border-b-2' >
+      <h1 className=' font-bold text-xl' >Ver Horarios</h1>
+      <h3 className='text-lg font-semibold' >Seleccione una fecha para el turno: </h3>
       <form onSubmit={onSubmit}>
         {
           <DatePicker
             onOpen={handleClickFecha}
             format="YYYY/MM/DD"
-            className="green"
+            className="blue"
             minDate={
               today.getFullYear() +
               "/" +
@@ -269,7 +264,7 @@ const AgendarCita = () => {
           <p className="text-red-500"> Elija una fecha para la cita</p>
         )}
         <br />
-        <span>Seleccione la hora del turno:</span>
+        <span className='text-lg font-semibold text-center' >Seleccione la hora del turno:</span>
 
         {/* Horas que coinciden con fecha de almanaque */}
 
@@ -318,9 +313,8 @@ const AgendarCita = () => {
         )}
 
         {/*--------------  Previsualizacion Turno  -------------------*/}
-
-        <div className="bg-green-500">
-          <h1>Turno para el Servicio: {detalleServicio[0]?.title}</h1>
+        {hora.hora ? <div className="border-2 rounded-xl p-2 text-center">
+          <h1 className='font-semibold text-lg border-b' >Turno para el Servicio: {detalleServicio[0]?.title}</h1>
           <h2>Con: {detalleServicio[0]?.nameUser}</h2>
           <h3>Fecha: {dia}</h3>
           <h3>Hora: {hora.hora}</h3>{" "}
@@ -337,8 +331,9 @@ const AgendarCita = () => {
             </div>
           )}
         </div>
+          : ''}
 
-        <button type="submit" className="bg-cyan-500">
+        <button type="submit" className="w-full mb-2 bg-green-500 text-white font-bold p-1 rounded-lg">
           Agendar cita
         </button>
       </form>

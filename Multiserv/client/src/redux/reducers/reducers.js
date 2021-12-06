@@ -236,7 +236,6 @@ function rootReducer(state = initalState, { type, payload }) {
                 ...state,
                 misCitas: payload
             }
-
         default:
             return state;
     }

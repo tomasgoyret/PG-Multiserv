@@ -80,9 +80,28 @@ const sendEmail = async (email, subject, html) => {
               <a href="https://pg-multiserv.vercel.app/">Visite nuestra página!</a>
           </div>`;
   }
+  const mailTurnoProveedor = (proveedor,name,dia,hora,direccion,ciudad,servicio)=>{
+    return `
+          <head>
+          </head>
+          <div id="email___content">
+              <h2>Hola ${proveedor}</h2>
+              <p>Agendaron un turno contigo!</p>
+              <p>Detalle del turno:</p>
+              <p>Cliente:${name}</p>
+              <p>Servicio contratado: ${servicio}</p>
+              <p>Día: ${dia}</p>
+              <p>Hora: ${hora}</p>
+              <p>Lugar: ${direccion} , ${ciudad}</p>
+              <br>
+
+              <a href="https://pg-multiserv.vercel.app/">Visite nuestra página!</a>
+          </div>`;
+  }
 
   module.exports = {
     sendEmail,
     mailPago,
-    mailTurno
+    mailTurno,
+    mailTurnoProveedor
   };

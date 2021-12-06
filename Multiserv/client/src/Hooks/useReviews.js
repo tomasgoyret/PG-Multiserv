@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 
-export const Review = () => {
+export const useReview = () => {
     const { reviews, usuarios } = useSelector(state => state)
 
     const reviewsdata = reviews.map(review => ({

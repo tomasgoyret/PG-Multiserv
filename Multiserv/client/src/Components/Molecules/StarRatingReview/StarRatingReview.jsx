@@ -10,7 +10,7 @@ const StarRatingReview = ({ rating, total }) => {
             {
                 rating ? 
                     (
-                        <div className="w-48 mr-4 flex flex-col items-end">
+                        <div className="w-full md:w-48 mr-4 flex flex-col items-center md:items-end">
                             <h2 className="font-semibold text-center text-6xl text-gray-700 fontRating mt-2">{rating.toFixed(1)}</h2>
                                 <ReactStars
                                     size={30}

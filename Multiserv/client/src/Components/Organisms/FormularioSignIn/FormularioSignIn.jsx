@@ -130,7 +130,7 @@ const FormularioSignIn = ({handleModal}) => {
                         <div className="px-4 py-2">
                             <Button
                                 icon={loading && <ImSpinner9 className="mr-2 animate-spin" />}
-                                className="px-4 py-2"
+                                className="px-4 py-3"
                                 submit
                                 theme="#155E75"
                                 customTextColor="#FFFFF"

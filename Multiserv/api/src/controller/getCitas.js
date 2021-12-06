@@ -1,6 +1,5 @@
 const { Citas, Usuarios, Servicios } = require("../db.js");
 
-
 const getCitas = async (req, res) => {
 
     try {

@@ -6,6 +6,7 @@ import { getAuth, updatePassword } from "firebase/auth";
 //_----------------------------------------------------------------------------------------
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 import Button from '../../Components/Atoms/Button/Button';
+import Swal from 'sweetalert2';
 
 //_----------------------------------------------------------------------------------------
 const PasswordChange = () => {
@@ -44,7 +45,7 @@ const PasswordChange = () => {
 // }
 function handleResetPassword(auth, actionCode, continueUrl, lang, e) {
   e.preventDefault();
-  alert('correo: ' + mail+'nueva contraseña: ' + newPassword1)
+  Swal.fire(`${'correo: ' + mail+'nueva contraseña: ' + newPassword1}`, '', 'success')
   
 //Localizar la interfaz de usuario al idioma seleccionado según lo determine el idioma parameter.Verifique que el código de restablecimiento de contraseña sea válido.
   verifyPasswordResetCode(auth, actionCode).then((mail) => {

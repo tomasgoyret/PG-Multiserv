@@ -29,6 +29,8 @@ import PercentageReview from "./Components/Molecules/PercentageReview/Percentage
 import StarRatingReview from "./Components/Molecules/StarRatingReview/StarRatingReview";
 import Reservations from "./pages/Reservations/Reservations";
 import NotFound404 from "./pages/NotFound404/NotFound404";
+import Nosotros from "./pages/Nosotros/Nosotros";
+import { AcercaDe } from "./pages/AcercaDe/AcercaDe";
 
 function App() {
   toast.configure()
@@ -94,10 +96,6 @@ function App() {
           element: <EditarServicio />
         },
         {
-          path: '/home/:idService/ver-horarios',
-          element: <AgendarCita />
-        },
-        {
           path: '/home/:uidClient/reservations',
           element: <Reservations />
         },
@@ -135,6 +133,14 @@ function App() {
       path: '*',
       element: <NotFound404 />
     },
+    {
+      path: '/about',
+      element: <Nosotros />
+    },
+    {
+      path: '/acercaDe',
+      element: <AcercaDe />
+    }
   ]
   /*
   <div>
