@@ -1,84 +1,54 @@
 const { Favoritos, Usuarios, Servicios } = require('../db.js')
-const { v4: uuidv4 } = require('uuid')
 
 const deleteFavorite = async (req, res) => {
   const { id, uidClient } = req.query
-  console.log(id, uidClient)
-  try {
-    const eliminado = await Favoritos.destroy({
-      where: { id }
-    })
-    const newLista = await Favoritos.findAll({
-      usuarios_favoritos: { where: { usuarioUidClient: uidClient } },
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    })
-    eliminado === 1 ? res.send(newLista) : res.send('No se encontro favorito')
-  } catch (error) {
-    console.log(error)
-  }
+  const del = await Favoritos.destroy({
+    where: { id }
+  })
+  const newList = await Favoritos.findAll({
+    usuarios_favoritos: { where: { usuarioUidClient: uidClient } },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  })
+  del ? res.status(200).json(newList) : res.status(400).json('No se encontro favorito')
 }
 
 const getAllUserFavorites = async (req, res) => {
   const { uidClient } = req.params
-
-  try {
-    const favoritos = await Favoritos.findAll({
-      usuarios_favoritos: { where: { usuarioUidClient: uidClient } },
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    })
-    favoritos.length === 0 ? res.send('No hay favoritos') : res.send(favoritos)
-  } catch (error) {
-    console.log(error)
-  }
+  const favoritos = await Favoritos.findAll({
+    usuarios_favoritos: { where: { usuarioUidClient: uidClient } },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  })
+  !favoritos.length
+    ? res.status(400).json('No hay favoritos')
+    : res.status(200).json(favoritos)
 }
 
 const postFavorite = async (req, res) => {
   const { uidClient, idService } = req.body
-
-  try {
-    // Corroboro si el favorito existe en ese Usuario
-
-    const usuario = await Usuarios.findOne({
-      where: { uidClient: uidClient },
-      include: {
-        model: Favoritos,
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        },
-        through: {
-          attributes: []
-        }
+  const favorite = await Favoritos.findOne({ where: { usuarioUidClient: uidClient, idService } })
+  if (favorite.length <= 0) {
+    const service = await Servicios.findOne({ where: { id: idService } })
+    console.log(service.title)
+    const title = service.title
+    const photos = service.photos
+    const [newFavorite, created] = await Favoritos.findOrCreate({
+      where: {
+        usuarioUidClient: uidClient,
+        idService
       },
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    })
-    if (usuario.favoritos?.some(f => f.idService === idService)) {
-      const fav = usuario.favoritos?.filter(f => f.idService === idService)
-      res.send({ msg: 'Favorito ya agregado', id: fav.id })
-    }
-
-    // Sino, creo el Favorito para Usuario
-    else {
-      const servicio = await Servicios.findOne({ where: { id: idService } })
-      const title = servicio.title
-      const photos = servicio.photos
-      const newFav = await Favoritos.create({
-        id: uuidv4(),
+      defaults: {
         idService,
         title,
         photos
-      })
-      await newFav.addUsuarios(uidClient)
-      res.send(newFav)
-    }
-  } catch (error) {
-    console.log(error)
+      }
+    })
+    res.status(200).json(newFavorite)
   }
+  res.status(400).json({ msg: 'Servicio ya agregado como favorito' })
 }
 
 module.exports = {

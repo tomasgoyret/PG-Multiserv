@@ -2,56 +2,37 @@ const { Categorias } = require('../db.js')
 
 const deleteCategorie = async (req, res) => {
   const { id } = req.params
-  try {
-    const Categoria = await Categorias.destroy({ where: { id } })
-    Categoria !== 1 ? res.send('No hay Categorías que coincidan') : res.send('Categoria borrada correctamente')
-  } catch (error) {
-    console.log(error)
-  }
+  const category = await Categorias.destroy({ where: { id } })
+  category !== 1 ? res.status(400).json('No hay Categorías que coincidan') : res.status(200).json('Categoria borrada correctamente')
 }
 
-const getAllCategories = async (req, res, next) => {
-  try {
-    const allCategories = await Categorias.findAll()
-    const respuesta = allCategories.map((c) => {
-      const res = {
-        id: c.id,
-        title: c.title
-      }
-      return res
-    })
-    res.send(respuesta)
-  } catch (error) {
-    next(error)
-  }
+const getAllCategories = async (req, res) => {
+  const allCategories = await Categorias.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } })
+  res.status(200).json(allCategories)
 }
 
-const postCategorie = async (req, res, next) => {
-  const { title } = req.body
-  const cat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()
-  try {
-    const existe = await Categorias.findOne({ where: { title: cat } })
-    if (existe === null) {
-      await Categorias.create({ title: cat })
-      res.send(`Se creó la categoría ${cat} correctamente`)
-    }
-    res.send(`La categoría ${cat} ya existe`)
-  } catch (error) {
-    next(error)
+const postCategorie = async (req, res) => {
+  let { title } = req.body
+  title = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()
+  const category = await Categorias.findOne({ where: { title: title } })
+  if (!category) {
+    await Categorias.create({ title: title })
+    res.status(201).json(`Se creó la categoría ${title} correctamente`)
   }
+  res.status(400).json(`La categoría ${title} ya existe`)
 }
 
 const updateCategorie = async (req, res) => {
   const { id, newTitle } = req.body
   try {
-    const cate = await Categorias.update({
+    const category = await Categorias.update({
       title: newTitle
     }, {
       where: { id }
     })
-    res.send({ msg: 'Categoría actualizada correctamente', cate })
+    res.status(201).json({ msg: 'Categoría actualizada correctamente', category })
   } catch (error) {
-    res.send(error)
+    res.status(400).json(error)
   }
 }
 

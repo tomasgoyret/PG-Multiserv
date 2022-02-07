@@ -73,11 +73,11 @@ const postAppointments = async (req, res, next) => {
 const updateAppointments = async (req, res, next) => {
   const { id } = req.params
   try {
-    const citas = await Citas.update(
+    const appointments = await Citas.update(
       { status: 'Concretada' },
       { where: { id: id } }
     )
-    res.send(citas)
+    res.send(appointments)
   } catch (error) {
     next(error)
   }
@@ -86,8 +86,8 @@ const updateAppointments = async (req, res, next) => {
 const deleteAppointments = async (req, res) => {
   const { id } = req.params
   try {
-    const cita = await Citas.destroy({ where: { id } })
-    cita !== 1 ? res.send('No hay citas que coincidan') : res.send('Cita borrada correctamente')
+    const appointment = await Citas.destroy({ where: { id } })
+    appointment !== 1 ? res.send('No hay citas que coincidan') : res.send('Cita borrada correctamente')
   } catch (error) {
     console.log(error)
   }

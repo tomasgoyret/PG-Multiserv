@@ -99,8 +99,8 @@ Resenas.belongsTo(Servicios)
 Resenas.belongsTo(Usuarios)
 
 // Muchos a Muchos  ---> Favoritos y Categorias
-Usuarios.belongsToMany(Favoritos, { through: 'usuarios_favoritos' })
-Favoritos.belongsToMany(Usuarios, { through: 'usuarios_favoritos' })
+Usuarios.hasMany(Favoritos)
+Favoritos.belongsTo(Usuarios)
 
 Servicios.belongsToMany(Categorias, { through: 'services_category' })
 Categorias.belongsToMany(Servicios, { through: 'services_category' })
