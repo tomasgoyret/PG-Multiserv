@@ -17,22 +17,22 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const app = require('./src/app');
-const { conn } = require('./src/db.js');
-const { LlamadoUsers, DataServices, Categoriasmockup, ResenasMockup, Users, CrearHorarios, CitasMockup } = require('./src/Funciones/User');
-require('dotenv').config();
+const app = require('./src/app')
+const { conn } = require('./src/db.js')
+const { LlamadoUsers, DataServices, Categoriasmockup, ResenasMockup, Users, CrearHorarios, CitasMockup } = require('./src/Funciones/User')
+require('dotenv').config()
 
 conn
-    .sync({ force: false})
-    .then(async () => { 
-        /*await LlamadoUsers(Users);
-        await Categoriasmockup();
-        await DataServices();
-        await ResenasMockup();
-        await CrearHorarios();
-        await CitasMockup();*/
-        await app.listen(process.env.PORT || 3001, () => {
-            console.log('Server on port '+ process.env.PORT || 3001)
-        })
+  .sync({ force: false })
+  .then(async () => {
+    // await LlamadoUsers(Users)
+    // await Categoriasmockup()
+    // await DataServices()
+    // await ResenasMockup()
+    // await CrearHorarios()
+    // await CitasMockup()
+    await app.listen(process.env.PORT || 3001, () => {
+      console.log('Server on port ' + process.env.PORT || 3001)
     })
-    .catch ((e)=>console.log(e.message));
+  })
+  .catch((e) => console.log(e.message))

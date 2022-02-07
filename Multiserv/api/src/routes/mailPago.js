@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const payService = require('../controller/payService')
+const postMailPago = require('../controller/mailPago')
 
-router.post('/', payService.pago)
+router.post('/', postMailPago)
 
 module.exports = router
