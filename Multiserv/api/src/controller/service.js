@@ -34,15 +34,9 @@ const updateService = async (req, res, next) => {
   const { id } = req.params
   const { title, currency, category, description, max, min, rating, photos, direccion, estadoDePago, homeService, location, address } = req.body
   let traduccion = ''
-  if (estadoDePago === 'approved') {
-    traduccion = 'Aprobado'
-  }
-  if (estadoDePago === 'rejected') {
-    traduccion = 'Rechazado'
-  }
-  if (estadoDePago === 'in_process') {
-    traduccion = 'Pendiente'
-  }
+  if (estadoDePago === 'approved') traduccion = 'Aprobado'
+  if (estadoDePago === 'rejected') traduccion = 'Rechazado'
+  if (estadoDePago === 'in_process')traduccion = 'Pendiente'
   try {
     const serv = await Servicios.update({
       title,
@@ -75,72 +69,50 @@ const updateService = async (req, res, next) => {
 }
 
 const getAllServices = async (req, res) => {
-  try {
-    const servicios = await Servicios.findAll({
-      include: {
-        model: Categorias,
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        },
-        through: {
-          attributes: []
-        }
-      },
+  const services = await Servicios.findAll({
+    include: {
+      model: Categorias,
       attributes: {
         exclude: ['createdAt', 'updatedAt']
       }
-    })
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  })
 
-    res.send(servicios)
-  } catch (error) {
-    console.log(error)
-  }
+  res.status(200).json(services)
 }
 
 // get user by id specific
 
 const getServiceId = async (req, res, next) => {
   const { id } = req.params
-  try {
-    const servicio = await Servicios.findAll({ where: { id }, include: [Categorias, Horarios] })
-    servicio.length < 1 ? res.send('No hay Servicios que coincidan') : res.send(servicio)
-  } catch (error) {
-    next(error)
-  }
+  const service = await Servicios.findAll({ where: { id }, include: [Categorias, Horarios] })
+  res.status(200).json(service)
 }
 
 const getUserService = async (req, res) => {
   const { uidClient } = req.params
-  try {
-    const servicios = await Servicios.findAll({
-      where: { usuarioUidClient: uidClient },
-      include: {
-        model: Categorias,
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        },
-        through: {
-          attributes: []
-        }
-      },
+  const servicios = await Servicios.findAll({
+    where: { usuarioUidClient: uidClient },
+    include: {
+      model: Categorias,
       attributes: {
         exclude: ['createdAt', 'updatedAt']
       }
-    })
-    res.send(servicios)
-  } catch (error) {
-    console.log(error)
-  }
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  })
+  res.status(200).json(servicios)
 }
 
 const deleteService = async (req, res) => {
   const { id } = req.params
-  try {
-    const servicio = await Servicios.destroy({ where: { id } })
-    servicio !== 1 ? res.send('No hay Servicios que coincidan') : res.send('Servicio borrado correctamente')
-  } catch (error) {
-    console.log(error)
-  }
+  const servicio = await Servicios.destroy({ where: { id } })
+  servicio !== 1 ? res.send('No hay Servicios que coincidan') : res.send('Servicio borrado correctamente')
 }
 
 module.exports = {

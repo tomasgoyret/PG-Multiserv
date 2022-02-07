@@ -7,8 +7,7 @@ const getAlllocations = async (req, res, next) => {
         exclude: ['createdAt', 'updatedAt', 'nameUser', 'currency', 'description', 'max', 'min', 'estadoDePago', 'rating', 'photos', 'profilePic']
       }
     })
-
-    res.send(ubicaciones)
+    res.status(200).json(ubicaciones)
   } catch (error) {
     next(error)
   }
@@ -18,13 +17,10 @@ const updateLocation = async (req, res, next) => {
   const { id } = req.params
   const { location, address } = req.body
   try {
-    const loc = await Servicios.update({
-      location: location,
-      address: address
-    }, {
-      where: { id }
-    })
-    res.send({ msg: 'Se agregó la ubicación correctamente', loc })
+    const locationData = await Servicios.update(
+      { location: location, address: address },
+      { where: { id } })
+    res.send({ msg: 'Se agregó la ubicación correctamente', locationData })
   } catch (error) {
     next(error)
   }

@@ -1,7 +1,5 @@
 const { Citas } = require('../db.js')
 
-// get all services
-
 const getAllReservations = async (req, res) => {
   const { ids } = req.body
   try {

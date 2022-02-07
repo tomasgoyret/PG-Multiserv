@@ -4,24 +4,15 @@ const mercadopago = require('mercadopago')
 mercadopago.configure({
   access_token: process.env.ACCESS_TOKEN
 })
-
 const payService = {}
-
 payService.pago = (req, res) => {
   const { id } = req.body
   const preference = {
-    items: [{
-      title: 'Publicación en Multiservicos',
-      unit_price: 100,
-      quantity: 1
-    }],
+    items: [{ title: 'Publicación en Multiservicos', unit_price: 100, quantity: 1 }],
     back_urls: {
       success: 'https://pg-multiserv.vercel.app/confirmServ',
       failure: 'https://pg-multiserv.vercel.app/confirmServ',
       pending: 'https://pg-multiserv.vercel.app/confirmServ'
-      // success: "localhost:3000/confirmServ",
-      // failure: "localhost:3000/confirmServ",
-      // pending: "localhost:3000/confirmServ",
     },
     auto_return: 'approved',
     external_reference: id
@@ -34,7 +25,7 @@ payService.pago = (req, res) => {
       res.send(redireccion)
     })
     .catch(function (error) {
-      error
+      throw error
     })
 }
 
